@@ -16,10 +16,11 @@ import protobuf from "protobufjs";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const OUT_DIR = path.resolve(__dirname, "../..", "dist");
+// Write outputs to the repository root (one level up from scripts/)
+const OUT_DIR = path.resolve(__dirname, "..", "dist");
 const OUT_JSON_DIR = path.join(OUT_DIR, "geosite-json");
-const INDEX_JSON_PATH = path.resolve(__dirname, "../..", "index.json");
-const README_TABLE_PATH = path.resolve(__dirname, "../..", "data_files.md");
+const INDEX_JSON_PATH = path.resolve(__dirname, "..", "index.json");
+const README_TABLE_PATH = path.resolve(__dirname, "..", "data_files.md");
 
 const GEO_DAT_URL =
   "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat";
@@ -156,4 +157,3 @@ main().catch((err) => {
   console.error("Failed to build geosite JSON:", err);
   process.exit(1);
 });
-
