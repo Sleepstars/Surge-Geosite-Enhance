@@ -222,7 +222,7 @@ const genSurgeList = async (
       if (line.startsWith("regexp:")) {
         const regexp = line.split(" ")[0].replace("regexp:", "");
         const wildcard = regexAstToWildcard(regexp);
-        // https://github.com/xxxbrian/Surge-Geosite/issues/3
+        // https://github.com/Sleepstars/Surge-Geosite-Enhance/issues/3
         const skip = /^[\?\*]+$/.test(wildcard);
         return convert(
           "regexp:",
@@ -365,7 +365,7 @@ app.get("/geosite", async (c) => {
 
 app.get("/", async (c) => {
   // redirect to the GitHub repository
-  return c.redirect("https://github.com/xxxbrian/Surge-Geosite");
+  return c.redirect("https://github.com/Sleepstars/Surge-Geosite-Enhance");
 });
 
 app.get("/misc/:category/:name", async (c) => {
