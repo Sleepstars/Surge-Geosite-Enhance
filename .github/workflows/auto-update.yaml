@@ -6,58 +6,45 @@ on:
     - cron:  '0 0 * * *'
 
 jobs:
-  update-readme:
+  build-geosite-json:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: write
     steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-        submodules: recursive  # Ensures submodules are checked out
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-    - name: Update submodules
-      run: |
-        git submodule update --remote --recursive  # Updates submodule references
-        git add upstream  # Stages submodule changes
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
 
-    - name: Generate file table for README
-      run: |
-        echo "| Name | Link |" > data_files.md
-        echo "|------|------|" >> data_files.md
-        for file in upstream/data/*; do
-          filename=$(basename $file)
-          echo "| $filename | https://surge.bojin.co/geosite/$filename |" >> data_files.md
-        done
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Generate Index Json
-      run: |
-        echo "{" > index.json
-        for file in upstream/data/*; do
-          filename=$(basename $file)
-          echo "\"$filename\": \"https://surge.bojin.co/geosite/$filename\"," >> index.json
-        done
-        sed -i '$ s/,$//' index.json
-        echo "}" >> index.json
+      - name: Build geosite JSON from Loyalsoldier geosite.dat
+        run: npm run build:geosite
 
-    - name: Update README
-      run: |
-        cat README_template.md data_files.md > README.md
+      - name: Update README
+        run: |
+          cat README_template.md data_files.md > README.md
 
-    - name: Configure Git
-      run: |
-        git config user.name "GitHub Actions Bot"
-        git config user.email "actions@github.com"
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
 
-    - name: Commit and push if necessary
-      run: |
-        set -e  # Ensure that the script stops on error
-        git add README.md
-        git add index.json
-        # Check if there are changes to be committed
-        if ! git diff --staged --quiet; then
-          git commit -m "[auto] Sync with upstream"
-          git push
-        else
-          echo "No changes to commit"
-        fi
+      - name: Commit and push if necessary
+        run: |
+          set -e
+          git add README.md
+          git add index.json
+          git add dist/geosite-json || true
+          if ! git diff --staged --quiet; then
+            git commit -m "[auto] Sync with upstream (geosite.dat → JSON)"
+            git push
+          else
+            echo "No changes to commit"
+          fi

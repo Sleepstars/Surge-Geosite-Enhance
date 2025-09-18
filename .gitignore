@@ -1,5 +1,7 @@
 # prod
 dist/
+!dist/geosite-json/
+!dist/geosite-json/**
 
 # dev
 .yarn/
@@ -18,7 +20,7 @@ node_modules/
 # env
 .env
 .env.production
-.dev.vars
+.dev.vars 
 
 # logs
 logs/
@@ -31,3 +33,6 @@ lerna-debug.log*
 
 # misc
 .DS_Store
+
+# AI moudles
+AGENTS.md
