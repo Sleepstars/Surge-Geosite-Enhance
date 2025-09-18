@@ -2,7 +2,7 @@
 // - Downloads latest geosite.dat from jsDelivr release
 // - Parses with protobufjs (Xray proto for GeoSiteList)
 // - Emits per-category JSON to dist/geosite-json/<name>.json
-// - Emits index.json mapping name -> https://surge.bojin.co/geosite/<name>
+// - Emits index.json mapping name -> https://direct.sleepstars.de/geosite/<name>
 // - Emits data_files.md for README table generation
 //
 // Node 18+ required.
@@ -136,7 +136,7 @@ const main = async () => {
     await writeJSON(outPath, { name, rules });
 
     // For README and index.json
-    const link = `https://surge.bojin.co/geosite/${name}`;
+    const link = `https://direct.sleepstars.de/geosite/${name}`;
     indexMap[name] = link;
     tableLines.push(`| ${name} | ${link} |`);
   }

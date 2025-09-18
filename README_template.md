@@ -8,7 +8,7 @@ geosite: apple@cn
 ```
 into a Surge-compatible Ruleset using the following URL:
 ```
-https://surge.bojin.co/geosite/apple@cn
+https://direct.sleepstars.de/geosite/apple@cn
 ```
 This conversion ensures real-time updates and compatibility with Surge configurations.
 
@@ -16,5 +16,5 @@ This conversion ensures real-time updates and compatibility with Surge configura
 
 **Geosite Ruleset Index**
 
-* JSON Format: `https://surge.bojin.co/geosite`
+* JSON Format: `https://direct.sleepstars.de/geosite`
 
