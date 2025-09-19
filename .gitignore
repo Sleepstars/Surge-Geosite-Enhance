@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # AI moudles
 AGENTS.md
+
+# Avoid Bun being auto-selected by CI (root only)
+/bun.lockb
