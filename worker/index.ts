@@ -21,9 +21,10 @@ app.get(
 type RuleItem = { type: "domain" | "full" | "keyword" | "regexp"; value: string; attrs?: string[] };
 type RuleJSON = { name: string; rules: RuleItem[] };
 
-const getJsonRules = async (name: string): Promise<RuleJSON | null> => {
-  // Points to this repo's prebuilt JSON; adjust if you fork
-  const base = "https://raw.githubusercontent.com/Sleepstars/Surge-Geosite-Enhance/refs/heads/main/dist/geosite-json";
+const getJsonRules = async (name: string, jsonBase?: string): Promise<RuleJSON | null> => {
+  // Base can be overridden by env JSON_BASE to support forks/mirrors
+  const base = jsonBase ||
+    "https://raw.githubusercontent.com/Sleepstars/Surge-Geosite-Enhance/main/dist/geosite-json";
   const candidates = Array.from(
     new Set([
       name,
@@ -95,7 +96,7 @@ app.get("/geosite/:name_with_filter", async (c) => {
 
   try {
     // Only use prebuilt JSON rules (no v2fly fallback)
-    const jsonRules = await getJsonRules(name);
+    const jsonRules = await getJsonRules(name, (c as any).env?.JSON_BASE);
     if (!jsonRules) {
       throw new HTTPException(404, { message: "Rules not found (JSON missing)" });
     }

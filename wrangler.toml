@@ -1,6 +1,9 @@
 name = "surge"
 compatibility_date = "2024-09-02"
 main = "worker/index.ts"
+
+[vars]
+JSON_BASE = "https://cdn.jsdelivr.net/gh/Sleepstars/Surge-Geosite-Enhance@main/dist/geosite-json"
 # compatibility_flags = [ "nodejs_compat" ]
 
 # [vars]
