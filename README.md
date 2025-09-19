@@ -17,7 +17,6 @@ This conversion ensures real-time updates and compatibility with Surge configura
 **Geosite Ruleset Index**
 
 * JSON Format: `https://direct.sleepstars.de/geosite`
-
 | Name | Link |
 |------|------|
 | GEEKPARK | https://direct.sleepstars.de/geosite/GEEKPARK |
