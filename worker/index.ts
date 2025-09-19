@@ -51,12 +51,14 @@ const genSurgeListFromJson = async (
 ): Promise<string> => {
   const lines: string[] = [];
   for (const r of data.rules) {
-    // filter by attribute (e.g., @cn)
+    // filter by attribute
+    // Supports @cn and @!cn (negation). Attribute compare is case-insensitive.
     if (filter) {
-      const attrs = r.attrs || [];
-      if (!attrs.some((a) => a === filter)) {
-        continue;
-      }
+      const neg = filter.startsWith("!");
+      const target = (neg ? filter.slice(1) : filter).toLowerCase();
+      const attrs = (r.attrs || []).map((a) => a.toLowerCase());
+      const has = attrs.includes(target);
+      if ((!neg && !has) || (neg && has)) continue;
     }
     switch (r.type) {
       case "domain":
