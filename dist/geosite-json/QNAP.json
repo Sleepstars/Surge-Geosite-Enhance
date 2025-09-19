@@ -1,0 +1,1 @@
+{"name":"QNAP","rules":[{"type":"domain","value":"myqnapcloud.com","attrs":[]},{"type":"domain","value":"qlink.to","attrs":[]},{"type":"domain","value":"qnap.com","attrs":[]},{"type":"domain","value":"myqnapcloud.cn","attrs":["cn"]},{"type":"domain","value":"qlinkto.cn","attrs":["cn"]},{"type":"domain","value":"qnap.com.cn","attrs":["cn"]}]}

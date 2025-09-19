@@ -1,0 +1,1 @@
+{"name":"NGINX","rules":[{"type":"domain","value":"nginx.com","attrs":[]},{"type":"domain","value":"nginx.org","attrs":[]}]}

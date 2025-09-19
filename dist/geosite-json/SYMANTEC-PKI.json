@@ -1,0 +1,1 @@
+{"name":"SYMANTEC-PKI","rules":[{"type":"domain","value":"symauth.com","attrs":[]},{"type":"domain","value":"symcb.com","attrs":[]},{"type":"domain","value":"symcd.com","attrs":[]},{"type":"domain","value":"pki.symantec.com","attrs":[]},{"type":"domain","value":"ws.symantec.com","attrs":[]}]}

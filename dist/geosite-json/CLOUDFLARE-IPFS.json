@@ -1,0 +1,1 @@
+{"name":"CLOUDFLARE-IPFS","rules":[{"type":"domain","value":"cf-ipfs.com","attrs":[]},{"type":"domain","value":"cloudflare-ipfs.com","attrs":[]}]}

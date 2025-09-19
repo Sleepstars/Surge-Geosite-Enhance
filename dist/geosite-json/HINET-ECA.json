@@ -1,0 +1,1 @@
+{"name":"HINET-ECA","rules":[{"type":"domain","value":"eca.hinet.net","attrs":[]},{"type":"domain","value":"pki.hinet.net","attrs":[]},{"type":"domain","value":"publicca.hinet.net","attrs":[]},{"type":"domain","value":"tls.hinet.net","attrs":[]},{"type":"domain","value":"gtlsca.nat.gov.tw","attrs":[]}]}

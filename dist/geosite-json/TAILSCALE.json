@@ -1,0 +1,1 @@
+{"name":"TAILSCALE","rules":[{"type":"domain","value":"tailscale.com","attrs":[]},{"type":"domain","value":"tailscale.io","attrs":[]},{"type":"domain","value":"ts.net","attrs":[]}]}

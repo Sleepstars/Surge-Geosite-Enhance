@@ -1,0 +1,1 @@
+{"name":"KINOPUB","rules":[{"type":"domain","value":"kino.pub","attrs":[]},{"type":"domain","value":"kinopub.online","attrs":[]},{"type":"domain","value":"gfw.ovh","attrs":[]},{"type":"domain","value":"mos-gorsud.co","attrs":[]},{"type":"regexp","value":"(\\w+)-static-[0-9]+\\.cdntogo\\.net$","attrs":[]}]}

@@ -1,0 +1,1 @@
+{"name":"IPIP","rules":[{"type":"domain","value":"ipip.net","attrs":[]},{"type":"domain","value":"myip.la","attrs":["!cn"]}]}

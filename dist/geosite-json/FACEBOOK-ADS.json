@@ -1,0 +1,1 @@
+{"name":"FACEBOOK-ADS","rules":[{"type":"domain","value":"analytics.facebook.com","attrs":["ads"]},{"type":"domain","value":"pixel.facebook.com","attrs":["ads"]}]}

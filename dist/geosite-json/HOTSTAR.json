@@ -1,0 +1,1 @@
+{"name":"HOTSTAR","rules":[{"type":"domain","value":"hotstar.com","attrs":[]},{"type":"domain","value":"hotstar-cdn.net","attrs":[]},{"type":"domain","value":"hotstar-labs.com","attrs":[]},{"type":"domain","value":"hotstarext.com","attrs":[]},{"type":"domain","value":"hsprepack.akamaized.net","attrs":[]},{"type":"regexp","value":"^hses[1-7]?\\.akamaized\\.net$","attrs":[]}]}

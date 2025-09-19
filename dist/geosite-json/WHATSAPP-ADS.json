@@ -1,0 +1,1 @@
+{"name":"WHATSAPP-ADS","rules":[{"type":"domain","value":"graph.whatsapp.com","attrs":["ads"]},{"type":"domain","value":"graph.whatsapp.net","attrs":["ads"]}]}

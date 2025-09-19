@@ -1,0 +1,1 @@
+{"name":"OOKLA-SPEEDTEST-ADS","rules":[{"type":"regexp","value":"^speed\\.(coe|open)\\.ad\\.[a-z]{2,6}\\.prod\\.hosts\\.ooklaserver\\.net$","attrs":["ads"]}]}
