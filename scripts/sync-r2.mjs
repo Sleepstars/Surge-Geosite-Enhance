@@ -14,7 +14,10 @@
 //   # Optional env:
 //   #   R2_CONCURRENCY=6  DRY_RUN=1  MANIFEST_KEY=manifests/geosite.json
 //
-// Requires Wrangler 4.x and auth to the account that owns the bucket.
+// Transport: AWS CLI (S3-compatible)
+//   Required env: R2_ACCESS_KEY_ID & R2_SECRET_ACCESS_KEY (or AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY)
+//                 plus either R2_S3_ENDPOINT or CLOUDFLARE_ACCOUNT_ID/R2_ACCOUNT_ID to derive endpoint
+//   Endpoint example: https://<account_id>.r2.cloudflarestorage.com; region: "auto"
 
 import fs from "node:fs";
 import fsp from "node:fs/promises";
@@ -113,24 +116,64 @@ const buildLocalPlan = async () => {
   return plan;
 };
 
-const resolveWranglerCmd = () => {
-  const bin = process.platform === "win32" ? "wrangler.cmd" : "wrangler";
-  const local = path.join(REPO_ROOT, "node_modules", ".bin", bin);
-  if (fs.existsSync(local)) return local;
-  return bin; // fallback to global
+// ---------- Tool resolution ----------
+const resolveAwsCmd = () => {
+  const bin = process.platform === "win32" ? "aws.exe" : "aws";
+  // Prefer system AWS CLI; node_modules usually doesn't ship it
+  return bin;
 };
 
-const wrangler = async (...args) => {
-  const cmd = resolveWranglerCmd();
-  const { stdout, stderr } = await execFileP(cmd, args, { cwd: REPO_ROOT });
+const awsCli = async (args, extraEnv = {}) => {
+  const cmd = resolveAwsCmd();
+  const { stdout, stderr } = await execFileP(cmd, args, {
+    cwd: REPO_ROOT,
+    env: { ...process.env, ...extraEnv },
+  });
   return { stdout, stderr };
 };
 
+const getAwsConfig = () => {
+  const accessKey = process.env.R2_ACCESS_KEY_ID || process.env.AWS_ACCESS_KEY_ID;
+  const secretKey = process.env.R2_SECRET_ACCESS_KEY || process.env.AWS_SECRET_ACCESS_KEY;
+  const accountId = process.env.R2_ACCOUNT_ID || process.env.CLOUDFLARE_ACCOUNT_ID;
+  const endpoint = process.env.R2_S3_ENDPOINT || (accountId ? `https://${accountId}.r2.cloudflarestorage.com` : undefined);
+  const region = process.env.AWS_REGION || process.env.AWS_DEFAULT_REGION || "auto";
+  return { accessKey, secretKey, endpoint, region };
+};
+
+const requireAwsConfig = () => {
+  const { accessKey, secretKey, endpoint, region } = getAwsConfig();
+  if (!accessKey || !secretKey || !endpoint) {
+    throw new Error(
+      "Missing AWS/R2 S3 config. Set R2_ACCESS_KEY_ID & R2_SECRET_ACCESS_KEY (or AWS_*), and R2_S3_ENDPOINT or R2_ACCOUNT_ID/CLOUDFLARE_ACCOUNT_ID."
+    );
+  }
+  return { accessKey, secretKey, endpoint, region };
+};
+
+// ---------- Remote I/O ----------
 const fetchRemoteManifest = async (bucket, key) => {
   const tmp = path.join(os.tmpdir(), `r2-manifest-${Date.now()}-${Math.random().toString(16).slice(2)}.json`);
   try {
-    // Fetch manifest from R2
-    await wrangler("r2", "object", "get", `${bucket}/${key}`, "--file", tmp);
+    const { accessKey, secretKey, endpoint, region } = requireAwsConfig();
+    // get-object: positional outfile must be last
+    await awsCli([
+      "s3api",
+      "get-object",
+      "--bucket",
+      bucket,
+      "--key",
+      key,
+      "--endpoint-url",
+      endpoint,
+      "--region",
+      region,
+      tmp,
+    ], {
+      AWS_ACCESS_KEY_ID: accessKey,
+      AWS_SECRET_ACCESS_KEY: secretKey,
+      AWS_S3_FORCE_PATH_STYLE: "true",
+    });
     const txt = await fsp.readFile(tmp, "utf8");
     await fsp.unlink(tmp).catch(() => {});
     return JSON.parse(txt);
@@ -142,17 +185,27 @@ const fetchRemoteManifest = async (bucket, key) => {
 };
 
 const putObject = async (bucket, key, file, contentType) => {
-  const args = [
-    "r2",
-    "object",
-    "put",
-    `${bucket}/${key}`,
-    "--file",
+  const { accessKey, secretKey, endpoint, region } = requireAwsConfig();
+  await awsCli([
+    "s3api",
+    "put-object",
+    "--bucket",
+    bucket,
+    "--key",
+    key,
+    "--body",
     file,
     "--content-type",
     contentType,
-  ];
-  await wrangler(...args);
+    "--endpoint-url",
+    endpoint,
+    "--region",
+    region,
+  ], {
+    AWS_ACCESS_KEY_ID: accessKey,
+    AWS_SECRET_ACCESS_KEY: secretKey,
+    AWS_S3_FORCE_PATH_STYLE: "true",
+  });
 };
 
 const uploadPlan = async (bucket, manifestKey, localPlan, remoteManifest) => {
@@ -216,6 +269,7 @@ const main = async () => {
 
   console.log(`Bucket: ${bucket}`);
   console.log(`Manifest key: ${manifestKey}`);
+  console.log("Transport: AWS CLI (S3-compatible)");
   if (DRY_RUN) console.log("DRY RUN enabled; no writes will occur.");
 
   const plan = await buildLocalPlan();

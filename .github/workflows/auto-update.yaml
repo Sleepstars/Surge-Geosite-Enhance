@@ -82,12 +82,25 @@ jobs:
           SRS_FILTERS: ${{ vars.SRS_FILTERS }}
           SRS_CONCURRENCY: ${{ vars.SRS_CONCURRENCY }}
         run: npm run build:srs
+      - name: Install AWS CLI v2
+        run: |
+          set -eux
+          sudo apt-get update
+          sudo apt-get install -y unzip
+          curl -sSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
+          unzip -q /tmp/awscliv2.zip -d /tmp
+          sudo /tmp/aws/install --update
+          aws --version
 
       - name: Manifest incremental sync to R2
         if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-srs.outputs.cache-hit != 'true'
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # AWS CLI (S3) credentials for R2
+          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          # Provide either R2_S3_ENDPOINT or (recommended) account id to derive endpoint
+          R2_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          # R2_S3_ENDPOINT: ${{ vars.R2_S3_ENDPOINT }}
           R2_BUCKET: ${{ vars.SRS_BUCKET_NAME }}
           R2_CONCURRENCY: ${{ vars.SRS_CONCURRENCY }}
         run: |
