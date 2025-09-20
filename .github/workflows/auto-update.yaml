@@ -4,6 +4,9 @@ on:
   workflow_dispatch:
   schedule:
     - cron:  '0 0 * * *'
+  push:
+    branches:
+      - main
 
 jobs:
   build-geosite-json:
@@ -32,14 +35,16 @@ jobs:
         run: |
           cat README_template.md data_files.md > README.md
 
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.22.x'
+
       - name: Install sing-box CLI
         run: |
           set -eux
-          VER="v1.12.1"
-          ARCH="linux-amd64v3"
-          curl -L -o /tmp/sing-box.tar.gz "https://github.com/SagerNet/sing-box/releases/download/${VER}/sing-box-${VER}-${ARCH}.tar.gz"
-          tar -xzf /tmp/sing-box.tar.gz -C /tmp
-          sudo mv "/tmp/sing-box-${VER}-${ARCH}/sing-box" /usr/local/bin/sing-box
+          go install -v github.com/sagernet/sing-box/cmd/sing-box@v1.12.1
+          echo "${HOME}/go/bin" >> "$GITHUB_PATH"
           sing-box version
 
       - name: Build SRS rulesets
@@ -60,7 +65,7 @@ jobs:
           for f in dist/srs/*.srs; do
             [ -e "$f" ] || continue
             key="geosite/$(basename "$f")"
-            npx wrangler r2 object put "$SRS_BUCKET_NAME" "$key" --file="$f"
+            npx wrangler r2 object put "${SRS_BUCKET_NAME}/${key}" --file="$f"
           done
 
       - name: Configure Git

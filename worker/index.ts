@@ -127,6 +127,7 @@ app.get("/srs/:name_with_filter", async (c) => {
   headers.set("content-type", "application/octet-stream");
   const suggested = pickedKey.split("/").pop() || pickedKey;
   headers.set("content-disposition", `inline; filename="${encodeURIComponent(suggested)}"`);
+  if (obj.etag) headers.set("etag", obj.etag);
   return new Response(obj.body, { headers });
 });
 
