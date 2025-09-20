@@ -83,45 +83,20 @@ jobs:
           SRS_CONCURRENCY: ${{ vars.SRS_CONCURRENCY }}
         run: npm run build:srs
 
-      - name: Install AWS CLI v2
-        run: |
-          set -eux
-          sudo apt-get update
-          sudo apt-get install -y unzip
-          curl -sSL "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/awscliv2.zip"
-          unzip -q /tmp/awscliv2.zip -d /tmp
-          sudo /tmp/aws/install --update
-          aws --version
-
-      - name: Sync artifacts to R2 (bulk)
+      - name: Manifest incremental sync to R2
         if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-srs.outputs.cache-hit != 'true'
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: auto
-          AWS_EC2_METADATA_DISABLED: true
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          SRS_BUCKET_NAME: ${{ vars.SRS_BUCKET_NAME }}
+          R2_BUCKET: ${{ vars.SRS_BUCKET_NAME }}
+          R2_CONCURRENCY: ${{ vars.SRS_CONCURRENCY }}
         run: |
           set -eux
-          ls -l dist/srs || true
-          if [ -z "${SRS_BUCKET_NAME:-}" ]; then
-            echo "SRS_BUCKET_NAME repo variable not set; skip upload" >&2
+          if [ -z "${R2_BUCKET:-}" ]; then
+            echo "R2_BUCKET (vars.SRS_BUCKET_NAME) not set; skip upload" >&2
             exit 0
           fi
-          aws --version
-          ENDPOINT="https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com"
-          aws configure set default.s3.signature_version s3v4
-          aws configure set default.s3.max_concurrent_requests 64
-          aws s3 sync dist/srs "s3://${SRS_BUCKET_NAME}/geosite" \
-            --endpoint-url "$ENDPOINT" \
-            --exclude "*" --include "*.srs" \
-            --no-progress
-          aws s3 sync dist/geosite-json "s3://${SRS_BUCKET_NAME}/geosite-json" \
-            --endpoint-url "$ENDPOINT" \
-            --no-progress
-          aws s3 cp index.json "s3://${SRS_BUCKET_NAME}/geosite/index.json" \
-            --endpoint-url "$ENDPOINT"
+          npm run r2:sync
 
       - name: Configure Git
         run: |

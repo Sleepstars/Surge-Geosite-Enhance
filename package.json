@@ -7,7 +7,8 @@
     "dev": "wrangler dev worker/index.ts",
     "deploy": "wrangler deploy --minify worker/index.ts",
     "build:geosite": "node scripts/build-geosite-json.mjs",
-    "build:srs": "node scripts/build-srs.mjs"
+    "build:srs": "node scripts/build-srs.mjs",
+    "r2:sync": "node scripts/sync-r2.mjs"
   },
   "dependencies": {
     "hono": "^4.9.7",
