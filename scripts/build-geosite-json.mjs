@@ -119,32 +119,49 @@ const main = async () => {
 
   await ensureDir(OUT_JSON_DIR);
 
-  const indexMap = {};
-  const tableLines = ["| Name | Link |", "|------|------|"];
-
+  // Collect categories first to allow deterministic sorting
+  const categories = [];
   for (const site of entries) {
     const name = String(site.country_code || "").trim();
     if (!name) continue;
     const domains = Array.isArray(site.domain) ? site.domain : [];
-    const rules = domains.map((d) => ({
-      type: domainTypeToRuleType(d.type),
-      value: String(d.value || "").trim(),
-      attrs: extractAttrs(d.attribute),
-    }));
-
-    const outPath = path.join(OUT_JSON_DIR, `${name}.json`);
-    await writeJSON(outPath, { name, rules });
-
-    // For README and index.json
-    const link = `https://direct.sleepstars.de/geosite/${name}`;
-    indexMap[name] = link;
-    tableLines.push(`| ${name} | ${link} |`);
+    // Normalize attributes and ensure stable ordering
+    const rules = domains
+      .map((d) => ({
+        type: domainTypeToRuleType(d.type),
+        value: String(d.value || "").trim(),
+        attrs: extractAttrs(d.attribute).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" })),
+      }))
+      // Sort rules for deterministic output within each category
+      .sort((a, b) => {
+        if (a.type === b.type) return a.value.localeCompare(b.value, "en", { sensitivity: "base" });
+        return a.type.localeCompare(b.type, "en", { sensitivity: "base" });
+      });
+    categories.push({ name, rules });
   }
 
-  // Write index.json at repo root (for compatibility with worker /geosite route)
-  await writeJSON(INDEX_JSON_PATH, indexMap);
+  // Sort categories by name for stable README and index.json
+  categories.sort((a, b) => a.name.localeCompare(b.name, "en", { sensitivity: "base" }));
 
-  // Write table for README
+  // Write per-category JSON files
+  for (const { name, rules } of categories) {
+    const outPath = path.join(OUT_JSON_DIR, `${name}.json`);
+    await writeJSON(outPath, { name, rules });
+  }
+
+  // Build sorted index.json (object keys inserted in sorted order)
+  const indexMapSorted = {};
+  for (const { name } of categories) {
+    indexMapSorted[name] = `https://direct.sleepstars.de/geosite/${name}`;
+  }
+  await writeJSON(INDEX_JSON_PATH, indexMapSorted);
+
+  // Build sorted README table
+  const tableLines = ["| Name | Link |", "|------|------|"];
+  for (const { name } of categories) {
+    const link = `https://direct.sleepstars.de/geosite/${name}`;
+    tableLines.push(`| ${name} | ${link} |`);
+  }
   await fsp.writeFile(README_TABLE_PATH, tableLines.join("\n") + "\n", "utf8");
 
   console.log("Done. Files written:");
