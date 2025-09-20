@@ -32,8 +32,10 @@ const execFileP = promisify(execFile);
 const REPO_ROOT = path.resolve(path.dirname(new URL(import.meta.url).pathname), "..");
 const DIST_DIR = path.join(REPO_ROOT, "dist");
 const SRC_JSON_DIR = path.join(DIST_DIR, "geosite-json");
+const SRC_GEOIP_JSON_DIR = path.join(DIST_DIR, "geoip-json");
 const SRS_DIR = path.join(DIST_DIR, "srs");
 const ROOT_INDEX_JSON = path.join(REPO_ROOT, "index.json");
+const ROOT_GEOIP_INDEX_JSON = path.join(REPO_ROOT, "geoip-index.json");
 
 const DEFAULT_MANIFEST_KEY = process.env.MANIFEST_KEY || "manifests/geosite.json";
 const CONCURRENCY = Math.max(1, Number(process.env.R2_CONCURRENCY || 6));
@@ -95,6 +97,12 @@ const buildLocalPlan = async () => {
     const key = `geosite-json/${path.basename(f)}`;
     plan.push({ file: f, key, size: (await fsp.stat(f)).size });
   }
+  // dist/geoip-json → geoip-json/
+  const geoipJsonFiles = await walk(SRC_GEOIP_JSON_DIR, (f) => f.endsWith(".json"));
+  for (const f of geoipJsonFiles) {
+    const key = `geoip-json/${path.basename(f)}`;
+    plan.push({ file: f, key, size: (await fsp.stat(f)).size });
+  }
   // dist/srs → geosite/
   const srsFiles = await walk(SRS_DIR, (f) => f.endsWith(".srs"));
   for (const f of srsFiles) {
@@ -106,6 +114,13 @@ const buildLocalPlan = async () => {
     const st = await fsp.stat(ROOT_INDEX_JSON);
     if (st.isFile()) {
       plan.push({ file: ROOT_INDEX_JSON, key: "geosite/index.json", size: st.size });
+    }
+  } catch (_) {}
+  // repo geoip-index.json → geoip/index.json
+  try {
+    const st = await fsp.stat(ROOT_GEOIP_INDEX_JSON);
+    if (st.isFile()) {
+      plan.push({ file: ROOT_GEOIP_INDEX_JSON, key: "geoip/index.json", size: st.size });
     }
   } catch (_) {}
   // compute sha256

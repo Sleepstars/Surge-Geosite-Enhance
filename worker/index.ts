@@ -89,6 +89,52 @@ const genSurgeListFromJson = async (
   return lines.join("\n");
 };
 
+// ---------- GEOIP (JSON → Surge list) ----------
+type GeoIPJSON = { name: string; cidr4?: string[]; cidr6?: string[] };
+
+const getGeoipJson = async (name: string, r2?: R2Bucket): Promise<GeoIPJSON | null> => {
+  const candidates = Array.from(new Set([name, name.toUpperCase(), name.toLowerCase()]));
+  if (r2) {
+    for (const n of candidates) {
+      const key = `geoip-json/${n}.json`;
+      try {
+        const obj = await r2.get(key);
+        if (!obj) continue;
+        try {
+          const data = (await (obj as any).json?.()) as GeoIPJSON | undefined;
+          if (data && data.name) return data;
+        } catch (_) {}
+        const ab = await obj.arrayBuffer();
+        const text = new TextDecoder().decode(ab);
+        return JSON.parse(text) as GeoIPJSON;
+      } catch (_) {
+        // try next candidate
+      }
+    }
+  }
+  return null;
+};
+
+const genSurgeIpListFromJson = async (
+  data: GeoIPJSON,
+  filter: string | null = null
+): Promise<string> => {
+  const wantV4 = !filter || filter.toLowerCase() === "v4" || filter.toLowerCase() === "ipv4";
+  const wantV6 = !filter || filter.toLowerCase() === "v6" || filter.toLowerCase() === "ipv6";
+  const lines: string[] = [];
+  if (wantV4) {
+    for (const cidr of data.cidr4 || []) {
+      lines.push(`IP-CIDR,${cidr}`);
+    }
+  }
+  if (wantV6) {
+    for (const cidr of data.cidr6 || []) {
+      lines.push(`IP-CIDR6,${cidr}`);
+    }
+  }
+  return lines.join("\n");
+};
+
 // SRS distribution via R2
 const getSrsKey = (name: string, filter: string | null): string => {
   // Store keys under geosite/ prefix for organization; '!' allowed in keys
@@ -206,6 +252,60 @@ app.get("/geosite", async (c) => {
   } catch (_) {
     // ignore and parse manually
   }
+  const ab = await obj.arrayBuffer();
+  const text = new TextDecoder().decode(ab);
+  return c.json(JSON.parse(text));
+});
+
+app.get("/geoip/:name_with_filter", async (c) => {
+  const raw = c.req.param("name_with_filter").trim();
+  if (!raw || raw.length === 0) {
+    throw new HTTPException(400, { message: "Invalid name parameter" });
+  }
+  const [rawName, rawFilter] = raw.includes("@") ? raw.split("@", 2) : [raw, null];
+  const name = rawName;
+  const filter = rawFilter ? rawFilter.toLowerCase() : null; // supports v4/v6
+
+  try {
+    const json = await getGeoipJson(name, (c as any).env?.SRS_BUCKET);
+    if (!json) {
+      throw new HTTPException(404, { message: "GeoIP not found (JSON missing)" });
+    }
+    const surgeList = await genSurgeIpListFromJson(json, filter);
+    return c.text(surgeList);
+  } catch (error) {
+    console.error(`Error processing geoip ${raw}:`, error);
+    if (error instanceof HTTPException) throw error;
+    throw new HTTPException(500, {
+      message: `Failed to process request: ${error instanceof Error ? error.message : "Unknown error"}`,
+    });
+  }
+});
+
+app.get("/geoip", async (c) => {
+  const kv = (c as any).env?.GEO_KV as KVNamespace | undefined;
+  if (kv) {
+    try {
+      const cached = (await kv.get("geoip:index", { type: "json", cacheTtl: 3600 })) as
+        | Record<string, string>
+        | null;
+      if (cached && typeof cached === "object") {
+        return c.json(cached);
+      }
+    } catch (_) {}
+  }
+  const bucket = (c as any).env?.SRS_BUCKET as R2Bucket | undefined;
+  if (!bucket) {
+    throw new HTTPException(500, { message: "SRS bucket not configured" });
+  }
+  const obj = await bucket.get("geoip/index.json");
+  if (!obj) {
+    throw new HTTPException(404, { message: "Index not found" });
+  }
+  try {
+    const data = (await (obj as any).json?.()) as Record<string, string> | undefined;
+    if (data && typeof data === "object") return c.json(data);
+  } catch (_) {}
   const ab = await obj.arrayBuffer();
   const text = new TextDecoder().decode(ab);
   return c.json(JSON.parse(text));
