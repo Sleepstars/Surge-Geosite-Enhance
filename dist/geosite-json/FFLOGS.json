@@ -1,1 +1,1 @@
-{"name":"FFLOGS","rules":[{"type":"domain","value":"fflogs.com","attrs":[]},{"type":"domain","value":"rpglogs.com","attrs":[]},{"type":"domain","value":"rpglogs.cn","attrs":["cn"]}]}
+{"name":"FFLOGS","rules":[{"type":"domain","value":"fflogs.com","attrs":[]},{"type":"domain","value":"rpglogs.cn","attrs":["cn"]},{"type":"domain","value":"rpglogs.com","attrs":[]}]}

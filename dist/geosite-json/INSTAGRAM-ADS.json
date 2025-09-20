@@ -1,1 +1,1 @@
-{"name":"INSTAGRAM-ADS","rules":[{"type":"domain","value":"graph.instagram.com","attrs":["ads"]},{"type":"domain","value":"graph-fallback.instagram.com","attrs":["ads"]}]}
+{"name":"INSTAGRAM-ADS","rules":[{"type":"domain","value":"graph-fallback.instagram.com","attrs":["ads"]},{"type":"domain","value":"graph.instagram.com","attrs":["ads"]}]}

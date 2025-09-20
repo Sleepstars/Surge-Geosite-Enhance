@@ -1,1 +1,1 @@
-{"name":"OPENWEATHER","rules":[{"type":"domain","value":"openweathermap.org","attrs":[]},{"type":"domain","value":"openweather.co.uk","attrs":[]}]}
+{"name":"OPENWEATHER","rules":[{"type":"domain","value":"openweather.co.uk","attrs":[]},{"type":"domain","value":"openweathermap.org","attrs":[]}]}

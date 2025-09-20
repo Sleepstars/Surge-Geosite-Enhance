@@ -1,1 +1,1 @@
-{"name":"HONGKONGPOST","rules":[{"type":"domain","value":"hongkongpost.gov.hk","attrs":[]},{"type":"domain","value":"ecert.gov.hk","attrs":[]}]}
+{"name":"HONGKONGPOST","rules":[{"type":"domain","value":"ecert.gov.hk","attrs":[]},{"type":"domain","value":"hongkongpost.gov.hk","attrs":[]}]}

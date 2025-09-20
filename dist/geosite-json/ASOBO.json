@@ -1,1 +1,1 @@
-{"name":"ASOBO","rules":[{"type":"full","value":"flightsimulator.azureedge.net","attrs":[]},{"type":"domain","value":"asobostudio.com","attrs":[]},{"type":"domain","value":"flightsimulator.com","attrs":[]}]}
+{"name":"ASOBO","rules":[{"type":"domain","value":"asobostudio.com","attrs":[]},{"type":"domain","value":"flightsimulator.com","attrs":[]},{"type":"full","value":"flightsimulator.azureedge.net","attrs":[]}]}

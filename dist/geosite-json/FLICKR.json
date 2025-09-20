@@ -1,1 +1,1 @@
-{"name":"FLICKR","rules":[{"type":"domain","value":"flickr","attrs":[]},{"type":"domain","value":"flic.kr","attrs":[]},{"type":"domain","value":"flickr.com","attrs":[]},{"type":"domain","value":"flickr.net","attrs":[]},{"type":"domain","value":"staticflickr.com","attrs":[]}]}
+{"name":"FLICKR","rules":[{"type":"domain","value":"flic.kr","attrs":[]},{"type":"domain","value":"flickr","attrs":[]},{"type":"domain","value":"flickr.com","attrs":[]},{"type":"domain","value":"flickr.net","attrs":[]},{"type":"domain","value":"staticflickr.com","attrs":[]}]}

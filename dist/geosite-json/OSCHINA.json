@@ -1,1 +1,1 @@
-{"name":"OSCHINA","rules":[{"type":"domain","value":"oschina.net","attrs":[]},{"type":"domain","value":"gitee.com","attrs":[]},{"type":"domain","value":"gitee.io","attrs":[]}]}
+{"name":"OSCHINA","rules":[{"type":"domain","value":"gitee.com","attrs":[]},{"type":"domain","value":"gitee.io","attrs":[]},{"type":"domain","value":"oschina.net","attrs":[]}]}

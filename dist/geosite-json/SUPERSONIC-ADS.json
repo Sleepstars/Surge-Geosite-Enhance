@@ -1,1 +1,1 @@
-{"name":"SUPERSONIC-ADS","rules":[{"type":"domain","value":"supersonic.com","attrs":["ads"]},{"type":"domain","value":"supersonicads.com","attrs":["ads"]},{"type":"domain","value":"ssacdn.com","attrs":["ads"]},{"type":"domain","value":"supersonicads-a.akamaihd.net","attrs":["ads"]}]}
+{"name":"SUPERSONIC-ADS","rules":[{"type":"domain","value":"ssacdn.com","attrs":["ads"]},{"type":"domain","value":"supersonic.com","attrs":["ads"]},{"type":"domain","value":"supersonicads-a.akamaihd.net","attrs":["ads"]},{"type":"domain","value":"supersonicads.com","attrs":["ads"]}]}

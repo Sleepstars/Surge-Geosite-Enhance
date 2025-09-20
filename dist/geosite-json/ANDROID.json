@@ -1,1 +1,1 @@
-{"name":"ANDROID","rules":[{"type":"full","value":"android.googlesource.com","attrs":[]},{"type":"domain","value":"android.com","attrs":[]},{"type":"domain","value":"androidify.com","attrs":[]}]}
+{"name":"ANDROID","rules":[{"type":"domain","value":"android.com","attrs":[]},{"type":"domain","value":"androidify.com","attrs":[]},{"type":"full","value":"android.googlesource.com","attrs":[]}]}

@@ -1,1 +1,1 @@
-{"name":"V2RAY","rules":[{"type":"domain","value":"v2ray.com","attrs":[]},{"type":"domain","value":"v2ray.cool","attrs":[]},{"type":"domain","value":"v2fly.org","attrs":[]}]}
+{"name":"V2RAY","rules":[{"type":"domain","value":"v2fly.org","attrs":[]},{"type":"domain","value":"v2ray.com","attrs":[]},{"type":"domain","value":"v2ray.cool","attrs":[]}]}

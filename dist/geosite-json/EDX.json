@@ -1,1 +1,1 @@
-{"name":"EDX","rules":[{"type":"domain","value":"edx.org","attrs":[]},{"type":"domain","value":"edx-cdn.org","attrs":[]}]}
+{"name":"EDX","rules":[{"type":"domain","value":"edx-cdn.org","attrs":[]},{"type":"domain","value":"edx.org","attrs":[]}]}

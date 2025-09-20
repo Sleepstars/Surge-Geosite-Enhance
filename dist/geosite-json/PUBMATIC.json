@@ -1,1 +1,1 @@
-{"name":"PUBMATIC","rules":[{"type":"domain","value":"pubmatic.com","attrs":[]},{"type":"domain","value":"pubmatic.co.jp","attrs":[]},{"type":"domain","value":"ads.pubmatic.com","attrs":["ads"]}]}
+{"name":"PUBMATIC","rules":[{"type":"domain","value":"ads.pubmatic.com","attrs":["ads"]},{"type":"domain","value":"pubmatic.co.jp","attrs":[]},{"type":"domain","value":"pubmatic.com","attrs":[]}]}

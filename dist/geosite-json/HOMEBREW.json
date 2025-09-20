@@ -1,1 +1,1 @@
-{"name":"HOMEBREW","rules":[{"type":"full","value":"homebrew.bintray.com","attrs":[]},{"type":"domain","value":"brew.sh","attrs":[]}]}
+{"name":"HOMEBREW","rules":[{"type":"domain","value":"brew.sh","attrs":[]},{"type":"full","value":"homebrew.bintray.com","attrs":[]}]}

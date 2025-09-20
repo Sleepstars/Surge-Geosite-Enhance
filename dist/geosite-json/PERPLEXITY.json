@@ -1,1 +1,1 @@
-{"name":"PERPLEXITY","rules":[{"type":"full","value":"pplx-res.cloudinary.com","attrs":[]},{"type":"domain","value":"perplexity.ai","attrs":[]},{"type":"domain","value":"perplexity.com","attrs":[]},{"type":"domain","value":"pplx.ai","attrs":[]}]}
+{"name":"PERPLEXITY","rules":[{"type":"domain","value":"perplexity.ai","attrs":[]},{"type":"domain","value":"perplexity.com","attrs":[]},{"type":"domain","value":"pplx.ai","attrs":[]},{"type":"full","value":"pplx-res.cloudinary.com","attrs":[]}]}

@@ -1,1 +1,1 @@
-{"name":"SCMP","rules":[{"type":"domain","value":"scmp.com","attrs":[]},{"type":"domain","value":"i-scmp.com","attrs":[]}]}
+{"name":"SCMP","rules":[{"type":"domain","value":"i-scmp.com","attrs":[]},{"type":"domain","value":"scmp.com","attrs":[]}]}

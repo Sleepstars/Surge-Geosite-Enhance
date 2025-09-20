@@ -1,1 +1,1 @@
-{"name":"QUORA","rules":[{"type":"domain","value":"qr.ae","attrs":[]},{"type":"domain","value":"quora.com","attrs":[]},{"type":"domain","value":"quoracdn.net","attrs":[]},{"type":"domain","value":"poe.com","attrs":[]},{"type":"domain","value":"poecdn.net","attrs":[]}]}
+{"name":"QUORA","rules":[{"type":"domain","value":"poe.com","attrs":[]},{"type":"domain","value":"poecdn.net","attrs":[]},{"type":"domain","value":"qr.ae","attrs":[]},{"type":"domain","value":"quora.com","attrs":[]},{"type":"domain","value":"quoracdn.net","attrs":[]}]}

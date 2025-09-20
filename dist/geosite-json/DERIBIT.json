@@ -1,1 +1,1 @@
-{"name":"DERIBIT","rules":[{"type":"full","value":"deribit.cdn.prismic.io","attrs":[]},{"type":"domain","value":"deribit.com","attrs":[]}]}
+{"name":"DERIBIT","rules":[{"type":"domain","value":"deribit.com","attrs":[]},{"type":"full","value":"deribit.cdn.prismic.io","attrs":[]}]}

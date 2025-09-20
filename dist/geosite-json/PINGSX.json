@@ -1,1 +1,1 @@
-{"name":"PINGSX","rules":[{"type":"full","value":"public-us-pingsx.api.clonoth.com","attrs":[]},{"type":"domain","value":"ping.sx","attrs":[]}]}
+{"name":"PINGSX","rules":[{"type":"domain","value":"ping.sx","attrs":[]},{"type":"full","value":"public-us-pingsx.api.clonoth.com","attrs":[]}]}

@@ -1,1 +1,1 @@
-{"name":"CSIS","rules":[{"type":"full","value":"csis-prod.s3.amazonaws.com","attrs":[]},{"type":"domain","value":"csis.org","attrs":[]}]}
+{"name":"CSIS","rules":[{"type":"domain","value":"csis.org","attrs":[]},{"type":"full","value":"csis-prod.s3.amazonaws.com","attrs":[]}]}

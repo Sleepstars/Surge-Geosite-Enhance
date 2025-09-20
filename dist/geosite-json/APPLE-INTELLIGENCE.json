@@ -1,1 +1,1 @@
-{"name":"APPLE-INTELLIGENCE","rules":[{"type":"full","value":"apple-relay.mask.apple-dns.net","attrs":[]},{"type":"full","value":"apple-relay.apple.com","attrs":[]},{"type":"full","value":"apple-relay.cloudflare.com","attrs":[]}]}
+{"name":"APPLE-INTELLIGENCE","rules":[{"type":"full","value":"apple-relay.apple.com","attrs":[]},{"type":"full","value":"apple-relay.cloudflare.com","attrs":[]},{"type":"full","value":"apple-relay.mask.apple-dns.net","attrs":[]}]}

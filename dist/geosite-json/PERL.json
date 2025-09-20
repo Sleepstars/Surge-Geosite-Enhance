@@ -1,1 +1,1 @@
-{"name":"PERL","rules":[{"type":"domain","value":"perl.org","attrs":[]},{"type":"domain","value":"cpan.org","attrs":[]},{"type":"domain","value":"metacpan.org","attrs":[]},{"type":"domain","value":"modperl.pl","attrs":[]},{"type":"domain","value":"perl.apache.org","attrs":[]}]}
+{"name":"PERL","rules":[{"type":"domain","value":"cpan.org","attrs":[]},{"type":"domain","value":"metacpan.org","attrs":[]},{"type":"domain","value":"modperl.pl","attrs":[]},{"type":"domain","value":"perl.apache.org","attrs":[]},{"type":"domain","value":"perl.org","attrs":[]}]}

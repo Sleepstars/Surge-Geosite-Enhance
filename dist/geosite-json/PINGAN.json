@@ -1,1 +1,1 @@
-{"name":"PINGAN","rules":[{"type":"domain","value":"pingan.com","attrs":[]},{"type":"domain","value":"yqb.com","attrs":[]},{"type":"domain","value":"pingan.com.cn","attrs":[]},{"type":"domain","value":"pingan.com.hk","attrs":["!cn"]}]}
+{"name":"PINGAN","rules":[{"type":"domain","value":"pingan.com","attrs":[]},{"type":"domain","value":"pingan.com.cn","attrs":[]},{"type":"domain","value":"pingan.com.hk","attrs":["!cn"]},{"type":"domain","value":"yqb.com","attrs":[]}]}
