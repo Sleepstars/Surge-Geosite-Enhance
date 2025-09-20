@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "wrangler dev worker/index.ts",
     "deploy": "wrangler deploy --minify worker/index.ts",
-    "build:geosite": "node scripts/build-geosite-json.mjs"
+    "build:geosite": "node scripts/build-geosite-json.mjs",
+    "build:srs": "node scripts/build-srs.mjs"
   },
   "dependencies": {
     "hono": "^4.9.7",

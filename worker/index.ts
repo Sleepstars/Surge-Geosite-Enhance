@@ -81,6 +81,55 @@ const genSurgeListFromJson = async (
   return lines.join("\n");
 };
 
+// SRS distribution via R2
+const getSrsKey = (name: string, filter: string | null): string => {
+  // Store keys under geosite/ prefix for organization; '!' allowed in keys
+  const fname = filter ? `${name}@${filter}.srs` : `${name}.srs`;
+  return `geosite/${fname}`;
+};
+
+app.get("/srs/:name_with_filter", async (c) => {
+  const raw = c.req.param("name_with_filter").trim();
+  if (!raw || raw.length === 0) {
+    throw new HTTPException(400, { message: "Invalid name parameter" });
+  }
+  const [rawName, rawFilter] = raw.includes("@") ? raw.split("@", 2) : [raw, null];
+  const name = rawName; // keep original case
+  const filter = rawFilter ? rawFilter.toLowerCase() : null; // attributes are lowercase like cn
+
+  const bucket = (c as any).env?.SRS_BUCKET as R2Bucket | undefined;
+  if (!bucket) {
+    throw new HTTPException(500, { message: "SRS bucket not configured" });
+  }
+  const candidates = Array.from(
+    new Set([
+      name,
+      name.toUpperCase(),
+      name.toLowerCase(),
+    ])
+  );
+  let found: R2ObjectBody | null = null;
+  let pickedKey = "";
+  for (const n of candidates) {
+    const key = getSrsKey(n, filter);
+    const obj = await bucket.get(key);
+    if (obj) {
+      found = obj;
+      pickedKey = key;
+      break;
+    }
+  }
+  const obj = found;
+  if (!obj) {
+    throw new HTTPException(404, { message: "SRS not found" });
+  }
+  const headers = new Headers();
+  headers.set("content-type", "application/octet-stream");
+  const suggested = pickedKey.split("/").pop() || pickedKey;
+  headers.set("content-disposition", `inline; filename="${encodeURIComponent(suggested)}"`);
+  return new Response(obj.body, { headers });
+});
+
 app.get("/geosite/:name_with_filter", async (c) => {
   const raw = c.req.param("name_with_filter").trim();
 

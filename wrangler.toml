@@ -13,9 +13,10 @@ JSON_BASE = "https://cdn.jsdelivr.net/gh/Sleepstars/Surge-Geosite-Enhance@main/d
 # binding = "MY_KV_NAMESPACE"
 # id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
-# [[r2_buckets]]
-# binding = "MY_BUCKET"
-# bucket_name = "my-bucket"
+[[r2_buckets]]
+binding = "SRS_BUCKET"
+# Change this to your actual R2 bucket name
+bucket_name = "surge-srs"
 
 # [[d1_databases]]
 # binding = "DB"
