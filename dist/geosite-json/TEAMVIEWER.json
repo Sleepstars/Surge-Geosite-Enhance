@@ -1,1 +1,0 @@
-{"name":"TEAMVIEWER","rules":[{"type":"domain","value":"teamviewer.cn","attrs":["cn"]},{"type":"domain","value":"teamviewer.com","attrs":[]},{"type":"domain","value":"teamviewer.us","attrs":[]},{"type":"full","value":"client-teamviewer-com.trafficmanager.net","attrs":[]},{"type":"full","value":"teamviewer.com.cdn.cloudflare.net","attrs":[]}]}

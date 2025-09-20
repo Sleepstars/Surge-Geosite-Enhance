@@ -1,1 +1,0 @@
-{"name":"BILIBILI2","rules":[{"type":"domain","value":"bili2.cc","attrs":[]},{"type":"domain","value":"bili888.com","attrs":[]},{"type":"domain","value":"bili999.com","attrs":[]},{"type":"regexp","value":"(^|\\.)bilibili3(0[1-9]|1[0-2])\\.xyz$","attrs":[]}]}

@@ -28,7 +28,29 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Fetch geosite.dat and compute SHA
+        id: geosite
+        run: |
+          set -eux
+          URL="https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geosite.dat"
+          curl -fsSL -o /tmp/geosite.dat "$URL"
+          SHA=$(sha256sum /tmp/geosite.dat | cut -d ' ' -f1)
+          echo "sha=$SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Restore cache (geosite JSON)
+        id: cache-json
+        uses: actions/cache@v4
+        with:
+          path: |
+            dist/geosite-json
+            index.json
+            data_files.md
+          key: geosite-json-${{ steps.geosite.outputs.sha }}
+
       - name: Build geosite JSON from Loyalsoldier geosite.dat
+        if: steps.cache-json.outputs.cache-hit != 'true'
+        env:
+          GEO_DAT_PATH: /tmp/geosite.dat
         run: npm run build:geosite
 
       - name: Update README
@@ -47,7 +69,18 @@ jobs:
           echo "${HOME}/go/bin" >> "$GITHUB_PATH"
           sing-box version
 
+      - name: Restore cache (SRS)
+        id: cache-srs
+        uses: actions/cache@v4
+        with:
+          path: dist/srs
+          key: srs-${{ steps.geosite.outputs.sha }}-${{ vars.SRS_FILTERS }}
+
       - name: Build SRS rulesets
+        if: steps.cache-srs.outputs.cache-hit != 'true'
+        env:
+          SRS_FILTERS: ${{ vars.SRS_FILTERS }}
+          SRS_CONCURRENCY: ${{ vars.SRS_CONCURRENCY }}
         run: npm run build:srs
 
       - name: Install AWS CLI v2
@@ -60,7 +93,8 @@ jobs:
           sudo /tmp/aws/install --update
           aws --version
 
-      - name: Sync SRS to R2 (bulk)
+      - name: Sync artifacts to R2 (bulk)
+        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-srs.outputs.cache-hit != 'true'
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
@@ -78,10 +112,16 @@ jobs:
           aws --version
           ENDPOINT="https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com"
           aws configure set default.s3.signature_version s3v4
+          aws configure set default.s3.max_concurrent_requests 64
           aws s3 sync dist/srs "s3://${SRS_BUCKET_NAME}/geosite" \
             --endpoint-url "$ENDPOINT" \
-            --exact-timestamps \
+            --exclude "*" --include "*.srs" \
             --no-progress
+          aws s3 sync dist/geosite-json "s3://${SRS_BUCKET_NAME}/geosite-json" \
+            --endpoint-url "$ENDPOINT" \
+            --no-progress
+          aws s3 cp index.json "s3://${SRS_BUCKET_NAME}/geosite/index.json" \
+            --endpoint-url "$ENDPOINT"
 
       - name: Configure Git
         run: |
@@ -92,8 +132,6 @@ jobs:
         run: |
           set -e
           git add README.md
-          git add index.json
-          git add dist/geosite-json || true
           if ! git diff --staged --quiet; then
             git commit -m "[auto] Sync with upstream (geosite.dat → JSON)"
             git push

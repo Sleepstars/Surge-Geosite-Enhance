@@ -1,1 +1,0 @@
-{"name":"LETSENCRYPT","rules":[{"type":"domain","value":"lencr.org","attrs":[]},{"type":"domain","value":"letsencrypt.com","attrs":[]},{"type":"domain","value":"letsencrypt.org","attrs":[]}]}

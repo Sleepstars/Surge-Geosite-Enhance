@@ -1,1 +1,0 @@
-{"name":"APPLE-ADS","rules":[{"type":"domain","value":"api-adservices.apple.com","attrs":["ads"]},{"type":"domain","value":"iad.apple.com","attrs":["ads"]},{"type":"domain","value":"iadsdk.apple.com","attrs":["ads"]},{"type":"domain","value":"qwapi.com","attrs":["ads"]}]}

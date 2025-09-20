@@ -79,7 +79,26 @@ const toHeadlessRule = (rules, filter) => {
 
 const compileSRS = async (sourcePath, outputPath) => {
   const args = ["rule-set", "compile", "--output", outputPath, sourcePath];
-  await execFileP(SING_BOX_BIN, args, { stdio: "inherit" });
+  await execFileP(SING_BOX_BIN, args);
+};
+
+const runPool = async (tasks, concurrency) => {
+  const results = [];
+  let i = 0;
+  const workers = Array.from({ length: concurrency }, async () => {
+    while (true) {
+      const idx = i++;
+      if (idx >= tasks.length) break;
+      try {
+        results[idx] = await tasks[idx]();
+      } catch (e) {
+        results[idx] = e;
+        console.error("Task failed:", e);
+      }
+    }
+  });
+  await Promise.all(workers);
+  return results;
 };
 
 const main = async () => {
@@ -91,25 +110,26 @@ const main = async () => {
 
   const filtersEnv = process.env.SRS_FILTERS || "cn,!cn";
   const filters = [null, ...filtersEnv.split(",").map((s) => s.trim()).filter(Boolean)];
-  let total = 0;
 
+  const concurrency = Math.max(1, Number(process.env.SRS_CONCURRENCY || 6));
+  const tasks = [];
   for (const name of names) {
     const data = await readCategory(name);
     for (const filter of filters) {
       const rule = toHeadlessRule(data.rules || [], filter);
-      if (Object.keys(rule).length === 0) {
-        // No entries for this filter; skip emitting
-        continue;
-      }
+      if (Object.keys(rule).length === 0) continue;
       const source = { version: 3, rules: [rule] };
       const srcPath = path.join(SRS_OUT_DIR, `.${name}${filter ? `@${filter}` : ""}.json`);
       const outPath = path.join(SRS_OUT_DIR, `${name}${filter ? `@${filter}` : ""}.srs`);
-      await fsp.writeFile(srcPath, JSON.stringify(source), "utf8");
-      await compileSRS(srcPath, outPath);
-      total++;
+      tasks.push(async () => {
+        await fsp.writeFile(srcPath, JSON.stringify(source), "utf8");
+        await compileSRS(srcPath, outPath);
+      });
     }
   }
-  console.log(`SRS build done. Generated ${total} files at ${SRS_OUT_DIR}`);
+  console.log(`Compiling ${tasks.length} SRS files with concurrency=${concurrency} ...`);
+  await runPool(tasks, concurrency);
+  console.log(`SRS build done. Generated ${tasks.length} files at ${SRS_OUT_DIR}`);
 };
 
 main().catch((err) => {

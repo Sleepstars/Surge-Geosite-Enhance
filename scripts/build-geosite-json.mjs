@@ -108,8 +108,16 @@ const writeJSON = async (filePath, data) => {
 };
 
 const main = async () => {
-  console.log("Downloading geosite.dat from", GEO_DAT_URL);
-  const buf = await downloadArrayBuffer(GEO_DAT_URL);
+  let buf;
+  const localGeo = process.env.GEO_DAT_PATH;
+  if (localGeo) {
+    console.log("Using local geosite.dat:", localGeo);
+    const b = await fsp.readFile(localGeo);
+    buf = b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength);
+  } else {
+    console.log("Downloading geosite.dat from", GEO_DAT_URL);
+    buf = await downloadArrayBuffer(GEO_DAT_URL);
+  }
   console.log("Downloaded", (buf.byteLength / (1024 * 1024)).toFixed(2), "MB");
 
   console.log("Decoding geosite.dat ...");

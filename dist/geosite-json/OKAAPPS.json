@@ -1,1 +1,0 @@
-{"name":"OKAAPPS","rules":[{"type":"domain","value":"okaapps.com","attrs":[]},{"type":"regexp","value":"^(.+\\.)*zh\\.okaapps\\.com$","attrs":["cn"]}]}

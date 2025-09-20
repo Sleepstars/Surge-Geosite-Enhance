@@ -21,10 +21,7 @@ app.get(
 type RuleItem = { type: "domain" | "full" | "keyword" | "regexp"; value: string; attrs?: string[] };
 type RuleJSON = { name: string; rules: RuleItem[] };
 
-const getJsonRules = async (name: string, jsonBase?: string): Promise<RuleJSON | null> => {
-  // Base can be overridden by env JSON_BASE to support forks/mirrors
-  const base = jsonBase ||
-    "https://raw.githubusercontent.com/Sleepstars/Surge-Geosite-Enhance/main/dist/geosite-json";
+const getJsonRules = async (name: string, r2?: R2Bucket): Promise<RuleJSON | null> => {
   const candidates = Array.from(
     new Set([
       name,
@@ -32,14 +29,25 @@ const getJsonRules = async (name: string, jsonBase?: string): Promise<RuleJSON |
       name.toLowerCase(),
     ])
   );
-  for (const n of candidates) {
-    const url = `${base}/${encodeURIComponent(n)}.json`;
-    try {
-      const res = await fetch(url);
-      if (!res.ok) continue;
-      return (await res.json()) as RuleJSON;
-    } catch (_) {
-      // try next candidate
+  // Only use R2; do not fallback to GitHub or CDN
+  if (r2) {
+    for (const n of candidates) {
+      const key = `geosite-json/${n}.json`;
+      try {
+        const obj = await r2.get(key);
+        if (!obj) continue;
+        try {
+          const data = (await (obj as any).json?.()) as RuleJSON | undefined;
+          if (data && data.name && Array.isArray(data.rules)) return data;
+        } catch (_) {
+          // ignore
+        }
+        const ab = await obj.arrayBuffer();
+        const text = new TextDecoder().decode(ab);
+        return JSON.parse(text) as RuleJSON;
+      } catch (_) {
+        // try next candidate
+      }
     }
   }
   return null;
@@ -148,7 +156,7 @@ app.get("/geosite/:name_with_filter", async (c) => {
 
   try {
     // Only use prebuilt JSON rules (no v2fly fallback)
-    const jsonRules = await getJsonRules(name, (c as any).env?.JSON_BASE);
+    const jsonRules = await getJsonRules(name, (c as any).env?.SRS_BUCKET);
     if (!jsonRules) {
       throw new HTTPException(404, { message: "Rules not found (JSON missing)" });
     }
@@ -164,23 +172,23 @@ app.get("/geosite/:name_with_filter", async (c) => {
 });
 
 app.get("/geosite", async (c) => {
-  const githubRaw = await fetch(
-    "https://raw.githubusercontent.com/Sleepstars/Surge-Geosite-Enhance/main/index.json"
-  )
-    .then((res) => {
-      if (res.ok) {
-        return res.json() as Promise<Record<string, string>>;
-      }
-      throw new HTTPException(500, {
-        message: `Failed to fetch content from GitHub: ${res.status} ${res.statusText}`,
-      });
-    })
-    .catch((err) => {
-      throw new HTTPException(500, {
-        message: `Failed to fetch content from GitHub: ${err.message}`,
-      });
-    });
-  return c.json(githubRaw);
+  const bucket = (c as any).env?.SRS_BUCKET as R2Bucket | undefined;
+  if (!bucket) {
+    throw new HTTPException(500, { message: "SRS bucket not configured" });
+  }
+  const obj = await bucket.get("geosite/index.json");
+  if (!obj) {
+    throw new HTTPException(404, { message: "Index not found" });
+  }
+  try {
+    const data = (await (obj as any).json?.()) as Record<string, string> | undefined;
+    if (data && typeof data === "object") return c.json(data);
+  } catch (_) {
+    // ignore and parse manually
+  }
+  const ab = await obj.arrayBuffer();
+  const text = new TextDecoder().decode(ab);
+  return c.json(JSON.parse(text));
 });
 
 app.get("/", async (c) => {

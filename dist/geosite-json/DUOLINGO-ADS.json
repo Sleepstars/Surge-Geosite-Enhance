@@ -1,1 +1,0 @@
-{"name":"DUOLINGO-ADS","rules":[{"type":"domain","value":"ads-api.duolingo.com","attrs":["ads"]},{"type":"domain","value":"analytics.vpc.duolingo.com","attrs":["ads"]},{"type":"domain","value":"metrics.duolingo.com","attrs":["ads"]}]}
