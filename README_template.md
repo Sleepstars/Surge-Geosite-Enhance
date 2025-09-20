@@ -20,9 +20,9 @@ This conversion ensures real-time updates and compatibility with Surge configura
 - Index JSON: `https://direct.sleepstars.de/geoip`
 - Output format: plain text with `IP-CIDR` and `IP-CIDR6` lines.
 - Examples: `.../geoip/cn`, `.../geoip/cn@v4`, `.../geoip/cn@v6`
+* SRS Binary: `https://direct.sleepstars.de/srs-geoip/<name>.srs`
 
 **Geosite Ruleset Index**
 
 * JSON Format: `https://direct.sleepstars.de/geosite`
 * SRS Binary: `https://direct.sleepstars.de/srs/<name>[@cn|@!cn].srs`
--

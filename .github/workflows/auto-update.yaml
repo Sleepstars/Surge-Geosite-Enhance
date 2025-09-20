@@ -63,6 +63,7 @@ jobs:
           path: |
             dist/geoip-json
             geoip-index.json
+            geoip_files.md
           key: geoip-json-${{ steps.geoip.outputs.sha }}
 
       - name: Build geosite JSON from Loyalsoldier geosite.dat
@@ -79,7 +80,7 @@ jobs:
 
       - name: Update README
         run: |
-          cat README_template.md data_files.md > README.md
+          cat README_template.md data_files.md geoip_files.md > README.md
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -100,12 +101,25 @@ jobs:
           path: dist/srs
           key: srs-${{ steps.geosite.outputs.sha }}-${{ vars.SRS_FILTERS }}
 
+      - name: Restore cache (SRS GeoIP)
+        id: cache-srs-geoip
+        uses: actions/cache@v4
+        with:
+          path: dist/srs-geoip
+          key: srs-geoip-${{ steps.geoip.outputs.sha }}
+
       - name: Build SRS rulesets
         if: steps.cache-srs.outputs.cache-hit != 'true'
         env:
           SRS_FILTERS: ${{ vars.SRS_FILTERS }}
           SRS_CONCURRENCY: ${{ vars.SRS_CONCURRENCY }}
         run: npm run build:srs
+
+      - name: Build SRS GeoIP rulesets
+        if: steps.cache-srs-geoip.outputs.cache-hit != 'true'
+        env:
+          SRS_CONCURRENCY: ${{ vars.SRS_CONCURRENCY }}
+        run: npm run build:srs-geoip
       - name: Install AWS CLI v2
         run: |
           set -eux
@@ -117,7 +131,7 @@ jobs:
           aws --version
 
       - name: Manifest incremental sync to R2
-        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-srs.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
+        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-srs.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true' || steps.cache-srs-geoip.outputs.cache-hit != 'true'
         env:
           # AWS CLI (S3) credentials for R2
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}

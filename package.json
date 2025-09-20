@@ -9,6 +9,7 @@
     "build:geosite": "node scripts/build-geosite-json.mjs",
     "build:geoip": "node scripts/build-geoip-json.mjs",
     "build:srs": "node scripts/build-srs.mjs",
+    "build:srs-geoip": "node scripts/build-geoip-srs.mjs",
     "r2:sync": "node scripts/sync-r2.mjs",
     "kv:put:index": "wrangler kv key put geosite:index --binding=GEO_KV --path ./index.json",
     "kv:put:geoip-index": "wrangler kv key put geoip:index --binding=GEO_KV --path ./geoip-index.json"

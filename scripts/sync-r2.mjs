@@ -34,6 +34,7 @@ const DIST_DIR = path.join(REPO_ROOT, "dist");
 const SRC_JSON_DIR = path.join(DIST_DIR, "geosite-json");
 const SRC_GEOIP_JSON_DIR = path.join(DIST_DIR, "geoip-json");
 const SRS_DIR = path.join(DIST_DIR, "srs");
+const SRS_GEOIP_DIR = path.join(DIST_DIR, "srs-geoip");
 const ROOT_INDEX_JSON = path.join(REPO_ROOT, "index.json");
 const ROOT_GEOIP_INDEX_JSON = path.join(REPO_ROOT, "geoip-index.json");
 
@@ -107,6 +108,12 @@ const buildLocalPlan = async () => {
   const srsFiles = await walk(SRS_DIR, (f) => f.endsWith(".srs"));
   for (const f of srsFiles) {
     const key = `geosite/${path.basename(f)}`;
+    plan.push({ file: f, key, size: (await fsp.stat(f)).size });
+  }
+  // dist/srs-geoip → geoip/
+  const srsGeoipFiles = await walk(SRS_GEOIP_DIR, (f) => f.endsWith(".srs"));
+  for (const f of srsGeoipFiles) {
+    const key = `geoip/${path.basename(f)}`;
     plan.push({ file: f, key, size: (await fsp.stat(f)).size });
   }
   // repo index.json → geosite/index.json

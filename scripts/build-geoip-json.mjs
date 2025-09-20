@@ -17,6 +17,7 @@ const __dirname = path.dirname(__filename);
 const OUT_DIR = path.resolve(__dirname, "..", "dist");
 const OUT_JSON_DIR = path.join(OUT_DIR, "geoip-json");
 const INDEX_JSON_PATH = path.resolve(__dirname, "..", "geoip-index.json");
+const README_TABLE_PATH = path.resolve(__dirname, "..", "geoip_files.md");
 
 const GEOIP_DAT_URL =
   "https://cdn.jsdelivr.net/gh/Loyalsoldier/v2ray-rules-dat@release/geoip.dat";
@@ -62,10 +63,9 @@ const toIPv4String = (u8) => {
 const toIPv6String = (u8) => {
   if (!u8 || u8.length !== 16) return null;
   const words = [];
-  for (let i = 0; i < 16; i += 2) {
-    words.push((u8[i] << 8) | u8[i + 1]);
-  }
-  // Find longest zero run for :: compression
+  for (let i = 0; i < 16; i += 2) words.push((u8[i] << 8) | u8[i + 1]);
+
+  // Longest zero run for :: compression
   let bestStart = -1;
   let bestLen = 0;
   let curStart = -1;
@@ -87,9 +87,8 @@ const toIPv6String = (u8) => {
     bestStart = curStart;
     bestLen = curLen;
   }
-  if (bestLen < 2) {
-    bestStart = -1; // do not compress a single 0
-  }
+  if (bestLen < 2) bestStart = -1; // do not compress a single 0
+
   const parts = [];
   let i = 0;
   while (i < 8) {
@@ -102,7 +101,10 @@ const toIPv6String = (u8) => {
     parts.push(words[i].toString(16));
     i++;
   }
-  return parts.join(":").replace(/^:/, "::").replace(/:$/, "::");
+  let s = parts.join(":");
+  // Ensure leading '::' instead of ':' when compression starts at the beginning
+  if (bestStart === 0 && !s.startsWith("::")) s = ":" + s;
+  return s;
 };
 
 const main = async () => {
@@ -160,10 +162,22 @@ const main = async () => {
   console.log("Done. Files written:");
   console.log(" -", INDEX_JSON_PATH);
   console.log(" -", OUT_JSON_DIR, "(per-group JSON)");
+  // Build README table
+  const tableLines = [
+    "\n**GeoIP Ruleset Index**\n",
+    "| Name | Link | SRS |",
+    "|------|------|-----|",
+  ];
+  for (const name of groups) {
+    const base = `https://direct.sleepstars.de/geoip/${name}`;
+    const srs = `https://direct.sleepstars.de/srs-geoip/${name}.srs`;
+    tableLines.push(`| ${name} | ${base} | ${srs} |`);
+  }
+  await fsp.writeFile(README_TABLE_PATH, tableLines.join("\n") + "\n", "utf8");
+  console.log(" -", README_TABLE_PATH);
 };
 
 main().catch((err) => {
   console.error("Failed to build geoip JSON:", err);
   process.exit(1);
 });
-
