@@ -129,7 +129,8 @@ const wrangler = async (...args) => {
 const fetchRemoteManifest = async (bucket, key) => {
   const tmp = path.join(os.tmpdir(), `r2-manifest-${Date.now()}-${Math.random().toString(16).slice(2)}.json`);
   try {
-    await wrangler("r2", "object", "get", `${bucket}/${key}`, "--file", tmp);
+    // Always use the remote API to avoid local mode inconsistencies
+    await wrangler("--remote", "r2", "object", "get", `${bucket}/${key}`, "--file", tmp);
     const txt = await fsp.readFile(tmp, "utf8");
     await fsp.unlink(tmp).catch(() => {});
     return JSON.parse(txt);
@@ -142,6 +143,7 @@ const fetchRemoteManifest = async (bucket, key) => {
 
 const putObject = async (bucket, key, file, contentType) => {
   const args = [
+    "--remote",
     "r2",
     "object",
     "put",
