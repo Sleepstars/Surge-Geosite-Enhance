@@ -19,10 +19,7 @@ This conversion ensures real-time updates and compatibility with Surge configura
 - Endpoint: `https://direct.sleepstars.de/geoip/<name>[@v4|@v6]`
 - Index JSON: `https://direct.sleepstars.de/geoip`
 - Output format: plain text with `IP-CIDR` and `IP-CIDR6` lines.
-- Examples:
-  - `https://direct.sleepstars.de/geoip/cn`
-  - `https://direct.sleepstars.de/geoip/cn@v4`
-  - `https://direct.sleepstars.de/geoip/cn@v6`
+- Examples: `.../geoip/cn`, `.../geoip/cn@v4`, `.../geoip/cn@v6`
 
 **Geosite Ruleset Index**
 
