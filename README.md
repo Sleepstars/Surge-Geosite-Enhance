@@ -26,6 +26,7 @@ This conversion ensures real-time updates and compatibility with Surge configura
 
 * JSON Format: `https://direct.sleepstars.de/geosite`
 * SRS Binary: `https://direct.sleepstars.de/srs/<name>[@cn|@!cn].srs`
+-
 | Name | Link | SRS |
 |------|------|-----|
 | 0X0 | https://direct.sleepstars.de/geosite/0X0 | https://direct.sleepstars.de/srs/0X0.srs |
