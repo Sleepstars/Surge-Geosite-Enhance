@@ -164,11 +164,12 @@ const main = async () => {
   }
   await writeJSON(INDEX_JSON_PATH, indexMapSorted);
 
-  // Build sorted README table
-  const tableLines = ["| Name | Link |", "|------|------|"];
+  // Build README table (Surge+SRS)
+  const tableLines = ["| Name | Link | SRS |", "|------|------|-----|"];
   for (const { name } of categories) {
-    const link = `https://direct.sleepstars.de/geosite/${name}`;
-    tableLines.push(`| ${name} | ${link} |`);
+    const surgeLink = `https://direct.sleepstars.de/geosite/${name}`;
+    const srsLink = `https://direct.sleepstars.de/srs/${name}.srs`;
+    tableLines.push(`| ${name} | ${surgeLink} | ${srsLink} |`);
   }
   await fsp.writeFile(README_TABLE_PATH, tableLines.join("\n") + "\n", "utf8");
 

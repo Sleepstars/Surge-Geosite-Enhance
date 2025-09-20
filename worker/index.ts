@@ -97,10 +97,15 @@ const getSrsKey = (name: string, filter: string | null): string => {
 };
 
 app.get("/srs/:name_with_filter", async (c) => {
-  const raw = c.req.param("name_with_filter").trim();
+  let raw = c.req.param("name_with_filter").trim();
   if (!raw || raw.length === 0) {
     throw new HTTPException(400, { message: "Invalid name parameter" });
   }
+  // Require ".srs" suffix in URL, e.g. /srs/APPLE.srs or /srs/APPLE@cn.srs
+  if (!raw.toLowerCase().endsWith(".srs")) {
+    throw new HTTPException(404, { message: "Not found" });
+  }
+  raw = raw.slice(0, -4);
   const [rawName, rawFilter] = raw.includes("@") ? raw.split("@", 2) : [raw, null];
   const name = rawName; // keep original case
   const filter = rawFilter ? rawFilter.toLowerCase() : null; // attributes are lowercase like cn
