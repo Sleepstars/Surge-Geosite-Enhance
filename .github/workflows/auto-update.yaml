@@ -50,9 +50,18 @@ jobs:
       - name: Build SRS rulesets
         run: npm run build:srs
 
-      - name: Upload SRS to R2
+      - name: Install AWS CLI
+        run: |
+          set -eux
+          sudo apt-get update
+          sudo apt-get install -y awscli
+
+      - name: Sync SRS to R2 (bulk)
         env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          AWS_EC2_METADATA_DISABLED: true
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           SRS_BUCKET_NAME: ${{ vars.SRS_BUCKET_NAME }}
         run: |
@@ -62,11 +71,13 @@ jobs:
             echo "SRS_BUCKET_NAME repo variable not set; skip upload" >&2
             exit 0
           fi
-          for f in dist/srs/*.srs; do
-            [ -e "$f" ] || continue
-            key="geosite/$(basename "$f")"
-            npx wrangler r2 object put "${SRS_BUCKET_NAME}/${key}" --file="$f"
-          done
+          aws --version
+          ENDPOINT="https://${CLOUDFLARE_ACCOUNT_ID}.r2.cloudflarestorage.com"
+          aws configure set default.s3.signature_version s3v4
+          aws s3 sync dist/srs "s3://${SRS_BUCKET_NAME}/geosite" \
+            --endpoint-url "$ENDPOINT" \
+            --exact-timestamps \
+            --no-progress
 
       - name: Configure Git
         run: |
