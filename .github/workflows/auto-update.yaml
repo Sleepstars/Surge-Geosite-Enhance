@@ -111,6 +111,21 @@ jobs:
           fi
           npm run r2:sync
 
+      - name: Write index.json to Workers KV (single-key)
+        if: steps.cache-json.outputs.cache-hit != 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # Optional if using --namespace-id: account id may not be required
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          GEOSITE_KV_NAMESPACE_ID: ${{ secrets.GEOSITE_KV_NAMESPACE_ID }}
+        run: |
+          set -eux
+          if [ -z "${GEOSITE_KV_NAMESPACE_ID:-}" ]; then
+            echo "GEOSITE_KV_NAMESPACE_ID secret not set; skip KV write" >&2
+            exit 0
+          fi
+          npx wrangler kv key put geosite:index --namespace-id="$GEOSITE_KV_NAMESPACE_ID" --path ./index.json
+
       - name: Configure Git
         run: |
           git config user.name "GitHub Actions Bot"

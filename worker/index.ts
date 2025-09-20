@@ -177,6 +177,21 @@ app.get("/geosite/:name_with_filter", async (c) => {
 });
 
 app.get("/geosite", async (c) => {
+  // Prefer KV (single-key cache written by CI), fallback to R2
+  const kv = (c as any).env?.GEO_KV as KVNamespace | undefined;
+  if (kv) {
+    try {
+      const cached = (await kv.get("geosite:index", { type: "json", cacheTtl: 3600 })) as
+        | Record<string, string>
+        | null;
+      if (cached && typeof cached === "object") {
+        return c.json(cached);
+      }
+    } catch (_) {
+      // ignore and fallback to R2
+    }
+  }
+
   const bucket = (c as any).env?.SRS_BUCKET as R2Bucket | undefined;
   if (!bucket) {
     throw new HTTPException(500, { message: "SRS bucket not configured" });

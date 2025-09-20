@@ -8,9 +8,9 @@ main = "worker/index.ts"
 # [vars]
 # MY_VAR = "my-variable"
 
-# [[kv_namespaces]]
-# binding = "MY_KV_NAMESPACE"
-# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+[[kv_namespaces]]
+binding = "GEO_KV"
+id = "5eb30a83af794fb68bc5ee45dea470a9"
 
 [[r2_buckets]]
 binding = "SRS_BUCKET"
