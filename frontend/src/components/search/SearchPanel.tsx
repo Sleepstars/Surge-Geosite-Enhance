@@ -17,7 +17,6 @@ export function SearchPanel() {
   const [limit, setLimit] = useState(50)
   const [attributes, setAttributes] = useState('')
   const [version, setVersion] = useState<'both' | 'ipv4' | 'ipv6'>('both')
-  const [searchMode, setSearchMode] = useState<'fast' | 'comprehensive'>('fast')
 
   const debouncedFastQuery = useDebounce(fastQuery, 300)
   const debouncedComprehensiveQuery = useDebounce(comprehensiveQuery, 300)
