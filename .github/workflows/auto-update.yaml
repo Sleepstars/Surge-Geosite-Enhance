@@ -173,7 +173,16 @@ jobs:
             echo "dist/d1/seed.sql is missing; run npm run build:d1 first" >&2
             exit 1
           fi
-          npx wrangler d1 execute "$D1_DATABASE_NAME" --file=dist/d1/seed.sql --remote
+          node scripts/split-d1-sql.mjs
+          CHUNK_DIR="dist/d1/chunks"
+          if compgen -G "${CHUNK_DIR}/*.sql" > /dev/null; then
+            while IFS= read -r chunk; do
+              echo "Executing D1 chunk ${chunk}"
+              npx wrangler d1 execute "$D1_DATABASE_NAME" --file="$chunk" --remote
+            done < <(find "$CHUNK_DIR" -maxdepth 1 -type f -name '*.sql' -print | sort)
+          else
+            npx wrangler d1 execute "$D1_DATABASE_NAME" --file=dist/d1/seed.sql --remote
+          fi
 
       - name: Write index.json to Workers KV (single-key)
         env:
