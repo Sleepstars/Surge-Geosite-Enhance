@@ -3,7 +3,6 @@ import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
 import { cache } from "hono/cache";
 
-import { regexAstToWildcard } from "./wildcard";
 import { renderHomePage } from "./ui";
 
 const app = new Hono();
@@ -222,12 +221,9 @@ const genSurgeListFromJson = async (
       case "keyword":
         lines.push(`DOMAIN-KEYWORD,${r.value}`);
         break;
-      case "regexp": {
-        const wildcard = regexAstToWildcard(r.value);
-        const skip = /^[\?\*]+$/.test(wildcard);
-        lines.push(`${skip ? "# SKIPPED-DOMAIN-WILDCARD," : "DOMAIN-WILDCARD,"}${wildcard}`);
-        break;
-      }
+      case "regexp":
+        // Skip regex rules to avoid generating overly broad wildcard entries.
+        continue;
     }
   }
   return lines.join("\n");
