@@ -79,7 +79,7 @@ jobs:
         run: npm run build:geoip
 
       - name: Build D1 seed SQL
-        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
+        # if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
         run: npm run build:d1
 
       - name: Update README
