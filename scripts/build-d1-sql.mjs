@@ -123,6 +123,7 @@ const ipv6Range = (cidr) => {
 const buildGeositeStatements = async () => {
   const files = await getGeositeFiles();
   const statements = [];
+  let duplicateRuleCount = 0;
   statements.push(
     "CREATE TABLE IF NOT EXISTS geosite_list (\n" +
       "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
@@ -155,27 +156,47 @@ const buildGeositeStatements = async () => {
     const json = JSON.parse(raw);
     const name = json.name || path.basename(file, ".json");
     const rules = Array.isArray(json.rules) ? json.rules : [];
-    const attrsSet = new Set();
-    rules.forEach((rule) => {
-      (rule.attrs || []).forEach((attr) => attrsSet.add(String(attr)));
-    });
-    const attrsArray = Array.from(attrsSet).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+    const listAttrSet = new Set();
+    const ruleMap = new Map();
+    for (const rule of rules) {
+      const type = String(rule.type || "domain");
+      const value = String(rule.value || "");
+      const key = `${type}\u0000${value}`;
+      const attrsLower = Array.isArray(rule.attrs)
+        ? rule.attrs.map((attr) => String(attr).toLowerCase())
+        : [];
+      attrsLower.forEach((attr) => listAttrSet.add(attr));
+      const existing = ruleMap.get(key);
+      if (existing) {
+        attrsLower.forEach((attr) => existing.attrs.add(attr));
+        duplicateRuleCount += 1;
+      } else {
+        ruleMap.set(key, {
+          type,
+          value,
+          valueLower: value.toLowerCase(),
+          attrs: new Set(attrsLower),
+        });
+      }
+    }
+    const dedupedRules = Array.from(ruleMap.values());
+    const attrsArray = Array.from(listAttrSet).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
     listId += 1;
     statements.push(
       `INSERT INTO geosite_list (id, name, rule_count, attrs) VALUES (${listId}, '${escapeSql(
         name
-      )}', ${rules.length}, '${escapeSql(JSON.stringify(attrsArray))}');`
+      )}', ${dedupedRules.length}, '${escapeSql(JSON.stringify(attrsArray))}');`
     );
-    for (const rule of rules) {
-      const type = String(rule.type || "domain");
-      const value = String(rule.value || "");
-      const attrs = Array.isArray(rule.attrs) ? rule.attrs.map(String) : [];
+    for (const entry of dedupedRules) {
+      const attrsJson = JSON.stringify(
+        Array.from(entry.attrs).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }))
+      );
       ruleRows.push({
         listId,
-        type,
-        value,
-        valueLower: value.toLowerCase(),
-        attrsJson: JSON.stringify(toLowerArray(attrs)),
+        type: entry.type,
+        value: entry.value,
+        valueLower: entry.valueLower,
+        attrsJson,
       });
     }
   }
@@ -187,12 +208,16 @@ const buildGeositeStatements = async () => {
         (row) =>
           `(${row.listId}, '${escapeSql(row.type)}', '${escapeSql(row.value)}', '${escapeSql(row.valueLower)}', '${escapeSql(
             row.attrsJson
-          )}')`
+      )}')`
       )
       .join(",\n");
     statements.push(
       `INSERT INTO geosite_rule (list_id, type, value, value_lower, attrs) VALUES\n${values};`
     );
+  }
+
+  if (duplicateRuleCount > 0) {
+    console.warn(`Deduplicated ${duplicateRuleCount} geosite rule occurrence(s) with identical type/value.`);
   }
 
   return statements;

@@ -5,7 +5,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const REPO_ROOT = path.resolve(__dirname, "..");
 const SEED_SQL_PATH = path.join(REPO_ROOT, "dist", "d1", "seed.sql");
 const CHUNK_DIR = path.join(REPO_ROOT, "dist", "d1", "chunks");
-const MAX_STATEMENTS_PER_CHUNK = 100;
+const MAX_STATEMENTS_PER_CHUNK = 1000;
 const MAX_CHARS_PER_CHUNK = 200_000;
 
 const readSeedSql = async () => {
