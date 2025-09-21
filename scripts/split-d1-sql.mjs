@@ -5,8 +5,8 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const REPO_ROOT = path.resolve(__dirname, "..");
 const SEED_SQL_PATH = path.join(REPO_ROOT, "dist", "d1", "seed.sql");
 const CHUNK_DIR = path.join(REPO_ROOT, "dist", "d1", "chunks");
-const MAX_STATEMENTS_PER_CHUNK = 10000;
-const MAX_CHARS_PER_CHUNK = 200_000;
+const TARGET_MAX_CHUNKS = 100;
+const MIN_CHARS_PER_CHUNK = 200_000;
 
 const readSeedSql = async () => {
   try {
@@ -51,6 +51,15 @@ const main = async () => {
     return;
   }
 
+  const totalChars = statements.reduce((sum, statement) => sum + statement.length + 1, 0);
+  const longestStatement = statements.reduce(
+    (max, statement) => Math.max(max, statement.length + 1),
+    0
+  );
+  const statementLimit = Math.max(1, Math.ceil(statements.length / TARGET_MAX_CHUNKS));
+  const charLimitBase = Math.ceil(totalChars / TARGET_MAX_CHUNKS);
+  const charLimit = Math.max(MIN_CHARS_PER_CHUNK, Math.ceil(charLimitBase * 2), longestStatement);
+
   await fsp.rm(CHUNK_DIR, { recursive: true, force: true });
   await fsp.mkdir(CHUNK_DIR, { recursive: true });
 
@@ -61,10 +70,7 @@ const main = async () => {
     const text = statement.endsWith(";") ? statement : `${statement};`;
     const projectedCharCount = current.charCount + text.length + 1;
     const projectedStatementCount = current.statements.length + 1;
-    if (
-      current.statements.length > 0 &&
-      (projectedStatementCount > MAX_STATEMENTS_PER_CHUNK || projectedCharCount > MAX_CHARS_PER_CHUNK)
-    ) {
+    if (current.statements.length > 0 && (projectedStatementCount > statementLimit || projectedCharCount > charLimit)) {
       await flushChunk(chunks, current);
     }
     current.statements.push(text);
