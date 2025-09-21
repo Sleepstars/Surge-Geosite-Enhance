@@ -1460,7 +1460,7 @@ app.post("/api/search/geosite", async (c) => {
   );
   const searchTime = Date.now() - startTime;
 
-  return c.json({
+  const responseBody = {
     query,
     filters,
     limit,
@@ -1477,7 +1477,11 @@ app.post("/api/search/geosite", async (c) => {
       searchTimeMs: searchTime,
       avgTimePerList: namesForSearch.length > 0 ? Math.round((searchTime / namesForSearch.length) * 100) / 100 : 0,
     },
-  });
+  };
+
+  c.status(200);
+  c.header("Cache-Control", "no-store");
+  return c.json(responseBody);
 });
 
 app.post("/api/search/geosite/fast", async (c) => {
