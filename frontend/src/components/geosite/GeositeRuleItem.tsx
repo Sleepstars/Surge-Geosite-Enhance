@@ -14,8 +14,6 @@ const getRuleTypeColor = (type: string) => {
       return 'bg-blue-500/10 text-blue-400 border-blue-500/20'
     case 'full':
       return 'bg-green-500/10 text-green-400 border-green-500/20'
-    case 'keyword':
-      return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/20'
     case 'regexp':
       return 'bg-purple-500/10 text-purple-400 border-purple-500/20'
     default:
@@ -29,8 +27,6 @@ const getRuleTypeLabel = (type: string) => {
       return 'DOMAIN-SUFFIX'
     case 'full':
       return 'DOMAIN'
-    case 'keyword':
-      return 'DOMAIN-KEYWORD'
     case 'regexp':
       return 'REGEXP'
     default:

@@ -1,5 +1,5 @@
 export interface RuleItem {
-  type: 'domain' | 'full' | 'keyword' | 'regexp'
+  type: 'domain' | 'full' | 'regexp'
   value: string
   attrs?: string[]
 }
@@ -30,7 +30,6 @@ export interface RuleStats {
   total: number
   domain: number
   full: number
-  keyword: number
   regexp: number
 }
 

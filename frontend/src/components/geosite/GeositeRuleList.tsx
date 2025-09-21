@@ -205,7 +205,6 @@ export const GeositeRuleList: React.FC = () => {
           </div>
           <Badge variant="secondary">域名后缀 {detail.stats.filtered.domain}</Badge>
           <Badge variant="secondary">完整域名 {detail.stats.filtered.full}</Badge>
-          <Badge variant="secondary">关键字 {detail.stats.filtered.keyword}</Badge>
           <Badge variant="secondary">正则 {detail.stats.filtered.regexp}</Badge>
         </div>
 

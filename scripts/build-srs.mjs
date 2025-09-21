@@ -43,7 +43,6 @@ const toHeadlessRule = (rules, filter) => {
   const agg = {
     domain: [],
     domain_suffix: [],
-    domain_keyword: [],
     domain_regex: [],
   };
 
@@ -59,9 +58,6 @@ const toHeadlessRule = (rules, filter) => {
         break;
       case "domain":
         agg.domain_suffix.push(r.value);
-        break;
-      case "keyword":
-        agg.domain_keyword.push(r.value);
         break;
       case "regexp":
         agg.domain_regex.push(r.value);

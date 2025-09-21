@@ -77,7 +77,9 @@ const domainTypeToRuleType = (type) => {
     case "Full":
       return "full"; // exact
     case "Plain":
-      return "keyword"; // substring match
+      // Plain type (keyword) is not supported in the new format
+      console.warn(`Skipping unsupported rule type: ${type}`);
+      return null;
     case "Regex":
       return "regexp";
     default:
@@ -140,6 +142,7 @@ const main = async () => {
         value: String(d.value || "").trim(),
         attrs: extractAttrs(d.attribute).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" })),
       }))
+      .filter((rule) => rule.type !== null) // Skip unsupported rule types (like keyword)
       // Sort rules for deterministic output within each category
       .sort((a, b) => {
         if (a.type === b.type) return a.value.localeCompare(b.value, "en", { sensitivity: "base" });
