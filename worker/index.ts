@@ -1447,6 +1447,7 @@ app.post("/api/search/geosite", async (c) => {
   const maxLists = clamp(Number(payload?.lists ?? 600), 100, 2000);
   const dedupedNames = Array.from(new Map([...prioritized, ...scopedNames].map((n) => [n, n])).values());
   const namesForSearch = dedupedNames.slice(0, Math.min(maxLists, dedupedNames.length));
+  const startTime = Date.now();
   const { matches, scanned } = await searchGeositeRules(
     query,
     filters,
@@ -1457,6 +1458,8 @@ app.post("/api/search/geosite", async (c) => {
     namesForSearch.length,
     tokens
   );
+  const searchTime = Date.now() - startTime;
+
   return c.json({
     query,
     filters,
@@ -1470,6 +1473,10 @@ app.post("/api/search/geosite", async (c) => {
     },
     matches,
     searchMode: "comprehensive",
+    performance: {
+      searchTimeMs: searchTime,
+      avgTimePerList: namesForSearch.length > 0 ? Math.round((searchTime / namesForSearch.length) * 100) / 100 : 0,
+    },
   });
 });
 
