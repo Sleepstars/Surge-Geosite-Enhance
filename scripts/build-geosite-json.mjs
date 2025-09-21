@@ -168,7 +168,7 @@ const main = async () => {
   const tableLines = ["| Name | Link | SRS |", "|------|------|-----|"];
   for (const { name } of categories) {
     const surgeLink = `https://direct.sleepstars.de/geosite/${name}`;
-    const srsLink = `https://direct.sleepstars.de/srs/${name}.srs`;
+    const srsLink = `https://direct.sleepstars.de/srs-geosite/${name}.srs`;
     tableLines.push(`| ${name} | ${surgeLink} | ${srsLink} |`);
   }
   await fsp.writeFile(README_TABLE_PATH, tableLines.join("\n") + "\n", "utf8");

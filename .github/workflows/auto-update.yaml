@@ -80,6 +80,10 @@ jobs:
 
       - name: Update README
         run: |
+          set -eux
+          # Ensure table fragments exist (rebuild if cache missed)
+          [ -f data_files.md ] || npm run build:geosite
+          [ -f geoip_files.md ] || npm run build:geoip
           cat README_template.md data_files.md geoip_files.md > README.md
 
       - name: Set up Go
