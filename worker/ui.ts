@@ -348,6 +348,27 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
       max-height: 320px;
       overflow: auto;
       padding-right: 4px;
+      position: relative;
+    }
+
+    .virtual-scroll-container {
+      position: relative;
+      overflow: auto;
+      max-height: 320px;
+    }
+
+    .virtual-scroll-content {
+      position: relative;
+    }
+
+    .virtual-scroll-viewport {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
 
     .rule-row,
@@ -675,6 +696,8 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
             <div class="chip-group">
               <a id="geosite-download" class="chip-link" href="#" target="_blank" rel="noreferrer" hidden>下载 SRS</a>
               <button id="geosite-copy" class="chip-button" type="button" hidden>复制下载链接</button>
+              <button id="geosite-export" class="chip-button" type="button" hidden>导出规则</button>
+              <button id="geosite-summary" class="chip-button" type="button" hidden>摘要视图</button>
             </div>
           </div>
           <div class="rule-list" id="geosite-rule-list"></div>
@@ -875,8 +898,146 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
         });
       };
 
+      // Virtual scrolling implementation
+      const createVirtualScroller = function (container, itemHeight, renderItem) {
+        const state = {
+          items: [],
+          visibleStart: 0,
+          visibleEnd: 0,
+          scrollTop: 0,
+          containerHeight: 0,
+          itemHeight: itemHeight,
+          overscan: 5,
+        };
+
+        const content = document.createElement("div");
+        content.className = "virtual-scroll-content";
+
+        const viewport = document.createElement("div");
+        viewport.className = "virtual-scroll-viewport";
+
+        content.appendChild(viewport);
+        container.innerHTML = "";
+        container.appendChild(content);
+        container.className += " virtual-scroll-container";
+
+        const updateVisibleRange = function () {
+          const containerRect = container.getBoundingClientRect();
+          state.containerHeight = containerRect.height;
+          state.scrollTop = container.scrollTop;
+
+          const visibleStart = Math.floor(state.scrollTop / state.itemHeight);
+          const visibleEnd = Math.min(
+            state.items.length,
+            Math.ceil((state.scrollTop + state.containerHeight) / state.itemHeight)
+          );
+
+          state.visibleStart = Math.max(0, visibleStart - state.overscan);
+          state.visibleEnd = Math.min(state.items.length, visibleEnd + state.overscan);
+        };
+
+        const render = function () {
+          updateVisibleRange();
+
+          // Set total height
+          content.style.height = (state.items.length * state.itemHeight) + "px";
+
+          // Clear viewport
+          viewport.innerHTML = "";
+
+          // Position viewport
+          viewport.style.transform = "translateY(" + (state.visibleStart * state.itemHeight) + "px)";
+
+          // Render visible items
+          for (let i = state.visibleStart; i < state.visibleEnd; i++) {
+            if (state.items[i]) {
+              const element = renderItem(state.items[i], i);
+              if (element) {
+                element.style.height = state.itemHeight + "px";
+                viewport.appendChild(element);
+              }
+            }
+          }
+        };
+
+        container.addEventListener("scroll", render);
+        window.addEventListener("resize", render);
+
+        return {
+          setItems: function (items) {
+            state.items = items;
+            render();
+          },
+          getState: function () {
+            return state;
+          },
+          refresh: render,
+          destroy: function () {
+            container.removeEventListener("scroll", render);
+            window.removeEventListener("resize", render);
+          }
+        };
+      };
+
       const INITIAL_RULE_LIMIT = 500;
       const RULE_LIMIT_STEP = 500;
+      const MAX_CLIENT_RULES = 2000; // Switch to server-side pagination above this threshold
+
+      // Performance monitoring
+      const performanceMonitor = {
+        metrics: {
+          loadTimes: [],
+          renderTimes: [],
+          memoryUsage: [],
+          searchTimes: [],
+        },
+
+        startTimer: function(operation) {
+          return {
+            operation: operation,
+            startTime: performance.now(),
+            startMemory: performance.memory ? performance.memory.usedJSHeapSize : 0
+          };
+        },
+
+        endTimer: function(timer) {
+          const endTime = performance.now();
+          const duration = endTime - timer.startTime;
+          const endMemory = performance.memory ? performance.memory.usedJSHeapSize : 0;
+          const memoryDelta = endMemory - timer.startMemory;
+
+          this.metrics[timer.operation + 'Times'] = this.metrics[timer.operation + 'Times'] || [];
+          this.metrics[timer.operation + 'Times'].push(duration);
+
+          if (performance.memory) {
+            this.metrics.memoryUsage.push({
+              operation: timer.operation,
+              delta: memoryDelta,
+              total: endMemory
+            });
+          }
+
+          // Log performance issues
+          if (duration > 1000) {
+            console.warn("Slow " + timer.operation + ": " + duration.toFixed(2) + "ms");
+          }
+
+          return { duration, memoryDelta };
+        },
+
+        getStats: function() {
+          const stats = {};
+          for (const [key, values] of Object.entries(this.metrics)) {
+            if (Array.isArray(values) && values.length > 0 && typeof values[0] === 'number') {
+              const avg = values.reduce((a, b) => a + b, 0) / values.length;
+              const max = Math.max(...values);
+              const min = Math.min(...values);
+              stats[key] = { avg: avg.toFixed(2), max: max.toFixed(2), min: min.toFixed(2), count: values.length };
+            }
+          }
+          return stats;
+        }
+      };
 
       const state = {
         active: "geosite",
@@ -895,6 +1056,16 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           ruleFilter: "",
           attribute: "",
           displayLimit: INITIAL_RULE_LIMIT,
+          // New pagination state
+          serverPagination: false,
+          currentOffset: 0,
+          totalRules: 0,
+          hasMoreRules: false,
+          isLoading: false,
+          allRulesLoaded: [],
+          // Virtual scrolling state
+          useVirtualScrolling: false,
+          virtualScroller: null,
         },
         geoip: {
           index: {},
@@ -931,6 +1102,8 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           attrFilter: document.getElementById("geosite-attr-filter"),
           download: document.getElementById("geosite-download"),
           copyButton: document.getElementById("geosite-copy"),
+          exportButton: document.getElementById("geosite-export"),
+          summaryButton: document.getElementById("geosite-summary"),
           reverseInput: document.getElementById("geosite-reverse-input"),
           reverseAttr: document.getElementById("geosite-reverse-attr"),
           reverseLimit: document.getElementById("geosite-reverse-limit"),
@@ -962,17 +1135,133 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
       const updateSrsLink = function (datasetKey, name) {
         const linkEl = dom[datasetKey].download;
         const copyBtn = dom[datasetKey].copyButton;
+        const exportBtn = dom[datasetKey].exportButton;
+        const summaryBtn = dom[datasetKey].summaryButton;
+
         if (!name) {
           linkEl.hidden = true;
           linkEl.href = "#";
           copyBtn.hidden = true;
+          if (exportBtn) exportBtn.hidden = true;
+          if (summaryBtn) summaryBtn.hidden = true;
           return;
         }
+
         const base = datasetKey === "geosite" ? "/srs-geosite/" : "/srs-geoip/";
         linkEl.hidden = false;
         linkEl.href = base + encodeURIComponent(name) + ".srs";
         copyBtn.hidden = false;
         copyBtn.dataset.url = linkEl.href;
+
+        if (exportBtn) {
+          exportBtn.hidden = false;
+          exportBtn.dataset.name = name;
+        }
+        if (summaryBtn) {
+          summaryBtn.hidden = false;
+          summaryBtn.dataset.name = name;
+        }
+      };
+
+      const exportRules = function (name, rules, format) {
+        format = format || 'txt';
+        const detail = state.geosite.currentDetail;
+        if (!detail || !rules) return;
+
+        var content = '';
+        var filename = name + '_rules.' + format;
+
+        if (format === 'txt') {
+          content = rules.map(function(rule) {
+            const attrs = rule.attrs && rule.attrs.length ? ' [' + rule.attrs.join(', ') + ']' : '';
+            return rule.type.toUpperCase() + ': ' + rule.value + attrs;
+          }).join('\n');
+        } else if (format === 'json') {
+          content = JSON.stringify({
+            name: name,
+            exported: new Date().toISOString(),
+            total: rules.length,
+            rules: rules
+          }, null, 2);
+          filename = name + '_rules.json';
+        }
+
+        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      };
+
+      const showSummaryView = function (name, rules) {
+        if (!rules) return;
+
+        var typeStats = {};
+        var attrStats = {};
+        var lengthStats = { short: 0, medium: 0, long: 0 };
+
+        rules.forEach(function(rule) {
+          // Type statistics
+          typeStats[rule.type] = (typeStats[rule.type] || 0) + 1;
+
+          // Attribute statistics
+          if (rule.attrs) {
+            rule.attrs.forEach(function(attr) {
+              attrStats[attr] = (attrStats[attr] || 0) + 1;
+            });
+          }
+
+          // Length statistics
+          var len = rule.value.length;
+          if (len < 10) lengthStats.short++;
+          else if (len < 30) lengthStats.medium++;
+          else lengthStats.long++;
+        });
+
+        var typeStatsHtml = Object.keys(typeStats).map(function(type) {
+          var count = typeStats[type];
+          var percentage = (count/rules.length*100).toFixed(1);
+          return type.toUpperCase() + ': ' + count + ' (' + percentage + '%)';
+        }).join('<br>');
+
+        var attrStatsHtml = '';
+        if (Object.keys(attrStats).length > 0) {
+          var topAttrs = Object.keys(attrStats).slice(0, 5).map(function(attr) {
+            return attr + ': ' + attrStats[attr];
+          }).join('<br>');
+          var moreAttrs = Object.keys(attrStats).length > 5 ? '<br>...' : '';
+          attrStatsHtml = '<div><strong>属性分布:</strong><br>' + topAttrs + moreAttrs + '</div>';
+        }
+
+        var summaryHtml =
+          '<div style="background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin: 12px 0;">' +
+            '<h4 style="margin: 0 0 12px; color: var(--accent);">规则摘要 - ' + name + '</h4>' +
+            '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px;">' +
+              '<div><strong>规则类型分布:</strong><br>' + typeStatsHtml + '</div>' +
+              '<div><strong>长度分布:</strong><br>' +
+                '短 (&lt;10): ' + lengthStats.short + '<br>' +
+                '中 (10-30): ' + lengthStats.medium + '<br>' +
+                '长 (&gt;30): ' + lengthStats.long +
+              '</div>' +
+              attrStatsHtml +
+            '</div>' +
+          '</div>';
+
+        const existingSummary = document.querySelector('.rule-summary');
+        if (existingSummary) {
+          existingSummary.remove();
+        }
+
+        const summaryDiv = document.createElement('div');
+        summaryDiv.className = 'rule-summary';
+        summaryDiv.innerHTML = summaryHtml;
+
+        const ruleList = dom.geosite.ruleList;
+        ruleList.parentNode.insertBefore(summaryDiv, ruleList);
       };
 
       const renderGeositeDetail = function (payload) {
@@ -1005,8 +1294,14 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           dom.geosite.tags.appendChild(span);
         });
 
-        dom.geosite.status.innerHTML =
-          "<strong>" + payload.name + "</strong> · 共 " + stats.filtered.total + " 条规则";
+        let statusText = "<strong>" + payload.name + "</strong> · 共 " + stats.filtered.total + " 条规则";
+
+        // Add performance indicators
+        if (stats.filtered.total > MAX_CLIENT_RULES) {
+          statusText += " <span style='color: var(--accent); font-size: 0.8em;'>(已启用性能优化)</span>";
+        }
+
+        dom.geosite.status.innerHTML = statusText;
         updateSrsLink("geosite", payload.name);
         applyGeositeRuleFilter();
       };
@@ -1028,17 +1323,27 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
       };
 
       const applyGeositeRuleFilter = function () {
+        const renderTimer = performanceMonitor.startTimer('render');
         const detail = state.geosite.currentDetail;
         const listEl = dom.geosite.ruleList;
         const infoEl = dom.geosite.ruleInfo;
         const moreBtn = dom.geosite.ruleMore;
         const sentinel = dom.geosite.ruleSentinel;
+
+        // Clean up existing virtual scroller
+        if (state.geosite.virtualScroller) {
+          state.geosite.virtualScroller.destroy();
+          state.geosite.virtualScroller = null;
+        }
+
         listEl.innerHTML = "";
+        listEl.className = "rule-list"; // Reset class
         infoEl.hidden = true;
         moreBtn.hidden = true;
         moreBtn.disabled = false;
         moreBtn.textContent = "加载更多";
         sentinel.hidden = true;
+
         if (!detail || !Array.isArray(detail.rules) || detail.rules.length === 0) {
           const empty = document.createElement("div");
           empty.className = "empty-state";
@@ -1047,9 +1352,11 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           listEl.appendChild(sentinel);
           return;
         }
+
         const res = getFilteredGeositeRules();
         const rules = res.rules;
         const term = res.term;
+
         if (!rules.length) {
           const empty = document.createElement("div");
           empty.className = "empty-state";
@@ -1058,67 +1365,133 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           listEl.appendChild(sentinel);
           return;
         }
+
         const total = rules.length;
-        const limit = Math.max(INITIAL_RULE_LIMIT, state.geosite.displayLimit || INITIAL_RULE_LIMIT);
-        state.geosite.displayLimit = limit;
-        const visible = rules.slice(0, Math.min(limit, total));
 
-        const frag = document.createDocumentFragment();
-        visible.forEach(function (rule) {
-          const row = document.createElement("div");
-          row.className = "rule-row";
+        // Use virtual scrolling for large datasets
+        if (total > 1000) {
+          state.geosite.useVirtualScrolling = true;
 
-          const header = document.createElement("div");
-          header.className = "rule-header";
-          const type = document.createElement("span");
-          type.className = "rule-type";
-          type.textContent = rule.type;
-          header.appendChild(type);
-          if (detail.url) {
-            const link = document.createElement("a");
-            link.href = detail.url;
-            link.target = "_blank";
-            link.rel = "noreferrer";
-            link.className = "chip-link";
-            link.textContent = "查看文本";
-            header.appendChild(link);
-          }
-          row.appendChild(header);
+          const renderRuleItem = function (rule, index) {
+            const row = document.createElement("div");
+            row.className = "rule-row";
+            row.style.boxSizing = "border-box";
 
-          const value = document.createElement("div");
-          value.className = "rule-value";
-          value.textContent = rule.value;
-          row.appendChild(value);
+            const header = document.createElement("div");
+            header.className = "rule-header";
+            const type = document.createElement("span");
+            type.className = "rule-type";
+            type.textContent = rule.type;
+            header.appendChild(type);
+            if (detail.url) {
+              const link = document.createElement("a");
+              link.href = detail.url;
+              link.target = "_blank";
+              link.rel = "noreferrer";
+              link.className = "chip-link";
+              link.textContent = "查看文本";
+              header.appendChild(link);
+            }
+            row.appendChild(header);
 
-          if (rule.attrs && rule.attrs.length) {
-            const attrs = document.createElement("div");
-            attrs.className = "rule-attrs";
-            attrs.textContent = "标签：" + rule.attrs.join(", ");
-            row.appendChild(attrs);
-          }
-          frag.appendChild(row);
-        });
-        listEl.appendChild(frag);
-        listEl.appendChild(sentinel);
+            const value = document.createElement("div");
+            value.className = "rule-value";
+            value.textContent = rule.value;
+            row.appendChild(value);
 
-        const remaining = total - visible.length;
-        const baseMessage = term ? "匹配到 " + total + " 条规则" : "共 " + total + " 条规则";
-        infoEl.textContent =
-          remaining > 0
-            ? baseMessage + "，已显示 " + visible.length + " 条，可继续加载或使用搜索定位。"
-            : baseMessage + "。";
-        infoEl.hidden = false;
-        if (remaining > 0) {
-          moreBtn.hidden = false;
-          const step = Math.min(remaining, RULE_LIMIT_STEP);
-          moreBtn.textContent =
-            step >= remaining
-              ? "加载剩余 " + remaining + " 条"
-              : "加载更多（+" + step + " 条）";
-          sentinel.hidden = false;
+            if (rule.attrs && rule.attrs.length) {
+              const attrs = document.createElement("div");
+              attrs.className = "rule-attrs";
+              attrs.textContent = "标签：" + rule.attrs.join(", ");
+              row.appendChild(attrs);
+            }
+            return row;
+          };
+
+          state.geosite.virtualScroller = createVirtualScroller(listEl, 80, renderRuleItem);
+          state.geosite.virtualScroller.setItems(rules);
+
+          const baseMessage = term ? "匹配到 " + total + " 条规则" : "共 " + total + " 条规则";
+          infoEl.textContent = baseMessage + "（使用虚拟滚动优化显示）";
+          infoEl.hidden = false;
+
         } else {
-          sentinel.hidden = true;
+          // Use traditional pagination for smaller datasets
+          state.geosite.useVirtualScrolling = false;
+          const limit = Math.max(INITIAL_RULE_LIMIT, state.geosite.displayLimit || INITIAL_RULE_LIMIT);
+          state.geosite.displayLimit = limit;
+          const visible = rules.slice(0, Math.min(limit, total));
+
+          const frag = document.createDocumentFragment();
+          visible.forEach(function (rule) {
+            const row = document.createElement("div");
+            row.className = "rule-row";
+
+            const header = document.createElement("div");
+            header.className = "rule-header";
+            const type = document.createElement("span");
+            type.className = "rule-type";
+            type.textContent = rule.type;
+            header.appendChild(type);
+            if (detail.url) {
+              const link = document.createElement("a");
+              link.href = detail.url;
+              link.target = "_blank";
+              link.rel = "noreferrer";
+              link.className = "chip-link";
+              link.textContent = "查看文本";
+              header.appendChild(link);
+            }
+            row.appendChild(header);
+
+            const value = document.createElement("div");
+            value.className = "rule-value";
+            value.textContent = rule.value;
+            row.appendChild(value);
+
+            if (rule.attrs && rule.attrs.length) {
+              const attrs = document.createElement("div");
+              attrs.className = "rule-attrs";
+              attrs.textContent = "标签：" + rule.attrs.join(", ");
+              row.appendChild(attrs);
+            }
+            frag.appendChild(row);
+          });
+          listEl.appendChild(frag);
+          listEl.appendChild(sentinel);
+
+          const remaining = total - visible.length;
+          const baseMessage = term ? "匹配到 " + total + " 条规则" : "共 " + total + " 条规则";
+          infoEl.textContent =
+            remaining > 0
+              ? baseMessage + "，已显示 " + visible.length + " 条，可继续加载或使用搜索定位。"
+              : baseMessage + "。";
+          infoEl.hidden = false;
+
+          if (remaining > 0 || (state.geosite.serverPagination && state.geosite.hasMoreRules)) {
+            moreBtn.hidden = false;
+
+            if (state.geosite.serverPagination && state.geosite.hasMoreRules) {
+              // Server-side pagination
+              moreBtn.textContent = state.geosite.isLoading ? "加载中..." : "加载更多";
+              moreBtn.disabled = state.geosite.isLoading;
+            } else {
+              // Client-side pagination
+              const step = Math.min(remaining, RULE_LIMIT_STEP);
+              moreBtn.textContent =
+                step >= remaining
+                  ? "加载剩余 " + remaining + " 条"
+                  : "加载更多（+" + step + " 条）";
+              moreBtn.disabled = false;
+            }
+            sentinel.hidden = false;
+          } else {
+            moreBtn.hidden = true;
+            sentinel.hidden = true;
+          }
         }
+
+        performanceMonitor.endTimer(renderTimer);
       };
 
       const renderGeoipDetail = function (payload) {
@@ -1357,28 +1730,116 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
         });
       };
 
-      const loadGeositeDetail = function (name) {
+      const loadGeositeDetail = function (name, resetPagination = true) {
+        const loadTimer = performanceMonitor.startTimer('load');
         const attribute = (state.geosite.attribute || "").trim();
-        const cacheKey = name + "::" + attribute;
+        const search = (state.geosite.ruleFilter || "").trim();
+
+        if (resetPagination) {
+          state.geosite.currentOffset = 0;
+          state.geosite.allRulesLoaded = [];
+          state.geosite.serverPagination = false;
+          state.geosite.displayLimit = INITIAL_RULE_LIMIT;
+        }
+
+        // Improved cache key structure
+        const baseCacheKey = name + "::" + attribute;
+        const searchCacheKey = baseCacheKey + "::" + search;
+        const paginatedCacheKey = searchCacheKey + "::" + state.geosite.currentOffset;
         const cache = state.geosite.detailCache;
+
+        // Clean old cache entries to prevent memory leaks
+        if (cache.size > 50) {
+          const keys = Array.from(cache.keys());
+          keys.slice(0, 25).forEach(key => cache.delete(key));
+        }
+
+        if (state.geosite.isLoading) return;
+        state.geosite.isLoading = true;
+
         dom.geosite.status.textContent = "正在加载规则...";
-        dom.geosite.ruleList.innerHTML = "";
-        if (cache.has(cacheKey)) {
-          renderGeositeDetail(cache.get(cacheKey));
+        if (resetPagination) {
+          dom.geosite.ruleList.innerHTML = "";
+        }
+
+        // Check cache for initial load (without search)
+        if (resetPagination && !search && cache.has(baseCacheKey)) {
+          const cachedData = cache.get(baseCacheKey);
+          state.geosite.isLoading = false;
+          renderGeositeDetail(cachedData);
           return;
         }
+
         let url = "/api/geosite/" + encodeURIComponent(name);
-        if (attribute) {
-          url += "?filter=" + encodeURIComponent(attribute);
+        const params = new URLSearchParams();
+        if (attribute) params.set("filter", attribute);
+        if (search) params.set("search", search);
+
+        // Use server pagination for large datasets or when searching
+        if (search || state.geosite.serverPagination) {
+          params.set("offset", state.geosite.currentOffset.toString());
+          params.set("limit", RULE_LIMIT_STEP.toString());
+          state.geosite.serverPagination = true;
         }
+
+        if (params.toString()) {
+          url += "?" + params.toString();
+        }
+
         fetchJson(url)
           .then(function (data) {
-            cache.set(cacheKey, data);
-            renderGeositeDetail(data);
+            const loadStats = performanceMonitor.endTimer(loadTimer);
+            state.geosite.isLoading = false;
+
+            // Determine if we should use server pagination
+            if (!state.geosite.serverPagination && data.pagination && data.pagination.total > MAX_CLIENT_RULES) {
+              state.geosite.serverPagination = true;
+              // Reload with server pagination
+              loadGeositeDetail(name, true);
+              return;
+            }
+
+            if (state.geosite.serverPagination && data.pagination) {
+              // Handle server-side pagination
+              if (resetPagination) {
+                state.geosite.allRulesLoaded = data.rules;
+              } else {
+                state.geosite.allRulesLoaded = state.geosite.allRulesLoaded.concat(data.rules);
+              }
+              state.geosite.totalRules = data.pagination.total;
+              state.geosite.hasMoreRules = data.pagination.hasMore;
+
+              // Create modified data object for rendering
+              const renderData = {
+                ...data,
+                rules: state.geosite.allRulesLoaded,
+                stats: {
+                  ...data.stats,
+                  filtered: {
+                    ...data.stats.filtered,
+                    total: state.geosite.totalRules
+                  }
+                }
+              };
+
+              if (resetPagination && !search) {
+                cache.set(baseCacheKey, renderData);
+              }
+              renderGeositeDetail(renderData);
+            } else {
+              // Handle client-side pagination (small datasets)
+              if (resetPagination && !search) {
+                cache.set(baseCacheKey, data);
+              }
+              renderGeositeDetail(data);
+            }
           })
           .catch(function (error) {
+            state.geosite.isLoading = false;
             dom.geosite.status.textContent = error.message;
-            dom.geosite.ruleList.innerHTML = "";
+            if (resetPagination) {
+              dom.geosite.ruleList.innerHTML = "";
+            }
           });
       };
 
@@ -1640,10 +2101,35 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
       dom.geosite.ruleFilter.addEventListener(
         "input",
         debounce(function () {
-          state.geosite.ruleFilter = dom.geosite.ruleFilter.value;
-          state.geosite.displayLimit = INITIAL_RULE_LIMIT;
-          applyGeositeRuleFilter();
-        }, 200)
+          const newFilter = dom.geosite.ruleFilter.value.trim();
+          const oldFilter = state.geosite.ruleFilter;
+
+          // Minimum search length for server-side search
+          const isLargeDataset = state.geosite.currentDetail &&
+                                state.geosite.currentDetail.stats.overall.total > MAX_CLIENT_RULES;
+          const useServerSearch = isLargeDataset && newFilter.length >= 2;
+
+          state.geosite.ruleFilter = newFilter;
+
+          // Show search hint for large datasets
+          if (isLargeDataset && newFilter.length > 0 && newFilter.length < 2) {
+            dom.geosite.status.innerHTML =
+              dom.geosite.status.innerHTML.split('<br>')[0] +
+              '<br><span style="color: var(--text-muted); font-size: 0.85em;">输入至少2个字符进行搜索</span>';
+            return;
+          }
+
+          // For large datasets or when search changes, use server-side search
+          if (useServerSearch || state.geosite.serverPagination) {
+            if (newFilter !== oldFilter) {
+              loadGeositeDetail(state.geosite.currentName, true);
+            }
+          } else {
+            // Client-side filtering for smaller datasets
+            state.geosite.displayLimit = INITIAL_RULE_LIMIT;
+            applyGeositeRuleFilter();
+          }
+        }, 300) // Increased debounce for server calls
       );
 
       dom.geosite.attrFilter.addEventListener(
@@ -1657,8 +2143,17 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
       );
 
       dom.geosite.ruleMore.addEventListener("click", function () {
-        state.geosite.displayLimit += RULE_LIMIT_STEP;
-        applyGeositeRuleFilter();
+        if (state.geosite.serverPagination) {
+          // Server-side pagination: load more from server
+          if (state.geosite.hasMoreRules && !state.geosite.isLoading) {
+            state.geosite.currentOffset += RULE_LIMIT_STEP;
+            loadGeositeDetail(state.geosite.currentName, false);
+          }
+        } else {
+          // Client-side pagination: show more from loaded data
+          state.geosite.displayLimit += RULE_LIMIT_STEP;
+          applyGeositeRuleFilter();
+        }
       });
 
       const geositeListEl = dom.geosite.ruleList;
@@ -1668,13 +2163,25 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
       const tryAutoLoadGeosite = function () {
         const detail = state.geosite.currentDetail;
         if (!detail) return false;
-        const res = getFilteredGeositeRules();
-        const rules = res.rules;
-        if (!rules.length) return false;
-        if (state.geosite.displayLimit >= rules.length) return false;
-        state.geosite.displayLimit = Math.min(rules.length, state.geosite.displayLimit + RULE_LIMIT_STEP);
-        applyGeositeRuleFilter();
-        return true;
+
+        if (state.geosite.serverPagination) {
+          // Server-side pagination: load more from server
+          if (state.geosite.hasMoreRules && !state.geosite.isLoading) {
+            state.geosite.currentOffset += RULE_LIMIT_STEP;
+            loadGeositeDetail(state.geosite.currentName, false);
+            return true;
+          }
+          return false;
+        } else {
+          // Client-side pagination: show more from loaded data
+          const res = getFilteredGeositeRules();
+          const rules = res.rules;
+          if (!rules.length) return false;
+          if (state.geosite.displayLimit >= rules.length) return false;
+          state.geosite.displayLimit = Math.min(rules.length, state.geosite.displayLimit + RULE_LIMIT_STEP);
+          applyGeositeRuleFilter();
+          return true;
+        }
       };
 
       const geositeObserver = new IntersectionObserver(
@@ -1684,14 +2191,28 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
             if (geositeSentinel.hidden) return;
             const now = Date.now();
             if (now - geositeLastAutoLoad < 400) return;
-            if (tryAutoLoadGeosite()) {
-              geositeLastAutoLoad = now;
+
+            // Intelligent preloading based on dataset size
+            const detail = state.geosite.currentDetail;
+            if (detail && state.geosite.serverPagination) {
+              // For large datasets, preload more aggressively
+              const preloadThreshold = detail.stats.overall.total > 5000 ? 200 : 100;
+              if (now - geositeLastAutoLoad > preloadThreshold) {
+                if (tryAutoLoadGeosite()) {
+                  geositeLastAutoLoad = now;
+                }
+              }
+            } else {
+              // Standard loading for smaller datasets
+              if (tryAutoLoadGeosite()) {
+                geositeLastAutoLoad = now;
+              }
             }
           });
         },
         {
           root: geositeListEl,
-          rootMargin: "80px 0px 80px 0px",
+          rootMargin: "120px 0px 120px 0px", // Increased margin for better preloading
           threshold: 0.01,
         }
       );
@@ -1715,6 +2236,24 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
               dom.geosite.copyButton.textContent = "复制下载链接";
             }, 2000);
           });
+      });
+
+      dom.geosite.exportButton.addEventListener("click", function () {
+        const name = dom.geosite.exportButton.dataset.name;
+        const detail = state.geosite.currentDetail;
+        if (!name || !detail) return;
+
+        const res = getFilteredGeositeRules();
+        exportRules(name, res.rules, 'txt');
+      });
+
+      dom.geosite.summaryButton.addEventListener("click", function () {
+        const name = dom.geosite.summaryButton.dataset.name;
+        const detail = state.geosite.currentDetail;
+        if (!name || !detail) return;
+
+        const res = getFilteredGeositeRules();
+        showSummaryView(name, res.rules);
       });
 
       dom.geosite.reverseButton.addEventListener("click", runGeositeReverse);
@@ -1784,6 +2323,18 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
       ensureIndexLoaded("geosite").catch(function (error) {
         console.error(error);
       });
+
+      // Expose performance monitoring to console for debugging
+      window.geositePerformance = {
+        getStats: () => performanceMonitor.getStats(),
+        clearStats: () => {
+          for (const key in performanceMonitor.metrics) {
+            if (Array.isArray(performanceMonitor.metrics[key])) {
+              performanceMonitor.metrics[key] = [];
+            }
+          }
+        }
+      };
     })();
   </script>
 </body>

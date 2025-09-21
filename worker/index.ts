@@ -933,30 +933,68 @@ app.get("/api/geosite/:name", async (c) => {
   if (!rawName) {
     throw new HTTPException(400, { message: "Invalid name parameter" });
   }
+
+  // Parse pagination parameters
+  const offset = Math.max(0, parseInt(c.req.query("offset") || "0", 10));
+  const limit = clamp(parseInt(c.req.query("limit") || "1000", 10), 10, 2000);
+  const search = c.req.query("search")?.trim() || "";
+
   const filters = normalizeAttributeFilters(c.req.query("filter"));
   const data = await getJsonRules(rawName, env.SRS_BUCKET);
   if (!data) {
     throw new HTTPException(404, { message: "Rules not found (JSON missing)" });
   }
-  const filtered = filters.length > 0 ? data.rules.filter((rule) => ruleMatchesAttributes(rule, filters)) : data.rules;
+
+  // Apply attribute filters first
+  let filtered = filters.length > 0 ? data.rules.filter((rule) => ruleMatchesAttributes(rule, filters)) : data.rules;
+
+  // Apply search filter if provided
+  if (search) {
+    const searchLower = search.toLowerCase();
+    filtered = filtered.filter((rule) => {
+      const combined = (rule.type + " " + rule.value + " " + (rule.attrs || []).join(" ")).toLowerCase();
+      return combined.includes(searchLower);
+    });
+  }
+
+  // Calculate pagination
+  const total = filtered.length;
+  const paginatedRules = filtered.slice(offset, offset + limit);
+  const hasMore = offset + limit < total;
+
   const indexMap = await fetchIndexMap("geosite", env).catch(() => ({} as Record<string, string>));
   const statsOverall = summarizeRuleTypes(data.rules);
   const statsFiltered = summarizeRuleTypes(filtered);
   const attrs = collectRuleAttributes(data.rules);
   const canonicalUrl = indexMap[data.name] || indexMap[rawName] || null;
-  return c.json({
+
+  const response = c.json({
     name: data.name,
     requested: rawName,
     url: canonicalUrl,
     segments: splitNameSegments(data.name),
     filters,
+    search,
+    pagination: {
+      offset,
+      limit,
+      total,
+      hasMore,
+      returned: paginatedRules.length,
+    },
     stats: {
       overall: statsOverall,
       filtered: statsFiltered,
     },
     attributes: attrs,
-    rules: filtered,
+    rules: paginatedRules,
   });
+
+  // Add caching headers for better performance
+  response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=1800'); // 5min browser, 30min CDN
+  response.headers.set('Vary', 'Accept-Encoding');
+
+  return response;
 });
 
 app.get("/geoip/:name_with_filter", async (c) => {
