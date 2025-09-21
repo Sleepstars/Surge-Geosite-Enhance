@@ -552,9 +552,6 @@ const searchGeositeRules = async (
     }
 
     if (likePatterns.length > 0) {
-      const keywordClauses = likePatterns.map(() => "r.value_lower LIKE ? ESCAPE '\\'").join(" OR ");
-      clauses.push(`(r.type = 'keyword' AND (${keywordClauses}))`);
-      for (const pattern of likePatterns) binds.push(pattern);
       const regexpClauses = likePatterns.map(() => "r.value_lower LIKE ? ESCAPE '\\'").join(" OR ");
       clauses.push(`(r.type = 'regexp' AND (${regexpClauses}))`);
       for (const pattern of likePatterns) binds.push(pattern);
