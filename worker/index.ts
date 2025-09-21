@@ -33,8 +33,6 @@ type CacheEntry<T> = { data: T; expires: number };
 
 const GEOSITE_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 const GEOIP_CACHE_TTL_MS = 5 * 60 * 1000;
-const GEOSITE_SEARCH_CHUNK = 160; // larger chunk size to reduce D1 round-trips
-const SQLITE_VARIABLE_LIMIT = 999; // D1 is backed by SQLite with a 999 parameter cap
 
 const geositeCache = new Map<string, CacheEntry<RuleJSON>>();
 const geoipCache = new Map<string, CacheEntry<GeoIPJSON>>();
@@ -226,7 +224,6 @@ const genSurgeListFromJson = async (
       case "full":
         lines.push(`DOMAIN,${r.value}`);
         break;
-
       case "regexp":
         // Skip regex rules to avoid generating overly broad wildcard entries.
         continue;
@@ -445,7 +442,6 @@ const evaluateGeositeRule = (
       }
       break;
     }
-
     case "regexp": {
       try {
         const regex = new RegExp(rule.value, "i");
@@ -491,15 +487,14 @@ const searchGeositeRules = async (
   if (hostLower) buildDomainSuffixes(hostLower).forEach((suffix) => domainCandidates.add(suffix.toLowerCase()));
   if (queryLower) domainCandidates.add(queryLower);
   const domainValues = Array.from(domainCandidates).filter((item) => item.length > 0);
-  const likeTokens = tokens.filter((token) => token.length >= 4 || /[^a-z0-9]/.test(token));
-  const likePatterns = likeTokens.map((token) => `%${escapeLikePattern(token)}%`);
+  const likePatterns = tokens.map((token) => `%${escapeLikePattern(token)}%`);
 
   const overscan = Math.max(limit * 3, limit + 20);
   const matches: GeositeSearchMatch[] = [];
   const seen = new Set<string>();
   let scanned = 0;
   const maxScan = Math.max(1, Math.min(Math.floor(maxLists) || 1, names.length));
-  const chunks = chunkArray(names.slice(0, maxScan), GEOSITE_SEARCH_CHUNK);
+  const chunks = chunkArray(names.slice(0, maxScan), 40);
 
   const processRows = (rows: any[]) => {
     for (const row of rows) {
@@ -531,59 +526,24 @@ const searchGeositeRules = async (
   for (const chunk of chunks) {
     scanned += chunk.length;
     const namePlaceholders = chunk.map(() => "?").join(",");
-    let shouldStop = false;
+    const nameParams = chunk;
 
     if (domainValues.length > 0) {
-      const remainingBudget = SQLITE_VARIABLE_LIMIT - chunk.length;
-      if (remainingBudget > 0) {
-        const domainChunkSize = Math.min(Math.max(1, remainingBudget), domainValues.length);
-        const domainGroups = chunkArray(domainValues, domainChunkSize);
-        const domainLimit = Math.max(overscan, chunk.length * 10);
-        for (const domainGroup of domainGroups) {
-          if (domainGroup.length === 0) continue;
-          const domainPlaceholders = domainGroup.map(() => "?").join(",");
-          const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type IN ('domain','full')\n          AND r.value_lower IN (${domainPlaceholders})\n        LIMIT ${domainLimit}`;
-          const result = await db.prepare(sql).bind(...chunk, ...domainGroup).all<any>();
-          if (processRows(result.results || [])) {
-            shouldStop = true;
-            break;
-          }
-          if (matches.length >= overscan) {
-            shouldStop = true;
-            break;
-          }
-        }
-        if (shouldStop) break;
-      }
+      const domainPlaceholders = domainValues.map(() => "?").join(",");
+      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type IN ('domain','full')\n          AND r.value_lower IN (${domainPlaceholders})`;
+      const result = await db.prepare(sql).bind(...nameParams, ...domainValues).all<any>();
+      if (processRows(result.results || [])) break;
     }
 
     if (likePatterns.length > 0) {
-      // Only regexp entries need LIKE scans.
-      const remainingBudget = SQLITE_VARIABLE_LIMIT - chunk.length;
-      if (remainingBudget > 0) {
-        const perQuery = Math.min(Math.max(1, remainingBudget), likePatterns.length);
-        const patternGroups = chunkArray(likePatterns, perQuery);
-        const regexpLimit = Math.max(overscan * 2, chunk.length * 20);
-        for (const patternGroup of patternGroups) {
-          if (patternGroup.length === 0) continue;
-          const regexpClauses = patternGroup.map(() => "r.value_lower LIKE ? ESCAPE '\\'").join(" OR ");
-          const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type = 'regexp'\n          AND (${regexpClauses})\n        LIMIT ${regexpLimit}`;
-          const result = await db.prepare(sql).bind(...chunk, ...patternGroup).all<any>();
-          if (processRows(result.results || [])) {
-            shouldStop = true;
-            break;
-          }
-          if (matches.length >= overscan) {
-            shouldStop = true;
-            break;
-          }
-        }
-        if (shouldStop) break;
+      for (const pattern of likePatterns) {
+        const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n          FROM geosite_rule r\n          JOIN geosite_list l ON l.id = r.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND r.type = 'regexp'\n            AND r.value_lower LIKE ? ESCAPE '\\'\n          LIMIT ${chunk.length * 20}`;
+        const result = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
+        if (processRows(result.results || [])) break;
       }
     } else {
-      const regexpLimit = chunk.length * 10;
-      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type = 'regexp'\n        LIMIT ${regexpLimit}`;
-      const result = await db.prepare(sql).bind(...chunk).all<any>();
+      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type = 'regexp'\n        LIMIT ${chunk.length * 10}`;
+      const result = await db.prepare(sql).bind(...nameParams).all<any>();
       if (processRows(result.results || [])) break;
     }
 
