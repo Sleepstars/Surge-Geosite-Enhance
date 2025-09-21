@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Search } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/Card'
 import { Input } from '../ui/Input'
@@ -6,12 +6,13 @@ import { Select } from '../ui/Select'
 import { LoadingState, ErrorState } from '../ui/LoadingSpinner'
 import { useGeoipIndex } from '@/hooks/useApi'
 import { useAppStore } from '@/stores/useAppStore'
+import { useDebounce } from '@/hooks/useDebounce'
 import { clsx } from 'clsx'
 
 export const GeoipNameList: React.FC = () => {
   const { data: index, isLoading, error, refetch } = useGeoipIndex()
-  const { 
-    geoipSearch, 
+  const {
+    geoipSearch,
     setGeoipSearch,
     geoipVersionFilter,
     setGeoipVersionFilter,
@@ -19,20 +20,33 @@ export const GeoipNameList: React.FC = () => {
     setGeoipSelectedName
   } = useAppStore()
 
+  const [localSearch, setLocalSearch] = useState(geoipSearch)
+  const debouncedSearch = useDebounce(localSearch, 300)
+
+  // 同步防抖后的值到全局状态
+  React.useEffect(() => {
+    setGeoipSearch(debouncedSearch)
+  }, [debouncedSearch, setGeoipSearch])
+
+  // 当全局状态变化时同步到本地状态
+  React.useEffect(() => {
+    setLocalSearch(geoipSearch)
+  }, [geoipSearch])
+
   const filteredNames = useMemo(() => {
     if (!index) return []
-    
-    const names = Object.keys(index).sort((a, b) => 
+
+    const names = Object.keys(index).sort((a, b) =>
       a.localeCompare(b, 'en', { sensitivity: 'base' })
     )
-    
-    if (!geoipSearch) return names
-    
-    const searchLower = geoipSearch.toLowerCase()
-    return names.filter(name => 
+
+    if (!debouncedSearch) return names
+
+    const searchLower = debouncedSearch.toLowerCase()
+    return names.filter(name =>
       name.toLowerCase().includes(searchLower)
     )
-  }, [index, geoipSearch])
+  }, [index, debouncedSearch])
 
   if (isLoading) {
     return (
@@ -80,8 +94,8 @@ export const GeoipNameList: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 placeholder="输入关键字，例如 CN、APPLE"
-                value={geoipSearch}
-                onChange={(e) => setGeoipSearch(e.target.value)}
+                value={localSearch}
+                onChange={(e) => setLocalSearch(e.target.value)}
                 className="pl-10"
               />
             </div>

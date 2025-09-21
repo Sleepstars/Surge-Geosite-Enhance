@@ -8,17 +8,31 @@ import { Badge } from '../ui/Badge'
 import { LoadingState, ErrorState } from '../ui/LoadingSpinner'
 import { useGeoipDetail } from '@/hooks/useApi'
 import { useAppStore } from '@/stores/useAppStore'
+import { useDebounce } from '@/hooks/useDebounce'
 import { clsx } from 'clsx'
 
 export const GeoipCidrList: React.FC = () => {
-  const { 
-    geoipSelectedName, 
+  const {
+    geoipSelectedName,
     geoipVersionFilter,
     geoipCidrFilter,
     setGeoipCidrFilter
   } = useAppStore()
-  
+
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle')
+  const [localCidrFilter, setLocalCidrFilter] = useState(geoipCidrFilter)
+
+  const debouncedCidrFilter = useDebounce(localCidrFilter, 300)
+
+  // 同步防抖后的值到全局状态
+  React.useEffect(() => {
+    setGeoipCidrFilter(debouncedCidrFilter)
+  }, [debouncedCidrFilter, setGeoipCidrFilter])
+
+  // 当全局状态变化时同步到本地状态（例如切换规则组时）
+  React.useEffect(() => {
+    setLocalCidrFilter(geoipCidrFilter)
+  }, [geoipSelectedName]) // 只在选择的规则组变化时同步
   
   const { data: detail, isLoading, error, refetch } = useGeoipDetail(
     geoipSelectedName,
@@ -44,13 +58,13 @@ export const GeoipCidrList: React.FC = () => {
   }, [detail, geoipVersionFilter])
 
   const filteredCidrs = useMemo(() => {
-    if (!geoipCidrFilter) return allCidrs
-    
-    const filterLower = geoipCidrFilter.toLowerCase()
-    return allCidrs.filter(({ cidr }) => 
+    if (!debouncedCidrFilter) return allCidrs
+
+    const filterLower = debouncedCidrFilter.toLowerCase()
+    return allCidrs.filter(({ cidr }) =>
       cidr.toLowerCase().includes(filterLower)
     )
-  }, [allCidrs, geoipCidrFilter])
+  }, [allCidrs, debouncedCidrFilter])
 
   const virtualizer = useVirtualizer({
     count: filteredCidrs.length,
@@ -176,8 +190,8 @@ export const GeoipCidrList: React.FC = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               placeholder="搜索 CIDR 内容"
-              value={geoipCidrFilter}
-              onChange={(e) => setGeoipCidrFilter(e.target.value)}
+              value={localCidrFilter}
+              onChange={(e) => setLocalCidrFilter(e.target.value)}
               className="pl-10"
             />
           </div>

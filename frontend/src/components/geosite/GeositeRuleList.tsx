@@ -9,24 +9,46 @@ import { LoadingState, ErrorState } from '../ui/LoadingSpinner'
 import { GeositeRuleItem } from './GeositeRuleItem'
 import { useGeositeDetail } from '@/hooks/useApi'
 import { useAppStore } from '@/stores/useAppStore'
+import { useDebounce } from '@/hooks/useDebounce'
 
 export const GeositeRuleList: React.FC = () => {
-  const { 
-    geositeSelectedName, 
-    geositeAttributeFilter, 
+  const {
+    geositeSelectedName,
+    geositeAttributeFilter,
     setGeositeAttributeFilter,
     geositeRuleFilter,
     setGeositeRuleFilter
   } = useAppStore()
-  
+
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle')
-  
+  const [localRuleFilter, setLocalRuleFilter] = useState(geositeRuleFilter)
+  const [localAttributeFilter, setLocalAttributeFilter] = useState(geositeAttributeFilter)
+
+  // 使用防抖来避免频繁的API请求
+  const debouncedRuleFilter = useDebounce(localRuleFilter, 300)
+  const debouncedAttributeFilter = useDebounce(localAttributeFilter, 300)
+
+  // 同步防抖后的值到全局状态
+  React.useEffect(() => {
+    setGeositeRuleFilter(debouncedRuleFilter)
+  }, [debouncedRuleFilter, setGeositeRuleFilter])
+
+  React.useEffect(() => {
+    setGeositeAttributeFilter(debouncedAttributeFilter)
+  }, [debouncedAttributeFilter, setGeositeAttributeFilter])
+
+  // 当全局状态变化时同步到本地状态（例如切换规则组时）
+  React.useEffect(() => {
+    setLocalRuleFilter(geositeRuleFilter)
+    setLocalAttributeFilter(geositeAttributeFilter)
+  }, [geositeSelectedName]) // 只在选择的规则组变化时同步
+
   const { data: detail, isLoading, error, refetch } = useGeositeDetail(
     geositeSelectedName,
     {
       limit: 2000, // Load more rules for better UX
-      search: geositeRuleFilter,
-      filter: geositeAttributeFilter,
+      search: debouncedRuleFilter, // 使用防抖后的值
+      filter: debouncedAttributeFilter, // 使用防抖后的值
     }
   )
 
@@ -158,8 +180,8 @@ export const GeositeRuleList: React.FC = () => {
             <label className="block text-sm font-medium mb-2">属性过滤</label>
             <Input
               placeholder="如 cn 或 !cn，留空为全部"
-              value={geositeAttributeFilter}
-              onChange={(e) => setGeositeAttributeFilter(e.target.value)}
+              value={localAttributeFilter}
+              onChange={(e) => setLocalAttributeFilter(e.target.value)}
             />
           </div>
           <div>
@@ -168,8 +190,8 @@ export const GeositeRuleList: React.FC = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
                 placeholder="搜索规则内容"
-                value={geositeRuleFilter}
-                onChange={(e) => setGeositeRuleFilter(e.target.value)}
+                value={localRuleFilter}
+                onChange={(e) => setLocalRuleFilter(e.target.value)}
                 className="pl-10"
               />
             </div>

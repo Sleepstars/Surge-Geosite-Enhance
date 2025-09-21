@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { Search, Expand, Minimize } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '../ui/Card'
 import { Input } from '../ui/Input'
@@ -7,30 +7,44 @@ import { LoadingState, ErrorState } from '../ui/LoadingSpinner'
 import { GeositeTreeNode } from './GeositeTreeNode'
 import { useGeositeIndex } from '@/hooks/useApi'
 import { useAppStore } from '@/stores/useAppStore'
+import { useDebounce } from '@/hooks/useDebounce'
 import { buildGeositeTree, filterTreeBySearch, getAllNodePaths } from '@/utils/tree'
 
 export const GeositeTree: React.FC = () => {
   const { data: index, isLoading, error, refetch } = useGeositeIndex()
-  const { 
-    geositeTreeSearch, 
+  const {
+    geositeTreeSearch,
     setGeositeTreeSearch,
     geositeExpandedNodes,
     collapseAllNodes,
     toggleNodeExpansion
   } = useAppStore()
 
+  const [localTreeSearch, setLocalTreeSearch] = useState(geositeTreeSearch)
+  const debouncedTreeSearch = useDebounce(localTreeSearch, 300)
+
+  // 同步防抖后的值到全局状态
+  React.useEffect(() => {
+    setGeositeTreeSearch(debouncedTreeSearch)
+  }, [debouncedTreeSearch, setGeositeTreeSearch])
+
+  // 当全局状态变化时同步到本地状态
+  React.useEffect(() => {
+    setLocalTreeSearch(geositeTreeSearch)
+  }, [geositeTreeSearch])
+
   const { treeRoot, filteredRoot } = useMemo(() => {
     if (!index) return { treeRoot: null, filteredRoot: null }
-    
-    const names = Object.keys(index).sort((a, b) => 
+
+    const names = Object.keys(index).sort((a, b) =>
       a.localeCompare(b, 'en', { sensitivity: 'base' })
     )
-    
+
     const { root } = buildGeositeTree(names)
-    const filtered = filterTreeBySearch(root, geositeTreeSearch)
-    
+    const filtered = filterTreeBySearch(root, debouncedTreeSearch)
+
     return { treeRoot: root, filteredRoot: filtered }
-  }, [index, geositeTreeSearch])
+  }, [index, debouncedTreeSearch])
 
   const handleExpandAll = () => {
     if (!treeRoot) return
@@ -86,8 +100,8 @@ export const GeositeTree: React.FC = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
               placeholder="搜索 GeoSite 名称，例如 APPLE 或 MEDIA"
-              value={geositeTreeSearch}
-              onChange={(e) => setGeositeTreeSearch(e.target.value)}
+              value={localTreeSearch}
+              onChange={(e) => setLocalTreeSearch(e.target.value)}
               className="pl-10"
             />
           </div>
