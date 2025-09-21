@@ -841,7 +841,8 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
 
       const buildGeositeTree = function (names) {
         const root = makeTreeNode("", "");
-        for (const name of names) {
+        for (var i = 0; i < names.length; i++) {
+          const name = names[i];
           const parts = splitSegments(name);
           const segments = parts.length ? parts : [name];
           let current = root;
@@ -864,7 +865,9 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           if (node.children.size > 0 && node.path) {
             branchPaths.push(node.path);
           }
-          for (const child of node.children.values()) {
+          var childrenArray = Array.from(node.children.values());
+          for (var j = 0; j < childrenArray.length; j++) {
+            var child = childrenArray[j];
             collect(child);
           }
         };
@@ -1027,11 +1030,14 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
 
         getStats: function() {
           const stats = {};
-          for (const [key, values] of Object.entries(this.metrics)) {
+          var entries = Object.keys(this.metrics);
+          for (var i = 0; i < entries.length; i++) {
+            var key = entries[i];
+            var values = this.metrics[key];
             if (Array.isArray(values) && values.length > 0 && typeof values[0] === 'number') {
-              const avg = values.reduce((a, b) => a + b, 0) / values.length;
-              const max = Math.max(...values);
-              const min = Math.min(...values);
+              const avg = values.reduce(function(a, b) { return a + b; }, 0) / values.length;
+              const max = Math.max.apply(Math, values);
+              const min = Math.min.apply(Math, values);
               stats[key] = { avg: avg.toFixed(2), max: max.toFixed(2), min: min.toFixed(2), count: values.length };
             }
           }
@@ -1593,7 +1599,8 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
         const renderNode = function (node, depth) {
           const children = sortChildren(node);
           const childElements = [];
-          for (const child of children) {
+          for (var i = 0; i < children.length; i++) {
+            var child = children[i];
             const childEl = renderNode(child, depth + 1);
             if (childEl) {
               childElements.push(childEl);
@@ -1681,7 +1688,8 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
 
         const topLevel = sortChildren(state.geosite.treeRoot);
         let appended = false;
-        for (const child of topLevel) {
+        for (var i = 0; i < topLevel.length; i++) {
+          var child = topLevel[i];
           const el = renderNode(child, 0);
           if (el) {
             container.appendChild(el);
@@ -1730,7 +1738,8 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
         });
       };
 
-      const loadGeositeDetail = function (name, resetPagination = true) {
+      const loadGeositeDetail = function (name, resetPagination) {
+        if (typeof resetPagination === 'undefined') resetPagination = true;
         const loadTimer = performanceMonitor.startTimer('load');
         const attribute = (state.geosite.attribute || "").trim();
         const search = (state.geosite.ruleFilter || "").trim();
@@ -1751,7 +1760,7 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
         // Clean old cache entries to prevent memory leaks
         if (cache.size > 50) {
           const keys = Array.from(cache.keys());
-          keys.slice(0, 25).forEach(key => cache.delete(key));
+          keys.slice(0, 25).forEach(function(key) { cache.delete(key); });
         }
 
         if (state.geosite.isLoading) return;
@@ -1811,12 +1820,18 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
 
               // Create modified data object for rendering
               const renderData = {
-                ...data,
+                name: data.name,
+                requested: data.requested,
+                url: data.url,
+                segments: data.segments,
+                filters: data.filters,
+                search: data.search,
+                pagination: data.pagination,
+                attributes: data.attributes,
                 rules: state.geosite.allRulesLoaded,
                 stats: {
-                  ...data.stats,
+                  overall: data.stats.overall,
                   filtered: {
-                    ...data.stats.filtered,
                     total: state.geosite.totalRules
                   }
                 }
@@ -2338,8 +2353,10 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
 
       // Expose performance monitoring to console for debugging
       window.geositePerformance = {
-        getStats: () => performanceMonitor.getStats(),
-        clearStats: () => {
+        getStats: function() {
+          return performanceMonitor.getStats();
+        },
+        clearStats: function() {
           for (const key in performanceMonitor.metrics) {
             if (Array.isArray(performanceMonitor.metrics[key])) {
               performanceMonitor.metrics[key] = [];
