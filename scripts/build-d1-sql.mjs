@@ -163,6 +163,55 @@ const buildGeositeStatements = async () => {
   statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_type_idx ON geosite_rule(type, value_lower);");
   statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_list_idx ON geosite_rule(list_id);");
   statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_rev_idx ON geosite_rule(value_rev);");
+  statements.push(
+    "CREATE VIRTUAL TABLE IF NOT EXISTS geosite_rule_fts USING fts5(\n" +
+      "  value,\n" +
+      "  value_rev,\n" +
+      "  attrs,\n" +
+      "  list_name,\n" +
+      "  list_id UNINDEXED,\n" +
+      "  type UNINDEXED,\n" +
+      "  tokenize = 'unicode61 remove_diacritics 2'\n" +
+      ");"
+  );
+  statements.push("DROP TRIGGER IF EXISTS geosite_rule_ai;");
+  statements.push(
+    "CREATE TRIGGER geosite_rule_ai AFTER INSERT ON geosite_rule BEGIN\n" +
+      "  INSERT INTO geosite_rule_fts(rowid, value, value_rev, attrs, list_name, list_id, type)\n" +
+      "  VALUES (\n" +
+      "    new.rowid,\n" +
+      "    new.value,\n" +
+      "    COALESCE(new.value_rev, ''),\n" +
+      "    new.attrs,\n" +
+      "    COALESCE((SELECT name FROM geosite_list WHERE id = new.list_id), ''),\n" +
+      "    new.list_id,\n" +
+      "    new.type\n" +
+      "  );\n" +
+      "END;"
+  );
+  statements.push("DROP TRIGGER IF EXISTS geosite_rule_ad;");
+  statements.push(
+    "CREATE TRIGGER geosite_rule_ad AFTER DELETE ON geosite_rule BEGIN\n" +
+      "  INSERT INTO geosite_rule_fts(geosite_rule_fts, rowid) VALUES ('delete', old.rowid);\n" +
+      "END;"
+  );
+  statements.push("DROP TRIGGER IF EXISTS geosite_rule_au;");
+  statements.push(
+    "CREATE TRIGGER geosite_rule_au AFTER UPDATE ON geosite_rule BEGIN\n" +
+      "  INSERT INTO geosite_rule_fts(geosite_rule_fts, rowid) VALUES ('delete', old.rowid);\n" +
+      "  INSERT INTO geosite_rule_fts(rowid, value, value_rev, attrs, list_name, list_id, type)\n" +
+      "  VALUES (\n" +
+      "    new.rowid,\n" +
+      "    new.value,\n" +
+      "    COALESCE(new.value_rev, ''),\n" +
+      "    new.attrs,\n" +
+      "    COALESCE((SELECT name FROM geosite_list WHERE id = new.list_id), ''),\n" +
+      "    new.list_id,\n" +
+      "    new.type\n" +
+      "  );\n" +
+      "END;"
+  );
+  statements.push("INSERT INTO geosite_rule_fts(geosite_rule_fts) VALUES ('delete-all');");
   statements.push("DELETE FROM geosite_rule;");
   statements.push("DELETE FROM geosite_list;");
 

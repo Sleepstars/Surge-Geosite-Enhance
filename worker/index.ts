@@ -97,6 +97,7 @@ const reverseDomainValue = (value: string): string | null => {
 };
 
 let geositeValueRevAvailable: boolean | null = null;
+let geositeFtsAvailable: boolean | null = null;
 let geoipCidrLowerAvailable: boolean | null = null;
 
 const buildSearchTokens = (query: string): string[] => {
@@ -113,6 +114,19 @@ const buildSearchTokens = (query: string): string[] => {
   for (const token of queryLower.split(/[^a-z0-9]+/)) push(token);
   for (const token of hostLower.split(/[^a-z0-9]+/)) push(token);
   return Array.from(set);
+};
+
+const sanitizeFtsToken = (token: string): string => {
+  return token.replace(/[^a-z0-9]/gi, "").toLowerCase();
+};
+
+const buildFtsMatchQuery = (tokens: string[]): string | null => {
+  const cleaned = tokens
+    .map(sanitizeFtsToken)
+    .filter((token) => token.length >= 2)
+    .map((token) => `${token}*`);
+  if (cleaned.length === 0) return null;
+  return cleaned.join(" ");
 };
 
 const bigIntToHex = (value: bigint): string => {
@@ -510,6 +524,7 @@ const searchGeositeRules = async (
   }
   const domainRevValues = Array.from(domainRevSet);
   const likePatterns = tokens.map((token) => `%${escapeLikePattern(token)}%`);
+  const ftsQuery = buildFtsMatchQuery(tokens);
 
   const overscan = Math.max(limit * 3, limit + 20);
   const matches: GeositeSearchMatch[] = [];
@@ -592,16 +607,39 @@ const searchGeositeRules = async (
       }
     }
 
-    if (likePatterns.length > 0) {
-      for (const pattern of likePatterns) {
-        const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n          FROM geosite_rule r\n          JOIN geosite_list l ON l.id = r.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND r.type = 'regexp'\n            AND r.value_lower LIKE ? ESCAPE '\\'\n          LIMIT ${chunk.length * 20}`;
-        const result = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
+    if (ftsQuery && geositeFtsAvailable !== false) {
+      const ftsLimit = Math.min(overscan, Math.max(limit * 2, chunk.length * 40));
+      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs, bm25(fts) AS rank\n        FROM geosite_rule_fts fts\n        JOIN geosite_rule r ON r.rowid = fts.rowid\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND fts MATCH ?\n        ORDER BY rank\n        LIMIT ${ftsLimit}`;
+      try {
+        const result = await db.prepare(sql).bind(...nameParams, ftsQuery).all<any>();
+        geositeFtsAvailable = true;
+        if (processRows(result.results || [])) break;
+      } catch (error) {
+        if (
+          geositeFtsAvailable !== false &&
+          error instanceof Error &&
+          /geosite_rule_fts/i.test(error.message)
+        ) {
+          geositeFtsAvailable = false;
+        } else {
+          throw error;
+        }
+      }
+    }
+
+    const shouldRunLike = !ftsQuery || geositeFtsAvailable === false;
+    if (shouldRunLike) {
+      if (likePatterns.length > 0) {
+        for (const pattern of likePatterns) {
+          const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n            FROM geosite_rule r\n            JOIN geosite_list l ON l.id = r.list_id\n            WHERE l.name IN (${namePlaceholders})\n              AND r.type = 'regexp'\n              AND r.value_lower LIKE ? ESCAPE '\\'\n            LIMIT ${chunk.length * 20}`;
+          const result = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
+          if (processRows(result.results || [])) break;
+        }
+      } else {
+        const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n          FROM geosite_rule r\n          JOIN geosite_list l ON l.id = r.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND r.type = 'regexp'\n          LIMIT ${chunk.length * 10}`;
+        const result = await db.prepare(sql).bind(...nameParams).all<any>();
         if (processRows(result.results || [])) break;
       }
-    } else {
-      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type = 'regexp'\n        LIMIT ${chunk.length * 10}`;
-      const result = await db.prepare(sql).bind(...nameParams).all<any>();
-      if (processRows(result.results || [])) break;
     }
 
     if (matches.length >= overscan) break;
