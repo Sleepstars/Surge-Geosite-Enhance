@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useVirtualizer } from '@tanstack/react-virtual'
-import { Search, Copy, Download, BarChart3 } from 'lucide-react'
+import { Search, Copy, BarChart3 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card'
 import { Input } from '../ui/Input'
 import { Button } from '../ui/Button'
@@ -24,6 +24,7 @@ export const GeositeRuleList: React.FC = () => {
   } = useAppStore()
 
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle')
+  const [srsCopyStatus, setSrsCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle')
   const [localRuleFilter, setLocalRuleFilter] = useState(geositeRuleFilter)
   const [localAttributeFilter, setLocalAttributeFilter] = useState(geositeAttributeFilter)
   const [cachedDetail, setCachedDetail] = useState<GeositeDetail | null>(null)
@@ -84,6 +85,22 @@ export const GeositeRuleList: React.FC = () => {
     return activeDetail.rules
   }, [activeDetail])
 
+  const srsUrl = useMemo(() => {
+    if (!activeDetail?.url) return null
+    const filterSuffix = activeDetail.filters.length > 0 ? `@${activeDetail.filters.join(',')}` : ''
+    const nameWithFilter = `${activeDetail.name}${filterSuffix}`
+
+    try {
+      const url = new URL(activeDetail.url)
+      return `${url.origin}/srs-geosite/${nameWithFilter}.srs`
+    } catch {
+      if (activeDetail.url.includes('/geosite/')) {
+        return `${activeDetail.url.replace('/geosite/', '/srs-geosite/')}${filterSuffix}.srs`
+      }
+      return null
+    }
+  }, [activeDetail])
+
   const virtualizer = useVirtualizer({
     count: filteredRules.length,
     getScrollElement: () => parentRef.current,
@@ -101,6 +118,19 @@ export const GeositeRuleList: React.FC = () => {
     } catch {
       setCopyStatus('error')
       setTimeout(() => setCopyStatus('idle'), 2000)
+    }
+  }
+
+  const handleCopySrsUrl = async () => {
+    if (!srsUrl) return
+
+    try {
+      await navigator.clipboard.writeText(srsUrl)
+      setSrsCopyStatus('copied')
+      setTimeout(() => setSrsCopyStatus('idle'), 2000)
+    } catch {
+      setSrsCopyStatus('error')
+      setTimeout(() => setSrsCopyStatus('idle'), 2000)
     }
   }
 
@@ -173,16 +203,21 @@ export const GeositeRuleList: React.FC = () => {
                   <Copy className="w-4 h-4" />
                   {copyStatus === 'copied' ? '已复制' : copyStatus === 'error' ? '复制失败' : '复制链接'}
                 </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  asChild
-                >
-                  <a href={activeDetail.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
-                    <Download className="w-4 h-4" />
-                    下载
-                  </a>
-                </Button>
+                {srsUrl && (
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={handleCopySrsUrl}
+                    className="flex items-center gap-2"
+                  >
+                    <Copy className="w-4 h-4" />
+                    {srsCopyStatus === 'copied'
+                      ? '已复制'
+                      : srsCopyStatus === 'error'
+                        ? '复制失败'
+                        : '复制 SRS 规则链接'}
+                  </Button>
+                )}
               </>
             )}
           </div>
