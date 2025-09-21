@@ -69,6 +69,21 @@ const searchGeosite = async (payload: {
   return response.json()
 }
 
+const searchGeositeFast = async (payload: {
+  query: string
+  attributes?: string
+  names?: string[]
+  limit?: number
+}): Promise<GeositeSearchResponse> => {
+  const response = await fetch(`${API_BASE}/api/search/geosite/fast`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
+  if (!response.ok) throw new Error('Failed to search geosite (fast)')
+  return response.json()
+}
+
 const searchGeoip = async (payload: {
   query: string
   version?: 'ipv4' | 'ipv6' | 'both'
@@ -126,6 +141,12 @@ export const useGeoipDetail = (name: string, filter?: string) => {
 export const useGeositeSearch = () => {
   return useMutation({
     mutationFn: searchGeosite,
+  })
+}
+
+export const useGeositeFastSearch = () => {
+  return useMutation({
+    mutationFn: searchGeositeFast,
   })
 }
 

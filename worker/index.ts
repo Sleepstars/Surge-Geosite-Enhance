@@ -432,6 +432,38 @@ type GeositeRuleMatchMeta = {
   matched: string;
 };
 
+// Fast evaluation function for suffix-only matching
+const evaluateGeositeRuleFast = (
+  rule: RuleItem,
+  rawQuery: string,
+  hostLower: string
+): GeositeRuleMatchMeta | null => {
+  const value = rule.value.trim();
+  const valueLower = value.toLowerCase();
+
+  switch (rule.type) {
+    case "full": {
+      if (hostLower && hostLower === valueLower) {
+        return { reason: "exact host", score: 110, matched: value };
+      }
+      break;
+    }
+    case "domain": {
+      if (hostLower) {
+        if (hostLower === valueLower) {
+          return { reason: "domain suffix", score: 105, matched: value };
+        }
+        if (hostLower.endsWith(`.${valueLower}`)) {
+          return { reason: "domain suffix", score: 95, matched: value };
+        }
+      }
+      break;
+    }
+    // Skip regexp rules in fast search for performance
+  }
+  return null;
+};
+
 const evaluateGeositeRule = (
   rule: RuleItem,
   rawQuery: string,
@@ -492,6 +524,162 @@ type GeositeSearchMatch = {
   reason: string;
   score: number;
   matched: string;
+};
+
+// Fast search function for suffix-only domain matching
+const searchGeositeRulesFast = async (
+  query: string,
+  attributeFilters: string[],
+  names: string[],
+  limit: number,
+  env: EnvBindings,
+  indexMap: Record<string, string>,
+  maxLists: number
+): Promise<{ matches: GeositeSearchMatch[]; scanned: number; searchMode: string }> => {
+  const db = ensureDb(env);
+  const trimmedQuery = query.trim();
+  const hostLower = extractHostCandidate(trimmedQuery).toLowerCase();
+
+  if (!hostLower) {
+    return { matches: [], scanned: 0, searchMode: "fast-suffix" };
+  }
+
+  // For fast search, we only use the exact domain and its immediate suffix
+  const domainCandidates = new Set<string>();
+  domainCandidates.add(hostLower);
+
+  // Only add the immediate parent domain for suffix matching
+  const parts = hostLower.split(".");
+  if (parts.length > 1) {
+    domainCandidates.add(parts.slice(1).join("."));
+  }
+
+  const domainValues = Array.from(domainCandidates).filter((item) => item.length > 0);
+  const domainRevSet = new Set<string>();
+  const legacyDomainValues: string[] = [];
+
+  for (const value of domainValues) {
+    const reversed = reverseDomainValue(value);
+    if (reversed) {
+      domainRevSet.add(reversed);
+    } else {
+      legacyDomainValues.push(value);
+    }
+  }
+
+  const domainRevValues = Array.from(domainRevSet);
+  const overscan = Math.max(limit * 2, limit + 10); // Smaller overscan for fast search
+  const matches: GeositeSearchMatch[] = [];
+  const seen = new Set<string>();
+  let scanned = 0;
+  const maxScan = Math.max(1, Math.min(Math.floor(maxLists) || 1, names.length));
+  const chunks = chunkArray(names.slice(0, maxScan), 40);
+
+  const processRows = (rows: any[]) => {
+    for (const row of rows) {
+      if (!row) continue;
+      const rule: RuleItem = {
+        type: row.type,
+        value: row.value,
+        attrs: parseAttrsJson(row.attrs),
+      };
+      if (!ruleMatchesAttributes(rule, attributeFilters)) continue;
+
+      // Fast evaluation - only exact matches and suffix matches
+      const meta = evaluateGeositeRuleFast(rule, trimmedQuery, hostLower);
+      if (!meta) continue;
+
+      const key = `${row.list}:::${rule.type}:::${rule.value}:::${meta.matched}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      matches.push({
+        list: row.list,
+        url: indexMap[row.list] || undefined,
+        rule,
+        reason: meta.reason,
+        score: meta.score,
+        matched: meta.matched,
+      });
+      if (matches.length >= overscan) return true;
+    }
+    return false;
+  };
+
+  for (const chunk of chunks) {
+    scanned += chunk.length;
+    const nameParams = chunk;
+    const namePlaceholders = chunk.map(() => "?").join(",");
+
+    // Try reversed domain lookup first (most efficient)
+    let attemptedValueRev = false;
+    const canUseValueRev = geositeValueRevAvailable !== false && domainRevValues.length > 0;
+    if (canUseValueRev) {
+      const domainPlaceholders = domainRevValues.map(() => "?").join(",");
+      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs
+        FROM geosite_rule r
+        JOIN geosite_list l ON l.id = r.list_id
+        WHERE l.name IN (${namePlaceholders})
+          AND r.type IN ('domain','full')
+          AND r.value_rev IN (${domainPlaceholders})`;
+      try {
+        const result = await db.prepare(sql).bind(...nameParams, ...domainRevValues).all<any>();
+        geositeValueRevAvailable = true;
+        attemptedValueRev = true;
+        if (processRows(result.results || [])) break;
+      } catch (error) {
+        if (
+          geositeValueRevAvailable !== false &&
+          error instanceof Error &&
+          /value_rev/i.test(error.message)
+        ) {
+          geositeValueRevAvailable = false;
+        } else {
+          throw error;
+        }
+      }
+    }
+
+    // Fallback to value_lower if needed
+    const shouldFallbackToLower =
+      geositeValueRevAvailable === false ||
+      (!attemptedValueRev && domainValues.length > 0) ||
+      (geositeValueRevAvailable !== false && legacyDomainValues.length > 0);
+
+    if (shouldFallbackToLower) {
+      const fallbackValues = geositeValueRevAvailable === false
+        ? domainValues
+        : domainRevValues.length === 0
+          ? domainValues
+          : legacyDomainValues;
+      if (fallbackValues.length > 0) {
+        const domainPlaceholders = fallbackValues.map(() => "?").join(",");
+        const sql = `SELECT l.name AS list, r.type, r.value, r.attrs
+          FROM geosite_rule r
+          JOIN geosite_list l ON l.id = r.list_id
+          WHERE l.name IN (${namePlaceholders})
+            AND r.type IN ('domain','full')
+            AND r.value_lower IN (${domainPlaceholders})`;
+        const result = await db.prepare(sql).bind(...nameParams, ...fallbackValues).all<any>();
+        if (processRows(result.results || [])) break;
+      }
+    }
+
+    if (matches.length >= overscan) break;
+  }
+
+  matches.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    if (a.list.toLowerCase() === b.list.toLowerCase()) {
+      return a.rule.value.localeCompare(b.rule.value, "en", { sensitivity: "base" });
+    }
+    return a.list.localeCompare(b.list, "en", { sensitivity: "base" });
+  });
+
+  return {
+    matches: matches.slice(0, limit),
+    scanned,
+    searchMode: "fast-suffix"
+  };
 };
 
 const searchGeositeRules = async (
@@ -1281,6 +1469,83 @@ app.post("/api/search/geosite", async (c) => {
       prioritized,
     },
     matches,
+    searchMode: "comprehensive",
+  });
+});
+
+app.post("/api/search/geosite/fast", async (c) => {
+  const env = ((c as any).env || {}) as EnvBindings;
+  let payload: any;
+  try {
+    payload = await c.req.json();
+  } catch (error) {
+    throw new HTTPException(400, { message: "Invalid JSON payload" });
+  }
+  const query = String(payload?.query ?? "").trim();
+  if (!query) {
+    throw new HTTPException(400, { message: "Missing query" });
+  }
+
+  // Validate that query looks like a domain for fast search
+  const hostCandidate = extractHostCandidate(query);
+  if (!hostCandidate || hostCandidate.length < 3) {
+    throw new HTTPException(400, { message: "Fast search requires a valid domain name" });
+  }
+
+  const filters = normalizeAttributeFilters(payload?.attributes ?? payload?.filter);
+  const indexMap = await fetchIndexMap("geosite", env);
+  const totalAvailable = Object.keys(indexMap).length;
+  const requestedNames: string[] = Array.isArray(payload?.names)
+    ? payload.names.map((n: unknown) => String(n).trim()).filter((n: string) => n.length > 0)
+    : [];
+  const scopedNames = requestedNames.length
+    ? requestedNames.filter((name) => indexMap[name] !== undefined)
+    : Object.keys(indexMap);
+  if (scopedNames.length === 0) {
+    throw new HTTPException(400, { message: "No valid geosite names in scope" });
+  }
+  const limit = clamp(Number(payload?.limit ?? 50), 5, 200);
+
+  // For fast search, prioritize lists that might contain the domain
+  const domainParts = hostCandidate.toLowerCase().split(".");
+  const prioritized = scopedNames.filter((name) => {
+    const lower = name.toLowerCase();
+    return domainParts.some((part) => part.length > 2 && lower.includes(part));
+  });
+
+  const maxLists = clamp(Number(payload?.lists ?? 400), 50, 1000); // Smaller default for fast search
+  const dedupedNames = Array.from(new Map([...prioritized, ...scopedNames].map((n) => [n, n])).values());
+  const namesForSearch = dedupedNames.slice(0, Math.min(maxLists, dedupedNames.length));
+
+  const startTime = Date.now();
+  const { matches, scanned, searchMode } = await searchGeositeRulesFast(
+    query,
+    filters,
+    namesForSearch,
+    limit,
+    env,
+    indexMap,
+    namesForSearch.length
+  );
+  const searchTime = Date.now() - startTime;
+
+  return c.json({
+    query,
+    filters,
+    limit,
+    scope: {
+      requested: requestedNames,
+      used: namesForSearch.length,
+      total: totalAvailable,
+      scanned,
+      prioritized,
+    },
+    matches,
+    searchMode,
+    performance: {
+      searchTimeMs: searchTime,
+      avgTimePerList: namesForSearch.length > 0 ? Math.round(searchTime / namesForSearch.length * 100) / 100 : 0,
+    },
   });
 });
 

@@ -78,6 +78,11 @@ export interface SearchResponse<T> {
     prioritized: string[]
   }
   matches: T[]
+  searchMode?: string
+  performance?: {
+    searchTimeMs: number
+    avgTimePerList: number
+  }
 }
 
 export interface GeositeSearchResponse extends SearchResponse<GeositeSearchMatch> {
