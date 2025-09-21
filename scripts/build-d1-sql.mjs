@@ -132,8 +132,10 @@ const buildGeositeStatements = async () => {
   const files = await getGeositeFiles();
   const statements = [];
   let duplicateRuleCount = 0;
+  statements.push("DROP TABLE IF EXISTS geosite_rule;");
+  statements.push("DROP TABLE IF EXISTS geosite_list;");
   statements.push(
-    "CREATE TABLE IF NOT EXISTS geosite_list (\n" +
+    "CREATE TABLE geosite_list (\n" +
       "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
       "  name TEXT UNIQUE NOT NULL,\n" +
       "  rule_count INTEGER NOT NULL,\n" +
@@ -141,7 +143,7 @@ const buildGeositeStatements = async () => {
       ");"
   );
   statements.push(
-    "CREATE TABLE IF NOT EXISTS geosite_rule (\n" +
+    "CREATE TABLE geosite_rule (\n" +
       "  list_id INTEGER NOT NULL,\n" +
       "  type TEXT NOT NULL,\n" +
       "  value TEXT NOT NULL,\n" +
@@ -152,12 +154,10 @@ const buildGeositeStatements = async () => {
       "  FOREIGN KEY (list_id) REFERENCES geosite_list(id)\n" +
       ");"
   );
-  statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_value_idx ON geosite_rule(value_lower);");
-  statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_type_idx ON geosite_rule(type, value_lower);");
-  statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_list_idx ON geosite_rule(list_id);");
-  statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_rev_idx ON geosite_rule(value_rev);");
-  statements.push("DELETE FROM geosite_rule;");
-  statements.push("DELETE FROM geosite_list;");
+  statements.push("CREATE INDEX geosite_rule_value_idx ON geosite_rule(value_lower);");
+  statements.push("CREATE INDEX geosite_rule_type_idx ON geosite_rule(type, value_lower);");
+  statements.push("CREATE INDEX geosite_rule_list_idx ON geosite_rule(list_id);");
+  statements.push("CREATE INDEX geosite_rule_rev_idx ON geosite_rule(value_rev);");
 
   let listId = 0;
   const ruleRows = [];
@@ -241,8 +241,10 @@ const buildGeositeStatements = async () => {
 const buildGeoipStatements = async () => {
   const files = await getGeoipFiles();
   const statements = [];
+  statements.push("DROP TABLE IF EXISTS geoip_cidr;");
+  statements.push("DROP TABLE IF EXISTS geoip_list;");
   statements.push(
-    "CREATE TABLE IF NOT EXISTS geoip_list (\n" +
+    "CREATE TABLE geoip_list (\n" +
       "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
       "  name TEXT UNIQUE NOT NULL,\n" +
       "  cidr4_count INTEGER NOT NULL,\n" +
@@ -250,7 +252,7 @@ const buildGeoipStatements = async () => {
       ");"
   );
   statements.push(
-    "CREATE TABLE IF NOT EXISTS geoip_cidr (\n" +
+    "CREATE TABLE geoip_cidr (\n" +
       "  list_id INTEGER NOT NULL,\n" +
       "  version INTEGER NOT NULL,\n" +
       "  cidr TEXT NOT NULL,\n" +
@@ -264,12 +266,10 @@ const buildGeoipStatements = async () => {
       "  FOREIGN KEY (list_id) REFERENCES geoip_list(id)\n" +
       ");"
   );
-  statements.push("CREATE INDEX IF NOT EXISTS geoip_cidr_v4_idx ON geoip_cidr(version, start_v4, end_v4);");
-  statements.push("CREATE INDEX IF NOT EXISTS geoip_cidr_v6_idx ON geoip_cidr(version, start_hex, end_hex);");
-  statements.push("CREATE INDEX IF NOT EXISTS geoip_cidr_list_idx ON geoip_cidr(list_id);");
-  statements.push("CREATE INDEX IF NOT EXISTS geoip_cidr_lower_idx ON geoip_cidr(cidr_lower);");
-  statements.push("DELETE FROM geoip_cidr;");
-  statements.push("DELETE FROM geoip_list;");
+  statements.push("CREATE INDEX geoip_cidr_v4_idx ON geoip_cidr(version, start_v4, end_v4);");
+  statements.push("CREATE INDEX geoip_cidr_v6_idx ON geoip_cidr(version, start_hex, end_hex);");
+  statements.push("CREATE INDEX geoip_cidr_list_idx ON geoip_cidr(list_id);");
+  statements.push("CREATE INDEX geoip_cidr_lower_idx ON geoip_cidr(cidr_lower);");
 
   let listId = 0;
   const cidrRows = [];
