@@ -201,7 +201,7 @@ export const GeositeRuleList: React.FC = () => {
                   className="flex items-center gap-2"
                 >
                   <Copy className="w-4 h-4" />
-                  {copyStatus === 'copied' ? '已复制' : copyStatus === 'error' ? '复制失败' : '复制 Surge 规则链接'}
+                  {copyStatus === 'copied' ? '已复制' : copyStatus === 'error' ? '复制失败' : 'Surge 规则'}
                 </Button>
                 {srsUrl && (
                   <Button
@@ -215,7 +215,7 @@ export const GeositeRuleList: React.FC = () => {
                       ? '已复制'
                       : srsCopyStatus === 'error'
                         ? '复制失败'
-                        : '复制 SRS 规则链接'}
+                        : 'SRS 规则'}
                   </Button>
                 )}
               </>
