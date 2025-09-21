@@ -34,6 +34,14 @@ const chunkArray = (arr, size) => {
   return chunks;
 };
 
+const reverseDomain = (value) => {
+  const trimmed = value.trim().replace(/^\*\./, "").replace(/\.+$/, "");
+  if (!trimmed) return null;
+  const parts = trimmed.split(".").filter(Boolean);
+  if (parts.length === 0) return null;
+  return parts.reverse().join(".");
+};
+
 const getGeositeFiles = async () => {
   const entries = await fsp.readdir(GEOSITE_JSON_DIR, { withFileTypes: true }).catch(() => []);
   return entries
@@ -138,6 +146,7 @@ const buildGeositeStatements = async () => {
       "  type TEXT NOT NULL,\n" +
       "  value TEXT NOT NULL,\n" +
       "  value_lower TEXT NOT NULL,\n" +
+      "  value_rev TEXT,\n" +
       "  attrs TEXT NOT NULL,\n" +
       "  PRIMARY KEY (list_id, type, value),\n" +
       "  FOREIGN KEY (list_id) REFERENCES geosite_list(id)\n" +
@@ -146,6 +155,7 @@ const buildGeositeStatements = async () => {
   statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_value_idx ON geosite_rule(value_lower);");
   statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_type_idx ON geosite_rule(type, value_lower);");
   statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_list_idx ON geosite_rule(list_id);");
+  statements.push("CREATE INDEX IF NOT EXISTS geosite_rule_rev_idx ON geosite_rule(value_rev);");
   statements.push("DELETE FROM geosite_rule;");
   statements.push("DELETE FROM geosite_list;");
 
@@ -171,10 +181,14 @@ const buildGeositeStatements = async () => {
         attrsLower.forEach((attr) => existing.attrs.add(attr));
         duplicateRuleCount += 1;
       } else {
+        const valueLower = value.toLowerCase();
+        const reverseForType = type === "domain" || type === "full";
+        const valueRev = reverseForType ? reverseDomain(valueLower) : null;
         ruleMap.set(key, {
           type,
           value,
-          valueLower: value.toLowerCase(),
+          valueLower,
+          valueRev,
           attrs: new Set(attrsLower),
         });
       }
@@ -196,6 +210,7 @@ const buildGeositeStatements = async () => {
         type: entry.type,
         value: entry.value,
         valueLower: entry.valueLower,
+        valueRev: entry.valueRev,
         attrsJson,
       });
     }
@@ -206,13 +221,13 @@ const buildGeositeStatements = async () => {
     const values = chunk
       .map(
         (row) =>
-          `(${row.listId}, '${escapeSql(row.type)}', '${escapeSql(row.value)}', '${escapeSql(row.valueLower)}', '${escapeSql(
-            row.attrsJson
-      )}')`
+          `(${row.listId}, '${escapeSql(row.type)}', '${escapeSql(row.value)}', '${escapeSql(row.valueLower)}', ${
+            row.valueRev ? `'${escapeSql(row.valueRev)}'` : "NULL"
+          }, '${escapeSql(row.attrsJson)}')`
       )
       .join(",\n");
     statements.push(
-      `INSERT INTO geosite_rule (list_id, type, value, value_lower, attrs) VALUES\n${values};`
+      `INSERT INTO geosite_rule (list_id, type, value, value_lower, value_rev, attrs) VALUES\n${values};`
     );
   }
 
@@ -239,6 +254,7 @@ const buildGeoipStatements = async () => {
       "  list_id INTEGER NOT NULL,\n" +
       "  version INTEGER NOT NULL,\n" +
       "  cidr TEXT NOT NULL,\n" +
+      "  cidr_lower TEXT NOT NULL,\n" +
       "  start_v4 INTEGER,\n" +
       "  end_v4 INTEGER,\n" +
       "  start_hex TEXT,\n" +
@@ -251,6 +267,7 @@ const buildGeoipStatements = async () => {
   statements.push("CREATE INDEX IF NOT EXISTS geoip_cidr_v4_idx ON geoip_cidr(version, start_v4, end_v4);");
   statements.push("CREATE INDEX IF NOT EXISTS geoip_cidr_v6_idx ON geoip_cidr(version, start_hex, end_hex);");
   statements.push("CREATE INDEX IF NOT EXISTS geoip_cidr_list_idx ON geoip_cidr(list_id);");
+  statements.push("CREATE INDEX IF NOT EXISTS geoip_cidr_lower_idx ON geoip_cidr(cidr_lower);");
   statements.push("DELETE FROM geoip_cidr;");
   statements.push("DELETE FROM geoip_list;");
 
@@ -275,6 +292,7 @@ const buildGeoipStatements = async () => {
         listId,
         version: 4,
         cidr,
+        cidrLower: cidr.toLowerCase(),
         start_v4: range.start,
         end_v4: range.end,
         start_hex: null,
@@ -289,6 +307,7 @@ const buildGeoipStatements = async () => {
         listId,
         version: 6,
         cidr,
+        cidrLower: cidr.toLowerCase(),
         start_v4: null,
         end_v4: null,
         start_hex: range.startHex,
@@ -306,11 +325,13 @@ const buildGeoipStatements = async () => {
         const endV4 = row.end_v4 == null ? "NULL" : row.end_v4;
         const startHex = row.start_hex == null ? "NULL" : `'${escapeSql(row.start_hex)}'`;
         const endHex = row.end_hex == null ? "NULL" : `'${escapeSql(row.end_hex)}'`;
-        return `(${row.listId}, ${row.version}, '${escapeSql(row.cidr)}', ${startV4}, ${endV4}, ${startHex}, ${endHex}, ${row.prefix})`;
+        return `(${row.listId}, ${row.version}, '${escapeSql(row.cidr)}', '${escapeSql(
+          row.cidrLower
+        )}', ${startV4}, ${endV4}, ${startHex}, ${endHex}, ${row.prefix})`;
       })
       .join(",\n");
     statements.push(
-      `INSERT INTO geoip_cidr (list_id, version, cidr, start_v4, end_v4, start_hex, end_hex, prefix) VALUES\n${values};`
+      `INSERT INTO geoip_cidr (list_id, version, cidr, cidr_lower, start_v4, end_v4, start_hex, end_hex, prefix) VALUES\n${values};`
     );
   }
 

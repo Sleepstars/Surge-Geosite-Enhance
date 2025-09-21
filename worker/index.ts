@@ -88,6 +88,17 @@ const chunkArray = <T>(items: T[], size: number): T[][] => {
   return chunks;
 };
 
+const reverseDomainValue = (value: string): string | null => {
+  const trimmed = value.trim().replace(/^\*\./, "").replace(/\.+$/, "");
+  if (!trimmed) return null;
+  const parts = trimmed.split(".").filter((segment) => segment.length > 0);
+  if (parts.length === 0) return null;
+  return parts.reverse().join(".");
+};
+
+let geositeValueRevAvailable: boolean | null = null;
+let geoipCidrLowerAvailable: boolean | null = null;
+
 const buildSearchTokens = (query: string): string[] => {
   const set = new Set<string>();
   const trimmed = query.trim();
@@ -487,6 +498,17 @@ const searchGeositeRules = async (
   if (hostLower) buildDomainSuffixes(hostLower).forEach((suffix) => domainCandidates.add(suffix.toLowerCase()));
   if (queryLower) domainCandidates.add(queryLower);
   const domainValues = Array.from(domainCandidates).filter((item) => item.length > 0);
+  const domainRevSet = new Set<string>();
+  const legacyDomainValues: string[] = [];
+  for (const value of domainValues) {
+    const reversed = reverseDomainValue(value);
+    if (reversed) {
+      domainRevSet.add(reversed);
+    } else {
+      legacyDomainValues.push(value);
+    }
+  }
+  const domainRevValues = Array.from(domainRevSet);
   const likePatterns = tokens.map((token) => `%${escapeLikePattern(token)}%`);
 
   const overscan = Math.max(limit * 3, limit + 20);
@@ -528,11 +550,46 @@ const searchGeositeRules = async (
     const namePlaceholders = chunk.map(() => "?").join(",");
     const nameParams = chunk;
 
-    if (domainValues.length > 0) {
-      const domainPlaceholders = domainValues.map(() => "?").join(",");
-      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type IN ('domain','full')\n          AND r.value_lower IN (${domainPlaceholders})`;
-      const result = await db.prepare(sql).bind(...nameParams, ...domainValues).all<any>();
-      if (processRows(result.results || [])) break;
+    let attemptedValueRev = false;
+    const canUseValueRev = geositeValueRevAvailable !== false && domainRevValues.length > 0;
+    if (canUseValueRev) {
+      const domainPlaceholders = domainRevValues.map(() => "?").join(",");
+      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type IN ('domain','full')\n          AND r.value_rev IN (${domainPlaceholders})`;
+      try {
+        const result = await db.prepare(sql).bind(...nameParams, ...domainRevValues).all<any>();
+        geositeValueRevAvailable = true;
+        attemptedValueRev = true;
+        if (processRows(result.results || [])) break;
+      } catch (error) {
+        if (
+          geositeValueRevAvailable !== false &&
+          error instanceof Error &&
+          /value_rev/i.test(error.message)
+        ) {
+          geositeValueRevAvailable = false;
+        } else {
+          throw error;
+        }
+      }
+    }
+
+    const shouldFallbackToLower =
+      geositeValueRevAvailable === false ||
+      (!attemptedValueRev && domainValues.length > 0) ||
+      (geositeValueRevAvailable !== false && legacyDomainValues.length > 0);
+
+    if (shouldFallbackToLower) {
+      const fallbackValues = geositeValueRevAvailable === false
+        ? domainValues
+        : domainRevValues.length === 0
+          ? domainValues
+          : legacyDomainValues;
+      if (fallbackValues.length > 0) {
+        const domainPlaceholders = fallbackValues.map(() => "?").join(",");
+        const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n          FROM geosite_rule r\n          JOIN geosite_list l ON l.id = r.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND r.type IN ('domain','full')\n            AND r.value_lower IN (${domainPlaceholders})`;
+        const result = await db.prepare(sql).bind(...nameParams, ...fallbackValues).all<any>();
+        if (processRows(result.results || [])) break;
+      }
     }
 
     if (likePatterns.length > 0) {
@@ -676,6 +733,7 @@ const searchGeoipLists = async (
   const trimmed = query.trim();
   const ip = parseIPAddress(trimmed);
   const lower = trimmed.toLowerCase();
+  const normalizedCidr = lower;
   const overscan = Math.max(limit * 3, limit + 20);
   const matches: GeoipSearchMatch[] = [];
   const seen = new Set<string>();
@@ -722,13 +780,41 @@ const searchGeoipLists = async (
     }
 
     if (!ip && mode === "cidr") {
-      const sql = `SELECT l.name AS list, c.cidr, c.prefix, c.version\n        FROM geoip_cidr c\n        JOIN geoip_list l ON l.id = c.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND LOWER(c.cidr) = LOWER(?)`;
-      const rows = await db.prepare(sql).bind(...nameParams, trimmed).all<any>();
-      for (const row of rows.results || []) {
-        const versionLabel = Number(row.version) === 4 ? "ipv4" : "ipv6";
-        if (versionFilter !== "both" && versionFilter !== versionLabel) continue;
-        if (pushMatch(row, versionLabel)) break;
+      let handledExact = false;
+      if (geoipCidrLowerAvailable !== false) {
+        const sql = `SELECT l.name AS list, c.cidr, c.prefix, c.version\n          FROM geoip_cidr c\n          JOIN geoip_list l ON l.id = c.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND c.cidr_lower = ?`;
+        try {
+          const rows = await db.prepare(sql).bind(...nameParams, normalizedCidr).all<any>();
+          geoipCidrLowerAvailable = true;
+          handledExact = true;
+          for (const row of rows.results || []) {
+            const versionLabel = Number(row.version) === 4 ? "ipv4" : "ipv6";
+            if (versionFilter !== "both" && versionFilter !== versionLabel) continue;
+            if (pushMatch(row, versionLabel)) break;
+          }
+        } catch (error) {
+          if (
+            geoipCidrLowerAvailable !== false &&
+            error instanceof Error &&
+            /cidr_lower/i.test(error.message)
+          ) {
+            geoipCidrLowerAvailable = false;
+          } else {
+            throw error;
+          }
+        }
       }
+
+      if (!handledExact) {
+        const sql = `SELECT l.name AS list, c.cidr, c.prefix, c.version\n          FROM geoip_cidr c\n          JOIN geoip_list l ON l.id = c.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND LOWER(c.cidr) = LOWER(?)`;
+        const rows = await db.prepare(sql).bind(...nameParams, trimmed).all<any>();
+        for (const row of rows.results || []) {
+          const versionLabel = Number(row.version) === 4 ? "ipv4" : "ipv6";
+          if (versionFilter !== "both" && versionFilter !== versionLabel) continue;
+          if (pushMatch(row, versionLabel)) break;
+        }
+      }
+
       if (matches.length >= overscan) break;
     }
 
@@ -736,15 +822,59 @@ const searchGeoipLists = async (
       const patterns = likePatterns.length ? likePatterns : [`%${escapeLikePattern(lower)}%`];
       for (const pattern of patterns) {
         if (versionFilter !== "ipv6") {
-          const sql = `SELECT l.name AS list, c.cidr, c.prefix\n            FROM geoip_cidr c\n            JOIN geoip_list l ON l.id = c.list_id\n            WHERE l.name IN (${namePlaceholders})\n              AND c.version = 4\n              AND c.cidr LIKE ? ESCAPE '\\'\n            LIMIT ${chunk.length * 80}`;
-          const rows = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
-          if ((rows.results || []).some((row) => pushMatch(row, "ipv4"))) break;
+          let handledPattern = false;
+          if (geoipCidrLowerAvailable !== false) {
+            const sql = `SELECT l.name AS list, c.cidr, c.prefix\n              FROM geoip_cidr c\n              JOIN geoip_list l ON l.id = c.list_id\n              WHERE l.name IN (${namePlaceholders})\n                AND c.version = 4\n                AND c.cidr_lower LIKE ? ESCAPE '\\'\n              LIMIT ${chunk.length * 80}`;
+            try {
+              const rows = await db.prepare(sql).bind(...nameParams, pattern.toLowerCase()).all<any>();
+              geoipCidrLowerAvailable = true;
+              handledPattern = true;
+              if ((rows.results || []).some((row) => pushMatch(row, "ipv4"))) break;
+            } catch (error) {
+              if (
+                geoipCidrLowerAvailable !== false &&
+                error instanceof Error &&
+                /cidr_lower/i.test(error.message)
+              ) {
+                geoipCidrLowerAvailable = false;
+              } else {
+                throw error;
+              }
+            }
+          }
+          if (!handledPattern) {
+            const sql = `SELECT l.name AS list, c.cidr, c.prefix\n              FROM geoip_cidr c\n              JOIN geoip_list l ON l.id = c.list_id\n              WHERE l.name IN (${namePlaceholders})\n                AND c.version = 4\n                AND c.cidr LIKE ? ESCAPE '\\'\n              LIMIT ${chunk.length * 80}`;
+            const rows = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
+            if ((rows.results || []).some((row) => pushMatch(row, "ipv4"))) break;
+          }
         }
         if (matches.length >= overscan) break;
         if (versionFilter !== "ipv4") {
-          const sql = `SELECT l.name AS list, c.cidr, c.prefix\n            FROM geoip_cidr c\n            JOIN geoip_list l ON l.id = c.list_id\n            WHERE l.name IN (${namePlaceholders})\n              AND c.version = 6\n              AND c.cidr LIKE ? ESCAPE '\\'\n            LIMIT ${chunk.length * 80}`;
-          const rows = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
-          if ((rows.results || []).some((row) => pushMatch(row, "ipv6"))) break;
+          let handledPattern = false;
+          if (geoipCidrLowerAvailable !== false) {
+            const sql = `SELECT l.name AS list, c.cidr, c.prefix\n              FROM geoip_cidr c\n              JOIN geoip_list l ON l.id = c.list_id\n              WHERE l.name IN (${namePlaceholders})\n                AND c.version = 6\n                AND c.cidr_lower LIKE ? ESCAPE '\\'\n              LIMIT ${chunk.length * 80}`;
+            try {
+              const rows = await db.prepare(sql).bind(...nameParams, pattern.toLowerCase()).all<any>();
+              geoipCidrLowerAvailable = true;
+              handledPattern = true;
+              if ((rows.results || []).some((row) => pushMatch(row, "ipv6"))) break;
+            } catch (error) {
+              if (
+                geoipCidrLowerAvailable !== false &&
+                error instanceof Error &&
+                /cidr_lower/i.test(error.message)
+              ) {
+                geoipCidrLowerAvailable = false;
+              } else {
+                throw error;
+              }
+            }
+          }
+          if (!handledPattern) {
+            const sql = `SELECT l.name AS list, c.cidr, c.prefix\n              FROM geoip_cidr c\n              JOIN geoip_list l ON l.id = c.list_id\n              WHERE l.name IN (${namePlaceholders})\n                AND c.version = 6\n                AND c.cidr LIKE ? ESCAPE '\\'\n              LIMIT ${chunk.length * 80}`;
+            const rows = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
+            if ((rows.results || []).some((row) => pushMatch(row, "ipv6"))) break;
+          }
         }
         if (matches.length >= overscan) break;
       }
