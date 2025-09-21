@@ -17,8 +17,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const REPO_ROOT = path.resolve(__dirname, "..");
 const DIST_D1_DIR = path.join(REPO_ROOT, "dist", "d1");
 const BASE_SQL_PATH = path.join(DIST_D1_DIR, "base.sql");
-const MANIFEST_PATH = path.join(DIST_D1_DIR, "manifest.json");
-const SEGMENTS_ROOT = path.join(DIST_D1_DIR, "segments");
+const D1_SCHEMA_VERSION = 3;
 
 const isDryRun = ["1", "true", "yes"].includes(String(process.env.DRY_RUN || "").toLowerCase());
 
@@ -118,13 +117,40 @@ const queryRows = async (label, sql) => {
   return rows;
 };
 
-const loadManifest = async () => {
-  const raw = await fsp.readFile(MANIFEST_PATH, "utf8");
-  return JSON.parse(raw);
-};
+const collectLocalSegments = async () => {
+  const segmentDirs = [
+    { kind: "geosite", dir: path.join(DIST_D1_DIR, "segments", "geosite") },
+    { kind: "geoip", dir: path.join(DIST_D1_DIR, "segments", "geoip") },
+  ];
 
-const resolveSegmentPath = (relativePath) => {
-  return path.resolve(REPO_ROOT, relativePath);
+  const map = new Map();
+
+  for (const { kind, dir } of segmentDirs) {
+    const entries = await fsp.readdir(dir, { withFileTypes: true }).catch((error) => {
+      if (error && error.code === "ENOENT") {
+        return [];
+      }
+      throw error;
+    });
+
+    for (const entry of entries) {
+      if (!entry.isFile() || !entry.name.endsWith(".sql")) continue;
+      const name = entry.name.slice(0, -4);
+      const filePath = path.join(dir, entry.name);
+      const stats = await fsp.stat(filePath);
+      const sha256 = await sha256File(filePath);
+      const key = `${kind}/${name}`;
+      map.set(key, {
+        kind,
+        name,
+        sha256,
+        size: stats.size,
+        path: filePath,
+      });
+    }
+  }
+
+  return map;
 };
 
 const loadRemoteSchemaVersion = async () => {
@@ -147,25 +173,67 @@ const loadRemoteManifest = async () => {
   try {
     const rows = await queryRows(
       "Fetch remote manifest",
-      "SELECT segment, kind, name, sha256 FROM seed_manifest;"
+      "SELECT value FROM schema_meta WHERE key = 'd1_manifest';"
     );
+    if (rows.length === 0) {
+      return new Map();
+    }
+    const raw = rows[0]?.value;
+    if (!raw) {
+      return new Map();
+    }
+    let parsed;
+    try {
+      parsed = JSON.parse(raw);
+    } catch (error) {
+      console.warn("Remote manifest JSON invalid; treating as empty.");
+      return new Map();
+    }
+    const entries = parsed?.segments;
+    if (!entries || typeof entries !== "object") {
+      return new Map();
+    }
     const map = new Map();
-    for (const row of rows) {
-      if (row?.segment) {
-        map.set(row.segment, {
-          kind: row.kind,
-          name: row.name,
-          sha256: row.sha256,
-        });
-      }
+    for (const [key, value] of Object.entries(entries)) {
+      if (!value || typeof value !== "object") continue;
+      map.set(key, {
+        kind: value.kind,
+        name: value.name,
+        sha256: value.sha256,
+        size: value.size,
+      });
     }
     return map;
   } catch (error) {
-    if (/(no such table|does not exist)/i.test(error.message)) {
-      return null;
+    if (/(no such table|no such column)/i.test(error.message)) {
+      return new Map();
     }
     throw error;
   }
+};
+
+const writeRemoteManifest = async (schemaVersion, segments) => {
+  if (isDryRun) {
+    console.log("[dry-run] Update remote manifest entry");
+    return;
+  }
+  const payload = {
+    schemaVersion,
+    generatedAt: new Date().toISOString(),
+    segments: Object.fromEntries(
+      [...segments.entries()].map(([key, value]) => [key, {
+        kind: value.kind,
+        name: value.name,
+        sha256: value.sha256,
+        size: value.size,
+      }])
+    ),
+  };
+  const json = escapeLiteral(JSON.stringify(payload));
+  const sql =
+    `INSERT INTO schema_meta (key, value) VALUES ('d1_manifest', '${json}')\n` +
+    "  ON CONFLICT(key) DO UPDATE SET value = excluded.value;";
+  await executeSql("Persist remote manifest", sql);
 };
 
 const applyBaseSchema = async (baseSqlPath) => {
@@ -174,20 +242,11 @@ const applyBaseSchema = async (baseSqlPath) => {
   console.log("Base schema applied.");
 };
 
-const updateManifestEntry = async (segment, sha256, size) => {
-  const sql =
-    `INSERT INTO seed_manifest (segment, kind, name, sha256, size, updated_at) VALUES (` +
-    `'${escapeLiteral(segment.key)}', '${escapeLiteral(segment.kind)}', '${escapeLiteral(segment.name)}', '${escapeLiteral(sha256)}', ${size}, CURRENT_TIMESTAMP)` +
-    `\nON CONFLICT(segment) DO UPDATE SET sha256 = excluded.sha256, size = excluded.size, updated_at = CURRENT_TIMESTAMP;`;
-  await executeSql(`Update manifest for ${segment.key}`, sql);
-};
-
-const removeManifestEntry = async (segmentKey) => {
-  const sql = `DELETE FROM seed_manifest WHERE segment = '${escapeLiteral(segmentKey)}';`;
-  await executeSql(`Remove manifest entry ${segmentKey}`, sql);
-};
-
 const deleteSegmentData = async (segmentKey, kind, name) => {
+  if (!kind || !name) {
+    console.warn(`Skipping deletion for ${segmentKey}: missing kind or name metadata.`);
+    return;
+  }
   const escapedName = escapeLiteral(name);
   if (kind === "geosite") {
     const sql =
@@ -206,30 +265,13 @@ const deleteSegmentData = async (segmentKey, kind, name) => {
   } else {
     throw new Error(`Unknown segment kind '${kind}' for ${segmentKey}`);
   }
-  await removeManifestEntry(segmentKey);
-};
-
-const validateLocalSegment = async (segment) => {
-  const absolutePath = resolveSegmentPath(segment.path);
-  const stats = await fsp.stat(absolutePath).catch((error) => {
-    if (error && error.code === "ENOENT") {
-      throw new Error(`Missing local segment file: ${segment.path}`);
-    }
-    throw error;
-  });
-  const checksum = await sha256File(absolutePath);
-  if (checksum !== segment.sha256) {
-    throw new Error(`Checksum mismatch for ${segment.path}: manifest has ${segment.sha256}, file is ${checksum}`);
-  }
-  return { absolutePath, size: stats.size };
 };
 
 const main = async () => {
-  const manifest = await loadManifest();
-  const localVersion = manifest.schemaVersion;
-  const localSegments = new Map(manifest.segments.map((segment) => [segment.key, segment]));
+  const localSegments = await collectLocalSegments();
+  const localVersion = D1_SCHEMA_VERSION;
 
-  console.log(`Local manifest: schema version ${localVersion}, ${localSegments.size} segment(s).`);
+  console.log(`Local segments ready: ${localSegments.size} file(s).`);
 
   let remoteVersion = null;
   let remoteSegments = new Map();
@@ -238,14 +280,7 @@ const main = async () => {
     console.log("Dry run enabled; skipping remote state discovery (assuming empty manifest).");
   } else {
     remoteVersion = await loadRemoteSchemaVersion();
-    const manifestResult = await loadRemoteManifest();
-    if (manifestResult === null) {
-      console.log("Remote manifest table missing; base schema will be applied.");
-      remoteSegments = new Map();
-      remoteVersion = null;
-    } else {
-      remoteSegments = manifestResult;
-    }
+    remoteSegments = await loadRemoteManifest();
   }
 
   if (!isDryRun) {
@@ -277,10 +312,10 @@ const main = async () => {
   }
 
   const segmentsToApply = [];
-  for (const segment of localSegments.values()) {
-    const remoteMeta = remoteSegments.get(segment.key);
+  for (const [segmentKey, segment] of localSegments.entries()) {
+    const remoteMeta = remoteSegments.get(segmentKey);
     if (!remoteMeta || remoteMeta.sha256 !== segment.sha256) {
-      segmentsToApply.push(segment);
+      segmentsToApply.push({ key: segmentKey, ...segment });
     }
   }
 
@@ -294,11 +329,13 @@ const main = async () => {
   }
 
   for (const segment of segmentsToApply) {
-    const { absolutePath, size } = await validateLocalSegment(segment);
-    console.log(`Updating ${segment.key} (${formatBytes(size)})`);
-    const sql = await fsp.readFile(absolutePath, "utf8");
+    console.log(`Updating ${segment.key} (${formatBytes(segment.size)})`);
+    const sql = await fsp.readFile(segment.path, "utf8");
     await executeSql(`Apply segment ${segment.key}`, sql);
-    await updateManifestEntry(segment, segment.sha256, size);
+  }
+
+  if (!isDryRun) {
+    await writeRemoteManifest(localVersion, localSegments);
   }
 
   if (segmentsToApply.length === 0 && segmentsToDelete.length === 0) {
@@ -312,4 +349,3 @@ main().catch((error) => {
   console.error("D1 incremental sync failed:", error.message);
   process.exit(1);
 });
-

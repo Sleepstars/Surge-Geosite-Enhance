@@ -2,10 +2,9 @@
 // Usage:
 //   node scripts/build-d1-sql.mjs
 // Result:
-//   dist/d1/base.sql           (schema + triggers + manifest table)
+//   dist/d1/base.sql           (schema + triggers)
 //   dist/d1/segments/geosite/* (per-geosite list SQL segments)
 //   dist/d1/segments/geoip/*   (per-geoip list SQL segments)
-//   dist/d1/manifest.json      (local manifest with hashes/metadata)
 
 import fsp from "node:fs/promises";
 import path from "node:path";
@@ -21,7 +20,6 @@ const BASE_SQL_PATH = path.join(D1_DIR, "base.sql");
 const SEGMENTS_DIR = path.join(D1_DIR, "segments");
 const GEOSITE_SEGMENTS_DIR = path.join(SEGMENTS_DIR, "geosite");
 const GEOIP_SEGMENTS_DIR = path.join(SEGMENTS_DIR, "geoip");
-const MANIFEST_PATH = path.join(D1_DIR, "manifest.json");
 
 const D1_SCHEMA_VERSION = 3;
 const GEOSITE_RULE_CHUNK = 2000;
@@ -257,18 +255,6 @@ const buildBaseSql = () => {
   statements.push("CREATE INDEX IF NOT EXISTS geoip_cidr_list_idx ON geoip_cidr(list_id);");
   statements.push("CREATE INDEX IF NOT EXISTS geoip_cidr_lower_idx ON geoip_cidr(cidr_lower);");
   statements.push(
-    "CREATE TABLE IF NOT EXISTS seed_manifest (" +
-      "  segment TEXT PRIMARY KEY," +
-      "  kind TEXT NOT NULL," +
-      "  name TEXT NOT NULL," +
-      "  sha256 TEXT NOT NULL," +
-      "  size INTEGER NOT NULL," +
-      "  updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP" +
-      ");"
-  );
-  statements.push("CREATE INDEX IF NOT EXISTS seed_manifest_kind_name_idx ON seed_manifest(kind, name);");
-  statements.push("DELETE FROM seed_manifest;");
-  statements.push(
     `INSERT INTO schema_meta (key, value) VALUES ('d1_schema_version', '${D1_SCHEMA_VERSION}')\n` +
       "  ON CONFLICT(key) DO UPDATE SET value = excluded.value;"
   );
@@ -484,29 +470,12 @@ const main = async () => {
 
   const allSegments = [...geosite.segments, ...geoip.segments].sort((a, b) => a.key.localeCompare(b.key));
 
-  const manifest = {
-    schemaVersion: D1_SCHEMA_VERSION,
-    generatedAt: new Date().toISOString(),
-    base: {
-      path: path.relative(REPO_ROOT, baseInfo.path),
-      sha256: baseInfo.sha256,
-      size: baseInfo.size,
-    },
-    segments: allSegments,
-    totals: {
-      geositeLists: geosite.listCount,
-      geositeRules: geosite.totalRuleCount,
-      geoipLists: geoip.listCount,
-      geoipCidrs: geoip.totalCidrs,
-    },
-  };
-
-  await fsp.writeFile(MANIFEST_PATH, JSON.stringify(manifest, null, 2) + "\n", "utf8");
-
-  console.log(`D1 base schema written to ${BASE_SQL_PATH}`);
-  console.log(`Geosite segments: ${geosite.listCount} list(s), ${geosite.totalRuleCount} rule(s), ${geosite.duplicateRuleCount} duplicate occurrence(s) merged.`);
+  console.log(`D1 base schema written to ${BASE_SQL_PATH} (${baseInfo.size} bytes).`);
+  console.log(
+    `Geosite segments: ${geosite.listCount} list(s), ${geosite.totalRuleCount} rule(s), ${geosite.duplicateRuleCount} duplicate occurrence(s) merged.`
+  );
   console.log(`GeoIP segments: ${geoip.listCount} list(s), ${geoip.totalCidrs} CIDR entry(ies).`);
-  console.log(`Manifest written to ${MANIFEST_PATH} tracking ${allSegments.length} segment(s).`);
+  console.log(`Segment files written under ${SEGMENTS_DIR} (total ${allSegments.length}).`);
 };
 
 main().catch((error) => {

@@ -163,8 +163,12 @@ jobs:
             echo "D1_DATABASE_NAME or D1_DATABASE_ID repo var not set; skip D1 sync" >&2
             exit 0
           fi
-          if [ ! -f dist/d1/manifest.json ]; then
-            echo "dist/d1/manifest.json is missing; run npm run build:d1 first" >&2
+          if [ ! -f dist/d1/base.sql ]; then
+            echo "dist/d1/base.sql is missing; run npm run build:d1 first" >&2
+            exit 1
+          fi
+          if [ ! -d dist/d1/segments ]; then
+            echo "dist/d1/segments directory is missing; run npm run build:d1 first" >&2
             exit 1
           fi
           node scripts/import-d1-rest.mjs
