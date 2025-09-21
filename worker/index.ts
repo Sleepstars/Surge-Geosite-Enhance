@@ -4,6 +4,7 @@ import { logger } from "hono/logger";
 import { cache } from "hono/cache";
 
 import { regexAstToWildcard } from "./wildcard";
+import { renderHomePage } from "./ui";
 
 const app = new Hono();
 app.use(logger());
@@ -21,32 +22,109 @@ app.get(
 type RuleItem = { type: "domain" | "full" | "keyword" | "regexp"; value: string; attrs?: string[] };
 type RuleJSON = { name: string; rules: RuleItem[] };
 
+type GeoIPJSON = { name: string; cidr4?: string[]; cidr6?: string[] };
+
+type CacheEntry<T> = { data: T; expires: number };
+
+const GEOSITE_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
+const GEOIP_CACHE_TTL_MS = 5 * 60 * 1000;
+
+const geositeCache = new Map<string, CacheEntry<RuleJSON>>();
+const geoipCache = new Map<string, CacheEntry<GeoIPJSON>>();
+
+const cleanupCache = <T>(cacheMap: Map<string, CacheEntry<T>>, now: number): void => {
+  for (const [k, entry] of cacheMap) {
+    if (entry.expires <= now) cacheMap.delete(k);
+  }
+};
+
+type EnvBindings = {
+  SRS_BUCKET?: R2Bucket;
+  GEO_KV?: KVNamespace;
+};
+
+const fetchIndexMap = async (
+  type: "geosite" | "geoip",
+  env: EnvBindings,
+  bypassKv = false
+): Promise<Record<string, string>> => {
+  const kv = bypassKv ? undefined : env.GEO_KV;
+  if (kv) {
+    try {
+      const cached = (await kv.get(`${type}:index`, { type: "json", cacheTtl: 3600 })) as
+        | Record<string, string>
+        | null;
+      if (cached && typeof cached === "object") {
+        return cached;
+      }
+    } catch (_) {
+      // ignore KV errors and fallback to R2
+    }
+  }
+
+  const bucket = env.SRS_BUCKET;
+  if (!bucket) {
+    throw new HTTPException(500, { message: "SRS bucket not configured" });
+  }
+
+  const key = type === "geosite" ? "geosite/index.json" : "geoip/index.json";
+  const obj = await bucket.get(key);
+  if (!obj) {
+    throw new HTTPException(404, { message: "Index not found" });
+  }
+  try {
+    const data = (await (obj as any).json?.()) as Record<string, string> | undefined;
+    if (data && typeof data === "object") return data;
+  } catch (_) {
+    // ignore json() errors; fallback to manual parse
+  }
+  const ab = await obj.arrayBuffer();
+  const text = new TextDecoder().decode(ab);
+  return JSON.parse(text) as Record<string, string>;
+};
+
 const getJsonRules = async (name: string, r2?: R2Bucket): Promise<RuleJSON | null> => {
-  const candidates = Array.from(
-    new Set([
-      name,
-      name.toUpperCase(),
-      name.toLowerCase(),
-    ])
-  );
-  // Only use R2; do not fallback to GitHub or CDN
+  const candidates = Array.from(new Set([name, name.toUpperCase(), name.toLowerCase()]));
+  const now = Date.now();
+  cleanupCache(geositeCache, now);
+  for (const candidate of candidates) {
+    const cached = geositeCache.get(candidate);
+    if (cached && cached.expires > now) {
+      return cached.data;
+    }
+  }
   if (r2) {
     for (const n of candidates) {
       const key = `geosite-json/${n}.json`;
       try {
         const obj = await r2.get(key);
         if (!obj) continue;
+        let data: RuleJSON | null = null;
         try {
-          const data = (await (obj as any).json?.()) as RuleJSON | undefined;
-          if (data && data.name && Array.isArray(data.rules)) return data;
+          if (typeof (obj as any).json === "function") {
+            const parsed = await (obj as any).json();
+            if (parsed && typeof parsed === "object" && Array.isArray((parsed as any).rules)) {
+              data = parsed as RuleJSON;
+            }
+          }
         } catch (_) {
-          // ignore
+          // ignore json() errors and fall back to manual parse
         }
-        const ab = await obj.arrayBuffer();
-        const text = new TextDecoder().decode(ab);
-        return JSON.parse(text) as RuleJSON;
+        if (!data) {
+          const ab = await obj.arrayBuffer();
+          const text = new TextDecoder().decode(ab);
+          data = JSON.parse(text) as RuleJSON;
+        }
+        if (data && data.name && Array.isArray(data.rules)) {
+          const expires = Date.now() + GEOSITE_CACHE_TTL_MS;
+          const variants = Array.from(new Set([...candidates, data.name, data.name.toUpperCase(), data.name.toLowerCase()]));
+          for (const variant of variants) {
+            geositeCache.set(variant, { data, expires });
+          }
+          return data;
+        }
       } catch (_) {
-        // try next candidate
+        // keep looping; try next candidate variant
       }
     }
   }
@@ -89,26 +167,48 @@ const genSurgeListFromJson = async (
   return lines.join("\n");
 };
 
-// ---------- GEOIP (JSON → Surge list) ----------
-type GeoIPJSON = { name: string; cidr4?: string[]; cidr6?: string[] };
-
 const getGeoipJson = async (name: string, r2?: R2Bucket): Promise<GeoIPJSON | null> => {
   const candidates = Array.from(new Set([name, name.toUpperCase(), name.toLowerCase()]));
+  const now = Date.now();
+  cleanupCache(geoipCache, now);
+  for (const candidate of candidates) {
+    const cached = geoipCache.get(candidate);
+    if (cached && cached.expires > now) {
+      return cached.data;
+    }
+  }
   if (r2) {
     for (const n of candidates) {
       const key = `geoip-json/${n}.json`;
       try {
         const obj = await r2.get(key);
         if (!obj) continue;
+        let data: GeoIPJSON | null = null;
         try {
-          const data = (await (obj as any).json?.()) as GeoIPJSON | undefined;
-          if (data && data.name) return data;
-        } catch (_) {}
-        const ab = await obj.arrayBuffer();
-        const text = new TextDecoder().decode(ab);
-        return JSON.parse(text) as GeoIPJSON;
+          if (typeof (obj as any).json === "function") {
+            const parsed = await (obj as any).json();
+            if (parsed && typeof parsed === "object") {
+              data = parsed as GeoIPJSON;
+            }
+          }
+        } catch (_) {
+          // ignore json() errors; fallback to manual parse
+        }
+        if (!data) {
+          const ab = await obj.arrayBuffer();
+          const text = new TextDecoder().decode(ab);
+          data = JSON.parse(text) as GeoIPJSON;
+        }
+        if (data && data.name) {
+          const expires = Date.now() + GEOIP_CACHE_TTL_MS;
+          const variants = Array.from(new Set([...candidates, data.name, data.name.toUpperCase(), data.name.toLowerCase()]));
+          for (const variant of variants) {
+            geoipCache.set(variant, { data, expires });
+          }
+          return data;
+        }
       } catch (_) {
-        // try next candidate
+        // continue to next variant
       }
     }
   }
@@ -133,6 +233,490 @@ const genSurgeIpListFromJson = async (
     }
   }
   return lines.join("\n");
+};
+
+const normalizeAttributeFilters = (
+  input: string | string[] | null | undefined
+): string[] => {
+  if (input == null) return [];
+  const rawItems = Array.isArray(input)
+    ? input
+    : String(input)
+        .split(/[,\s]+/)
+        .map((v) => v.trim())
+        .filter((v) => v.length > 0);
+  const result: string[] = [];
+  for (const item of rawItems) {
+    let value = item.trim();
+    if (!value) continue;
+    while (value.startsWith("@")) value = value.slice(1);
+    const neg = value.startsWith("!");
+    const body = neg ? value.slice(1) : value;
+    if (!body) continue;
+    const normalized = neg ? `!${body.toLowerCase()}` : body.toLowerCase();
+    if (!result.includes(normalized)) result.push(normalized);
+  }
+  return result;
+};
+
+const ruleMatchesAttributes = (rule: RuleItem, filters: string[]): boolean => {
+  if (!filters || filters.length === 0) return true;
+  const attrs = (rule.attrs || []).map((a) => a.toLowerCase());
+  for (const f of filters) {
+    const neg = f.startsWith("!");
+    const target = (neg ? f.slice(1) : f).toLowerCase();
+    if (!target) continue;
+    const has = attrs.includes(target);
+    if (neg) {
+      if (has) return false;
+    } else if (!has) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const summarizeRuleTypes = (rules: RuleItem[]) => {
+  const summary = {
+    total: rules.length,
+    domain: 0,
+    full: 0,
+    keyword: 0,
+    regexp: 0,
+  };
+  for (const r of rules) {
+    if (r.type === "domain") summary.domain++;
+    else if (r.type === "full") summary.full++;
+    else if (r.type === "keyword") summary.keyword++;
+    else if (r.type === "regexp") summary.regexp++;
+  }
+  return summary;
+};
+
+const collectRuleAttributes = (rules: RuleItem[]): string[] => {
+  const set = new Set<string>();
+  for (const rule of rules) {
+    for (const attr of rule.attrs || []) {
+      if (attr) set.add(attr);
+    }
+  }
+  return Array.from(set).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" }));
+};
+
+const splitNameSegments = (name: string): string[] => {
+  return name
+    .split(/[-:_]/)
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
+};
+
+const clamp = (value: number, min: number, max: number): number => {
+  if (Number.isNaN(value)) return min;
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
+};
+
+const extractHostCandidate = (raw: string): string => {
+  let target = raw.trim();
+  if (!target) return "";
+  try {
+    if (/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(target)) {
+      const url = new URL(target);
+      target = url.hostname || target;
+    }
+  } catch (_) {
+    // ignore URL parse failures
+  }
+  target = target.replace(/^\*\./, "");
+  const slashIndex = target.indexOf("/");
+  if (slashIndex >= 0) target = target.slice(0, slashIndex);
+  const questionIndex = target.indexOf("?");
+  if (questionIndex >= 0) target = target.slice(0, questionIndex);
+  target = target.replace(/:\d+$/, "");
+  target = target.replace(/\.+$/, "");
+  return target.trim().toLowerCase();
+};
+
+type GeositeRuleMatchMeta = {
+  reason: string;
+  score: number;
+  matched: string;
+};
+
+const evaluateGeositeRule = (
+  rule: RuleItem,
+  rawQuery: string,
+  hostLower: string,
+  queryLower: string
+): GeositeRuleMatchMeta | null => {
+  const value = rule.value.trim();
+  const valueLower = value.toLowerCase();
+  switch (rule.type) {
+    case "full": {
+      if (hostLower && hostLower === valueLower) {
+        return { reason: "exact host", score: 110, matched: value };
+      }
+      if (queryLower && valueLower === queryLower) {
+        return { reason: "exact value", score: 90, matched: value };
+      }
+      if (queryLower && valueLower.includes(queryLower)) {
+        return { reason: "value contains", score: 45, matched: value };
+      }
+      break;
+    }
+    case "domain": {
+      if (hostLower) {
+        if (hostLower === valueLower) {
+          return { reason: "domain suffix", score: 105, matched: value };
+        }
+        if (hostLower.endsWith(`.${valueLower}`)) {
+          return { reason: "domain suffix", score: 95, matched: value };
+        }
+      }
+      if (queryLower && valueLower.includes(queryLower)) {
+        return { reason: "value contains", score: 40, matched: value };
+      }
+      break;
+    }
+    case "keyword": {
+      if (hostLower && hostLower.includes(valueLower)) {
+        return { reason: "keyword", score: 80, matched: value };
+      }
+      if (queryLower && valueLower.includes(queryLower)) {
+        return { reason: "value contains", score: 50, matched: value };
+      }
+      break;
+    }
+    case "regexp": {
+      try {
+        const regex = new RegExp(rule.value, "i");
+        if (regex.test(rawQuery)) {
+          return { reason: "regex", score: 70, matched: rule.value };
+        }
+      } catch (_) {
+        // ignore invalid regex
+      }
+      if (queryLower && rule.value.toLowerCase().includes(queryLower)) {
+        return { reason: "regex contains", score: 35, matched: rule.value };
+      }
+      break;
+    }
+  }
+  return null;
+};
+
+type GeositeSearchMatch = {
+  list: string;
+  url?: string;
+  rule: RuleItem;
+  reason: string;
+  score: number;
+  matched: string;
+};
+
+const searchGeositeRules = async (
+  query: string,
+  attributeFilters: string[],
+  names: string[],
+  limit: number,
+  env: EnvBindings,
+  indexMap: Record<string, string>
+): Promise<{ matches: GeositeSearchMatch[]; scanned: number }> => {
+  const bucket = env.SRS_BUCKET;
+  if (!bucket) {
+    throw new HTTPException(500, { message: "SRS bucket not configured" });
+  }
+  const trimmedQuery = query.trim();
+  const hostLower = extractHostCandidate(trimmedQuery);
+  const queryLower = trimmedQuery.toLowerCase();
+  const overscan = Math.max(limit * 3, limit + 20);
+  const matches: GeositeSearchMatch[] = [];
+  let scanned = 0;
+  let stop = false;
+  const batchSize = 5;
+
+  for (let i = 0; i < names.length && !stop; i += batchSize) {
+    const batch = names.slice(i, i + batchSize);
+    await Promise.all(
+      batch.map(async (name) => {
+        if (stop) return;
+        const data = await getJsonRules(name, bucket);
+        if (!data) return;
+        scanned++;
+        for (const rule of data.rules) {
+          if (!ruleMatchesAttributes(rule, attributeFilters)) continue;
+          const meta = evaluateGeositeRule(rule, trimmedQuery, hostLower, queryLower);
+          if (!meta) continue;
+          matches.push({
+            list: data.name,
+            url: indexMap[data.name] || indexMap[name] || undefined,
+            rule,
+            reason: meta.reason,
+            score: meta.score,
+            matched: meta.matched,
+          });
+          if (matches.length >= overscan) {
+            stop = true;
+            break;
+          }
+        }
+      })
+    );
+  }
+
+  matches.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    if (a.list.toLowerCase() === b.list.toLowerCase()) {
+      return a.rule.value.localeCompare(b.rule.value, "en", { sensitivity: "base" });
+    }
+    return a.list.localeCompare(b.list, "en", { sensitivity: "base" });
+  });
+
+  return { matches: matches.slice(0, limit), scanned };
+};
+
+type ParsedIPv4 = { version: "ipv4"; value: number };
+type ParsedIPv6 = { version: "ipv6"; value: bigint };
+type ParsedIP = ParsedIPv4 | ParsedIPv6;
+
+const parseIPv4Address = (input: string): number | null => {
+  const parts = input.split(".");
+  if (parts.length !== 4) return null;
+  let value = 0;
+  for (const part of parts) {
+    if (!/^\d+$/.test(part)) return null;
+    const octet = Number(part);
+    if (octet < 0 || octet > 255) return null;
+    value = (value << 8) | octet;
+  }
+  return value >>> 0;
+};
+
+const parseIPv6Address = (input: string): bigint | null => {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+  const lower = trimmed.toLowerCase();
+  const doubleColonIndex = lower.indexOf("::");
+  let headParts: string[] = [];
+  let tailParts: string[] = [];
+  if (doubleColonIndex >= 0) {
+    headParts = lower.slice(0, doubleColonIndex).split(":").filter((p) => p.length > 0);
+    tailParts = lower.slice(doubleColonIndex + 2).split(":").filter((p) => p.length > 0);
+  } else {
+    headParts = lower.split(":").filter((p) => p.length > 0);
+    tailParts = [];
+  }
+
+  const hextets: number[] = [];
+  const pushPart = (part: string) => {
+    if (part.includes(".")) {
+      const ipv4 = parseIPv4Address(part);
+      if (ipv4 === null) return false;
+      hextets.push((ipv4 >>> 16) & 0xffff, ipv4 & 0xffff);
+      return true;
+    }
+    if (part.length === 0) {
+      hextets.push(0);
+      return true;
+    }
+    const value = parseInt(part, 16);
+    if (Number.isNaN(value) || value < 0 || value > 0xffff) return false;
+    hextets.push(value);
+    return true;
+  };
+
+  for (const part of headParts) {
+    if (!pushPart(part)) return null;
+  }
+
+  if (doubleColonIndex >= 0) {
+    const missing = 8 - (headParts.length + tailParts.length);
+    if (missing < 0) return null;
+    for (let i = 0; i < missing; i++) hextets.push(0);
+  }
+
+  for (const part of tailParts) {
+    if (!pushPart(part)) return null;
+  }
+
+  if (doubleColonIndex < 0 && hextets.length !== 8) {
+    return null;
+  }
+  if (hextets.length !== 8) {
+    return null;
+  }
+
+  let value = 0n;
+  for (const h of hextets) {
+    value = (value << 16n) | BigInt(h);
+  }
+  return value;
+};
+
+const parseIPAddress = (input: string): ParsedIP | null => {
+  const trimmed = input.trim();
+  if (!trimmed) return null;
+  if (trimmed.includes(".")) {
+    const ipv4 = parseIPv4Address(trimmed);
+    if (ipv4 !== null) return { version: "ipv4", value: ipv4 };
+  }
+  if (trimmed.includes(":")) {
+    const ipv6 = parseIPv6Address(trimmed);
+    if (ipv6 !== null) return { version: "ipv6", value: ipv6 };
+  }
+  return null;
+};
+
+const parseCidr = (
+  cidr: string
+): ({ version: "ipv4"; base: number; prefix: number } | { version: "ipv6"; base: bigint; prefix: number }) | null => {
+  const parts = cidr.split("/");
+  if (parts.length !== 2) return null;
+  const ipPart = parts[0].trim();
+  const prefix = Number(parts[1]);
+  if (!Number.isFinite(prefix)) return null;
+  if (ipPart.includes(".")) {
+    if (prefix < 0 || prefix > 32) return null;
+    const base = parseIPv4Address(ipPart);
+    if (base === null) return null;
+    return { version: "ipv4", base, prefix };
+  }
+  if (ipPart.includes(":")) {
+    if (prefix < 0 || prefix > 128) return null;
+    const base = parseIPv6Address(ipPart);
+    if (base === null) return null;
+    return { version: "ipv6", base, prefix };
+  }
+  return null;
+};
+
+const IPv6_FULL_MASK = (1n << 128n) - 1n;
+
+const ipv4MatchesCidr = (value: number, base: number, prefix: number): boolean => {
+  if (prefix <= 0) return true;
+  if (prefix >= 32) return value === base;
+  const mask = (0xffffffff << (32 - prefix)) >>> 0;
+  return (value & mask) === (base & mask);
+};
+
+const ipv6MatchesCidr = (value: bigint, base: bigint, prefix: number): boolean => {
+  if (prefix <= 0) return true;
+  if (prefix >= 128) return value === base;
+  const mask = ((1n << BigInt(prefix)) - 1n) << BigInt(128 - prefix);
+  return (value & mask) === (base & mask & IPv6_FULL_MASK);
+};
+
+type GeoipSearchMatch = {
+  list: string;
+  url?: string;
+  version: "ipv4" | "ipv6";
+  cidr: string;
+  prefix: number;
+  score: number;
+};
+
+const searchGeoipLists = async (
+  query: string,
+  names: string[],
+  limit: number,
+  env: EnvBindings,
+  indexMap: Record<string, string>,
+  versionFilter: "ipv4" | "ipv6" | "both" = "both"
+): Promise<{ matches: GeoipSearchMatch[]; scanned: number; mode: string }> => {
+  const bucket = env.SRS_BUCKET;
+  if (!bucket) {
+    throw new HTTPException(500, { message: "SRS bucket not configured" });
+  }
+
+  const trimmed = query.trim();
+  const ip = parseIPAddress(trimmed);
+  const lower = trimmed.toLowerCase();
+  const overscan = Math.max(limit * 3, limit + 20);
+  const matches: GeoipSearchMatch[] = [];
+  let scanned = 0;
+  let stop = false;
+  const batchSize = 4;
+  const mode = ip ? "ip" : trimmed.includes("/") ? "cidr" : "substring";
+
+  for (let i = 0; i < names.length && !stop; i += batchSize) {
+    const batch = names.slice(i, i + batchSize);
+    await Promise.all(
+      batch.map(async (name) => {
+        if (stop) return;
+        const data = await getGeoipJson(name, bucket);
+        if (!data) return;
+        scanned++;
+        const collect = (cidrs: string[] | undefined, version: "ipv4" | "ipv6") => {
+          if (!cidrs) return;
+          if (versionFilter !== "both" && versionFilter !== version) return;
+          for (const cidr of cidrs) {
+            if (ip) {
+              const parsed = parseCidr(cidr);
+              if (!parsed || parsed.version !== version) continue;
+              if (parsed.version === "ipv4") {
+                if (ip.version !== "ipv4") continue;
+                if (!ipv4MatchesCidr(ip.value, parsed.base, parsed.prefix)) continue;
+              } else {
+                if (ip.version !== "ipv6") continue;
+                if (!ipv6MatchesCidr(ip.value, parsed.base, parsed.prefix)) continue;
+              }
+              matches.push({
+                list: data.name,
+                url: indexMap[data.name] || indexMap[name] || undefined,
+                version,
+                cidr,
+                prefix: parsed.prefix,
+                score: parsed.prefix + (version === "ipv4" ? 1000 : 500),
+              });
+            } else if (mode === "cidr") {
+              if (cidr.toLowerCase() === lower) {
+                const parsed = parseCidr(cidr);
+                const prefix = parsed ? parsed.prefix : 0;
+                matches.push({
+                  list: data.name,
+                  url: indexMap[data.name] || indexMap[name] || undefined,
+                  version,
+                  cidr,
+                  prefix,
+                  score: 300 + prefix,
+                });
+              }
+            } else {
+              if (cidr.toLowerCase().includes(lower)) {
+                const parsed = parseCidr(cidr);
+                const prefix = parsed ? parsed.prefix : 0;
+                matches.push({
+                  list: data.name,
+                  url: indexMap[data.name] || indexMap[name] || undefined,
+                  version,
+                  cidr,
+                  prefix,
+                  score: 200 + prefix,
+                });
+              }
+            }
+            if (matches.length >= overscan) {
+              stop = true;
+              break;
+            }
+          }
+        };
+        collect(data.cidr4, "ipv4");
+        collect(data.cidr6, "ipv6");
+      })
+    );
+  }
+
+  matches.sort((a, b) => {
+    if (b.score !== a.score) return b.score - a.score;
+    if (a.list.toLowerCase() === b.list.toLowerCase()) {
+      return a.cidr.localeCompare(b.cidr, "en", { sensitivity: "base" });
+    }
+    return a.list.localeCompare(b.list, "en", { sensitivity: "base" });
+  });
+
+  return { matches: matches.slice(0, limit), scanned, mode };
 };
 
 // SRS distribution via R2
@@ -271,38 +855,49 @@ app.get("/geosite/:name_with_filter", async (c) => {
 });
 
 app.get("/geosite", async (c) => {
-  // Prefer KV (single-key cache written by CI), fallback to R2
-  const kv = (c as any).env?.GEO_KV as KVNamespace | undefined;
-  if (kv) {
-    try {
-      const cached = (await kv.get("geosite:index", { type: "json", cacheTtl: 3600 })) as
-        | Record<string, string>
-        | null;
-      if (cached && typeof cached === "object") {
-        return c.json(cached);
-      }
-    } catch (_) {
-      // ignore and fallback to R2
-    }
-  }
-
-  const bucket = (c as any).env?.SRS_BUCKET as R2Bucket | undefined;
-  if (!bucket) {
-    throw new HTTPException(500, { message: "SRS bucket not configured" });
-  }
-  const obj = await bucket.get("geosite/index.json");
-  if (!obj) {
-    throw new HTTPException(404, { message: "Index not found" });
-  }
+  const env = ((c as any).env || {}) as EnvBindings;
+  const bypassKv = c.req.query("fresh") === "1";
   try {
-    const data = (await (obj as any).json?.()) as Record<string, string> | undefined;
-    if (data && typeof data === "object") return c.json(data);
-  } catch (_) {
-    // ignore and parse manually
+    const data = await fetchIndexMap("geosite", env, bypassKv);
+    return c.json(data);
+  } catch (error) {
+    if (error instanceof HTTPException) throw error;
+    throw new HTTPException(500, {
+      message: `Failed to load geosite index: ${error instanceof Error ? error.message : "Unknown error"}`,
+    });
   }
-  const ab = await obj.arrayBuffer();
-  const text = new TextDecoder().decode(ab);
-  return c.json(JSON.parse(text));
+});
+
+app.get("/api/geosite/:name", async (c) => {
+  const env = ((c as any).env || {}) as EnvBindings;
+  const rawName = c.req.param("name")?.trim();
+  if (!rawName) {
+    throw new HTTPException(400, { message: "Invalid name parameter" });
+  }
+  const filters = normalizeAttributeFilters(c.req.query("filter"));
+  const data = await getJsonRules(rawName, env.SRS_BUCKET);
+  if (!data) {
+    throw new HTTPException(404, { message: "Rules not found (JSON missing)" });
+  }
+  const filtered = filters.length > 0 ? data.rules.filter((rule) => ruleMatchesAttributes(rule, filters)) : data.rules;
+  const indexMap = await fetchIndexMap("geosite", env).catch(() => ({} as Record<string, string>));
+  const statsOverall = summarizeRuleTypes(data.rules);
+  const statsFiltered = summarizeRuleTypes(filtered);
+  const attrs = collectRuleAttributes(data.rules);
+  const canonicalUrl = indexMap[data.name] || indexMap[rawName] || null;
+  return c.json({
+    name: data.name,
+    requested: rawName,
+    url: canonicalUrl,
+    segments: splitNameSegments(data.name),
+    filters,
+    stats: {
+      overall: statsOverall,
+      filtered: statsFiltered,
+    },
+    attributes: attrs,
+    rules: filtered,
+  });
 });
 
 app.get("/geoip/:name_with_filter", async (c) => {
@@ -331,36 +926,149 @@ app.get("/geoip/:name_with_filter", async (c) => {
 });
 
 app.get("/geoip", async (c) => {
-  const kv = (c as any).env?.GEO_KV as KVNamespace | undefined;
-  if (kv) {
-    try {
-      const cached = (await kv.get("geoip:index", { type: "json", cacheTtl: 3600 })) as
-        | Record<string, string>
-        | null;
-      if (cached && typeof cached === "object") {
-        return c.json(cached);
-      }
-    } catch (_) {}
-  }
-  const bucket = (c as any).env?.SRS_BUCKET as R2Bucket | undefined;
-  if (!bucket) {
-    throw new HTTPException(500, { message: "SRS bucket not configured" });
-  }
-  const obj = await bucket.get("geoip/index.json");
-  if (!obj) {
-    throw new HTTPException(404, { message: "Index not found" });
-  }
+  const env = ((c as any).env || {}) as EnvBindings;
+  const bypassKv = c.req.query("fresh") === "1";
   try {
-    const data = (await (obj as any).json?.()) as Record<string, string> | undefined;
-    if (data && typeof data === "object") return c.json(data);
-  } catch (_) {}
-  const ab = await obj.arrayBuffer();
-  const text = new TextDecoder().decode(ab);
-  return c.json(JSON.parse(text));
+    const data = await fetchIndexMap("geoip", env, bypassKv);
+    return c.json(data);
+  } catch (error) {
+    if (error instanceof HTTPException) throw error;
+    throw new HTTPException(500, {
+      message: `Failed to load geoip index: ${error instanceof Error ? error.message : "Unknown error"}`,
+    });
+  }
 });
 
-app.get("/", async (c) => {
-  return c.redirect("https://github.com/Sleepstars/Surge-Geosite-Enhance");
+app.get("/api/geoip/:name", async (c) => {
+  const env = ((c as any).env || {}) as EnvBindings;
+  const rawName = c.req.param("name")?.trim();
+  if (!rawName) {
+    throw new HTTPException(400, { message: "Invalid name parameter" });
+  }
+  const filter = c.req.query("filter");
+  const data = await getGeoipJson(rawName, env.SRS_BUCKET);
+  if (!data) {
+    throw new HTTPException(404, { message: "GeoIP not found (JSON missing)" });
+  }
+  const wantV4 = !filter || ["v4", "ipv4"].includes(filter.toLowerCase());
+  const wantV6 = !filter || ["v6", "ipv6"].includes(filter.toLowerCase());
+  const cidr4 = wantV4 ? data.cidr4 || [] : [];
+  const cidr6 = wantV6 ? data.cidr6 || [] : [];
+  const indexMap = await fetchIndexMap("geoip", env).catch(() => ({} as Record<string, string>));
+  const canonicalUrl = indexMap[data.name] || indexMap[rawName] || null;
+  return c.json({
+    name: data.name,
+    requested: rawName,
+    url: canonicalUrl,
+    segments: splitNameSegments(data.name),
+    filter: filter || null,
+    stats: {
+      totalV4: data.cidr4?.length || 0,
+      totalV6: data.cidr6?.length || 0,
+      returnedV4: cidr4.length,
+      returnedV6: cidr6.length,
+    },
+    cidr4,
+    cidr6,
+  });
+});
+
+app.post("/api/search/geosite", async (c) => {
+  const env = ((c as any).env || {}) as EnvBindings;
+  let payload: any;
+  try {
+    payload = await c.req.json();
+  } catch (error) {
+    throw new HTTPException(400, { message: "Invalid JSON payload" });
+  }
+  const query = String(payload?.query ?? "").trim();
+  if (!query) {
+    throw new HTTPException(400, { message: "Missing query" });
+  }
+  const filters = normalizeAttributeFilters(payload?.attributes ?? payload?.filter);
+  const indexMap = await fetchIndexMap("geosite", env);
+  const totalAvailable = Object.keys(indexMap).length;
+  const requestedNames: string[] = Array.isArray(payload?.names)
+    ? payload.names.map((n: unknown) => String(n).trim()).filter((n: string) => n.length > 0)
+    : [];
+  const scopedNames = requestedNames.length
+    ? requestedNames.filter((name) => indexMap[name] !== undefined)
+    : Object.keys(indexMap);
+  if (scopedNames.length === 0) {
+    throw new HTTPException(400, { message: "No valid geosite names in scope" });
+  }
+  const limit = clamp(Number(payload?.limit ?? 50), 5, 200);
+  const { matches, scanned } = await searchGeositeRules(query, filters, scopedNames, limit, env, indexMap);
+  return c.json({
+    query,
+    filters,
+    limit,
+    scope: {
+      requested: requestedNames,
+      used: scopedNames.length,
+      total: totalAvailable,
+      scanned,
+    },
+    matches,
+  });
+});
+
+app.post("/api/search/geoip", async (c) => {
+  const env = ((c as any).env || {}) as EnvBindings;
+  let payload: any;
+  try {
+    payload = await c.req.json();
+  } catch (error) {
+    throw new HTTPException(400, { message: "Invalid JSON payload" });
+  }
+  const query = String(payload?.query ?? "").trim();
+  if (!query) {
+    throw new HTTPException(400, { message: "Missing query" });
+  }
+  const versionRaw = String(payload?.version ?? "both").toLowerCase();
+  const versionFilter: "ipv4" | "ipv6" | "both" =
+    versionRaw === "ipv4" || versionRaw === "v4"
+      ? "ipv4"
+      : versionRaw === "ipv6" || versionRaw === "v6"
+        ? "ipv6"
+        : "both";
+  const indexMap = await fetchIndexMap("geoip", env);
+  const totalAvailable = Object.keys(indexMap).length;
+  const requestedNames: string[] = Array.isArray(payload?.names)
+    ? payload.names.map((n: unknown) => String(n).trim()).filter((n: string) => n.length > 0)
+    : [];
+  const scopedNames = requestedNames.length
+    ? requestedNames.filter((name) => indexMap[name] !== undefined)
+    : Object.keys(indexMap);
+  if (scopedNames.length === 0) {
+    throw new HTTPException(400, { message: "No valid geoip names in scope" });
+  }
+  const limit = clamp(Number(payload?.limit ?? 50), 5, 200);
+  const { matches, scanned, mode } = await searchGeoipLists(
+    query,
+    scopedNames,
+    limit,
+    env,
+    indexMap,
+    versionFilter
+  );
+  return c.json({
+    query,
+    version: versionFilter,
+    limit,
+    mode,
+    scope: {
+      requested: requestedNames,
+      used: scopedNames.length,
+      total: totalAvailable,
+      scanned,
+    },
+    matches,
+  });
+});
+
+app.get("/", (c) => {
+  return c.html(renderHomePage());
 });
 
 // SRS (GeoIP) distribution via R2
@@ -403,6 +1111,10 @@ app.get("/srs-geoip/:name_with_filter", async (c) => {
   headers.set("content-disposition", `inline; filename="${encodeURIComponent(suggested)}"`);
   if (obj.etag) headers.set("etag", obj.etag);
   return new Response(obj.body, { headers });
+});
+
+app.get("/github", (c) => {
+  return c.redirect("https://github.com/Sleepstars/Surge-Geosite-Enhance");
 });
 
 app.get("/misc/:category/:name", async (c) => {

@@ -1,29 +1,37 @@
-const KEY = "YOUR_API_KEY";
-const getNodeList = async () => {
-  const response = await fetch("https://api.boce.com/v3/node/list?key=" + KEY);
-  const data = await response.json();
-  // Example data:
-  //   {
-  //     "error_code": 0,
-  //     "error": "",
-  //     "data": {
-  //         "list": [
-  //             {
-  //                 "id": 6,
-  //                 "node_name": "河北",
-  //                 "isp_name": "电信",
-  //                 "isp_code": 100017
-  //             }
-  //         ]
-  //     }
-  // }
-  return data.data.list;
+export {};
+
+type NodeInfo = {
+  id: number;
+  node_name: string;
+  isp_name?: string;
+  isp_code?: number;
 };
 
-const nodeList = await getNodeList();
-const nodeListString = nodeList.map((node: any) => node.id).join(",");
+type DigRecord = {
+  node_id: number;
+  node_name: string;
+  origin_ip: string;
+  records?: Array<{ name: string; value: string }>;
+};
 
-const targetHost = [
+type DigTaskResult = {
+  done?: boolean;
+  list?: DigRecord[];
+};
+
+type DigTaskMap = Record<string, DigTaskResult>;
+
+declare const Bun: {
+  write(path: string, data: string): Promise<void>;
+};
+
+declare const process: {
+  env: Record<string, string | undefined>;
+};
+
+const KEY = process.env.KEY ?? "YOUR_API_KEY";
+const RESULT_PATH = "./resultv4.json";
+const TARGET_HOSTS = [
   "szminorshort.weixin.qq.com",
   "szlong.weixin.qq.com",
   "shextshort.weixin.qq.com",
@@ -103,80 +111,78 @@ const targetHost = [
   "wxsnsdy.wxs.qq.com",
 ];
 
-console.log("nodeListString", nodeListString);
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
-let result: any = {};
-for (const host of targetHost) {
+const readJsonSafely = <T>(raw: unknown, fallback: T): T => {
+  return (raw && typeof raw === "object" ? (raw as T) : fallback) ?? fallback;
+};
+
+const getNodeList = async (): Promise<NodeInfo[]> => {
+  const response = await fetch(`https://api.boce.com/v3/node/list?key=${KEY}`);
+  const raw = await response.json();
+  const data = readJsonSafely<{ data?: { list?: NodeInfo[] } }>(raw, {});
+  const list = Array.isArray(data.data?.list) ? data.data?.list : [];
+  return list.filter((item): item is NodeInfo => typeof item?.id === "number");
+};
+
+const createDigTask = async (host: string, nodeIds: string): Promise<string | null> => {
   const response = await fetch(
-    "https://api.boce.com/v3/task/create/dig?key=" +
-      KEY +
-      "&host=" +
-      host +
-      "&node_ids=" +
-      nodeListString
+    `https://api.boce.com/v3/task/create/dig?key=${KEY}&host=${encodeURIComponent(host)}&node_ids=${nodeIds}`
   );
-  const data = await response.json();
-  // Example data:
-  //   {
-  //     "error_code": 0,
-  //     "data": {
-  //         "id": "LxiB1jZPNiGZbvSYxBoVNEAfR8DhZaQ"
-  //     },
-  //     "error": "错误信息",
-  // }
-  // for 10s in 2 minutes
-  const id = data.data.id;
-  console.log(`Task Created: ${id} - ${host}`);
-  for (let i = 0; i < 12; i++) {
-    await new Promise((resolve) => setTimeout(resolve, 10000));
-    const response = await fetch(
-      "https://api.boce.com/v3/task/dig/" + id + "?key=" + KEY
-    );
-    const data = await response.json();
-    // Example data:
-    //   {
-    //     "done": true,
-    //     "id": "751854daeb70d4b2a933f293861746ea",
-    //     "list": [
-    //         {
-    //             "node_id": 6,
-    //             "node_name": "河北电信",
-    //             "host": "www.baidu.com",
-    //             "origin_ip": "106.8.158.251",
-    //             "report_source": "www.baidu.com.\t\t0\tIN\tA\t182.61.200.6\nwww.baidu.com.\t\t0\tIN\tA\t182.61.200.7\n;; Query time: 23 msec\n;; SERVER: 127.0.0.1#53(127.0.0.1)\n;; WHEN: Thu Dec 24 06:35:20 2020\n;; MSG SIZE  rcvd: 316\n",
-    //             "session_id": "D4EE07120704",
-    //             "error_code": 0,
-    //             "error": "",
-    //             "time_id": "751854daeb70d4b2a933f293861746ea",
-    //             "query_time": 23,
-    //             "use_dns": [
-    //                 "10.236.1.103",
-    //                 "10.236.1.104"
-    //             ],
-    //             "records": [
-    //                 {
-    //                     "ttl": 0,
-    //                     "name": "www.baidu.com",
-    //                     "type": "A",
-    //                     "value": "182.61.200.6",
-    //                     "q_time": 23,
-    //                     "ip_region": "中国北京北京",
-    //                     "ip_isp": "电信"
-    //                 }
-    //             ]
-    //         }
-    //     ],
-    //     "max_node": 1
-    // }
-    if (data.done) {
-      result[host] = data;
-      console.log("Task Done:", data.list.length);
-      break;
+  const raw = await response.json();
+  const data = readJsonSafely<{ data?: { id?: string } }>(raw, {});
+  const id = data.data?.id;
+  return typeof id === "string" && id.length > 0 ? id : null;
+};
+
+const fetchDigStatus = async (taskId: string): Promise<DigTaskResult> => {
+  const response = await fetch(`https://api.boce.com/v3/task/dig/${taskId}?key=${KEY}`);
+  const raw = await response.json();
+  const data = readJsonSafely<DigTaskResult>(raw, {});
+  if (Array.isArray(data.list)) {
+    data.list = data.list.filter((item): item is DigRecord => typeof item?.origin_ip === "string");
+  } else {
+    data.list = [];
+  }
+  return data;
+};
+
+const main = async () => {
+  const nodeList = await getNodeList();
+  if (!nodeList.length) {
+    console.error("未获取到节点列表，请检查 KEY 配置或接口状态。");
+    return;
+  }
+  const nodeListString = nodeList.map((node) => node.id).join(",");
+  console.log("节点数:", nodeList.length, "列表:", nodeListString);
+
+  const result: DigTaskMap = {};
+
+  for (const host of TARGET_HOSTS) {
+    const taskId = await createDigTask(host, nodeListString);
+    if (!taskId) {
+      console.warn("创建任务失败:", host);
+      continue;
+    }
+    console.log(`Task Created: ${taskId} - ${host}`);
+    for (let i = 0; i < 12; i += 1) {
+      await sleep(10_000);
+      const status = await fetchDigStatus(taskId);
+      if (status.done) {
+        console.log("Task Done:", host, status.list?.length ?? 0);
+        result[host] = status;
+        break;
+      }
+      if (i === 11) {
+        console.warn("任务超时:", host);
+      }
     }
   }
-}
 
-console.log(result);
+  await Bun.write(RESULT_PATH, JSON.stringify(result, null, 2));
+  console.log("结果已写入", RESULT_PATH);
+};
 
-const path = "./resultv4.json";
-await Bun.write(path, JSON.stringify(result, null, 2));
+main().catch((error) => {
+  console.error("执行失败:", error);
+});

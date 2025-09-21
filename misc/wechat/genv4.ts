@@ -1,64 +1,90 @@
-const path = "./resultv4.json";
-const file = Bun.file(path);
+export {};
 
-const text = await file.text();
+type DigRecord = {
+  node_id: number;
+  node_name: string;
+  origin_ip: string;
+  records?: Array<{ name: string; value: string }>;
+};
 
-const data = JSON.parse(text);
+type DigTaskResult = {
+  list?: DigRecord[];
+};
 
-console.log(data);
+declare const Bun: {
+  file(path: string): { text(): Promise<string> };
+  write(path: string, data: string): Promise<void>;
+};
 
-let ips: any = {};
+const RESULT_PATH = "./resultv4.json";
+const OUTPUT_PATH = "wechat-ipv4.list";
 
-for (const [host, result] of Object.entries(data)) {
-  console.log(`Host: ${host}`);
-  for (const item of result.list) {
-    console.log(`  Node: ${item.node_name} - ${item.origin_ip}`);
-    // if has records
-    if (item.records) {
-      for (const record of item.records) {
-        console.log(`    ${record.name} - ${record.value}`);
-        // if is ipv4
-        if (record.value.match(/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$/)) {
-          if (!ips[record.value]) {
-            ips[record.value] = [];
-          }
-          ips[record.value].push(
-            `${host} - ${item.node_name}(${item.origin_ip})`
-          );
-        }
-      }
-    }
+const parseResultFile = async (): Promise<Record<string, DigTaskResult>> => {
+  const file = Bun.file(RESULT_PATH);
+  const text = await file.text();
+  try {
+    const parsed = JSON.parse(text);
+    return (parsed && typeof parsed === "object" ? (parsed as Record<string, DigTaskResult>) : {}) ?? {};
+  } catch (error) {
+    console.error("解析 JSON 失败", error);
+    return {};
   }
-}
+};
 
-console.log(ips);
+const isIPv4 = (value: string): boolean => {
+  return /^(?:\d{1,3}\.){3}\d{1,3}$/.test(value);
+};
 
-const sortedIps = Object.keys(ips)
-  .sort((a, b) => {
-    const aParts = a.split(".");
-    const bParts = b.split(".");
-    for (let i = 0; i < 4; i++) {
-      const diff = parseInt(aParts[i]) - parseInt(bParts[i]);
-      if (diff !== 0) {
-        return diff;
-      }
+const sortIPv4 = (ips: string[]): string[] => {
+  return ips.sort((a, b) => {
+    const aParts = a.split(".").map(Number);
+    const bParts = b.split(".").map(Number);
+    for (let i = 0; i < 4; i += 1) {
+      const diff = (aParts[i] || 0) - (bParts[i] || 0);
+      if (diff !== 0) return diff;
     }
     return 0;
-  })
-  .reduce((obj, key) => {
-    obj[key] = ips[key];
-    return obj;
-  }, {});
+  });
+};
 
-const outputPath = "wechat-ipv4.list";
-
-let output = "";
-for (const [ip, hosts] of Object.entries(sortedIps)) {
-  output += `IP-CIDR,${ip}/32\n`;
-  for (const host of hosts) {
-    output += `\t # ${host}\n`;
+const buildOutput = (ipMap: Record<string, string[]>): string => {
+  const lines: string[] = [];
+  for (const ip of sortIPv4(Object.keys(ipMap))) {
+    lines.push(`IP-CIDR,${ip}/32`);
+    for (const host of ipMap[ip]) {
+      lines.push(`\t# ${host}`);
+    }
   }
-}
+  return lines.join("\n") + "\n";
+};
 
-console.log(output);
-await Bun.write(outputPath, output);
+const main = async () => {
+  const results = await parseResultFile();
+  const ipMap: Record<string, string[]> = {};
+
+  for (const [host, task] of Object.entries(results)) {
+    const list = Array.isArray(task?.list) ? task.list : [];
+    for (const item of list) {
+      const records = Array.isArray(item.records) ? item.records : [];
+      for (const record of records) {
+        if (!record?.value || !isIPv4(record.value)) continue;
+        if (!ipMap[record.value]) {
+          ipMap[record.value] = [];
+        }
+        ipMap[record.value].push(`${host} - ${item.node_name} (${item.origin_ip})`);
+      }
+    }
+  }
+
+  if (!Object.keys(ipMap).length) {
+    console.warn("未找到任何 IPv4 记录");
+  }
+
+  const output = buildOutput(ipMap);
+  await Bun.write(OUTPUT_PATH, output);
+  console.log("已写入", OUTPUT_PATH);
+};
+
+main().catch((error) => {
+  console.error("生成列表失败:", error);
+});
