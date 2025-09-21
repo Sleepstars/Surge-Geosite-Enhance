@@ -1628,7 +1628,7 @@ app.post("/api/search/geoip", async (c) => {
 });
 
 app.get("/", (c) => {
-  return c.redirect("https://geo.sleepstars.de");
+  return c.text("Surge Geosite API");
 });
 
 // SRS (GeoIP) distribution via R2
