@@ -1,3 +1,5 @@
+# Geosite Ruleset Index
+
 | Name | Link | SRS |
 |------|------|-----|
 | 0X0 | https://direct.sleepstars.de/geosite/0X0 | https://direct.sleepstars.de/srs-geosite/0X0.srs |

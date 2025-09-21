@@ -168,7 +168,12 @@ const main = async () => {
   await writeJSON(INDEX_JSON_PATH, indexMapSorted);
 
   // Build README table (Surge+SRS)
-  const tableLines = ["| Name | Link | SRS |", "|------|------|-----|"];
+  const tableLines = [
+    "# Geosite Ruleset Index",
+    "",
+    "| Name | Link | SRS |",
+    "|------|------|-----|",
+  ];
   for (const { name } of categories) {
     const surgeLink = `https://direct.sleepstars.de/geosite/${name}`;
     const srsLink = `https://direct.sleepstars.de/srs-geosite/${name}.srs`;

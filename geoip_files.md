@@ -1,5 +1,4 @@
-
-**GeoIP Ruleset Index**
+# GeoIP Ruleset Index
 
 | Name | Link | SRS |
 |------|------|-----|

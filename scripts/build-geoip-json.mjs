@@ -164,7 +164,8 @@ const main = async () => {
   console.log(" -", OUT_JSON_DIR, "(per-group JSON)");
   // Build README table
   const tableLines = [
-    "\n**GeoIP Ruleset Index**\n",
+    "# GeoIP Ruleset Index",
+    "",
     "| Name | Link | SRS |",
     "|------|------|-----|",
   ];

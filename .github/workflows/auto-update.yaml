@@ -82,13 +82,6 @@ jobs:
         if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
         run: npm run build:d1
 
-      - name: Update README
-        run: |
-          set -eux
-          # Ensure table fragments exist (rebuild if cache missed)
-          [ -f data_files.md ] || npm run build:geosite
-          [ -f geoip_files.md ] || npm run build:geoip
-          cat README_template.md data_files.md geoip_files.md > README.md
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -211,7 +204,7 @@ jobs:
       - name: Commit and push if necessary
         run: |
           set -e
-          git add README.md
+          git add README.md data_files.md geoip_files.md
           if ! git diff --staged --quiet; then
             git commit -m "[auto] Sync with upstream (geosite.dat → JSON)"
             git push
