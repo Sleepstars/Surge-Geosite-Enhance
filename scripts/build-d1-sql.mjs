@@ -139,7 +139,6 @@ const buildGeositeStatements = async () => {
     `INSERT INTO schema_meta (key, value) VALUES ('d1_schema_version', '${D1_SCHEMA_VERSION}')\n` +
       "  ON CONFLICT(key) DO UPDATE SET value = excluded.value;"
   );
-  statements.push(`PRAGMA user_version = ${D1_SCHEMA_VERSION};`);
   statements.push(
     "CREATE TABLE IF NOT EXISTS geosite_list (\n" +
       "  id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
