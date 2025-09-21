@@ -295,10 +295,8 @@ const buildGeoipStatements = async () => {
 const main = async () => {
   await ensureDir(OUT_SQL_DIR);
   const chunks = [
-    "BEGIN;",
     ...(await buildGeositeStatements()),
     ...(await buildGeoipStatements()),
-    "COMMIT;",
   ];
   await fsp.writeFile(OUT_SQL_PATH, chunks.join("\n") + "\n", "utf8");
   console.log("D1 seed written to", OUT_SQL_PATH);
