@@ -21,7 +21,7 @@ const SEGMENTS_DIR = path.join(D1_DIR, "segments");
 const GEOSITE_SEGMENTS_DIR = path.join(SEGMENTS_DIR, "geosite");
 const GEOIP_SEGMENTS_DIR = path.join(SEGMENTS_DIR, "geoip");
 
-const D1_SCHEMA_VERSION = 3;
+const D1_SCHEMA_VERSION = 2;
 const GEOSITE_RULE_CHUNK = 2000;
 const GEOIP_CIDR_CHUNK = 2000;
 

@@ -17,7 +17,7 @@ const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const REPO_ROOT = path.resolve(__dirname, "..");
 const DIST_D1_DIR = path.join(REPO_ROOT, "dist", "d1");
 const BASE_SQL_PATH = path.join(DIST_D1_DIR, "base.sql");
-const D1_SCHEMA_VERSION = 3;
+const D1_SCHEMA_VERSION = 2;
 
 const isDryRun = ["1", "true", "yes"].includes(String(process.env.DRY_RUN || "").toLowerCase());
 
