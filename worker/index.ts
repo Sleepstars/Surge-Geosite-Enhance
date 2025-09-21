@@ -2,11 +2,17 @@ import { Hono } from "hono";
 import { HTTPException } from "hono/http-exception";
 import { logger } from "hono/logger";
 import { cache } from "hono/cache";
-
-import { renderHomePage } from "./ui";
+import { cors } from "hono/cors";
 
 const app = new Hono();
 app.use(logger());
+
+// Enable CORS for frontend
+app.use('*', cors({
+  origin: ['http://localhost:3000', 'https://geo.sleepstars.de'],
+  allowMethods: ['GET', 'POST', 'OPTIONS'],
+  allowHeaders: ['Content-Type'],
+}));
 
 // Cache all responses via Cloudflare cache API
 app.get(
@@ -1198,7 +1204,7 @@ app.post("/api/search/geoip", async (c) => {
 });
 
 app.get("/", (c) => {
-  return c.html(renderHomePage());
+  return c.redirect("https://geo.sleepstars.de");
 });
 
 // SRS (GeoIP) distribution via R2

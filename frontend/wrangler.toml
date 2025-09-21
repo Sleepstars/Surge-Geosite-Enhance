@@ -1,0 +1,12 @@
+# Cloudflare Pages configuration
+name = "surge-geosite-frontend"
+compatibility_date = "2024-01-01"
+
+[env.production]
+# Production environment settings
+routes = [
+  { pattern = "geosite.example.com/*", zone_name = "example.com" }
+]
+
+[env.preview]
+# Preview environment settings

@@ -1,0 +1,8 @@
+# Cloudflare Pages redirects
+# Redirect API calls to the Worker
+/api/* https://direct.sleepstars.de/api/:splat 200
+/geosite/* https://direct.sleepstars.de/geosite/:splat 200
+/geoip/* https://direct.sleepstars.de/geoip/:splat 200
+
+# SPA fallback
+/* /index.html 200
