@@ -697,7 +697,7 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
               <a id="geosite-download" class="chip-link" href="#" target="_blank" rel="noreferrer" hidden>下载 SRS</a>
               <button id="geosite-copy" class="chip-button" type="button" hidden>复制下载链接</button>
               <button id="geosite-export" class="chip-button" type="button" hidden>导出规则</button>
-              <button id="geosite-summary" class="chip-button" type="button" hidden>摘要视图</button>
+              <button id="geosite-summary-btn" class="chip-button" type="button" hidden>摘要视图</button>
             </div>
           </div>
           <div class="rule-list" id="geosite-rule-list"></div>
@@ -1103,7 +1103,7 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           download: document.getElementById("geosite-download"),
           copyButton: document.getElementById("geosite-copy"),
           exportButton: document.getElementById("geosite-export"),
-          summaryButton: document.getElementById("geosite-summary"),
+          summaryButton: document.getElementById("geosite-summary-btn"),
           reverseInput: document.getElementById("geosite-reverse-input"),
           reverseAttr: document.getElementById("geosite-reverse-attr"),
           reverseLimit: document.getElementById("geosite-reverse-limit"),
@@ -2238,30 +2238,38 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           });
       });
 
-      dom.geosite.exportButton.addEventListener("click", function () {
-        const name = dom.geosite.exportButton.dataset.name;
-        const detail = state.geosite.currentDetail;
-        if (!name || !detail) return;
+      if (dom.geosite.exportButton) {
+        dom.geosite.exportButton.addEventListener("click", function () {
+          const name = dom.geosite.exportButton.dataset.name;
+          const detail = state.geosite.currentDetail;
+          if (!name || !detail) return;
 
-        const res = getFilteredGeositeRules();
-        exportRules(name, res.rules, 'txt');
-      });
+          const res = getFilteredGeositeRules();
+          exportRules(name, res.rules, 'txt');
+        });
+      }
 
-      dom.geosite.summaryButton.addEventListener("click", function () {
-        const name = dom.geosite.summaryButton.dataset.name;
-        const detail = state.geosite.currentDetail;
-        if (!name || !detail) return;
+      if (dom.geosite.summaryButton) {
+        dom.geosite.summaryButton.addEventListener("click", function () {
+          const name = dom.geosite.summaryButton.dataset.name;
+          const detail = state.geosite.currentDetail;
+          if (!name || !detail) return;
 
-        const res = getFilteredGeositeRules();
-        showSummaryView(name, res.rules);
-      });
+          const res = getFilteredGeositeRules();
+          showSummaryView(name, res.rules);
+        });
+      }
 
-      dom.geosite.reverseButton.addEventListener("click", runGeositeReverse);
-      dom.geosite.reverseInput.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-          runGeositeReverse();
-        }
-      });
+      if (dom.geosite.reverseButton) {
+        dom.geosite.reverseButton.addEventListener("click", runGeositeReverse);
+      }
+      if (dom.geosite.reverseInput) {
+        dom.geosite.reverseInput.addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            runGeositeReverse();
+          }
+        });
+      }
 
       dom.geoip.searchInput.addEventListener(
         "input",
@@ -2313,12 +2321,16 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           });
       });
 
-      dom.geoip.reverseButton.addEventListener("click", runGeoipReverse);
-      dom.geoip.reverseInput.addEventListener("keypress", function (event) {
-        if (event.key === "Enter") {
-          runGeoipReverse();
-        }
-      });
+      if (dom.geoip.reverseButton) {
+        dom.geoip.reverseButton.addEventListener("click", runGeoipReverse);
+      }
+      if (dom.geoip.reverseInput) {
+        dom.geoip.reverseInput.addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            runGeoipReverse();
+          }
+        });
+      }
 
       ensureIndexLoaded("geosite").catch(function (error) {
         console.error(error);
