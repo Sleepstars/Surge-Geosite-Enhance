@@ -461,6 +461,23 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
       align-items: center;
     }
 
+    .chip-button.load-more {
+      display: block;
+      margin: 12px auto 0;
+    }
+
+    .rule-info {
+      margin-top: 10px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .rule-sentinel {
+      height: 1px;
+      width: 100%;
+    }
+
     .footer {
       padding: 20px clamp(16px, 4vw, 48px) 32px;
       color: var(--text-muted);
@@ -661,6 +678,9 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
             </div>
           </div>
           <div class="rule-list" id="geosite-rule-list"></div>
+          <div class="rule-info" id="geosite-rule-info" hidden></div>
+          <button id="geosite-rule-more" class="chip-button load-more" type="button" hidden>加载更多</button>
+          <div id="geosite-rule-sentinel" class="rule-sentinel" hidden></div>
         </article>
       </div>
 
@@ -855,6 +875,9 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
         });
       };
 
+      const INITIAL_RULE_LIMIT = 500;
+      const RULE_LIMIT_STEP = 500;
+
       const state = {
         active: "geosite",
         geosite: {
@@ -871,6 +894,7 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           currentDetail: null,
           ruleFilter: "",
           attribute: "",
+          displayLimit: INITIAL_RULE_LIMIT,
         },
         geoip: {
           index: {},
@@ -901,6 +925,9 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           tags: document.getElementById("geosite-tags"),
           ruleFilter: document.getElementById("geosite-rule-filter"),
           ruleList: document.getElementById("geosite-rule-list"),
+          ruleInfo: document.getElementById("geosite-rule-info"),
+          ruleMore: document.getElementById("geosite-rule-more"),
+          ruleSentinel: document.getElementById("geosite-rule-sentinel"),
           attrFilter: document.getElementById("geosite-attr-filter"),
           download: document.getElementById("geosite-download"),
           copyButton: document.getElementById("geosite-copy"),
@@ -950,6 +977,10 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
 
       const renderGeositeDetail = function (payload) {
         state.geosite.currentDetail = payload;
+        state.geosite.displayLimit = INITIAL_RULE_LIMIT;
+        dom.geosite.ruleInfo.hidden = true;
+        dom.geosite.ruleMore.hidden = true;
+        dom.geosite.ruleMore.textContent = "加载更多";
         const stats = payload.stats || { overall: { total: 0 }, filtered: { total: 0 } };
         dom.geosite.summary.innerHTML = "";
         const summaryItems = [
@@ -980,16 +1011,10 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
         applyGeositeRuleFilter();
       };
 
-      const applyGeositeRuleFilter = function () {
+      const getFilteredGeositeRules = function () {
         const detail = state.geosite.currentDetail;
-        const listEl = dom.geosite.ruleList;
-        listEl.innerHTML = "";
-        if (!detail || !Array.isArray(detail.rules) || detail.rules.length === 0) {
-          const empty = document.createElement("div");
-          empty.className = "empty-state";
-          empty.textContent = "暂无匹配规则";
-          listEl.appendChild(empty);
-          return;
+        if (!detail || !Array.isArray(detail.rules)) {
+          return { rules: [], term: "" };
         }
         const term = (state.geosite.ruleFilter || "").trim().toLowerCase();
         let rules = detail.rules;
@@ -999,15 +1024,47 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
             return combined.includes(term);
           });
         }
+        return { rules, term };
+      };
+
+      const applyGeositeRuleFilter = function () {
+        const detail = state.geosite.currentDetail;
+        const listEl = dom.geosite.ruleList;
+        const infoEl = dom.geosite.ruleInfo;
+        const moreBtn = dom.geosite.ruleMore;
+        const sentinel = dom.geosite.ruleSentinel;
+        listEl.innerHTML = "";
+        infoEl.hidden = true;
+        moreBtn.hidden = true;
+        moreBtn.disabled = false;
+        moreBtn.textContent = "加载更多";
+        sentinel.hidden = true;
+        if (!detail || !Array.isArray(detail.rules) || detail.rules.length === 0) {
+          const empty = document.createElement("div");
+          empty.className = "empty-state";
+          empty.textContent = "暂无匹配规则";
+          listEl.appendChild(empty);
+          listEl.appendChild(sentinel);
+          return;
+        }
+        const res = getFilteredGeositeRules();
+        const rules = res.rules;
+        const term = res.term;
         if (!rules.length) {
           const empty = document.createElement("div");
           empty.className = "empty-state";
           empty.textContent = "过滤条件下无匹配结果";
           listEl.appendChild(empty);
+          listEl.appendChild(sentinel);
           return;
         }
+        const total = rules.length;
+        const limit = Math.max(INITIAL_RULE_LIMIT, state.geosite.displayLimit || INITIAL_RULE_LIMIT);
+        state.geosite.displayLimit = limit;
+        const visible = rules.slice(0, Math.min(limit, total));
+
         const frag = document.createDocumentFragment();
-        rules.forEach(function (rule) {
+        visible.forEach(function (rule) {
           const row = document.createElement("div");
           row.className = "rule-row";
 
@@ -1042,6 +1099,26 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           frag.appendChild(row);
         });
         listEl.appendChild(frag);
+        listEl.appendChild(sentinel);
+
+        const remaining = total - visible.length;
+        const baseMessage = term ? "匹配到 " + total + " 条规则" : "共 " + total + " 条规则";
+        infoEl.textContent =
+          remaining > 0
+            ? baseMessage + "，已显示 " + visible.length + " 条，可继续加载或使用搜索定位。"
+            : baseMessage + "。";
+        infoEl.hidden = false;
+        if (remaining > 0) {
+          moreBtn.hidden = false;
+          const step = Math.min(remaining, RULE_LIMIT_STEP);
+          moreBtn.textContent =
+            step >= remaining
+              ? "加载剩余 " + remaining + " 条"
+              : "加载更多（+" + step + " 条）";
+          sentinel.hidden = false;
+        } else {
+          sentinel.hidden = true;
+        }
       };
 
       const renderGeoipDetail = function (payload) {
@@ -1564,6 +1641,7 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
         "input",
         debounce(function () {
           state.geosite.ruleFilter = dom.geosite.ruleFilter.value;
+          state.geosite.displayLimit = INITIAL_RULE_LIMIT;
           applyGeositeRuleFilter();
         }, 200)
       );
@@ -1577,6 +1655,48 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           }
         }
       );
+
+      dom.geosite.ruleMore.addEventListener("click", function () {
+        state.geosite.displayLimit += RULE_LIMIT_STEP;
+        applyGeositeRuleFilter();
+      });
+
+      const geositeListEl = dom.geosite.ruleList;
+      const geositeSentinel = dom.geosite.ruleSentinel;
+      let geositeLastAutoLoad = 0;
+
+      const tryAutoLoadGeosite = function () {
+        const detail = state.geosite.currentDetail;
+        if (!detail) return false;
+        const res = getFilteredGeositeRules();
+        const rules = res.rules;
+        if (!rules.length) return false;
+        if (state.geosite.displayLimit >= rules.length) return false;
+        state.geosite.displayLimit = Math.min(rules.length, state.geosite.displayLimit + RULE_LIMIT_STEP);
+        applyGeositeRuleFilter();
+        return true;
+      };
+
+      const geositeObserver = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            if (geositeSentinel.hidden) return;
+            const now = Date.now();
+            if (now - geositeLastAutoLoad < 400) return;
+            if (tryAutoLoadGeosite()) {
+              geositeLastAutoLoad = now;
+            }
+          });
+        },
+        {
+          root: geositeListEl,
+          rootMargin: "80px 0px 80px 0px",
+          threshold: 0.01,
+        }
+      );
+
+      geositeObserver.observe(geositeSentinel);
 
       dom.geosite.copyButton.addEventListener("click", function () {
         const url = dom.geosite.copyButton.dataset.url;
