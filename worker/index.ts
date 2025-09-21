@@ -33,6 +33,7 @@ type CacheEntry<T> = { data: T; expires: number };
 
 const GEOSITE_CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 const GEOIP_CACHE_TTL_MS = 5 * 60 * 1000;
+const GEOSITE_SEARCH_CHUNK = 160; // larger chunk size to reduce D1 round-trips
 
 const geositeCache = new Map<string, CacheEntry<RuleJSON>>();
 const geoipCache = new Map<string, CacheEntry<GeoIPJSON>>();
@@ -508,7 +509,7 @@ const searchGeositeRules = async (
   const seen = new Set<string>();
   let scanned = 0;
   const maxScan = Math.max(1, Math.min(Math.floor(maxLists) || 1, names.length));
-  const chunks = chunkArray(names.slice(0, maxScan), 40);
+  const chunks = chunkArray(names.slice(0, maxScan), GEOSITE_SEARCH_CHUNK);
 
   const processRows = (rows: any[]) => {
     for (const row of rows) {
@@ -540,33 +541,36 @@ const searchGeositeRules = async (
   for (const chunk of chunks) {
     scanned += chunk.length;
     const namePlaceholders = chunk.map(() => "?").join(",");
-    const nameParams = chunk;
+    const baseSql = `SELECT l.name AS list, r.type, r.value, r.attrs\n      FROM geosite_rule r\n      JOIN geosite_list l ON l.id = r.list_id\n      WHERE l.name IN (${namePlaceholders})`;
+    const binds: unknown[] = [...chunk];
+    const clauses: string[] = [];
 
     if (domainValues.length > 0) {
       const domainPlaceholders = domainValues.map(() => "?").join(",");
-      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type IN ('domain','full')\n          AND r.value_lower IN (${domainPlaceholders})`;
-      const result = await db.prepare(sql).bind(...nameParams, ...domainValues).all<any>();
-      if (processRows(result.results || [])) break;
+      clauses.push(`(r.type IN ('domain','full') AND r.value_lower IN (${domainPlaceholders}))`);
+      binds.push(...domainValues);
     }
 
     if (likePatterns.length > 0) {
-      for (const pattern of likePatterns) {
-        const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n          FROM geosite_rule r\n          JOIN geosite_list l ON l.id = r.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND r.type = 'keyword'\n            AND r.value_lower LIKE ? ESCAPE '\\'\n          LIMIT ${chunk.length * 40}`;
-        const result = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
-        if (processRows(result.results || [])) break;
-      }
-      if (matches.length >= overscan) break;
-      for (const pattern of likePatterns) {
-        const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n          FROM geosite_rule r\n          JOIN geosite_list l ON l.id = r.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND r.type = 'regexp'\n            AND r.value_lower LIKE ? ESCAPE '\\'\n          LIMIT ${chunk.length * 20}`;
-        const result = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
-        if (processRows(result.results || [])) break;
-      }
-    } else {
-      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type = 'regexp'\n        LIMIT ${chunk.length * 10}`;
-      const result = await db.prepare(sql).bind(...nameParams).all<any>();
-      if (processRows(result.results || [])) break;
+      const keywordClauses = likePatterns.map(() => "r.value_lower LIKE ? ESCAPE '\\'").join(" OR ");
+      clauses.push(`(r.type = 'keyword' AND (${keywordClauses}))`);
+      for (const pattern of likePatterns) binds.push(pattern);
+      const regexpClauses = likePatterns.map(() => "r.value_lower LIKE ? ESCAPE '\\'").join(" OR ");
+      clauses.push(`(r.type = 'regexp' AND (${regexpClauses}))`);
+      for (const pattern of likePatterns) binds.push(pattern);
     }
 
+    let sql = baseSql;
+    if (clauses.length > 0) {
+      const limit = Math.max(overscan * 3, chunk.length * 80);
+      sql += `\n        AND (${clauses.join(" OR ")})\n        LIMIT ${limit}`;
+    } else {
+      const limit = chunk.length * 10;
+      sql += `\n        AND r.type = 'regexp'\n        LIMIT ${limit}`;
+    }
+
+    const result = await db.prepare(sql).bind(...binds).all<any>();
+    if (processRows(result.results || [])) break;
     if (matches.length >= overscan) break;
   }
 
