@@ -1,8 +1,9 @@
-// Build Cloudflare D1 incremental segments and manifest from geosite / geoip JSON outputs.
+// Build Cloudflare D1 base schema, seed SQL, and per-list segments from geosite / geoip JSON outputs.
 // Usage:
 //   node scripts/build-d1-sql.mjs
 // Result:
 //   dist/d1/base.sql           (schema + triggers)
+//   dist/d1/seed.sql           (full rebuild SQL)
 //   dist/d1/segments/geosite/* (per-geosite list SQL segments)
 //   dist/d1/segments/geoip/*   (per-geoip list SQL segments)
 
@@ -17,6 +18,7 @@ const GEOSITE_JSON_DIR = path.join(DIST_DIR, "geosite-json");
 const GEOIP_JSON_DIR = path.join(DIST_DIR, "geoip-json");
 const D1_DIR = path.join(DIST_DIR, "d1");
 const BASE_SQL_PATH = path.join(D1_DIR, "base.sql");
+const SEED_SQL_PATH = path.join(D1_DIR, "seed.sql");
 const SEGMENTS_DIR = path.join(D1_DIR, "segments");
 const GEOSITE_SEGMENTS_DIR = path.join(SEGMENTS_DIR, "geosite");
 const GEOIP_SEGMENTS_DIR = path.join(SEGMENTS_DIR, "geoip");
@@ -262,7 +264,7 @@ const buildBaseSql = () => {
   return statements.join("\n");
 };
 
-const buildGeositeSegments = async () => {
+const buildGeositeSegments = async (seedCollector) => {
   const files = await listJsonFiles(GEOSITE_JSON_DIR);
   const segments = [];
   let duplicateRuleCount = 0;
@@ -337,6 +339,9 @@ const buildGeositeSegments = async () => {
 
     statements.push("COMMIT;");
     const sqlContent = statements.join("\n");
+    if (seedCollector) {
+      seedCollector.push(sqlContent);
+    }
     const filePath = path.join(GEOSITE_SEGMENTS_DIR, `${name}.sql`);
     const fileInfo = await writeFileWithHash(filePath, sqlContent);
     segments.push({
@@ -360,7 +365,7 @@ const buildGeositeSegments = async () => {
   };
 };
 
-const buildGeoipSegments = async () => {
+const buildGeoipSegments = async (seedCollector) => {
   const files = await listJsonFiles(GEOIP_JSON_DIR);
   const segments = [];
   let totalCidrs = 0;
@@ -434,6 +439,9 @@ const buildGeoipSegments = async () => {
 
     statements.push("COMMIT;");
     const sqlContent = statements.join("\n");
+    if (seedCollector) {
+      seedCollector.push(sqlContent);
+    }
     const filePath = path.join(GEOIP_SEGMENTS_DIR, `${name}.sql`);
     const fileInfo = await writeFileWithHash(filePath, sqlContent);
     segments.push({
@@ -463,10 +471,16 @@ const main = async () => {
   await ensureDir(GEOIP_SEGMENTS_DIR);
 
   const baseSql = buildBaseSql();
+  const seedParts = [baseSql];
   const baseInfo = await writeFileWithHash(BASE_SQL_PATH, baseSql);
 
-  const geosite = await buildGeositeSegments();
-  const geoip = await buildGeoipSegments();
+  const geosite = await buildGeositeSegments(seedParts);
+  const geoip = await buildGeoipSegments(seedParts);
+
+  const seedSql = seedParts.join("\n");
+  const seedContent = seedSql.endsWith("\n") ? seedSql : `${seedSql}\n`;
+  await fsp.writeFile(SEED_SQL_PATH, seedContent, "utf8");
+  const seedSize = Buffer.byteLength(seedContent, "utf8");
 
   const allSegments = [...geosite.segments, ...geoip.segments].sort((a, b) => a.key.localeCompare(b.key));
 
@@ -476,6 +490,7 @@ const main = async () => {
   );
   console.log(`GeoIP segments: ${geoip.listCount} list(s), ${geoip.totalCidrs} CIDR entry(ies).`);
   console.log(`Segment files written under ${SEGMENTS_DIR} (total ${allSegments.length}).`);
+  console.log(`D1 seed written to ${SEED_SQL_PATH} (${seedSize} bytes).`);
 };
 
 main().catch((error) => {

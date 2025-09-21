@@ -230,6 +230,43 @@ const putObject = async (bucket, key, file, contentType) => {
   });
 };
 
+const summarizeChangedKeys = (keys) => {
+  const geosite = new Set();
+  const geoip = new Set();
+
+  for (const key of keys) {
+    if (key.startsWith("geosite-json/")) {
+      const name = path.basename(key, ".json");
+      if (name) geosite.add(name);
+      continue;
+    }
+    if (key.startsWith("geosite/")) {
+      let name = path.basename(key, ".srs");
+      if (!name) continue;
+      const atIndex = name.indexOf("@");
+      if (atIndex >= 0) {
+        name = name.slice(0, atIndex);
+      }
+      if (name) geosite.add(name);
+      continue;
+    }
+    if (key.startsWith("geoip-json/")) {
+      const name = path.basename(key, ".json");
+      if (name) geoip.add(name);
+      continue;
+    }
+    if (key.startsWith("geoip/")) {
+      const name = path.basename(key, ".srs");
+      if (name) geoip.add(name);
+    }
+  }
+
+  return {
+    geosite: Array.from(geosite).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" })),
+    geoip: Array.from(geoip).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" })),
+  };
+};
+
 const uploadPlan = async (bucket, manifestKey, localPlan, remoteManifest) => {
   const remoteEntries = remoteManifest?.entries || {};
   const changed = [];
@@ -241,7 +278,7 @@ const uploadPlan = async (bucket, manifestKey, localPlan, remoteManifest) => {
   }
   if (changed.length === 0) {
     console.log("All objects up-to-date. No uploads needed.");
-    return remoteEntries;
+    return { entries: remoteEntries, changedKeys: [] };
   }
   console.log(`Uploading ${changed.length} changed object(s) with concurrency=${CONCURRENCY} ...`);
 
@@ -282,7 +319,7 @@ const uploadPlan = async (bucket, manifestKey, localPlan, remoteManifest) => {
     console.log(`PUT ${manifestKey} (manifest)`);
   }
   await fsp.unlink(tmp).catch(() => {});
-  return merged;
+  return { entries: merged, changedKeys: changed.map((item) => item.key) };
 };
 
 const main = async () => {
@@ -297,13 +334,29 @@ const main = async () => {
   const plan = await buildLocalPlan();
   if (plan.length === 0) {
     console.log("No local artifacts found to sync.");
+    const summaryPath = path.join(DIST_DIR, "d1-changed.json");
+    await fsp.mkdir(DIST_DIR, { recursive: true });
+    await fsp.writeFile(summaryPath, JSON.stringify({ geosite: [], geoip: [] }, null, 2) + "\n", "utf8");
     return;
   }
   // Deterministic order for stable logs
   plan.sort((a, b) => a.key.localeCompare(b.key));
 
   const remoteManifest = await fetchRemoteManifest(bucket, manifestKey);
-  await uploadPlan(bucket, manifestKey, plan, remoteManifest);
+  const { changedKeys } = await uploadPlan(bucket, manifestKey, plan, remoteManifest);
+
+  const summary = summarizeChangedKeys(changedKeys);
+  const summaryPath = path.join(DIST_DIR, "d1-changed.json");
+  await fsp.mkdir(DIST_DIR, { recursive: true });
+  await fsp.writeFile(summaryPath, JSON.stringify(summary, null, 2) + "\n", "utf8");
+  const totalChanges = summary.geosite.length + summary.geoip.length;
+  if (totalChanges === 0) {
+    console.log("No geosite/geoip categories changed for D1 sync.");
+  } else {
+    console.log(
+      `Recorded D1 incremental changes: ${summary.geosite.length} geosite, ${summary.geoip.length} geoip (see ${summaryPath}).`
+    );
+  }
 };
 
 main().catch((err) => {

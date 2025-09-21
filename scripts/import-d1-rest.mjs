@@ -1,56 +1,87 @@
-// Incrementally sync Cloudflare D1 with locally generated segments using the REST query API.
+// Prepare chunked SQL and import into Cloudflare D1 using the REST Import API.
+// Supports incremental updates based on dist/d1-changed.json produced by sync-r2 (SRS manifest diff).
 // Usage:
 //   node scripts/import-d1-rest.mjs
-// Environment variables (required unless DRY_RUN=1):
-//   CLOUDFLARE_API_TOKEN
-//   CLOUDFLARE_ACCOUNT_ID
-//   D1_DATABASE_ID
+// Environment variables:
+//   CLOUDFLARE_API_TOKEN (required)
+//   CLOUDFLARE_ACCOUNT_ID (required)
+//   D1_DATABASE_ID (required)
 // Optional:
-//   DRY_RUN=1               Print actions without executing remote mutations
+//   D1_IMPORT_POLL_INTERVAL_MS (default 1000)
 
 import fsp from "node:fs/promises";
 import path from "node:path";
-import crypto from "node:crypto";
+import { createHash } from "node:crypto";
+import { setTimeout as sleep } from "node:timers/promises";
 
 const API_BASE = "https://api.cloudflare.com/client/v4";
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 const REPO_ROOT = path.resolve(__dirname, "..");
-const DIST_D1_DIR = path.join(REPO_ROOT, "dist", "d1");
-const BASE_SQL_PATH = path.join(DIST_D1_DIR, "base.sql");
-const D1_SCHEMA_VERSION = 2;
+const DIST_DIR = path.join(REPO_ROOT, "dist");
+const DIST_D1_DIR = path.join(DIST_DIR, "d1");
+const SEED_SQL_PATH = path.join(DIST_D1_DIR, "seed.sql");
+const SEGMENTS_GEOSITE_DIR = path.join(DIST_D1_DIR, "segments", "geosite");
+const SEGMENTS_GEOIP_DIR = path.join(DIST_D1_DIR, "segments", "geoip");
+const CHUNKS_DIR = path.join(DIST_D1_DIR, "chunks");
+const D1_CHANGED_PATH = path.join(DIST_DIR, "d1-changed.json");
 
-const isDryRun = ["1", "true", "yes"].includes(String(process.env.DRY_RUN || "").toLowerCase());
+const D1_SCHEMA_VERSION = 2;
+const MAX_STATEMENTS_PER_CHUNK = 300;
 
 const requiredEnv = (key) => {
   const value = process.env[key];
-  if (!value && !isDryRun) {
+  if (!value) {
     throw new Error(`${key} environment variable is required.`);
   }
-  return value || null;
+  return value;
 };
 
 const apiToken = requiredEnv("CLOUDFLARE_API_TOKEN");
 const accountId = requiredEnv("CLOUDFLARE_ACCOUNT_ID");
 const databaseId = requiredEnv("D1_DATABASE_ID");
-const queryUrl = !isDryRun && accountId && databaseId
-  ? `${API_BASE}/accounts/${accountId}/d1/database/${databaseId}/query`
-  : null;
+const pollIntervalMs = Number(process.env.D1_IMPORT_POLL_INTERVAL_MS || "1000");
 
-const formatBytes = (bytes) => {
-  if (bytes === 0) return "0 B";
-  const units = ["B", "KB", "MB", "GB"];
-  const exponent = Math.min(Math.floor(Math.log(bytes) / Math.log(1024)), units.length - 1);
-  const value = bytes / 1024 ** exponent;
-  return `${value.toFixed(value >= 10 || exponent === 0 ? 0 : 1)} ${units[exponent]}`;
+const splitStatements = (sql) => {
+  return sql
+    .split(/;\s*(?:\n|$)/g)
+    .map((statement) => statement.trim())
+    .filter((statement) => statement.length > 0)
+    .map((statement) => (statement.endsWith(";") ? statement : `${statement};`));
 };
 
-const escapeLiteral = (value) => {
-  return value.replace(/'/g, "''");
-};
+const writeChunkFiles = async (statements) => {
+  if (statements.length === 0) {
+    return [];
+  }
+  await fsp.rm(CHUNKS_DIR, { recursive: true, force: true });
+  await fsp.mkdir(CHUNKS_DIR, { recursive: true });
 
-const sha256File = async (filePath) => {
-  const content = await fsp.readFile(filePath);
-  return crypto.createHash("sha256").update(content).digest("hex");
+  const chunkPaths = [];
+  let chunkStatements = [];
+  let chunkIndex = 0;
+
+  const flushChunk = async () => {
+    if (chunkStatements.length === 0) return;
+    chunkIndex += 1;
+    const fileName = `chunk-${String(chunkIndex).padStart(4, "0")}.sql`;
+    const filePath = path.join(CHUNKS_DIR, fileName);
+    const content = chunkStatements.join("\n");
+    const normalized = content.endsWith("\n") ? content : `${content}\n`;
+    await fsp.writeFile(filePath, normalized, "utf8");
+    chunkPaths.push(filePath);
+    chunkStatements = [];
+  };
+
+  for (const statement of statements) {
+    chunkStatements.push(statement);
+    if (chunkStatements.length >= MAX_STATEMENTS_PER_CHUNK) {
+      // eslint-disable-next-line no-await-in-loop
+      await flushChunk();
+    }
+  }
+  await flushChunk();
+
+  return chunkPaths;
 };
 
 const fetchJson = async (url, options, label) => {
@@ -71,14 +102,8 @@ const fetchJson = async (url, options, label) => {
   return data;
 };
 
-const executeSql = async (label, sql) => {
-  if (isDryRun) {
-    console.log(`[dry-run] ${label} (SQL ${sql.length} chars)`);
-    return [];
-  }
-  if (!queryUrl || !apiToken) {
-    throw new Error(`${label}: missing query endpoint configuration.`);
-  }
+const queryRows = async (label, sql) => {
+  const queryUrl = `${API_BASE}/accounts/${accountId}/d1/database/${databaseId}/query`;
   const data = await fetchJson(
     queryUrl,
     {
@@ -91,66 +116,15 @@ const executeSql = async (label, sql) => {
     },
     label
   );
-  const result = data.result;
-  if (!Array.isArray(result)) {
-    throw new Error(`${label}: unexpected response shape.`);
-  }
-  for (const entry of result) {
-    if (entry?.success === false) {
-      const entryErrors = Array.isArray(entry.errors) && entry.errors.length > 0
-        ? entry.errors.map((item) => item.message || String(item)).join("; ")
-        : entry.error || "Statement failed";
-      throw new Error(`${label}: ${entryErrors}`);
-    }
-  }
-  return result;
-};
 
-const queryRows = async (label, sql) => {
-  const segments = await executeSql(label, sql);
   const rows = [];
-  for (const segment of segments) {
-    if (Array.isArray(segment.results)) {
-      rows.push(...segment.results);
+  const resultArray = Array.isArray(data.result) ? data.result : [];
+  for (const entry of resultArray) {
+    if (Array.isArray(entry.results)) {
+      rows.push(...entry.results);
     }
   }
   return rows;
-};
-
-const collectLocalSegments = async () => {
-  const segmentDirs = [
-    { kind: "geosite", dir: path.join(DIST_D1_DIR, "segments", "geosite") },
-    { kind: "geoip", dir: path.join(DIST_D1_DIR, "segments", "geoip") },
-  ];
-
-  const map = new Map();
-
-  for (const { kind, dir } of segmentDirs) {
-    const entries = await fsp.readdir(dir, { withFileTypes: true }).catch((error) => {
-      if (error && error.code === "ENOENT") {
-        return [];
-      }
-      throw error;
-    });
-
-    for (const entry of entries) {
-      if (!entry.isFile() || !entry.name.endsWith(".sql")) continue;
-      const name = entry.name.slice(0, -4);
-      const filePath = path.join(dir, entry.name);
-      const stats = await fsp.stat(filePath);
-      const sha256 = await sha256File(filePath);
-      const key = `${kind}/${name}`;
-      map.set(key, {
-        kind,
-        name,
-        sha256,
-        size: stats.size,
-        path: filePath,
-      });
-    }
-  }
-
-  return map;
 };
 
 const loadRemoteSchemaVersion = async () => {
@@ -162,190 +136,253 @@ const loadRemoteSchemaVersion = async () => {
     if (rows.length === 0) return null;
     return rows[0]?.value ?? null;
   } catch (error) {
-    if (/(no such table|no such column)/i.test(error.message)) {
+    const message = error?.message || "";
+    if (/no such table/i.test(message) || /does not exist/i.test(message)) {
       return null;
     }
     throw error;
   }
 };
 
-const loadRemoteManifest = async () => {
+const loadChangedSummary = async () => {
   try {
-    const rows = await queryRows(
-      "Fetch remote manifest",
-      "SELECT value FROM schema_meta WHERE key = 'd1_manifest';"
-    );
-    if (rows.length === 0) {
-      return new Map();
-    }
-    const raw = rows[0]?.value;
-    if (!raw) {
-      return new Map();
-    }
-    let parsed;
-    try {
-      parsed = JSON.parse(raw);
-    } catch (error) {
-      console.warn("Remote manifest JSON invalid; treating as empty.");
-      return new Map();
-    }
-    const entries = parsed?.segments;
-    if (!entries || typeof entries !== "object") {
-      return new Map();
-    }
-    const map = new Map();
-    for (const [key, value] of Object.entries(entries)) {
-      if (!value || typeof value !== "object") continue;
-      map.set(key, {
-        kind: value.kind,
-        name: value.name,
-        sha256: value.sha256,
-        size: value.size,
-      });
-    }
-    return map;
+    const raw = await fsp.readFile(D1_CHANGED_PATH, "utf8");
+    const parsed = JSON.parse(raw);
+    return {
+      geosite: Array.isArray(parsed.geosite) ? parsed.geosite : [],
+      geoip: Array.isArray(parsed.geoip) ? parsed.geoip : [],
+    };
   } catch (error) {
-    if (/(no such table|no such column)/i.test(error.message)) {
-      return new Map();
+    if (error && error.code === "ENOENT") {
+      return null;
+    }
+    console.warn(`Failed to read ${D1_CHANGED_PATH}; assuming full rebuild.`, error.message || error);
+    return null;
+  }
+};
+
+const readSegmentStatements = async (dir, name) => {
+  const filePath = path.join(dir, `${name}.sql`);
+  try {
+    const sql = await fsp.readFile(filePath, "utf8");
+    return splitStatements(sql);
+  } catch (error) {
+    if (error && error.code === "ENOENT") {
+      throw new Error(`Segment SQL not found for ${name} at ${filePath}. Run npm run build:d1 first.`);
     }
     throw error;
   }
 };
 
-const writeRemoteManifest = async (schemaVersion, segments) => {
-  if (isDryRun) {
-    console.log("[dry-run] Update remote manifest entry");
-    return;
+const prepareChunks = async ({ fullRebuild, summary }) => {
+  const statements = [];
+
+  if (fullRebuild) {
+    const seedSql = await fsp.readFile(SEED_SQL_PATH, "utf8").catch((error) => {
+      if (error && error.code === "ENOENT") {
+        throw new Error(`Seed SQL missing at ${SEED_SQL_PATH}; run npm run build:d1 first.`);
+      }
+      throw error;
+    });
+    statements.push(...splitStatements(seedSql));
+    console.log(`Preparing full rebuild from seed.sql with ${statements.length} statement(s).`);
+    const chunkPaths = await writeChunkFiles(statements);
+    return { chunkPaths, mode: "full" };
   }
-  const payload = {
-    schemaVersion,
-    generatedAt: new Date().toISOString(),
-    segments: Object.fromEntries(
-      [...segments.entries()].map(([key, value]) => [key, {
-        kind: value.kind,
-        name: value.name,
-        sha256: value.sha256,
-        size: value.size,
-      }])
-    ),
-  };
-  const json = escapeLiteral(JSON.stringify(payload));
-  const sql =
-    `INSERT INTO schema_meta (key, value) VALUES ('d1_manifest', '${json}')\n` +
-    "  ON CONFLICT(key) DO UPDATE SET value = excluded.value;";
-  await executeSql("Persist remote manifest", sql);
+
+  const geositeLists = (summary?.geosite || []).filter(Boolean);
+  const geoipLists = (summary?.geoip || []).filter(Boolean);
+
+  if (geositeLists.length === 0 && geoipLists.length === 0) {
+    return { chunkPaths: [], mode: "incremental" };
+  }
+
+  for (const name of geositeLists) {
+    const parts = await readSegmentStatements(SEGMENTS_GEOSITE_DIR, name);
+    statements.push(...parts);
+  }
+  for (const name of geoipLists) {
+    const parts = await readSegmentStatements(SEGMENTS_GEOIP_DIR, name);
+    statements.push(...parts);
+  }
+
+  if (statements.length === 0) {
+    return { chunkPaths: [], mode: "incremental" };
+  }
+
+  console.log(
+    `Preparing incremental update: ${geositeLists.length} geosite and ${geoipLists.length} geoip list(s), ${statements.length} statement(s) total.`
+  );
+  const chunkPaths = await writeChunkFiles(statements);
+  return { chunkPaths, mode: "incremental", geositeLists, geoipLists };
 };
 
-const applyBaseSchema = async (baseSqlPath) => {
-  const sql = await fsp.readFile(baseSqlPath, "utf8");
-  await executeSql("Apply base schema", sql);
-  console.log("Base schema applied.");
-};
+const importChunk = async (chunkPath, importUrl, chunkIndex, totalChunks) => {
+  const label = path.basename(chunkPath);
+  console.log(`Starting import for ${label} (${chunkIndex + 1}/${totalChunks})`);
+  const contents = await fsp.readFile(chunkPath);
+  const md5 = createHash("md5").update(contents).digest("hex");
 
-const deleteSegmentData = async (segmentKey, kind, name) => {
-  if (!kind || !name) {
-    console.warn(`Skipping deletion for ${segmentKey}: missing kind or name metadata.`);
-    return;
+  const initData = await fetchJson(
+    importUrl,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        action: "init",
+        etag: md5,
+      }),
+    },
+    `D1 import init (${label})`
+  );
+
+  const uploadUrl = initData.result?.upload_url;
+  const filename = initData.result?.filename;
+  if (!filename) {
+    throw new Error(`D1 import init (${label}) did not return a filename.`);
   }
-  const escapedName = escapeLiteral(name);
-  if (kind === "geosite") {
-    const sql =
-      "BEGIN TRANSACTION;\n" +
-      `DELETE FROM geosite_rule WHERE list_id = (SELECT id FROM geosite_list WHERE name = '${escapedName}');\n` +
-      `DELETE FROM geosite_list WHERE name = '${escapedName}';\n` +
-      "COMMIT;";
-    await executeSql(`Delete geosite list ${name}`, sql);
-  } else if (kind === "geoip") {
-    const sql =
-      "BEGIN TRANSACTION;\n" +
-      `DELETE FROM geoip_cidr WHERE list_id = (SELECT id FROM geoip_list WHERE name = '${escapedName}');\n` +
-      `DELETE FROM geoip_list WHERE name = '${escapedName}';\n` +
-      "COMMIT;";
-    await executeSql(`Delete geoip list ${name}`, sql);
+
+  if (uploadUrl) {
+    const uploadResponse = await fetch(uploadUrl, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/sql",
+      },
+      body: contents,
+    }).catch((error) => {
+      throw new Error(`Upload to R2 (${label}): network error ${error.message}`);
+    });
+    if (!uploadResponse.ok) {
+      throw new Error(`Upload to R2 (${label}) failed with status ${uploadResponse.status}`);
+    }
+    const etagHeader = uploadResponse.headers.get("etag");
+    if (etagHeader) {
+      const normalized = etagHeader.replace(/"/g, "").trim();
+      if (normalized && normalized !== md5) {
+        throw new Error(`Upload to R2 (${label}) ETag mismatch (expected ${md5}, got ${normalized}).`);
+      }
+    }
   } else {
-    throw new Error(`Unknown segment kind '${kind}' for ${segmentKey}`);
+    console.log(`Upload skipped for ${label} (server reported existing upload).`);
+  }
+
+  const ingestData = await fetchJson(
+    importUrl,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiToken}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        action: "ingest",
+        etag: md5,
+        filename,
+      }),
+    },
+    `D1 import ingest (${label})`
+  );
+
+  const bookmark = ingestData.result?.at_bookmark;
+  await pollImport(importUrl, bookmark, label);
+  console.log(`Completed import for ${label}.`);
+};
+
+const pollImport = async (importUrl, bookmark, label) => {
+  if (!bookmark) {
+    console.log(`No bookmark returned for ${label}; assuming ingest completed immediately.`);
+    return;
+  }
+  while (true) {
+    await sleep(pollIntervalMs);
+    const pollData = await fetchJson(
+      importUrl,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          action: "poll",
+          current_bookmark: bookmark,
+        }),
+      },
+      `D1 import poll (${label})`
+    );
+
+    const result = pollData.result || {};
+    if (Array.isArray(result.messages) && result.messages.length > 0) {
+      for (const message of result.messages) {
+        console.log(`[${label}] ${message}`);
+      }
+    }
+    if (result.status === "error") {
+      const errorMessage = result.error || "Unknown import error.";
+      throw new Error(`D1 import poll (${label}) reported error: ${errorMessage}`);
+    }
+    if (result.success || result.status === "complete") {
+      return;
+    }
+    if (result.error === "Not currently importing anything.") {
+      return;
+    }
   }
 };
 
 const main = async () => {
-  const localSegments = await collectLocalSegments();
-  const localVersion = D1_SCHEMA_VERSION;
+  const summary = await loadChangedSummary();
+  const remoteSchemaVersion = await loadRemoteSchemaVersion();
+  const schemaChanged = remoteSchemaVersion === null || remoteSchemaVersion !== String(D1_SCHEMA_VERSION);
 
-  console.log(`Local segments ready: ${localSegments.size} file(s).`);
-
-  let remoteVersion = null;
-  let remoteSegments = new Map();
-
-  if (isDryRun) {
-    console.log("Dry run enabled; skipping remote state discovery (assuming empty manifest).");
+  if (remoteSchemaVersion === null) {
+    console.log("Remote schema version unavailable (schema_meta missing).");
   } else {
-    remoteVersion = await loadRemoteSchemaVersion();
-    remoteSegments = await loadRemoteManifest();
+    console.log(`Remote schema version: ${remoteSchemaVersion}`);
   }
 
-  if (!isDryRun) {
+  if (schemaChanged) {
     console.log(
-      remoteVersion
-        ? `Remote schema version: ${remoteVersion}`
-        : "Remote schema version unavailable."
+      remoteSchemaVersion === null
+        ? "Remote schema version unavailable; performing full rebuild."
+        : `Schema version mismatch (remote ${remoteSchemaVersion} != local ${D1_SCHEMA_VERSION}); performing full rebuild.`
     );
   }
 
-  const needsBase = !isDryRun && remoteVersion !== String(localVersion);
-  if (needsBase) {
+  const { chunkPaths, mode, geositeLists = [], geoipLists = [] } = await prepareChunks({
+    fullRebuild: schemaChanged || !summary,
+    summary,
+  });
+
+  if (chunkPaths.length === 0) {
+    console.log("No SQL statements to import; skipping D1 sync.");
+    return;
+  }
+
+  if (mode === "incremental") {
     console.log(
-      remoteVersion
-        ? `Schema version mismatch (remote ${remoteVersion} != local ${localVersion}); applying base schema.`
-        : "Schema metadata missing; applying base schema."
+      `Incremental update will apply ${geositeLists.length} geosite and ${geoipLists.length} geoip list(s).`
     );
-    await applyBaseSchema(BASE_SQL_PATH);
-    remoteSegments = new Map();
-  } else if (!isDryRun && remoteSegments.size === 0) {
-    console.log("Remote manifest is empty; base schema assumed to be current.");
-  }
-
-  const segmentsToDelete = [];
-  for (const [segmentKey, meta] of remoteSegments.entries()) {
-    if (!localSegments.has(segmentKey)) {
-      segmentsToDelete.push({ key: segmentKey, ...meta });
-    }
-  }
-
-  const segmentsToApply = [];
-  for (const [segmentKey, segment] of localSegments.entries()) {
-    const remoteMeta = remoteSegments.get(segmentKey);
-    if (!remoteMeta || remoteMeta.sha256 !== segment.sha256) {
-      segmentsToApply.push({ key: segmentKey, ...segment });
-    }
+    if (geositeLists.length > 0) console.log(`  Geosite: ${geositeLists.join(", ")}`);
+    if (geoipLists.length > 0) console.log(`  GeoIP: ${geoipLists.join(", ")}`);
   }
 
   console.log(
-    `Planned operations: ${segmentsToApply.length} update(s), ${segmentsToDelete.length} deletion(s).`
+    `Prepared ${chunkPaths.length} chunk file(s) under ${CHUNKS_DIR} (<= ${MAX_STATEMENTS_PER_CHUNK} statements per chunk).`
   );
 
-  for (const stale of segmentsToDelete) {
-    console.log(`Removing stale segment ${stale.key}`);
-    await deleteSegmentData(stale.key, stale.kind, stale.name);
-  }
-
-  for (const segment of segmentsToApply) {
-    console.log(`Updating ${segment.key} (${formatBytes(segment.size)})`);
-    const sql = await fsp.readFile(segment.path, "utf8");
-    await executeSql(`Apply segment ${segment.key}`, sql);
-  }
-
-  if (!isDryRun) {
-    await writeRemoteManifest(localVersion, localSegments);
-  }
-
-  if (segmentsToApply.length === 0 && segmentsToDelete.length === 0) {
-    console.log("No changes required; D1 manifest is up to date.");
-  } else {
-    console.log("Incremental D1 sync completed.");
+  const importUrl = `${API_BASE}/accounts/${accountId}/d1/database/${databaseId}/import`;
+  console.log(`Importing ${chunkPaths.length} SQL chunk(s) into D1 database ${databaseId}.`);
+  for (let i = 0; i < chunkPaths.length; i += 1) {
+    // eslint-disable-next-line no-await-in-loop
+    await importChunk(chunkPaths[i], importUrl, i, chunkPaths.length);
   }
 };
 
 main().catch((error) => {
-  console.error("D1 incremental sync failed:", error.message);
+  console.error("D1 REST import failed:", error.message);
   process.exit(1);
 });
