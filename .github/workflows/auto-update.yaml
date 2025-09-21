@@ -88,10 +88,25 @@ jobs:
           go-version: '1.22.x'
 
       - name: Install sing-box CLI
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -eux
-          go install -v github.com/sagernet/sing-box/cmd/sing-box@v1.12.1
-          echo "${HOME}/go/bin" >> "$GITHUB_PATH"
+          VERSION=$(curl -fsSL -H "Authorization: Bearer ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" https://api.github.com/repos/SagerNet/sing-box/releases/latest | jq -r '.tag_name')
+          if [ -z "${VERSION}" ] || [ "${VERSION}" = "null" ]; then
+            echo "Failed to resolve sing-box latest version" >&2
+            exit 1
+          fi
+          VERSION=${VERSION#v}
+          ARCHIVE="sing-box-${VERSION}-linux-amd64.tar.gz"
+          URL="https://github.com/SagerNet/sing-box/releases/download/v${VERSION}/${ARCHIVE}"
+          DOWNLOAD="${RUNNER_TEMP}/${ARCHIVE}"
+          curl -fsSL -o "$DOWNLOAD" "$URL"
+          tar -xzf "$DOWNLOAD" -C "$RUNNER_TEMP"
+          BIN_DIR="${HOME}/.local/bin"
+          mkdir -p "$BIN_DIR"
+          install -m 0755 "${RUNNER_TEMP}/sing-box-${VERSION}-linux-amd64/sing-box" "$BIN_DIR/sing-box"
+          echo "$BIN_DIR" >> "$GITHUB_PATH"
           sing-box version
 
       - name: Restore cache (SRS)
