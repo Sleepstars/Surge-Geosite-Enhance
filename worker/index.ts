@@ -38,9 +38,75 @@ const cleanupCache = <T>(cacheMap: Map<string, CacheEntry<T>>, now: number): voi
   }
 };
 
+const ensureDb = (env: EnvBindings): D1Database => {
+  const db = env.DB;
+  if (!db) {
+    throw new HTTPException(500, { message: "D1 database not configured" });
+  }
+  return db;
+};
+
+const parseAttrsJson = (text: string | null | undefined): string[] => {
+  if (!text) return [];
+  try {
+    const arr = JSON.parse(text);
+    if (Array.isArray(arr)) {
+      return arr
+        .map((item) => String(item).trim().toLowerCase())
+        .filter((item) => item.length > 0);
+    }
+  } catch (_) {
+    // ignore malformed
+  }
+  return [];
+};
+
+const buildDomainSuffixes = (host: string): string[] => {
+  const parts = host.split(".").filter((segment) => segment.length > 0);
+  const suffixes: string[] = [];
+  for (let i = 0; i < parts.length; i += 1) {
+    suffixes.push(parts.slice(i).join("."));
+  }
+  return suffixes;
+};
+
+const escapeLikePattern = (input: string): string => {
+  return input.replace(/[\\%_]/g, (m) => `\\${m}`);
+};
+
+const chunkArray = <T>(items: T[], size: number): T[][] => {
+  if (size <= 0) return [items];
+  const chunks: T[][] = [];
+  for (let i = 0; i < items.length; i += size) {
+    chunks.push(items.slice(i, i + size));
+  }
+  return chunks;
+};
+
+const buildSearchTokens = (query: string): string[] => {
+  const set = new Set<string>();
+  const trimmed = query.trim();
+  const queryLower = trimmed.toLowerCase();
+  const hostLower = extractHostCandidate(trimmed).toLowerCase();
+  const push = (token: string) => {
+    const value = token.trim();
+    if (value.length >= 2) set.add(value);
+  };
+  if (queryLower) push(queryLower);
+  if (hostLower) push(hostLower);
+  for (const token of queryLower.split(/[^a-z0-9]+/)) push(token);
+  for (const token of hostLower.split(/[^a-z0-9]+/)) push(token);
+  return Array.from(set);
+};
+
+const bigIntToHex = (value: bigint): string => {
+  return value.toString(16).padStart(32, "0");
+};
+
 type EnvBindings = {
   SRS_BUCKET?: R2Bucket;
   GEO_KV?: KVNamespace;
+  DB?: D1Database;
 };
 
 const fetchIndexMap = async (
@@ -421,48 +487,85 @@ const searchGeositeRules = async (
   names: string[],
   limit: number,
   env: EnvBindings,
-  indexMap: Record<string, string>
+  indexMap: Record<string, string>,
+  maxLists: number,
+  tokens: string[]
 ): Promise<{ matches: GeositeSearchMatch[]; scanned: number }> => {
-  const bucket = env.SRS_BUCKET;
-  if (!bucket) {
-    throw new HTTPException(500, { message: "SRS bucket not configured" });
-  }
+  const db = ensureDb(env);
   const trimmedQuery = query.trim();
-  const hostLower = extractHostCandidate(trimmedQuery);
+  const hostLower = extractHostCandidate(trimmedQuery).toLowerCase();
   const queryLower = trimmedQuery.toLowerCase();
+  const domainCandidates = new Set<string>();
+  if (hostLower) buildDomainSuffixes(hostLower).forEach((suffix) => domainCandidates.add(suffix.toLowerCase()));
+  if (queryLower) domainCandidates.add(queryLower);
+  const domainValues = Array.from(domainCandidates).filter((item) => item.length > 0);
+  const likePatterns = tokens.map((token) => `%${escapeLikePattern(token)}%`);
+
   const overscan = Math.max(limit * 3, limit + 20);
   const matches: GeositeSearchMatch[] = [];
+  const seen = new Set<string>();
   let scanned = 0;
-  let stop = false;
-  const batchSize = 5;
+  const maxScan = Math.max(1, Math.min(Math.floor(maxLists) || 1, names.length));
+  const chunks = chunkArray(names.slice(0, maxScan), 40);
 
-  for (let i = 0; i < names.length && !stop; i += batchSize) {
-    const batch = names.slice(i, i + batchSize);
-    await Promise.all(
-      batch.map(async (name) => {
-        if (stop) return;
-        const data = await getJsonRules(name, bucket);
-        if (!data) return;
-        scanned++;
-        for (const rule of data.rules) {
-          if (!ruleMatchesAttributes(rule, attributeFilters)) continue;
-          const meta = evaluateGeositeRule(rule, trimmedQuery, hostLower, queryLower);
-          if (!meta) continue;
-          matches.push({
-            list: data.name,
-            url: indexMap[data.name] || indexMap[name] || undefined,
-            rule,
-            reason: meta.reason,
-            score: meta.score,
-            matched: meta.matched,
-          });
-          if (matches.length >= overscan) {
-            stop = true;
-            break;
-          }
-        }
-      })
-    );
+  const processRows = (rows: any[]) => {
+    for (const row of rows) {
+      if (!row) continue;
+      const rule: RuleItem = {
+        type: row.type,
+        value: row.value,
+        attrs: parseAttrsJson(row.attrs),
+      };
+      if (!ruleMatchesAttributes(rule, attributeFilters)) continue;
+      const meta = evaluateGeositeRule(rule, trimmedQuery, hostLower, queryLower);
+      if (!meta) continue;
+      const key = `${row.list}:::${rule.type}:::${rule.value}:::${meta.matched}`;
+      if (seen.has(key)) continue;
+      seen.add(key);
+      matches.push({
+        list: row.list,
+        url: indexMap[row.list] || undefined,
+        rule,
+        reason: meta.reason,
+        score: meta.score,
+        matched: meta.matched,
+      });
+      if (matches.length >= overscan) return true;
+    }
+    return false;
+  };
+
+  for (const chunk of chunks) {
+    scanned += chunk.length;
+    const namePlaceholders = chunk.map(() => "?").join(",");
+    const nameParams = chunk;
+
+    if (domainValues.length > 0) {
+      const domainPlaceholders = domainValues.map(() => "?").join(",");
+      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type IN ('domain','full')\n          AND r.value_lower IN (${domainPlaceholders})`;
+      const result = await db.prepare(sql).bind(...nameParams, ...domainValues).all<any>();
+      if (processRows(result.results || [])) break;
+    }
+
+    if (likePatterns.length > 0) {
+      for (const pattern of likePatterns) {
+        const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n          FROM geosite_rule r\n          JOIN geosite_list l ON l.id = r.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND r.type = 'keyword'\n            AND r.value_lower LIKE ? ESCAPE '\\'\n          LIMIT ${chunk.length * 40}`;
+        const result = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
+        if (processRows(result.results || [])) break;
+      }
+      if (matches.length >= overscan) break;
+      for (const pattern of likePatterns) {
+        const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n          FROM geosite_rule r\n          JOIN geosite_list l ON l.id = r.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND r.type = 'regexp'\n            AND r.value_lower LIKE ? ESCAPE '\\'\n          LIMIT ${chunk.length * 20}`;
+        const result = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
+        if (processRows(result.results || [])) break;
+      }
+    } else {
+      const sql = `SELECT l.name AS list, r.type, r.value, r.attrs\n        FROM geosite_rule r\n        JOIN geosite_list l ON l.id = r.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND r.type = 'regexp'\n        LIMIT ${chunk.length * 10}`;
+      const result = await db.prepare(sql).bind(...nameParams).all<any>();
+      if (processRows(result.results || [])) break;
+    }
+
+    if (matches.length >= overscan) break;
   }
 
   matches.sort((a, b) => {
@@ -568,45 +671,6 @@ const parseIPAddress = (input: string): ParsedIP | null => {
   return null;
 };
 
-const parseCidr = (
-  cidr: string
-): ({ version: "ipv4"; base: number; prefix: number } | { version: "ipv6"; base: bigint; prefix: number }) | null => {
-  const parts = cidr.split("/");
-  if (parts.length !== 2) return null;
-  const ipPart = parts[0].trim();
-  const prefix = Number(parts[1]);
-  if (!Number.isFinite(prefix)) return null;
-  if (ipPart.includes(".")) {
-    if (prefix < 0 || prefix > 32) return null;
-    const base = parseIPv4Address(ipPart);
-    if (base === null) return null;
-    return { version: "ipv4", base, prefix };
-  }
-  if (ipPart.includes(":")) {
-    if (prefix < 0 || prefix > 128) return null;
-    const base = parseIPv6Address(ipPart);
-    if (base === null) return null;
-    return { version: "ipv6", base, prefix };
-  }
-  return null;
-};
-
-const IPv6_FULL_MASK = (1n << 128n) - 1n;
-
-const ipv4MatchesCidr = (value: number, base: number, prefix: number): boolean => {
-  if (prefix <= 0) return true;
-  if (prefix >= 32) return value === base;
-  const mask = (0xffffffff << (32 - prefix)) >>> 0;
-  return (value & mask) === (base & mask);
-};
-
-const ipv6MatchesCidr = (value: bigint, base: bigint, prefix: number): boolean => {
-  if (prefix <= 0) return true;
-  if (prefix >= 128) return value === base;
-  const mask = ((1n << BigInt(prefix)) - 1n) << BigInt(128 - prefix);
-  return (value & mask) === (base & mask & IPv6_FULL_MASK);
-};
-
 type GeoipSearchMatch = {
   list: string;
   url?: string;
@@ -622,90 +686,89 @@ const searchGeoipLists = async (
   limit: number,
   env: EnvBindings,
   indexMap: Record<string, string>,
-  versionFilter: "ipv4" | "ipv6" | "both" = "both"
+  versionFilter: "ipv4" | "ipv6" | "both" = "both",
+  maxLists: number,
+  tokens: string[]
 ): Promise<{ matches: GeoipSearchMatch[]; scanned: number; mode: string }> => {
-  const bucket = env.SRS_BUCKET;
-  if (!bucket) {
-    throw new HTTPException(500, { message: "SRS bucket not configured" });
-  }
-
+  const db = ensureDb(env);
   const trimmed = query.trim();
   const ip = parseIPAddress(trimmed);
   const lower = trimmed.toLowerCase();
   const overscan = Math.max(limit * 3, limit + 20);
   const matches: GeoipSearchMatch[] = [];
+  const seen = new Set<string>();
   let scanned = 0;
-  let stop = false;
-  const batchSize = 4;
+  const maxScan = Math.max(1, Math.min(Math.floor(maxLists) || 1, names.length));
+  const chunks = chunkArray(names.slice(0, maxScan), 40);
   const mode = ip ? "ip" : trimmed.includes("/") ? "cidr" : "substring";
+  const likePatterns = tokens.length ? tokens.map((token) => `%${escapeLikePattern(token)}%`) : [];
 
-  for (let i = 0; i < names.length && !stop; i += batchSize) {
-    const batch = names.slice(i, i + batchSize);
-    await Promise.all(
-      batch.map(async (name) => {
-        if (stop) return;
-        const data = await getGeoipJson(name, bucket);
-        if (!data) return;
-        scanned++;
-        const collect = (cidrs: string[] | undefined, version: "ipv4" | "ipv6") => {
-          if (!cidrs) return;
-          if (versionFilter !== "both" && versionFilter !== version) return;
-          for (const cidr of cidrs) {
-            if (ip) {
-              const parsed = parseCidr(cidr);
-              if (!parsed || parsed.version !== version) continue;
-              if (parsed.version === "ipv4") {
-                if (ip.version !== "ipv4") continue;
-                if (!ipv4MatchesCidr(ip.value, parsed.base, parsed.prefix)) continue;
-              } else {
-                if (ip.version !== "ipv6") continue;
-                if (!ipv6MatchesCidr(ip.value, parsed.base, parsed.prefix)) continue;
-              }
-              matches.push({
-                list: data.name,
-                url: indexMap[data.name] || indexMap[name] || undefined,
-                version,
-                cidr,
-                prefix: parsed.prefix,
-                score: parsed.prefix + (version === "ipv4" ? 1000 : 500),
-              });
-            } else if (mode === "cidr") {
-              if (cidr.toLowerCase() === lower) {
-                const parsed = parseCidr(cidr);
-                const prefix = parsed ? parsed.prefix : 0;
-                matches.push({
-                  list: data.name,
-                  url: indexMap[data.name] || indexMap[name] || undefined,
-                  version,
-                  cidr,
-                  prefix,
-                  score: 300 + prefix,
-                });
-              }
-            } else {
-              if (cidr.toLowerCase().includes(lower)) {
-                const parsed = parseCidr(cidr);
-                const prefix = parsed ? parsed.prefix : 0;
-                matches.push({
-                  list: data.name,
-                  url: indexMap[data.name] || indexMap[name] || undefined,
-                  version,
-                  cidr,
-                  prefix,
-                  score: 200 + prefix,
-                });
-              }
-            }
-            if (matches.length >= overscan) {
-              stop = true;
-              break;
-            }
-          }
-        };
-        collect(data.cidr4, "ipv4");
-        collect(data.cidr6, "ipv6");
-      })
-    );
+  const pushMatch = (row: any, versionLabel: "ipv4" | "ipv6") => {
+    const listName = String(row.list);
+    const cidr = String(row.cidr);
+    const key = `${listName}:::${cidr}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    const prefix = Number(row.prefix || 0);
+    matches.push({
+      list: listName,
+      url: indexMap[listName] || undefined,
+      version: versionLabel,
+      cidr,
+      prefix,
+      score: prefix + (versionLabel === "ipv4" ? 1000 : 500),
+    });
+    return matches.length >= overscan;
+  };
+
+  for (const chunk of chunks) {
+    scanned += chunk.length;
+    const namePlaceholders = chunk.map(() => "?").join(",");
+    const nameParams = chunk;
+
+    if (ip && ip.version === "ipv4" && versionFilter !== "ipv6") {
+      const sql = `SELECT l.name AS list, c.cidr, c.prefix\n        FROM geoip_cidr c\n        JOIN geoip_list l ON l.id = c.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND c.version = 4\n          AND c.start_v4 <= ?\n          AND c.end_v4 >= ?`;
+      const rows = await db.prepare(sql).bind(...nameParams, ip.value, ip.value).all<any>();
+      if ((rows.results || []).some((row) => pushMatch(row, "ipv4"))) break;
+    }
+
+    if (ip && ip.version === "ipv6" && versionFilter !== "ipv4") {
+      const ipHex = bigIntToHex(ip.value);
+      const sql = `SELECT l.name AS list, c.cidr, c.prefix\n        FROM geoip_cidr c\n        JOIN geoip_list l ON l.id = c.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND c.version = 6\n          AND c.start_hex <= ?\n          AND c.end_hex >= ?`;
+      const rows = await db.prepare(sql).bind(...nameParams, ipHex, ipHex).all<any>();
+      if ((rows.results || []).some((row) => pushMatch(row, "ipv6"))) break;
+    }
+
+    if (!ip && mode === "cidr") {
+      const sql = `SELECT l.name AS list, c.cidr, c.prefix, c.version\n        FROM geoip_cidr c\n        JOIN geoip_list l ON l.id = c.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND LOWER(c.cidr) = LOWER(?)`;
+      const rows = await db.prepare(sql).bind(...nameParams, trimmed).all<any>();
+      for (const row of rows.results || []) {
+        const versionLabel = Number(row.version) === 4 ? "ipv4" : "ipv6";
+        if (versionFilter !== "both" && versionFilter !== versionLabel) continue;
+        if (pushMatch(row, versionLabel)) break;
+      }
+      if (matches.length >= overscan) break;
+    }
+
+    if (!ip && mode !== "cidr") {
+      const patterns = likePatterns.length ? likePatterns : [`%${escapeLikePattern(lower)}%`];
+      for (const pattern of patterns) {
+        if (versionFilter !== "ipv6") {
+          const sql = `SELECT l.name AS list, c.cidr, c.prefix\n            FROM geoip_cidr c\n            JOIN geoip_list l ON l.id = c.list_id\n            WHERE l.name IN (${namePlaceholders})\n              AND c.version = 4\n              AND c.cidr LIKE ? ESCAPE '\\'\n            LIMIT ${chunk.length * 80}`;
+          const rows = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
+          if ((rows.results || []).some((row) => pushMatch(row, "ipv4"))) break;
+        }
+        if (matches.length >= overscan) break;
+        if (versionFilter !== "ipv4") {
+          const sql = `SELECT l.name AS list, c.cidr, c.prefix\n            FROM geoip_cidr c\n            JOIN geoip_list l ON l.id = c.list_id\n            WHERE l.name IN (${namePlaceholders})\n              AND c.version = 6\n              AND c.cidr LIKE ? ESCAPE '\\'\n            LIMIT ${chunk.length * 80}`;
+          const rows = await db.prepare(sql).bind(...nameParams, pattern).all<any>();
+          if ((rows.results || []).some((row) => pushMatch(row, "ipv6"))) break;
+        }
+        if (matches.length >= overscan) break;
+      }
+    }
+
+    if (matches.length >= overscan) break;
   }
 
   matches.sort((a, b) => {
@@ -998,16 +1061,36 @@ app.post("/api/search/geosite", async (c) => {
     throw new HTTPException(400, { message: "No valid geosite names in scope" });
   }
   const limit = clamp(Number(payload?.limit ?? 50), 5, 200);
-  const { matches, scanned } = await searchGeositeRules(query, filters, scopedNames, limit, env, indexMap);
+  const tokens = buildSearchTokens(query);
+  const prioritized = tokens.length
+    ? scopedNames.filter((name) => {
+        const lower = name.toLowerCase();
+        return tokens.some((token) => lower.includes(token));
+      })
+    : [];
+  const maxLists = clamp(Number(payload?.lists ?? 600), 100, 2000);
+  const dedupedNames = Array.from(new Map([...prioritized, ...scopedNames].map((n) => [n, n])).values());
+  const namesForSearch = dedupedNames.slice(0, Math.min(maxLists, dedupedNames.length));
+  const { matches, scanned } = await searchGeositeRules(
+    query,
+    filters,
+    namesForSearch,
+    limit,
+    env,
+    indexMap,
+    namesForSearch.length,
+    tokens
+  );
   return c.json({
     query,
     filters,
     limit,
     scope: {
       requested: requestedNames,
-      used: scopedNames.length,
+      used: namesForSearch.length,
       total: totalAvailable,
       scanned,
+      prioritized,
     },
     matches,
   });
@@ -1044,13 +1127,25 @@ app.post("/api/search/geoip", async (c) => {
     throw new HTTPException(400, { message: "No valid geoip names in scope" });
   }
   const limit = clamp(Number(payload?.limit ?? 50), 5, 200);
+  const tokens = buildSearchTokens(query);
+  const prioritized = tokens.length
+    ? scopedNames.filter((name) => {
+        const lower = name.toLowerCase();
+        return tokens.some((token) => lower.includes(token));
+      })
+    : [];
+  const maxLists = clamp(Number(payload?.lists ?? 800), 100, 2000);
+  const dedupedNames = Array.from(new Map([...prioritized, ...scopedNames].map((n) => [n, n])).values());
+  const namesForSearch = dedupedNames.slice(0, Math.min(maxLists, dedupedNames.length));
   const { matches, scanned, mode } = await searchGeoipLists(
     query,
-    scopedNames,
+    namesForSearch,
     limit,
     env,
     indexMap,
-    versionFilter
+    versionFilter,
+    namesForSearch.length,
+    tokens
   );
   return c.json({
     query,
@@ -1059,9 +1154,10 @@ app.post("/api/search/geoip", async (c) => {
     mode,
     scope: {
       requested: requestedNames,
-      used: scopedNames.length,
+      used: namesForSearch.length,
       total: totalAvailable,
       scanned,
+      prioritized,
     },
     matches,
   });

@@ -78,6 +78,10 @@ jobs:
           GEOIP_DAT_PATH: /tmp/geoip.dat
         run: npm run build:geoip
 
+      - name: Build D1 seed SQL
+        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
+        run: npm run build:d1
+
       - name: Update README
         run: |
           set -eux
@@ -152,6 +156,24 @@ jobs:
             exit 0
           fi
           npm run r2:sync
+
+      - name: Sync D1 database with latest seed
+        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          D1_DATABASE_NAME: ${{ vars.D1_DATABASE_NAME }}
+        run: |
+          set -eux
+          if [ -z "${D1_DATABASE_NAME:-}" ]; then
+            echo "D1_DATABASE_NAME repo var not set; skip D1 sync" >&2
+            exit 0
+          fi
+          if [ ! -f dist/d1/seed.sql ]; then
+            echo "dist/d1/seed.sql is missing; run npm run build:d1 first" >&2
+            exit 1
+          fi
+          npx wrangler d1 execute "$D1_DATABASE_NAME" --file=dist/d1/seed.sql --remote
 
       - name: Write index.json to Workers KV (single-key)
         env:

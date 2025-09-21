@@ -17,10 +17,14 @@ binding = "SRS_BUCKET"
 # Change this to your actual R2 bucket name
 bucket_name = "surge-srs"
 
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "my-database"
-# database_id = ""
+[[d1_databases]]
+binding = "DB"
+database_name = "surge-srs"
+database_id = "3ac86863-0414-48e7-8c87-5d9ca429c2b3"
 
 # [ai]
 # binding = "AI"
+
+# wrangler.toml (wrangler v3.88.0^)
+[observability.logs]
+enabled = true

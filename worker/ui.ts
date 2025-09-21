@@ -439,6 +439,28 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
       gap: 6px;
     }
 
+    .chip-button {
+      background: rgba(148, 163, 184, 0.12);
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      color: var(--text-muted);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.18s ease;
+    }
+
+    .chip-button:hover {
+      border-color: rgba(56, 189, 248, 0.5);
+      color: var(--accent);
+    }
+
+    .chip-group {
+      display: inline-flex;
+      gap: 8px;
+      align-items: center;
+    }
+
     .footer {
       padding: 20px clamp(16px, 4vw, 48px) 32px;
       color: var(--text-muted);
@@ -633,7 +655,10 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           <div class="tag-cloud" id="geosite-tags"></div>
           <div class="rule-controls">
             <input id="geosite-rule-filter" type="search" placeholder="在当前规则中搜索" />
-            <a id="geosite-download" class="chip-link" href="#" target="_blank" rel="noreferrer" hidden>下载 SRS</a>
+            <div class="chip-group">
+              <a id="geosite-download" class="chip-link" href="#" target="_blank" rel="noreferrer" hidden>下载 SRS</a>
+              <button id="geosite-copy" class="chip-button" type="button" hidden>复制下载链接</button>
+            </div>
           </div>
           <div class="rule-list" id="geosite-rule-list"></div>
         </article>
@@ -699,7 +724,10 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           <div class="summary" id="geoip-summary"></div>
           <div class="rule-controls">
             <input id="geoip-cidr-filter" type="search" placeholder="在 CIDR 中搜索" />
-            <a id="geoip-download" class="chip-link" href="#" target="_blank" rel="noreferrer" hidden>下载 SRS</a>
+            <div class="chip-group">
+              <a id="geoip-download" class="chip-link" href="#" target="_blank" rel="noreferrer" hidden>下载 SRS</a>
+              <button id="geoip-copy" class="chip-button" type="button" hidden>复制下载链接</button>
+            </div>
           </div>
           <div class="cidr-list" id="geoip-cidr-list"></div>
         </article>
@@ -875,6 +903,7 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           ruleList: document.getElementById("geosite-rule-list"),
           attrFilter: document.getElementById("geosite-attr-filter"),
           download: document.getElementById("geosite-download"),
+          copyButton: document.getElementById("geosite-copy"),
           reverseInput: document.getElementById("geosite-reverse-input"),
           reverseAttr: document.getElementById("geosite-reverse-attr"),
           reverseLimit: document.getElementById("geosite-reverse-limit"),
@@ -892,6 +921,7 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           cidrFilter: document.getElementById("geoip-cidr-filter"),
           cidrList: document.getElementById("geoip-cidr-list"),
           download: document.getElementById("geoip-download"),
+          copyButton: document.getElementById("geoip-copy"),
           reverseInput: document.getElementById("geoip-reverse-input"),
           reverseVersion: document.getElementById("geoip-reverse-version"),
           reverseLimit: document.getElementById("geoip-reverse-limit"),
@@ -904,14 +934,18 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
 
       const updateSrsLink = function (datasetKey, name) {
         const linkEl = dom[datasetKey].download;
+        const copyBtn = dom[datasetKey].copyButton;
         if (!name) {
           linkEl.hidden = true;
           linkEl.href = "#";
+          copyBtn.hidden = true;
           return;
         }
         const base = datasetKey === "geosite" ? "/srs-geosite/" : "/srs-geoip/";
         linkEl.hidden = false;
         linkEl.href = base + encodeURIComponent(name) + ".srs";
+        copyBtn.hidden = false;
+        copyBtn.dataset.url = linkEl.href;
       };
 
       const renderGeositeDetail = function (payload) {
@@ -1544,6 +1578,25 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
         }
       );
 
+      dom.geosite.copyButton.addEventListener("click", function () {
+        const url = dom.geosite.copyButton.dataset.url;
+        if (!url) return;
+        navigator.clipboard
+          .writeText(new URL(url, window.location.origin).href)
+          .then(function () {
+            dom.geosite.copyButton.textContent = "已复制";
+            setTimeout(function () {
+              dom.geosite.copyButton.textContent = "复制下载链接";
+            }, 1500);
+          })
+          .catch(function () {
+            dom.geosite.copyButton.textContent = "复制失败";
+            setTimeout(function () {
+              dom.geosite.copyButton.textContent = "复制下载链接";
+            }, 2000);
+          });
+      });
+
       dom.geosite.reverseButton.addEventListener("click", runGeositeReverse);
       dom.geosite.reverseInput.addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
@@ -1581,6 +1634,25 @@ export const renderHomePage = (): string => `<!DOCTYPE html>
           applyGeoipCidrFilter();
         }, 200)
       );
+
+      dom.geoip.copyButton.addEventListener("click", function () {
+        const url = dom.geoip.copyButton.dataset.url;
+        if (!url) return;
+        navigator.clipboard
+          .writeText(new URL(url, window.location.origin).href)
+          .then(function () {
+            dom.geoip.copyButton.textContent = "已复制";
+            setTimeout(function () {
+              dom.geoip.copyButton.textContent = "复制下载链接";
+            }, 1500);
+          })
+          .catch(function () {
+            dom.geoip.copyButton.textContent = "复制失败";
+            setTimeout(function () {
+              dom.geoip.copyButton.textContent = "复制下载链接";
+            }, 2000);
+          });
+      });
 
       dom.geoip.reverseButton.addEventListener("click", runGeoipReverse);
       dom.geoip.reverseInput.addEventListener("keypress", function (event) {
