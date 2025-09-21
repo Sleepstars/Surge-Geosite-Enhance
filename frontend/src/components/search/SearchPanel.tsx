@@ -10,6 +10,8 @@ import { useGeositeSearch, useGeositeFastSearch, useGeoipSearch } from '@/hooks/
 import { useAppStore } from '@/stores/useAppStore'
 import { useDebounce } from '@/hooks/useDebounce'
 
+const API_INPUT_DEBOUNCE = 500
+
 export function SearchPanel() {
   const { activeDataset } = useAppStore()
   const [fastQuery, setFastQuery] = useState('')
@@ -18,8 +20,8 @@ export function SearchPanel() {
   const [attributes, setAttributes] = useState('')
   const [version, setVersion] = useState<'both' | 'ipv4' | 'ipv6'>('both')
 
-  const debouncedFastQuery = useDebounce(fastQuery, 300)
-  const debouncedComprehensiveQuery = useDebounce(comprehensiveQuery, 300)
+  const debouncedFastQuery = useDebounce(fastQuery, API_INPUT_DEBOUNCE)
+  const debouncedComprehensiveQuery = useDebounce(comprehensiveQuery, API_INPUT_DEBOUNCE)
 
   const geositeSearch = useGeositeSearch()
   const geositeFastSearch = useGeositeFastSearch()

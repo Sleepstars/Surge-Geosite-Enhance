@@ -5,11 +5,14 @@ import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card'
 import { Input } from '../ui/Input'
 import { Button } from '../ui/Button'
 import { Badge } from '../ui/Badge'
-import { LoadingState, ErrorState } from '../ui/LoadingSpinner'
+import { LoadingState, ErrorState, LoadingSpinner } from '../ui/LoadingSpinner'
 import { GeositeRuleItem } from './GeositeRuleItem'
 import { useGeositeDetail } from '@/hooks/useApi'
 import { useAppStore } from '@/stores/useAppStore'
 import { useDebounce } from '@/hooks/useDebounce'
+import type { GeositeDetail } from '@/types'
+
+const API_INPUT_DEBOUNCE = 500
 
 export const GeositeRuleList: React.FC = () => {
   const {
@@ -23,10 +26,12 @@ export const GeositeRuleList: React.FC = () => {
   const [copyStatus, setCopyStatus] = useState<'idle' | 'copied' | 'error'>('idle')
   const [localRuleFilter, setLocalRuleFilter] = useState(geositeRuleFilter)
   const [localAttributeFilter, setLocalAttributeFilter] = useState(geositeAttributeFilter)
+  const [cachedDetail, setCachedDetail] = useState<GeositeDetail | null>(null)
+  const lastSelectedNameRef = React.useRef<string | null>(null)
 
   // 使用防抖来避免频繁的API请求
-  const debouncedRuleFilter = useDebounce(localRuleFilter, 300)
-  const debouncedAttributeFilter = useDebounce(localAttributeFilter, 300)
+  const debouncedRuleFilter = useDebounce(localRuleFilter, API_INPUT_DEBOUNCE)
+  const debouncedAttributeFilter = useDebounce(localAttributeFilter, API_INPUT_DEBOUNCE)
 
   // 同步防抖后的值到全局状态
   React.useEffect(() => {
@@ -43,7 +48,7 @@ export const GeositeRuleList: React.FC = () => {
     setLocalAttributeFilter(geositeAttributeFilter)
   }, [geositeSelectedName]) // 只在选择的规则组变化时同步
 
-  const { data: detail, isLoading, error, refetch } = useGeositeDetail(
+  const { data: detail, isPending, isFetching, error, refetch } = useGeositeDetail(
     geositeSelectedName,
     {
       limit: 2000, // Load more rules for better UX
@@ -52,12 +57,32 @@ export const GeositeRuleList: React.FC = () => {
     }
   )
 
+  React.useEffect(() => {
+    if (detail) {
+      setCachedDetail(detail)
+    }
+  }, [detail])
+
+  React.useEffect(() => {
+    if (!geositeSelectedName) {
+      setCachedDetail(null)
+      lastSelectedNameRef.current = null
+      return
+    }
+
+    if (lastSelectedNameRef.current !== geositeSelectedName) {
+      setCachedDetail(null)
+      lastSelectedNameRef.current = geositeSelectedName
+    }
+  }, [geositeSelectedName])
+
   const parentRef = React.useRef<HTMLDivElement>(null)
 
+  const activeDetail = detail ?? cachedDetail
   const filteredRules = useMemo(() => {
-    if (!detail?.rules) return []
-    return detail.rules
-  }, [detail?.rules])
+    if (!activeDetail?.rules) return []
+    return activeDetail.rules
+  }, [activeDetail])
 
   const virtualizer = useVirtualizer({
     count: filteredRules.length,
@@ -67,10 +92,10 @@ export const GeositeRuleList: React.FC = () => {
   })
 
   const handleCopyUrl = async () => {
-    if (!detail?.url) return
+    if (!activeDetail?.url) return
     
     try {
-      await navigator.clipboard.writeText(detail.url)
+      await navigator.clipboard.writeText(activeDetail.url)
       setCopyStatus('copied')
       setTimeout(() => setCopyStatus('idle'), 2000)
     } catch {
@@ -78,6 +103,9 @@ export const GeositeRuleList: React.FC = () => {
       setTimeout(() => setCopyStatus('idle'), 2000)
     }
   }
+
+  const isInitialLoading = isPending && !activeDetail
+  const isBackgroundFetching = isFetching && !!activeDetail
 
   if (!geositeSelectedName) {
     return (
@@ -94,7 +122,7 @@ export const GeositeRuleList: React.FC = () => {
     )
   }
 
-  if (isLoading) {
+  if (isInitialLoading) {
     return (
       <Card>
         <CardHeader>
@@ -107,7 +135,7 @@ export const GeositeRuleList: React.FC = () => {
     )
   }
 
-  if (error) {
+  if (error && !activeDetail) {
     return (
       <Card>
         <CardHeader>
@@ -123,15 +151,18 @@ export const GeositeRuleList: React.FC = () => {
     )
   }
 
-  if (!detail) return null
+  if (!activeDetail) return null
 
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
-          <span>规则详情</span>
+          <span className="flex items-center gap-2">
+            规则详情
+            {isBackgroundFetching && <LoadingSpinner size="sm" className="text-muted-foreground" />}
+          </span>
           <div className="flex items-center gap-2">
-            {detail.url && (
+            {activeDetail.url && (
               <>
                 <Button
                   variant="outline"
@@ -147,7 +178,7 @@ export const GeositeRuleList: React.FC = () => {
                   size="sm"
                   asChild
                 >
-                  <a href={detail.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                  <a href={activeDetail.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                     <Download className="w-4 h-4" />
                     下载
                   </a>
@@ -159,17 +190,25 @@ export const GeositeRuleList: React.FC = () => {
       </CardHeader>
       
       <CardContent className="space-y-4">
+        {error && activeDetail && (
+          <ErrorState 
+            error={error instanceof Error ? error.message : '加载失败'} 
+            onRetry={() => refetch()}
+            className="border border-destructive/20 rounded-md"
+          />
+        )}
+
         <div className="flex items-center gap-2 text-sm">
-          <Badge variant="outline">{detail.name}</Badge>
+          <Badge variant="outline">{activeDetail.name}</Badge>
           <span className="text-muted-foreground">·</span>
           <span className="text-muted-foreground">
-            共 {detail.stats.filtered.total} 条规则
+            共 {activeDetail.stats.filtered.total} 条规则
           </span>
-          {detail.stats.overall.total !== detail.stats.filtered.total && (
+          {activeDetail.stats.overall.total !== activeDetail.stats.filtered.total && (
             <>
               <span className="text-muted-foreground">·</span>
               <span className="text-muted-foreground">
-                (原始 {detail.stats.overall.total} 条)
+                (原始 {activeDetail.stats.overall.total} 条)
               </span>
             </>
           )}
@@ -203,14 +242,14 @@ export const GeositeRuleList: React.FC = () => {
             <BarChart3 className="w-4 h-4" />
             <span>统计：</span>
           </div>
-          <Badge variant="secondary">域名后缀 {detail.stats.filtered.domain}</Badge>
-          <Badge variant="secondary">完整域名 {detail.stats.filtered.full}</Badge>
-          <Badge variant="secondary">正则 {detail.stats.filtered.regexp}</Badge>
+          <Badge variant="secondary">域名后缀 {activeDetail.stats.filtered.domain}</Badge>
+          <Badge variant="secondary">完整域名 {activeDetail.stats.filtered.full}</Badge>
+          <Badge variant="secondary">正则 {activeDetail.stats.filtered.regexp}</Badge>
         </div>
 
         <div 
           ref={parentRef}
-          className="border rounded-md bg-background/50 h-96 overflow-auto"
+          className="relative border rounded-md bg-background/50 h-96 overflow-auto"
         >
           {filteredRules.length > 0 ? (
             <div
@@ -242,6 +281,11 @@ export const GeositeRuleList: React.FC = () => {
           ) : (
             <div className="p-8 text-center text-muted-foreground">
               没有找到匹配的规则
+            </div>
+          )}
+          {isBackgroundFetching && (
+            <div className="absolute inset-0 bg-background/70 backdrop-blur-sm flex items-center justify-center pointer-events-none">
+              <LoadingSpinner className="text-primary" />
             </div>
           )}
         </div>
