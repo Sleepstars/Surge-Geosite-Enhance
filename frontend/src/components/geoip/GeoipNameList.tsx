@@ -53,9 +53,23 @@ export const GeoipNameList: React.FC = () => {
       <Card className="h-full">
         <CardHeader>
           <CardTitle>GeoIP · 规则列表</CardTitle>
+          <CardDescription>
+            按名称快速检索规则集，可选择仅显示 IPv4 或 IPv6，并加载右侧 CIDR 详情。
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <LoadingState>加载规则列表...</LoadingState>
+        <CardContent className="space-y-4">
+          {/* 搜索和过滤输入占位 */}
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <div className="h-10 rounded-md border bg-muted/20" />
+            </div>
+            <div className="h-10 w-40 rounded-md border bg-muted/20" />
+          </div>
+
+          {/* 列表容器固定高度，保持整体卡片高度一致 */}
+          <div className="border rounded-md bg-background/50 h-96 flex items-center justify-center">
+            <LoadingState>加载规则列表...</LoadingState>
+          </div>
         </CardContent>
       </Card>
     )
@@ -66,12 +80,26 @@ export const GeoipNameList: React.FC = () => {
       <Card className="h-full">
         <CardHeader>
           <CardTitle>GeoIP · 规则列表</CardTitle>
+          <CardDescription>
+            按名称快速检索规则集，可选择仅显示 IPv4 或 IPv6，并加载右侧 CIDR 详情。
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <ErrorState 
-            error={error instanceof Error ? error.message : '加载失败'} 
-            onRetry={() => refetch()}
-          />
+        <CardContent className="space-y-4">
+          {/* 搜索和过滤输入占位 */}
+          <div className="flex gap-2">
+            <div className="relative flex-1">
+              <div className="h-10 rounded-md border bg-muted/20" />
+            </div>
+            <div className="h-10 w-40 rounded-md border bg-muted/20" />
+          </div>
+
+          {/* 列表容器固定高度，保持整体卡片高度一致 */}
+          <div className="border rounded-md bg-background/50 h-96 flex items-center justify-center">
+            <ErrorState
+              error={error instanceof Error ? error.message : '加载失败'}
+              onRetry={() => refetch()}
+            />
+          </div>
         </CardContent>
       </Card>
     )

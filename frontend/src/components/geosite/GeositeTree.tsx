@@ -61,9 +61,27 @@ export const GeositeTree: React.FC = () => {
       <Card className="h-full">
         <CardHeader>
           <CardTitle>GeoSite · 规则树</CardTitle>
+          <CardDescription>
+            按层级结构浏览规则组，可展开查看子分类，并点击选择加载右侧规则详情。
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <LoadingState>加载规则树...</LoadingState>
+        <CardContent className="space-y-4">
+          {/* 搜索输入占位 */}
+          <div>
+            <label className="block text-sm font-medium mb-2 opacity-50">搜索规则</label>
+            <div className="h-10 rounded-md border bg-muted/20" />
+          </div>
+
+          {/* 操作按钮占位 */}
+          <div className="flex gap-2">
+            <div className="h-9 w-20 rounded-md border bg-muted/20" />
+            <div className="h-9 w-20 rounded-md border bg-muted/20" />
+          </div>
+
+          {/* 树容器固定高度，保持整体卡片高度一致 */}
+          <div className="border rounded-md bg-background/50 h-96 flex items-center justify-center">
+            <LoadingState>加载规则树...</LoadingState>
+          </div>
         </CardContent>
       </Card>
     )
@@ -74,12 +92,30 @@ export const GeositeTree: React.FC = () => {
       <Card className="h-full">
         <CardHeader>
           <CardTitle>GeoSite · 规则树</CardTitle>
+          <CardDescription>
+            按层级结构浏览规则组，可展开查看子分类，并点击选择加载右侧规则详情。
+          </CardDescription>
         </CardHeader>
-        <CardContent>
-          <ErrorState 
-            error={error instanceof Error ? error.message : '加载失败'} 
-            onRetry={() => refetch()}
-          />
+        <CardContent className="space-y-4">
+          {/* 搜索输入占位 */}
+          <div>
+            <label className="block text-sm font-medium mb-2 opacity-50">搜索规则</label>
+            <div className="h-10 rounded-md border bg-muted/20" />
+          </div>
+
+          {/* 操作按钮占位 */}
+          <div className="flex gap-2">
+            <div className="h-9 w-20 rounded-md border bg-muted/20" />
+            <div className="h-9 w-20 rounded-md border bg-muted/20" />
+          </div>
+
+          {/* 树容器固定高度，保持整体卡片高度一致 */}
+          <div className="border rounded-md bg-background/50 h-96 flex items-center justify-center">
+            <ErrorState
+              error={error instanceof Error ? error.message : '加载失败'}
+              onRetry={() => refetch()}
+            />
+          </div>
         </CardContent>
       </Card>
     )

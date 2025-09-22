@@ -104,7 +104,7 @@ export function SearchPanel() {
                   placeholder="属性过滤（如 cn 或 !cn）"
                   value={attributes}
                   onChange={(e) => setAttributes(e.target.value)}
-                  className="w-full sm:w-32 md:w-40 sm:flex-none"
+                  className="w-full sm:w-48 md:w-52 sm:flex-none"
                 />
                 <Button
                   onClick={handleFastSearch}
@@ -154,7 +154,7 @@ export function SearchPanel() {
                   placeholder="属性过滤（如 cn 或 !cn）"
                   value={attributes}
                   onChange={(e) => setAttributes(e.target.value)}
-                  className="w-full sm:w-32 md:w-40 sm:flex-none"
+                  className="w-full sm:w-48 md:w-52 sm:flex-none"
                 />
                 <Button
                   onClick={handleComprehensiveSearch}
