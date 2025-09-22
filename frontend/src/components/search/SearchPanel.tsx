@@ -8,9 +8,7 @@ import { Badge } from '../ui/Badge'
 import { ErrorState } from '../ui/LoadingSpinner'
 import { useGeositeSearch, useGeositeFastSearch, useGeoipSearch, useGeositeIndex } from '@/hooks/useApi'
 import { useAppStore } from '@/stores/useAppStore'
-import { useDebounce } from '@/hooks/useDebounce'
-
-const API_INPUT_DEBOUNCE = 500
+// Note: reverse-matching search uses immediate input without debouncing
 
 export function SearchPanel() {
   const { activeDataset } = useAppStore()
@@ -20,15 +18,14 @@ export function SearchPanel() {
   const [version, setVersion] = useState<'both' | 'ipv4' | 'ipv6'>('both')
   const geositeIndex = useGeositeIndex()
 
-  const debouncedFastQuery = useDebounce(fastQuery, API_INPUT_DEBOUNCE)
-  const debouncedComprehensiveQuery = useDebounce(comprehensiveQuery, API_INPUT_DEBOUNCE)
+  // Use raw queries directly (no debounce)
 
   const geositeSearch = useGeositeSearch()
   const geositeFastSearch = useGeositeFastSearch()
   const geoipSearch = useGeoipSearch()
 
   const handleFastSearch = () => {
-    if (!debouncedFastQuery.trim()) return
+    if (!fastQuery.trim()) return
 
     if (activeDataset === 'geosite') {
       // Narrow the scope of lists on the client to speed up server-side work
@@ -36,7 +33,7 @@ export function SearchPanel() {
       let scopedNames: string[] | undefined
       const indexData = geositeIndex.data
       if (indexData) {
-        const raw = debouncedFastQuery.trim()
+        const raw = fastQuery.trim()
         // Extract a hostname-ish candidate cheaply (no heavy URL parsing)
         let host = raw
         try {
@@ -63,7 +60,7 @@ export function SearchPanel() {
         }
       }
       geositeFastSearch.mutate({
-        query: debouncedFastQuery,
+        query: fastQuery,
         attributes: attributes || undefined,
         names: scopedNames,
         // Ask server to scan fewer lists by default for fast mode
@@ -71,24 +68,24 @@ export function SearchPanel() {
       })
     } else {
       geoipSearch.mutate({
-        query: debouncedFastQuery,
+        query: fastQuery,
         version,
       })
     }
   }
 
   const handleComprehensiveSearch = () => {
-    if (!debouncedComprehensiveQuery.trim()) return
+    if (!comprehensiveQuery.trim()) return
 
     if (activeDataset === 'geosite') {
       geositeSearch.mutate({
-        query: debouncedComprehensiveQuery,
+        query: comprehensiveQuery,
         attributes: attributes || undefined,
         limit: 200,
       })
     } else {
       geoipSearch.mutate({
-        query: debouncedComprehensiveQuery,
+        query: comprehensiveQuery,
         version,
         limit: 200,
       })
@@ -145,7 +142,7 @@ export function SearchPanel() {
                 />
                 <Button
                   onClick={handleFastSearch}
-                  disabled={!debouncedFastQuery.trim() || isLoading}
+                  disabled={!fastQuery.trim() || isLoading}
                   className="bg-green-600 hover:bg-green-700 w-full sm:w-auto sm:flex-none"
                   aria-label="快速匹配"
                   title="快速匹配"
@@ -195,7 +192,7 @@ export function SearchPanel() {
                 />
                 <Button
                   onClick={handleComprehensiveSearch}
-                  disabled={!debouncedComprehensiveQuery.trim() || isLoading}
+                  disabled={!comprehensiveQuery.trim() || isLoading}
                   className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto sm:flex-none"
                   aria-label="全面搜索"
                   title="全面搜索"
@@ -232,7 +229,7 @@ export function SearchPanel() {
               </Select>
               <Button
                 onClick={handleComprehensiveSearch}
-                disabled={!debouncedComprehensiveQuery.trim() || isLoading}
+                disabled={!comprehensiveQuery.trim() || isLoading}
                 className="w-full sm:w-auto sm:flex-none"
                 aria-label="开始匹配"
                 title="开始匹配"
