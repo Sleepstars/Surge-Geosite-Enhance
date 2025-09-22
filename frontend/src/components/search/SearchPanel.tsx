@@ -59,10 +59,11 @@ export function SearchPanel() {
   }
 
   const isLoading = geositeSearch.isPending || geositeFastSearch.isPending || geoipSearch.isPending
-  const error = geositeSearch.error || geositeFastSearch.error || geoipSearch.error
-  const data = activeDataset === 'geosite'
-    ? (geositeFastSearch.data || geositeSearch.data)
-    : geoipSearch.data
+  const latestGeositeFirst = (geositeFastSearch.submittedAt ?? 0) >= (geositeSearch.submittedAt ?? 0)
+  const geositeData = latestGeositeFirst ? geositeFastSearch.data : geositeSearch.data
+  const geositeError = latestGeositeFirst ? geositeFastSearch.error : geositeSearch.error
+  const error = activeDataset === 'geosite' ? geositeError : geoipSearch.error
+  const data = activeDataset === 'geosite' ? geositeData : geoipSearch.data
 
   return (
     <Card>
