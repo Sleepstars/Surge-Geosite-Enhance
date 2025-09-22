@@ -1,25 +1,53 @@
 import { useQuery, useMutation } from '@tanstack/react-query'
-import { 
-  GeositeDetail, 
-  GeoipDetail, 
-  GeositeSearchResponse, 
-  GeoipSearchResponse 
+import {
+  GeositeDetail,
+  GeoipDetail,
+  GeositeSearchResponse,
+  GeoipSearchResponse,
 } from '@/types'
 
 const configuredApiBase = import.meta.env.VITE_API_BASE?.replace(/\/$/, '') ?? ''
 const API_BASE = import.meta.env.DEV ? 'http://localhost:8787' : configuredApiBase
 
+// Unified response handler to surface better errors (e.g., 429)
+const handleJson = async <T>(response: Response, defaultError: string): Promise<T> => {
+  if (response.ok) return response.json() as Promise<T>
+
+  let message = defaultError
+  if (response.status === 429) {
+    const ra = response.headers.get('retry-after')
+    if (ra && /^\d+$/.test(ra)) {
+      message = `操作过于频繁，请在 ${ra} 秒后再试`
+    } else {
+      message = '操作过于频繁，请稍后再试'
+    }
+  } else {
+    try {
+      // Try to read JSON error payload if available
+      const data = (await response.clone().json()) as { message?: string } | undefined
+      if (data && typeof data.message === 'string' && data.message.trim()) {
+        message = data.message
+      }
+    } catch {
+      try {
+        const text = await response.text()
+        if (text && text.length < 200) message = text
+      } catch {}
+    }
+  }
+
+  throw new Error(message)
+}
+
 // Fetch functions
 const fetchGeositeIndex = async (): Promise<Record<string, string>> => {
   const response = await fetch(`${API_BASE}/geosite`)
-  if (!response.ok) throw new Error('Failed to fetch geosite index')
-  return response.json()
+  return handleJson<Record<string, string>>(response, '获取 Geosite 索引失败')
 }
 
 const fetchGeoipIndex = async (): Promise<Record<string, string>> => {
   const response = await fetch(`${API_BASE}/geoip`)
-  if (!response.ok) throw new Error('Failed to fetch geoip index')
-  return response.json()
+  return handleJson<Record<string, string>>(response, '获取 GeoIP 索引失败')
 }
 
 const fetchGeositeDetail = async (
@@ -38,8 +66,7 @@ const fetchGeositeDetail = async (
   if (options.filter) params.set('filter', options.filter)
   
   const response = await fetch(`${API_BASE}/api/geosite/${name}?${params}`)
-  if (!response.ok) throw new Error('Failed to fetch geosite detail')
-  return response.json()
+  return handleJson<GeositeDetail>(response, '获取 Geosite 详情失败')
 }
 
 const fetchGeoipDetail = async (
@@ -50,8 +77,7 @@ const fetchGeoipDetail = async (
   if (filter) params.set('filter', filter)
   
   const response = await fetch(`${API_BASE}/api/geoip/${name}?${params}`)
-  if (!response.ok) throw new Error('Failed to fetch geoip detail')
-  return response.json()
+  return handleJson<GeoipDetail>(response, '获取 GeoIP 详情失败')
 }
 
 const searchGeosite = async (payload: {
@@ -66,8 +92,7 @@ const searchGeosite = async (payload: {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   })
-  if (!response.ok) throw new Error('Failed to search geosite')
-  return response.json()
+  return handleJson<GeositeSearchResponse>(response, '搜索 Geosite 失败')
 }
 
 const searchGeositeFast = async (payload: {
@@ -82,8 +107,7 @@ const searchGeositeFast = async (payload: {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   })
-  if (!response.ok) throw new Error('Failed to search geosite (fast)')
-  return response.json()
+  return handleJson<GeositeSearchResponse>(response, '搜索 Geosite（快速）失败')
 }
 
 const searchGeoip = async (payload: {
@@ -98,8 +122,7 @@ const searchGeoip = async (payload: {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
   })
-  if (!response.ok) throw new Error('Failed to search geoip')
-  return response.json()
+  return handleJson<GeoipSearchResponse>(response, '搜索 GeoIP 失败')
 }
 
 // Hooks
