@@ -125,7 +125,7 @@ export const GeositeTree: React.FC = () => {
           </Button>
         </div>
         
-        <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-y-auto">
+        <div className="border rounded-md bg-background/50 max-h-96 overflow-y-auto">
           {filteredRoot && filteredRoot.children.size > 0 ? (
             <div className="p-2">
               {Array.from(filteredRoot.children.values()).map((child) => (

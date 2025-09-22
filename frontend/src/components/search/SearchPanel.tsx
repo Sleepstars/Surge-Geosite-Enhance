@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Search, Zap, HelpCircle } from 'lucide-react'
+import { Search, Zap, HelpCircle, Loader2 } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from '../ui/Card'
 import { Input } from '../ui/Input'
 import { Button } from '../ui/Button'
@@ -91,28 +91,33 @@ export function SearchPanel() {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3 sm:flex-nowrap">
                 <Input
                   placeholder="例如：apple.com"
                   value={fastQuery}
                   onChange={(e) => setFastQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleFastSearch()}
-                  className="flex-1"
+                  className="flex-1 min-w-[220px]"
                 />
                 {/* 属性过滤与搜索操作放在同一行 */}
                 <Input
                   placeholder="属性过滤（如 cn 或 !cn）"
                   value={attributes}
                   onChange={(e) => setAttributes(e.target.value)}
-                  className="w-48"
+                  className="w-full sm:w-32 md:w-40 sm:flex-none"
                 />
                 <Button
                   onClick={handleFastSearch}
                   disabled={!debouncedFastQuery.trim() || isLoading}
-                  className="bg-green-600 hover:bg-green-700"
+                  className="bg-green-600 hover:bg-green-700 w-full sm:w-auto sm:flex-none"
+                  aria-label="快速匹配"
+                  title="快速匹配"
                 >
-                  <Zap className="w-4 h-4 mr-1" />
-                  快速匹配
+                  {isLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                  ) : (
+                    <Search className="w-4 h-4" aria-hidden="true" />
+                  )}
                 </Button>
               </div>
               {fastQuery && !fastQuery.includes('.') && (
@@ -136,28 +141,33 @@ export function SearchPanel() {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-2 flex-wrap">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3 sm:flex-nowrap">
                 <Input
                   placeholder="例如：google 或 apple.com"
                   value={comprehensiveQuery}
                   onChange={(e) => setComprehensiveQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleComprehensiveSearch()}
-                  className="flex-1"
+                  className="flex-1 min-w-[220px]"
                 />
                 {/* 属性过滤与搜索操作放在同一行 */}
                 <Input
                   placeholder="属性过滤（如 cn 或 !cn）"
                   value={attributes}
                   onChange={(e) => setAttributes(e.target.value)}
-                  className="w-48"
+                  className="w-full sm:w-32 md:w-40 sm:flex-none"
                 />
                 <Button
                   onClick={handleComprehensiveSearch}
                   disabled={!debouncedComprehensiveQuery.trim() || isLoading}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-blue-600 hover:bg-blue-700 w-full sm:w-auto sm:flex-none"
+                  aria-label="全面搜索"
+                  title="全面搜索"
                 >
-                  <Search className="w-4 h-4 mr-1" />
-                  全面搜索
+                  {isLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                  ) : (
+                    <Search className="w-4 h-4" aria-hidden="true" />
+                  )}
                 </Button>
               </div>
             </div>
@@ -165,19 +175,19 @@ export function SearchPanel() {
         ) : (
           <div className="space-y-2">
             <label className="block text-sm font-medium">IP 匹配</label>
-            <div className="flex gap-2 flex-wrap">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-3 sm:flex-nowrap">
               <Input
                 placeholder="例如：8.8.8.8 或 192.168.1.0/24"
                 value={comprehensiveQuery}
                 onChange={(e) => setComprehensiveQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleComprehensiveSearch()}
-                className="flex-1"
+                className="flex-1 min-w-[220px]"
               />
               {/* IP 版本与搜索操作放在同一行 */}
               <Select
                 value={version}
                 onChange={(e) => setVersion(e.target.value as 'both' | 'ipv4' | 'ipv6')}
-                className="w-40"
+                className="w-full sm:w-32 md:w-40 sm:flex-none"
               >
                 <option value="both">IPv4 + IPv6</option>
                 <option value="ipv4">仅 IPv4</option>
@@ -186,8 +196,15 @@ export function SearchPanel() {
               <Button
                 onClick={handleComprehensiveSearch}
                 disabled={!debouncedComprehensiveQuery.trim() || isLoading}
+                className="w-full sm:w-auto sm:flex-none"
+                aria-label="开始匹配"
+                title="开始匹配"
               >
-                {isLoading ? '搜索中...' : '开始匹配'}
+                {isLoading ? (
+                  <Loader2 className="w-4 h-4 animate-spin" aria-hidden="true" />
+                ) : (
+                  <Search className="w-4 h-4" aria-hidden="true" />
+                )}
               </Button>
             </div>
           </div>
