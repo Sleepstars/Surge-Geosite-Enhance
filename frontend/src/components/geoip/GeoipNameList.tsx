@@ -86,7 +86,7 @@ export const GeoipNameList: React.FC = () => {
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="space-y-4 flex flex-col h-full">
+      <CardContent className="space-y-4">
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -108,7 +108,7 @@ export const GeoipNameList: React.FC = () => {
           </Select>
         </div>
         
-        <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-y-auto">
+        <div className="border rounded-md bg-background/50 h-96 overflow-y-auto">
           {filteredNames.length > 0 ? (
             <div className="p-2">
               {filteredNames.map((name) => (

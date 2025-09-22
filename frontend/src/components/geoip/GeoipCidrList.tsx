@@ -92,9 +92,24 @@ export const GeoipCidrList: React.FC = () => {
         <CardHeader>
           <CardTitle>CIDR 列表</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="text-center py-8 text-muted-foreground">
-            请选择规则组以查看 CIDR
+        <CardContent className="space-y-4">
+          {/* 信息行占位 */}
+          <div className="h-5" />
+
+          {/* 统计行占位 */}
+          <div className="h-5" />
+
+          {/* 搜索输入占位 */}
+          <div>
+            <label className="block text-sm font-medium mb-2 opacity-50">CIDR 搜索</label>
+            <div className="h-10 rounded-md border bg-muted/20" />
+          </div>
+
+          {/* 列表容器固定高度，保持整体卡片高度一致 */}
+          <div className="relative border rounded-md bg-background/50 h-96 flex items-center justify-center">
+            <div className="text-center text-muted-foreground">
+              请选择规则组以查看 CIDR
+            </div>
           </div>
         </CardContent>
       </Card>
@@ -107,8 +122,23 @@ export const GeoipCidrList: React.FC = () => {
         <CardHeader>
           <CardTitle>CIDR 列表</CardTitle>
         </CardHeader>
-        <CardContent>
-          <LoadingState>加载 CIDR 列表...</LoadingState>
+        <CardContent className="space-y-4">
+          {/* 信息行占位 */}
+          <div className="h-5" />
+
+          {/* 统计行占位 */}
+          <div className="h-5" />
+
+          {/* 搜索输入占位 */}
+          <div>
+            <label className="block text-sm font-medium mb-2 opacity-50">CIDR 搜索</label>
+            <div className="h-10 rounded-md border bg-muted/20" />
+          </div>
+
+          {/* 列表容器固定高度，保持整体卡片高度一致 */}
+          <div className="relative border rounded-md bg-background/50 h-96 flex items-center justify-center">
+            <LoadingState>加载 CIDR 列表...</LoadingState>
+          </div>
         </CardContent>
       </Card>
     )
@@ -120,11 +150,26 @@ export const GeoipCidrList: React.FC = () => {
         <CardHeader>
           <CardTitle>CIDR 列表</CardTitle>
         </CardHeader>
-        <CardContent>
-          <ErrorState 
-            error={error instanceof Error ? error.message : '加载失败'} 
-            onRetry={() => refetch()}
-          />
+        <CardContent className="space-y-4">
+          {/* 信息行占位 */}
+          <div className="h-5" />
+
+          {/* 统计行占位 */}
+          <div className="h-5" />
+
+          {/* 搜索输入占位 */}
+          <div>
+            <label className="block text-sm font-medium mb-2 opacity-50">CIDR 搜索</label>
+            <div className="h-10 rounded-md border bg-muted/20" />
+          </div>
+
+          {/* 列表容器固定高度，保持整体卡片高度一致 */}
+          <div className="relative border rounded-md bg-background/50 h-96 flex items-center justify-center">
+            <ErrorState
+              error={error instanceof Error ? error.message : '加载失败'}
+              onRetry={() => refetch()}
+            />
+          </div>
         </CardContent>
       </Card>
     )
@@ -165,7 +210,7 @@ export const GeoipCidrList: React.FC = () => {
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="space-y-4 flex flex-col h-full">
+      <CardContent className="space-y-4">
         <div className="flex items-center gap-2 text-sm">
           <Badge variant="outline">{detail.name}</Badge>
           <span className="text-muted-foreground">·</span>
@@ -197,9 +242,9 @@ export const GeoipCidrList: React.FC = () => {
           </div>
         </div>
 
-        <div 
+        <div
           ref={parentRef}
-          className="border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-auto"
+          className="border rounded-md bg-background/50 h-96 overflow-auto"
         >
           {filteredCidrs.length > 0 ? (
             <div

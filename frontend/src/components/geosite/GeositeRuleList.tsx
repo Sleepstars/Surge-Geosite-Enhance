@@ -339,9 +339,9 @@ export const GeositeRuleList: React.FC = () => {
           <Badge variant="secondary">正则 {activeDetail.stats.filtered.regexp}</Badge>
         </div>
 
-        <div 
+        <div
           ref={parentRef}
-          className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-auto"
+          className="relative border rounded-md bg-background/50 h-96 overflow-auto"
         >
           {filteredRules.length > 0 ? (
             <div
