@@ -12,7 +12,7 @@ export const Header: React.FC = () => {
               Surge Geosite Explorer
             </h1>
             <p className="text-sm text-muted-foreground">
-              直观浏览与反向匹配 GeoSite / GeoIP 规则
+              直观浏览与域名搜索 GeoSite / GeoIP 规则
             </p>
           </div>
           

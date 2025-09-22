@@ -7,7 +7,7 @@ export const IntroSection: React.FC = () => {
   const features = [
     'GeoSite：树状展开，逐级查看规则组',
     'GeoIP：支持关键字过滤与 IPv4 / IPv6 拆分',
-    '反向匹配：自动识别域名、关键字与 IP/CIDR',
+    '域名搜索：自动识别域名、关键字与 IP/CIDR',
   ]
 
   return (
