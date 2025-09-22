@@ -79,7 +79,7 @@ jobs:
         run: npm run build:geoip
 
       - name: Build D1 seed SQL
-        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
+        # if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
         run: npm run build:d1
 
       - name: Set up Go
@@ -146,27 +146,27 @@ jobs:
           sudo /tmp/aws/install --update
           aws --version
 
-      - name: Manifest incremental sync to R2
-        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-srs.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true' || steps.cache-srs-geoip.outputs.cache-hit != 'true'
-        env:
-          # AWS CLI (S3) credentials for R2
-          R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-          R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-          # Provide either R2_S3_ENDPOINT or (recommended) account id to derive endpoint
-          R2_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          # R2_S3_ENDPOINT: ${{ vars.R2_S3_ENDPOINT }}
-          R2_BUCKET: ${{ vars.SRS_BUCKET_NAME }}
-          R2_CONCURRENCY: ${{ vars.SRS_CONCURRENCY }}
-        run: |
-          set -eux
-          if [ -z "${R2_BUCKET:-}" ]; then
-            echo "R2_BUCKET (vars.SRS_BUCKET_NAME) not set; skip upload" >&2
-            exit 0
-          fi
-          npm run r2:sync
+      # - name: Manifest incremental sync to R2
+      #   if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-srs.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true' || steps.cache-srs-geoip.outputs.cache-hit != 'true'
+      #   env:
+      #     # AWS CLI (S3) credentials for R2
+      #     R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+      #     R2_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+      #     # Provide either R2_S3_ENDPOINT or (recommended) account id to derive endpoint
+      #     R2_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      #     # R2_S3_ENDPOINT: ${{ vars.R2_S3_ENDPOINT }}
+      #     R2_BUCKET: ${{ vars.SRS_BUCKET_NAME }}
+      #     R2_CONCURRENCY: ${{ vars.SRS_CONCURRENCY }}
+      #   run: |
+      #     set -eux
+      #     if [ -z "${R2_BUCKET:-}" ]; then
+      #       echo "R2_BUCKET (vars.SRS_BUCKET_NAME) not set; skip upload" >&2
+      #       exit 0
+      #     fi
+      #     npm run r2:sync
 
       - name: Sync D1 database with latest seed
-        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
+        # if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

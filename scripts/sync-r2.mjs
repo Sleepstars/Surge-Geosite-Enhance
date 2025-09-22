@@ -241,6 +241,8 @@ const summarizeChangedKeys = (keys) => {
       continue;
     }
     if (key.startsWith("geosite/")) {
+      // Only .srs files correspond to per-list segments. Ignore others like index.json.
+      if (!key.endsWith(".srs")) continue;
       let name = path.basename(key, ".srs");
       if (!name) continue;
       const atIndex = name.indexOf("@");
@@ -256,6 +258,7 @@ const summarizeChangedKeys = (keys) => {
       continue;
     }
     if (key.startsWith("geoip/")) {
+      if (!key.endsWith(".srs")) continue;
       const name = path.basename(key, ".srs");
       if (name) geoip.add(name);
     }
