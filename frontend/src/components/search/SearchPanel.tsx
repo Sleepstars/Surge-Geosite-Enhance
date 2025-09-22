@@ -77,14 +77,6 @@ export function SearchPanel() {
       <CardContent className="space-y-6">
         {activeDataset === 'geosite' ? (
           <div className="space-y-4">
-            {/* Information Banner */}
-            <div className="bg-gray-50 dark:bg-gray-900/50 rounded-lg p-3 text-sm">
-              <div className="font-medium mb-1">选择搜索方式：</div>
-              <div className="text-muted-foreground space-y-1">
-                <div>• <span className="text-green-600">快速搜索</span>：适合精确域名查询，仅匹配域名后缀，速度更快</div>
-                <div>• <span className="text-blue-600">全面搜索</span>：支持关键字和模糊匹配，功能更全面但速度较慢</div>
-              </div>
-            </div>
             {/* Fast Search Section */}
             <div className="border rounded-lg p-4 bg-green-50 dark:bg-green-950/20">
               <div className="flex items-center gap-2 mb-3">
@@ -98,9 +90,6 @@ export function SearchPanel() {
                     仅匹配域名后缀，速度更快，适合精确域名查询
                   </div>
                 </div>
-              </div>
-              <div className="text-xs text-green-700 dark:text-green-300 mb-2">
-                💡 推荐用于：完整域名查询 (如 apple.com, google.com)
               </div>
               <div className="flex gap-2 flex-wrap">
                 <Input
@@ -146,9 +135,6 @@ export function SearchPanel() {
                     支持部分匹配和关键字搜索，功能更全面
                   </div>
                 </div>
-              </div>
-              <div className="text-xs text-blue-700 dark:text-blue-300 mb-2">
-                💡 推荐用于：关键字搜索 (如 google, apple) 或复杂查询
               </div>
               <div className="flex gap-2 flex-wrap">
                 <Input
