@@ -88,11 +88,11 @@ export const GeoipCidrList: React.FC = () => {
 
   if (!geoipSelectedName) {
     return (
-      <Card className="h-full">
+      <Card className="h-full flex flex-col">
         <CardHeader>
           <CardTitle>CIDR 列表</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
           {/* 信息行占位 */}
           <div className="h-5" />
 
@@ -105,8 +105,8 @@ export const GeoipCidrList: React.FC = () => {
             <div className="h-10 rounded-md border bg-muted/20" />
           </div>
 
-          {/* 列表容器固定高度，保持整体卡片高度一致 */}
-          <div className="relative border rounded-md bg-background/50 h-96 flex items-center justify-center">
+          {/* 列表容器占据剩余空间，保持整体卡片高度一致 */}
+          <div className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
             <div className="text-center text-muted-foreground">
               请选择规则组以查看 CIDR
             </div>
@@ -118,11 +118,11 @@ export const GeoipCidrList: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Card className="h-full">
+      <Card className="h-full flex flex-col">
         <CardHeader>
           <CardTitle>CIDR 列表</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
           {/* 信息行占位 */}
           <div className="h-5" />
 
@@ -135,8 +135,8 @@ export const GeoipCidrList: React.FC = () => {
             <div className="h-10 rounded-md border bg-muted/20" />
           </div>
 
-          {/* 列表容器固定高度，保持整体卡片高度一致 */}
-          <div className="relative border rounded-md bg-background/50 h-96 flex items-center justify-center">
+          {/* 列表容器占据剩余空间，保持整体卡片高度一致 */}
+          <div className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
             <LoadingState>加载 CIDR 列表...</LoadingState>
           </div>
         </CardContent>
@@ -146,11 +146,11 @@ export const GeoipCidrList: React.FC = () => {
 
   if (error) {
     return (
-      <Card className="h-full">
+      <Card className="h-full flex flex-col">
         <CardHeader>
           <CardTitle>CIDR 列表</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
           {/* 信息行占位 */}
           <div className="h-5" />
 
@@ -163,8 +163,8 @@ export const GeoipCidrList: React.FC = () => {
             <div className="h-10 rounded-md border bg-muted/20" />
           </div>
 
-          {/* 列表容器固定高度，保持整体卡片高度一致 */}
-          <div className="relative border rounded-md bg-background/50 h-96 flex items-center justify-center">
+          {/* 列表容器占据剩余空间，保持整体卡片高度一致 */}
+          <div className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
             <ErrorState
               error={error instanceof Error ? error.message : '加载失败'}
               onRetry={() => refetch()}
@@ -178,7 +178,7 @@ export const GeoipCidrList: React.FC = () => {
   if (!detail) return null
 
   return (
-    <Card className="h-full">
+    <Card className="h-full flex flex-col">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span>CIDR 列表</span>
@@ -210,7 +210,7 @@ export const GeoipCidrList: React.FC = () => {
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
         <div className="flex items-center gap-2 text-sm">
           <Badge variant="outline">{detail.name}</Badge>
           <span className="text-muted-foreground">·</span>
@@ -244,7 +244,7 @@ export const GeoipCidrList: React.FC = () => {
 
         <div
           ref={parentRef}
-          className="border rounded-md bg-background/50 h-96 overflow-auto"
+          className="border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-auto"
         >
           {filteredCidrs.length > 0 ? (
             <div

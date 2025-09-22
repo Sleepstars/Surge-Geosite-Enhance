@@ -50,14 +50,14 @@ export const GeoipNameList: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Card className="h-full">
+      <Card className="h-full flex flex-col">
         <CardHeader>
           <CardTitle>GeoIP · 规则列表</CardTitle>
           <CardDescription>
             按名称快速检索规则集，可选择仅显示 IPv4 或 IPv6，并加载右侧 CIDR 详情。
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
           {/* 搜索和过滤输入占位 */}
           <div className="flex gap-2">
             <div className="relative flex-1">
@@ -66,8 +66,8 @@ export const GeoipNameList: React.FC = () => {
             <div className="h-10 w-40 rounded-md border bg-muted/20" />
           </div>
 
-          {/* 列表容器固定高度，保持整体卡片高度一致 */}
-          <div className="border rounded-md bg-background/50 h-96 flex items-center justify-center">
+          {/* 列表容器占据剩余空间，保持卡片高度一致 */}
+          <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
             <LoadingState>加载规则列表...</LoadingState>
           </div>
         </CardContent>
@@ -77,14 +77,14 @@ export const GeoipNameList: React.FC = () => {
 
   if (error) {
     return (
-      <Card className="h-full">
+      <Card className="h-full flex flex-col">
         <CardHeader>
           <CardTitle>GeoIP · 规则列表</CardTitle>
           <CardDescription>
             按名称快速检索规则集，可选择仅显示 IPv4 或 IPv6，并加载右侧 CIDR 详情。
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
           {/* 搜索和过滤输入占位 */}
           <div className="flex gap-2">
             <div className="relative flex-1">
@@ -93,8 +93,8 @@ export const GeoipNameList: React.FC = () => {
             <div className="h-10 w-40 rounded-md border bg-muted/20" />
           </div>
 
-          {/* 列表容器固定高度，保持整体卡片高度一致 */}
-          <div className="border rounded-md bg-background/50 h-96 flex items-center justify-center">
+          {/* 列表容器占据剩余空间，保持卡片高度一致 */}
+          <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
             <ErrorState
               error={error instanceof Error ? error.message : '加载失败'}
               onRetry={() => refetch()}
@@ -106,7 +106,7 @@ export const GeoipNameList: React.FC = () => {
   }
 
   return (
-    <Card className="h-full">
+    <Card className="h-full flex flex-col">
       <CardHeader>
         <CardTitle>GeoIP · 规则列表</CardTitle>
         <CardDescription>
@@ -114,7 +114,7 @@ export const GeoipNameList: React.FC = () => {
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -136,7 +136,7 @@ export const GeoipNameList: React.FC = () => {
           </Select>
         </div>
         
-        <div className="border rounded-md bg-background/50 h-96 overflow-y-auto">
+        <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-y-auto">
           {filteredNames.length > 0 ? (
             <div className="p-2">
               {filteredNames.map((name) => (

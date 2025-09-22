@@ -58,14 +58,14 @@ export const GeositeTree: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Card className="h-full">
+      <Card className="h-full flex flex-col">
         <CardHeader>
           <CardTitle>GeoSite · 规则树</CardTitle>
           <CardDescription>
             按层级结构浏览规则组，可展开查看子分类，并点击选择加载右侧规则详情。
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
           {/* 搜索输入占位 */}
           <div>
             <label className="block text-sm font-medium mb-2 opacity-50">搜索规则</label>
@@ -78,8 +78,8 @@ export const GeositeTree: React.FC = () => {
             <div className="h-9 w-20 rounded-md border bg-muted/20" />
           </div>
 
-          {/* 树容器固定高度，保持整体卡片高度一致 */}
-          <div className="border rounded-md bg-background/50 h-96 flex items-center justify-center">
+          {/* 树容器占据剩余空间，保持整体卡片高度一致 */}
+          <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
             <LoadingState>加载规则树...</LoadingState>
           </div>
         </CardContent>
@@ -89,14 +89,14 @@ export const GeositeTree: React.FC = () => {
 
   if (error) {
     return (
-      <Card className="h-full">
+      <Card className="h-full flex flex-col">
         <CardHeader>
           <CardTitle>GeoSite · 规则树</CardTitle>
           <CardDescription>
             按层级结构浏览规则组，可展开查看子分类，并点击选择加载右侧规则详情。
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
           {/* 搜索输入占位 */}
           <div>
             <label className="block text-sm font-medium mb-2 opacity-50">搜索规则</label>
@@ -109,8 +109,8 @@ export const GeositeTree: React.FC = () => {
             <div className="h-9 w-20 rounded-md border bg-muted/20" />
           </div>
 
-          {/* 树容器固定高度，保持整体卡片高度一致 */}
-          <div className="border rounded-md bg-background/50 h-96 flex items-center justify-center">
+          {/* 树容器占据剩余空间，保持整体卡片高度一致 */}
+          <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
             <ErrorState
               error={error instanceof Error ? error.message : '加载失败'}
               onRetry={() => refetch()}
@@ -122,7 +122,7 @@ export const GeositeTree: React.FC = () => {
   }
 
   return (
-    <Card className="h-full">
+    <Card className="h-full flex flex-col">
       <CardHeader>
         <CardTitle>GeoSite · 规则树</CardTitle>
         <CardDescription>
@@ -130,7 +130,7 @@ export const GeositeTree: React.FC = () => {
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="space-y-4 flex flex-col h-full">
+      <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -161,7 +161,7 @@ export const GeositeTree: React.FC = () => {
           </Button>
         </div>
         
-        <div className="border rounded-md bg-background/50 h-96 overflow-y-auto">
+        <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-y-auto">
           {filteredRoot && filteredRoot.children.size > 0 ? (
             <div className="p-2">
               {Array.from(filteredRoot.children.values()).map((child) => (
