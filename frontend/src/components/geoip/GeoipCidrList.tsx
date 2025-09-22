@@ -156,7 +156,7 @@ export const GeoipCidrList: React.FC = () => {
                 >
                   <a href={detail.url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                     <Download className="w-4 h-4" />
-                    下载
+                    SRS 规则
                   </a>
                 </Button>
               </>
@@ -165,7 +165,7 @@ export const GeoipCidrList: React.FC = () => {
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex flex-col h-full">
         <div className="flex items-center gap-2 text-sm">
           <Badge variant="outline">{detail.name}</Badge>
           <span className="text-muted-foreground">·</span>
@@ -199,7 +199,7 @@ export const GeoipCidrList: React.FC = () => {
 
         <div 
           ref={parentRef}
-          className="border rounded-md bg-background/50 h-96 overflow-auto"
+          className="border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-auto"
         >
           {filteredCidrs.length > 0 ? (
             <div
@@ -214,12 +214,12 @@ export const GeoipCidrList: React.FC = () => {
                 return (
                   <div
                     key={virtualItem.key}
+                    ref={virtualizer.measureElement}
                     style={{
                       position: 'absolute',
                       top: 0,
                       left: 0,
                       width: '100%',
-                      height: `${virtualItem.size}px`,
                       transform: `translateY(${virtualItem.start}px)`,
                     }}
                   >

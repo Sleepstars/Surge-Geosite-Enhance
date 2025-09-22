@@ -38,11 +38,11 @@ export const GeositeRuleItem: React.FC<GeositeRuleItemProps> = ({ rule, index })
   return (
     <div 
       className={clsx(
-        'p-3 border-b border-border/50 last:border-b-0 hover:bg-accent/30 transition-colors',
+        'py-2 px-3 border-b border-border/50 last:border-b-0 hover:bg-accent/30 transition-colors',
         index % 2 === 0 ? 'bg-background/50' : 'bg-background/30'
       )}
     >
-      <div className="flex items-start gap-3">
+      <div className="flex items-center gap-2">
         <Badge 
           variant="outline" 
           className={clsx('text-xs font-mono', getRuleTypeColor(rule.type))}
@@ -51,8 +51,8 @@ export const GeositeRuleItem: React.FC<GeositeRuleItemProps> = ({ rule, index })
         </Badge>
         
         <div className="flex-1 min-w-0">
-          <div className="flex items-start gap-2">
-            <div className="font-mono text-sm break-all flex-1">
+          <div className="flex items-center gap-2">
+            <div className="font-mono text-sm leading-tight break-all flex-1">
               {rule.value}
             </div>
             {rule.attrs && rule.attrs.length > 0 && (

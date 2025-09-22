@@ -103,7 +103,7 @@ export const GeositeRuleList: React.FC = () => {
   const virtualizer = useVirtualizer({
     count: filteredRules.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 80,
+    estimateSize: () => 44,
     overscan: 10,
   })
 
@@ -286,7 +286,7 @@ export const GeositeRuleList: React.FC = () => {
         </CardTitle>
       </CardHeader>
       
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 flex flex-col h-full">
         {error && activeDetail && (
           <ErrorState 
             error={error instanceof Error ? error.message : '加载失败'} 
@@ -311,27 +311,22 @@ export const GeositeRuleList: React.FC = () => {
           )}
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">属性过滤</label>
+        <div className="flex gap-2 flex-wrap">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="如 cn 或 !cn，留空为全部"
-              value={localAttributeFilter}
-              onChange={(e) => setLocalAttributeFilter(e.target.value)}
+              placeholder="规则搜索"
+              value={localRuleFilter}
+              onChange={(e) => setLocalRuleFilter(e.target.value)}
+              className="pl-10"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">规则搜索</label>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                placeholder="搜索规则内容"
-                value={localRuleFilter}
-                onChange={(e) => setLocalRuleFilter(e.target.value)}
-                className="pl-10"
-              />
-            </div>
-          </div>
+          <Input
+            placeholder="属性过滤（如 cn 或 !cn）"
+            value={localAttributeFilter}
+            onChange={(e) => setLocalAttributeFilter(e.target.value)}
+            className="w-48"
+          />
         </div>
 
         <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -346,7 +341,7 @@ export const GeositeRuleList: React.FC = () => {
 
         <div 
           ref={parentRef}
-          className="relative border rounded-md bg-background/50 h-96 overflow-auto"
+          className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-auto"
         >
           {filteredRules.length > 0 ? (
             <div
@@ -359,12 +354,12 @@ export const GeositeRuleList: React.FC = () => {
               {virtualizer.getVirtualItems().map((virtualItem) => (
                 <div
                   key={virtualItem.key}
+                  ref={virtualizer.measureElement}
                   style={{
                     position: 'absolute',
                     top: 0,
                     left: 0,
                     width: '100%',
-                    height: `${virtualItem.size}px`,
                     transform: `translateY(${virtualItem.start}px)`,
                   }}
                 >

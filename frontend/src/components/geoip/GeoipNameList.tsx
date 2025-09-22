@@ -86,34 +86,29 @@ export const GeoipNameList: React.FC = () => {
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-2">名称搜索</label>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-              <Input
-                placeholder="输入关键字，例如 CN、APPLE"
-                value={localSearch}
-                onChange={(e) => setLocalSearch(e.target.value)}
-                className="pl-10"
-              />
-            </div>
+      <CardContent className="space-y-4 flex flex-col h-full">
+        <div className="flex gap-2">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+            <Input
+              placeholder="输入关键字，例如 CN、APPLE"
+              value={localSearch}
+              onChange={(e) => setLocalSearch(e.target.value)}
+              className="pl-10"
+            />
           </div>
-          <div>
-            <label className="block text-sm font-medium mb-2">显示类型</label>
-            <Select
-              value={geoipVersionFilter}
-              onChange={(e) => setGeoipVersionFilter(e.target.value as 'both' | 'ipv4' | 'ipv6')}
-            >
-              <option value="both">IPv4 + IPv6</option>
-              <option value="ipv4">仅 IPv4</option>
-              <option value="ipv6">仅 IPv6</option>
-            </Select>
-          </div>
+          <Select
+            value={geoipVersionFilter}
+            onChange={(e) => setGeoipVersionFilter(e.target.value as 'both' | 'ipv4' | 'ipv6')}
+            className="w-40"
+          >
+            <option value="both">IPv4 + IPv6</option>
+            <option value="ipv4">仅 IPv4</option>
+            <option value="ipv6">仅 IPv6</option>
+          </Select>
         </div>
         
-        <div className="border rounded-md bg-background/50 h-96 overflow-y-auto">
+        <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-y-auto">
           {filteredNames.length > 0 ? (
             <div className="p-2">
               {filteredNames.map((name) => (
