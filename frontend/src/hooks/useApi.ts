@@ -59,6 +59,7 @@ const searchGeosite = async (payload: {
   attributes?: string
   names?: string[]
   limit?: number
+  lists?: number
 }): Promise<GeositeSearchResponse> => {
   const response = await fetch(`${API_BASE}/api/search/geosite`, {
     method: 'POST',
@@ -74,6 +75,7 @@ const searchGeositeFast = async (payload: {
   attributes?: string
   names?: string[]
   limit?: number
+  lists?: number
 }): Promise<GeositeSearchResponse> => {
   const response = await fetch(`${API_BASE}/api/search/geosite/fast`, {
     method: 'POST',
@@ -89,6 +91,7 @@ const searchGeoip = async (payload: {
   version?: 'ipv4' | 'ipv6' | 'both'
   names?: string[]
   limit?: number
+  lists?: number
 }): Promise<GeoipSearchResponse> => {
   const response = await fetch(`${API_BASE}/api/search/geoip`, {
     method: 'POST',

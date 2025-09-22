@@ -6,7 +6,7 @@ import { Button } from '../ui/Button'
 import { Select } from '../ui/Select'
 import { Badge } from '../ui/Badge'
 import { ErrorState } from '../ui/LoadingSpinner'
-import { useGeositeSearch, useGeositeFastSearch, useGeoipSearch } from '@/hooks/useApi'
+import { useGeositeSearch, useGeositeFastSearch, useGeoipSearch, useGeositeIndex } from '@/hooks/useApi'
 import { useAppStore } from '@/stores/useAppStore'
 import { useDebounce } from '@/hooks/useDebounce'
 
@@ -18,6 +18,7 @@ export function SearchPanel() {
   const [comprehensiveQuery, setComprehensiveQuery] = useState('')
   const [attributes, setAttributes] = useState('')
   const [version, setVersion] = useState<'both' | 'ipv4' | 'ipv6'>('both')
+  const geositeIndex = useGeositeIndex()
 
   const debouncedFastQuery = useDebounce(fastQuery, API_INPUT_DEBOUNCE)
   const debouncedComprehensiveQuery = useDebounce(comprehensiveQuery, API_INPUT_DEBOUNCE)
@@ -30,9 +31,43 @@ export function SearchPanel() {
     if (!debouncedFastQuery.trim()) return
 
     if (activeDataset === 'geosite') {
+      // Narrow the scope of lists on the client to speed up server-side work
+      // Heuristic: include list names that contain any significant domain part
+      let scopedNames: string[] | undefined
+      const indexData = geositeIndex.data
+      if (indexData) {
+        const raw = debouncedFastQuery.trim()
+        // Extract a hostname-ish candidate cheaply (no heavy URL parsing)
+        let host = raw
+        try {
+          if (/^[a-zA-Z][a-zA-Z0-9+.-]*:\/\//.test(raw)) {
+            const url = new URL(raw)
+            host = url.hostname || raw
+          }
+        } catch {
+          // ignore
+        }
+        host = host.replace(/^\*\./, '')
+        const cut = (s: string, ch: string) => (s.includes(ch) ? s.slice(0, s.indexOf(ch)) : s)
+        host = cut(cut(cut(host, '/'), '?'), ':').replace(/\.+$/, '')
+        const parts = host.toLowerCase().split('.').filter(p => p.length > 2)
+        if (parts.length > 0) {
+          const keys = Object.keys(indexData)
+          const picks: string[] = []
+          for (const name of keys) {
+            const lower = name.toLowerCase()
+            if (parts.some(p => lower.includes(p))) picks.push(name)
+            if (picks.length >= 250) break // cap to avoid sending too many
+          }
+          scopedNames = picks.length > 0 ? picks : undefined
+        }
+      }
       geositeFastSearch.mutate({
         query: debouncedFastQuery,
         attributes: attributes || undefined,
+        names: scopedNames,
+        // Ask server to scan fewer lists by default for fast mode
+        lists: 200,
       })
     } else {
       geoipSearch.mutate({
