@@ -929,58 +929,6 @@ const parseIPAddress = (input: string): ParsedIP | null => {
   return null;
 };
 
-// Parse IPv4 prefix like "1.2" or "1.2.3" (optionally with trailing dot)
-// into an inclusive numeric range [start, end].
-const parseIPv4PrefixRange = (input: string): { start: number; end: number } | null => {
-  let s = input.trim();
-  if (!s) return null;
-  if (!s.includes(".")) return null;
-  if (s.endsWith(".")) s = s.slice(0, -1);
-  const parts = s.split(".").filter((p) => p.length > 0);
-  if (parts.length !== 2 && parts.length !== 3) return null;
-  const octets: number[] = [];
-  for (const p of parts) {
-    if (!/^\d+$/.test(p)) return null;
-    const n = Number(p);
-    if (!Number.isInteger(n) || n < 0 || n > 255) return null;
-    octets.push(n);
-  }
-  if (octets.length === 2) {
-    const start = ((octets[0] << 24) | (octets[1] << 16)) >>> 0;
-    const end = (start | 0x0000ffff) >>> 0; // /16
-    return { start, end };
-  }
-  if (octets.length === 3) {
-    const start = ((octets[0] << 24) | (octets[1] << 16) | (octets[2] << 8)) >>> 0;
-    const end = (start | 0x000000ff) >>> 0; // /24
-    return { start, end };
-  }
-  return null;
-};
-
-// Parse simple IPv6 hextet prefix like "2001:db8" or "2001:db8:abcd" (no :: compression)
-// into an inclusive hex range [startHex, endHex].
-const parseIPv6PrefixRange = (input: string): { startHex: string; endHex: string } | null => {
-  let s = input.trim().toLowerCase();
-  if (!s) return null;
-  if (!s.includes(":")) return null;
-  // Disallow compressed forms for prefix parsing to keep logic simple
-  if (s.includes("::")) return null;
-  if (s.endsWith(":")) s = s.slice(0, -1);
-  const parts = s.split(":").filter((p) => p.length > 0);
-  if (parts.length < 1 || parts.length > 7) return null;
-  let base = 0n;
-  for (const p of parts) {
-    if (!/^[0-9a-f]{1,4}$/.test(p)) return null;
-    const v = BigInt(parseInt(p, 16));
-    base = (base << 16n) | v;
-  }
-  const bitsRemaining = 16 * (8 - parts.length);
-  const start = base << BigInt(bitsRemaining);
-  const mask = bitsRemaining === 0 ? 0n : ((1n << BigInt(bitsRemaining)) - 1n);
-  const end = start | mask;
-  return { startHex: start.toString(16).padStart(32, "0"), endHex: end.toString(16).padStart(32, "0") };
-};
 
 type GeoipSearchMatch = {
   list: string;
@@ -997,9 +945,7 @@ const searchGeoipLists = async (
   limit: number,
   env: EnvBindings,
   indexMap: Record<string, string>,
-  versionFilter: "ipv4" | "ipv6" | "both" = "both",
-  maxLists: number,
-  tokens: string[]
+  maxLists: number
 ): Promise<{ matches: GeoipSearchMatch[]; scanned: number; mode: string }> => {
   const db = ensureDb(env);
   const trimmed = query.trim();
@@ -1012,9 +958,7 @@ const searchGeoipLists = async (
   let scanned = 0;
   const maxScan = Math.max(1, Math.min(Math.floor(maxLists) || 1, names.length));
   const chunks = chunkArray(names.slice(0, maxScan), 40);
-  const ipv4Prefix = !ip && !trimmed.includes("/") ? parseIPv4PrefixRange(trimmed) : null;
-  const ipv6Prefix = !ip && !trimmed.includes("/") ? parseIPv6PrefixRange(trimmed) : null;
-  const mode = ip ? "ip" : trimmed.includes("/") ? "cidr" : (ipv4Prefix || ipv6Prefix ? "prefix" : "substring");
+  const mode = ip ? "ip" : trimmed.includes("/") ? "cidr" : "unknown";
 
   const totalLists = Object.keys(indexMap).length;
   const hasScope = names.length > 0 && names.length < totalLists;
@@ -1039,7 +983,7 @@ const searchGeoipLists = async (
   };
 
   // Fast path: exact IP match across all lists (or a single IN clause when scoped)
-  if (ip && ((ip.version === "ipv4" && versionFilter !== "ipv6") || (ip.version === "ipv6" && versionFilter !== "ipv4"))) {
+  if (ip) {
     if (!hasScope) {
       if (ip.version === "ipv4") {
         const sql = `SELECT l.name AS list, c.cidr, c.prefix
@@ -1101,7 +1045,6 @@ const searchGeoipLists = async (
     }
     // else fall through to chunked path below when too many names
   }
-
   // Fast path: exact CIDR match across all lists (or a single IN clause when scoped)
   if (!ip && trimmed.includes("/")) {
     if (!hasScope) {
@@ -1112,7 +1055,6 @@ const searchGeoipLists = async (
       const rows = await db.prepare(sql).bind(normalizedCidr).all<any>();
       for (const row of rows.results || []) {
         const versionLabel = Number(row.version) === 4 ? "ipv4" : "ipv6";
-        if (versionFilter !== "both" && versionFilter !== versionLabel) continue;
         if (pushMatch(row, versionLabel)) break;
       }
       scanned = totalLists;
@@ -1128,79 +1070,10 @@ const searchGeoipLists = async (
       const rows = await db.prepare(sql).bind(...nameParams, normalizedCidr).all<any>();
       for (const row of rows.results || []) {
         const versionLabel = Number(row.version) === 4 ? "ipv4" : "ipv6";
-        if (versionFilter !== "both" && versionFilter !== versionLabel) continue;
         if (pushMatch(row, versionLabel)) break;
       }
       scanned = names.length;
       return { matches: matches.slice(0, limit), scanned, mode };
-    }
-  }
-
-  // Fast path: IPv4/IPv6 prefix range across all lists (or single IN when scoped)
-  if (!ip && !trimmed.includes("/")) {
-    if (ipv4Prefix && versionFilter !== "ipv6") {
-      if (!hasScope) {
-        const sql = `SELECT l.name AS list, c.cidr, c.prefix
-          FROM geoip_cidr c
-          JOIN geoip_list l ON l.id = c.list_id
-          WHERE c.version = 4
-            AND c.start_v4 <= ?
-            AND c.end_v4 >= ?
-          ORDER BY c.prefix DESC
-          LIMIT ${overscan}`;
-        const rows = await db.prepare(sql).bind(ipv4Prefix.end, ipv4Prefix.start).all<any>();
-        for (const row of rows.results || []) { if (pushMatch(row, "ipv4")) break; }
-        scanned = totalLists;
-        return { matches: matches.slice(0, limit), scanned, mode };
-      } else if (canSingleIn) {
-        const namePlaceholders = names.map(() => "?").join(",");
-        const nameParams = names;
-        const sql = `SELECT l.name AS list, c.cidr, c.prefix
-          FROM geoip_cidr c
-          JOIN geoip_list l ON l.id = c.list_id
-          WHERE l.name IN (${namePlaceholders})
-            AND c.version = 4
-            AND c.start_v4 <= ?
-            AND c.end_v4 >= ?
-          ORDER BY c.prefix DESC
-          LIMIT ${overscan}`;
-        const rows = await db.prepare(sql).bind(...nameParams, ipv4Prefix.end, ipv4Prefix.start).all<any>();
-        for (const row of rows.results || []) { if (pushMatch(row, "ipv4")) break; }
-        scanned = names.length;
-        return { matches: matches.slice(0, limit), scanned, mode };
-      }
-    }
-    if (ipv6Prefix && versionFilter !== "ipv4") {
-      if (!hasScope) {
-        const sql = `SELECT l.name AS list, c.cidr, c.prefix
-          FROM geoip_cidr c
-          JOIN geoip_list l ON l.id = c.list_id
-          WHERE c.version = 6
-            AND c.start_hex <= ?
-            AND c.end_hex >= ?
-          ORDER BY c.prefix DESC
-          LIMIT ${overscan}`;
-        const rows = await db.prepare(sql).bind(ipv6Prefix.endHex, ipv6Prefix.startHex).all<any>();
-        for (const row of rows.results || []) { if (pushMatch(row, "ipv6")) break; }
-        scanned = totalLists;
-        return { matches: matches.slice(0, limit), scanned, mode };
-      } else if (canSingleIn) {
-        const namePlaceholders = names.map(() => "?").join(",");
-        const nameParams = names;
-        const sql = `SELECT l.name AS list, c.cidr, c.prefix
-          FROM geoip_cidr c
-          JOIN geoip_list l ON l.id = c.list_id
-          WHERE l.name IN (${namePlaceholders})
-            AND c.version = 6
-            AND c.start_hex <= ?
-            AND c.end_hex >= ?
-          ORDER BY c.prefix DESC
-          LIMIT ${overscan}`;
-        const rows = await db.prepare(sql).bind(...nameParams, ipv6Prefix.endHex, ipv6Prefix.startHex).all<any>();
-        for (const row of rows.results || []) { if (pushMatch(row, "ipv6")) break; }
-        scanned = names.length;
-        return { matches: matches.slice(0, limit), scanned, mode };
-      }
     }
   }
 
@@ -1209,20 +1082,21 @@ const searchGeoipLists = async (
     const namePlaceholders = chunk.map(() => "?").join(",");
     const nameParams = chunk;
 
-    if (ip && ip.version === "ipv4" && versionFilter !== "ipv6") {
+    if (ip && ip.version === "ipv4") {
       const sql = `SELECT l.name AS list, c.cidr, c.prefix\n        FROM geoip_cidr c\n        JOIN geoip_list l ON l.id = c.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND c.version = 4\n          AND c.start_v4 <= ?\n          AND c.end_v4 >= ?\n        ORDER BY c.prefix DESC\n        LIMIT ${chunk.length * 80}`;
       const rows = await db.prepare(sql).bind(...nameParams, ip.value, ip.value).all<any>();
       if ((rows.results || []).some((row) => pushMatch(row, "ipv4"))) break;
     }
 
-    if (ip && ip.version === "ipv6" && versionFilter !== "ipv4") {
+    if (ip && ip.version === "ipv6") {
       const ipHex = bigIntToHex(ip.value);
       const sql = `SELECT l.name AS list, c.cidr, c.prefix\n        FROM geoip_cidr c\n        JOIN geoip_list l ON l.id = c.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND c.version = 6\n          AND c.start_hex <= ?\n          AND c.end_hex >= ?\n        ORDER BY c.prefix DESC\n        LIMIT ${chunk.length * 80}`;
       const rows = await db.prepare(sql).bind(...nameParams, ipHex, ipHex).all<any>();
       if ((rows.results || []).some((row) => pushMatch(row, "ipv6"))) break;
     }
 
-    if (!ip && mode === "cidr") {
+    // Exact CIDR within chunk when too many names for single IN
+    if (!ip && trimmed.includes("/")) {
       let handledExact = false;
       if (geoipCidrLowerAvailable !== false) {
         const sql = `SELECT l.name AS list, c.cidr, c.prefix, c.version\n          FROM geoip_cidr c\n          JOIN geoip_list l ON l.id = c.list_id\n          WHERE l.name IN (${namePlaceholders})\n            AND c.cidr_lower = ?`;
@@ -1232,7 +1106,6 @@ const searchGeoipLists = async (
           handledExact = true;
           for (const row of rows.results || []) {
             const versionLabel = Number(row.version) === 4 ? "ipv4" : "ipv6";
-            if (versionFilter !== "both" && versionFilter !== versionLabel) continue;
             if (pushMatch(row, versionLabel)) break;
           }
         } catch (error) {
@@ -1253,26 +1126,9 @@ const searchGeoipLists = async (
         const rows = await db.prepare(sql).bind(...nameParams, trimmed).all<any>();
         for (const row of rows.results || []) {
           const versionLabel = Number(row.version) === 4 ? "ipv4" : "ipv6";
-          if (versionFilter !== "both" && versionFilter !== versionLabel) continue;
           if (pushMatch(row, versionLabel)) break;
         }
       }
-
-      if (matches.length >= overscan) break;
-    }
-
-    // Prefix range matching (no wildcard LIKE): IPv4
-    if (!ip && ipv4Prefix && versionFilter !== "ipv6") {
-      const sql = `SELECT l.name AS list, c.cidr, c.prefix\n        FROM geoip_cidr c\n        JOIN geoip_list l ON l.id = c.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND c.version = 4\n          AND c.start_v4 <= ?\n          AND c.end_v4 >= ?\n        ORDER BY c.prefix DESC\n        LIMIT ${chunk.length * 80}`;
-      const rows = await db.prepare(sql).bind(...nameParams, ipv4Prefix.end, ipv4Prefix.start).all<any>();
-      if ((rows.results || []).some((row) => pushMatch(row, "ipv4"))) break;
-    }
-
-    // Prefix range matching (no wildcard LIKE): IPv6
-    if (!ip && ipv6Prefix && versionFilter !== "ipv4") {
-      const sql = `SELECT l.name AS list, c.cidr, c.prefix\n        FROM geoip_cidr c\n        JOIN geoip_list l ON l.id = c.list_id\n        WHERE l.name IN (${namePlaceholders})\n          AND c.version = 6\n          AND c.start_hex <= ?\n          AND c.end_hex >= ?\n        ORDER BY c.prefix DESC\n        LIMIT ${chunk.length * 80}`;
-      const rows = await db.prepare(sql).bind(...nameParams, ipv6Prefix.endHex, ipv6Prefix.startHex).all<any>();
-      if ((rows.results || []).some((row) => pushMatch(row, "ipv6"))) break;
     }
 
     if (matches.length >= overscan) break;
@@ -1852,13 +1708,13 @@ app.post("/api/search/geoip", async (c) => {
   if (!query) {
     throw new HTTPException(400, { message: "Missing query" });
   }
-  const versionRaw = String(payload?.version ?? "both").toLowerCase();
-  const versionFilter: "ipv4" | "ipv6" | "both" =
-    versionRaw === "ipv4" || versionRaw === "v4"
-      ? "ipv4"
-      : versionRaw === "ipv6" || versionRaw === "v6"
-        ? "ipv6"
-        : "both";
+  // Allow only exact IP or exact CIDR for GeoIP search
+  const parsedIp = parseIPAddress(query);
+  const isCidrQuery = query.includes("/");
+  if (!parsedIp && !isCidrQuery) {
+    throw new HTTPException(400, { message: "GeoIP search requires an exact IP or CIDR" });
+  }
+  // IP version selection is not required; version is inferred from query
   // Read direct from D1 (no KV cache for geoip)
   const listsParam = clamp(Number(payload?.lists ?? 800), 100, 2000);
   const limitParam = clamp(Number(payload?.limit ?? 200), 5, 200); // default widened to 200
@@ -1876,13 +1732,8 @@ app.post("/api/search/geoip", async (c) => {
     throw new HTTPException(400, { message: "No valid geoip names in scope" });
   }
   const limit = limitParam;
-  const tokens = buildSearchTokens(query);
-  const prioritized = tokens.length
-    ? scopedNames.filter((name) => {
-        const lower = name.toLowerCase();
-        return tokens.some((token) => lower.includes(token));
-      })
-    : [];
+  // Prioritization is not necessary for exact IP, keep scope order
+  const prioritized: string[] = [];
   const maxLists = listsParam;
   const dedupedNames = Array.from(new Map([...prioritized, ...scopedNames].map((n) => [n, n])).values());
   const namesForSearch = dedupedNames.slice(0, Math.min(maxLists, dedupedNames.length));
@@ -1893,14 +1744,11 @@ app.post("/api/search/geoip", async (c) => {
     limit,
     env,
     indexMap,
-    versionFilter,
-    namesForSearch.length,
-    tokens
+    namesForSearch.length
   );
   const searchTime = Date.now() - startTime;
   const responseBody = {
     query,
-    version: versionFilter,
     limit,
     mode,
     scope: {

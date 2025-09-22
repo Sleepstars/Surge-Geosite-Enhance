@@ -380,6 +380,12 @@ const main = async () => {
     // eslint-disable-next-line no-await-in-loop
     await importChunk(chunkPaths[i], importUrl, i, chunkPaths.length);
   }
+
+  // Run a light-weight optimize after imports to refresh stats.
+  // This uses a small analysis limit to control cost on large datasets.
+  console.log("Executing PRAGMA optimize on D1 (analysis_limit=400)...");
+  await queryRows("PRAGMA optimize");
+  console.log("PRAGMA optimize completed.");
 };
 
 main().catch((error) => {
