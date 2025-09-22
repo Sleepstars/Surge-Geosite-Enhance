@@ -36,6 +36,18 @@ const GEOIP_CACHE_TTL_MS = 5 * 60 * 1000;
 
 const geositeCache = new Map<string, CacheEntry<RuleJSON>>();
 const geoipCache = new Map<string, CacheEntry<GeoIPJSON>>();
+const SEARCH_KV_TTL_SECONDS = 3 * 24 * 60 * 60; // 3 days
+
+const schedule = (c: any, promise: Promise<unknown>) => {
+  try {
+    const ec: any = (c as any).executionCtx;
+    if (ec && typeof ec.waitUntil === "function") {
+      ec.waitUntil(promise);
+    }
+  } catch (_) {
+    // Ignore if execution context not available
+  }
+};
 
 const cleanupCache = <T>(cacheMap: Map<string, CacheEntry<T>>, now: number): void => {
   for (const [k, entry] of cacheMap) {
@@ -1405,18 +1417,90 @@ app.post("/api/search/geosite", async (c) => {
     throw new HTTPException(400, { message: "Missing query" });
   }
   const filters = normalizeAttributeFilters(payload?.attributes ?? payload?.filter);
-  const indexMap = await fetchIndexMap("geosite", env);
-  const totalAvailable = Object.keys(indexMap).length;
-  const requestedNames: string[] = Array.isArray(payload?.names)
+
+  // Try KV cache for hot queries (comprehensive geosite search)
+  const kv = env.GEO_KV;
+  const listsParam = clamp(Number(payload?.lists ?? 600), 100, 2000);
+  const limitParam = clamp(Number(payload?.limit ?? 200), 5, 200); // default widened to 200
+  const namesParam: string[] = Array.isArray(payload?.names)
     ? payload.names.map((n: unknown) => String(n).trim()).filter((n: string) => n.length > 0)
     : [];
+  const namesKeyPart = namesParam.length ? `|names=${namesParam.sort((a,b)=>a.localeCompare(b)).join(";")}` : "";
+  const cacheKey = kv
+    ? `search:geosite:v1:q=${query.toLowerCase()}|f=${filters.join(",")}|lmt=${limitParam}|lists=${listsParam}${namesKeyPart}`
+    : null;
+  if (kv && cacheKey) {
+    try {
+      const cached = (await kv.get(cacheKey, { type: "json" })) as any | null;
+      if (cached && typeof cached === "object" && Array.isArray(cached.matches)) {
+        // Kick off background revalidation
+        schedule(c, (async () => {
+          try {
+            const indexMapBg = await fetchIndexMap("geosite", env);
+            const totalAvailableBg = Object.keys(indexMapBg).length;
+            const scopedNamesBg = namesParam.length
+              ? namesParam.filter((name) => indexMapBg[name] !== undefined)
+              : Object.keys(indexMapBg);
+            if (scopedNamesBg.length === 0) return;
+            const tokensBg = buildSearchTokens(query);
+            const prioritizedBg = tokensBg.length
+              ? scopedNamesBg.filter((name) => {
+                  const lower = name.toLowerCase();
+                  return tokensBg.some((token) => lower.includes(token));
+                })
+              : [];
+            const dedupedNamesBg = Array.from(new Map([...prioritizedBg, ...scopedNamesBg].map((n) => [n, n])).values());
+            const namesForSearchBg = dedupedNamesBg.slice(0, Math.min(listsParam, dedupedNamesBg.length));
+            const { matches: matchesBg, scanned: scannedBg } = await searchGeositeRules(
+              query,
+              filters,
+              namesForSearchBg,
+              limitParam,
+              env,
+              indexMapBg,
+              namesForSearchBg.length,
+              tokensBg
+            );
+            const responseBodyBg = {
+              query,
+              filters,
+              limit: limitParam,
+              scope: {
+                requested: namesParam,
+                used: namesForSearchBg.length,
+                total: totalAvailableBg,
+                scanned: scannedBg,
+                prioritized: prioritizedBg,
+              },
+              matches: matchesBg,
+              searchMode: "comprehensive",
+            };
+            // Compare only key fields to avoid perf noise
+            const eq = JSON.stringify({ q: cached.query, f: cached.filters, l: cached.limit, m: cached.matches }) ===
+                      JSON.stringify({ q: responseBodyBg.query, f: responseBodyBg.filters, l: responseBodyBg.limit, m: responseBodyBg.matches });
+            if (!eq) {
+              await kv.put(cacheKey, JSON.stringify(responseBodyBg), { expirationTtl: SEARCH_KV_TTL_SECONDS });
+            }
+          } catch (_) { /* ignore */ }
+        })());
+        c.header("X-Cache-Status", "HIT-KV");
+        c.header("Cache-Control", "no-store");
+        return c.json(cached);
+      }
+    } catch (_) {
+      // ignore KV errors
+    }
+  }
+  const indexMap = await fetchIndexMap("geosite", env);
+  const totalAvailable = Object.keys(indexMap).length;
+  const requestedNames: string[] = namesParam;
   const scopedNames = requestedNames.length
     ? requestedNames.filter((name) => indexMap[name] !== undefined)
     : Object.keys(indexMap);
   if (scopedNames.length === 0) {
     throw new HTTPException(400, { message: "No valid geosite names in scope" });
   }
-  const limit = clamp(Number(payload?.limit ?? 50), 5, 200);
+  const limit = limitParam;
   const tokens = buildSearchTokens(query);
   const prioritized = tokens.length
     ? scopedNames.filter((name) => {
@@ -1424,7 +1508,7 @@ app.post("/api/search/geosite", async (c) => {
         return tokens.some((token) => lower.includes(token));
       })
     : [];
-  const maxLists = clamp(Number(payload?.lists ?? 600), 100, 2000);
+  const maxLists = listsParam;
   const dedupedNames = Array.from(new Map([...prioritized, ...scopedNames].map((n) => [n, n])).values());
   const namesForSearch = dedupedNames.slice(0, Math.min(maxLists, dedupedNames.length));
   const startTime = Date.now();
@@ -1458,6 +1542,16 @@ app.post("/api/search/geosite", async (c) => {
       avgTimePerList: namesForSearch.length > 0 ? Math.round((searchTime / namesForSearch.length) * 100) / 100 : 0,
     },
   };
+
+  // Populate KV cache
+  if (kv && cacheKey) {
+    try {
+      await kv.put(cacheKey, JSON.stringify(responseBody), { expirationTtl: SEARCH_KV_TTL_SECONDS });
+      c.header("X-Cache-Status", "MISS-KV");
+    } catch (_) {
+      // ignore KV errors
+    }
+  }
 
   c.status(200);
   c.header("Cache-Control", "no-store");
@@ -1559,18 +1653,89 @@ app.post("/api/search/geoip", async (c) => {
       : versionRaw === "ipv6" || versionRaw === "v6"
         ? "ipv6"
         : "both";
-  const indexMap = await fetchIndexMap("geoip", env);
-  const totalAvailable = Object.keys(indexMap).length;
-  const requestedNames: string[] = Array.isArray(payload?.names)
+  // KV cache for geoip comprehensive search
+  const kv = env.GEO_KV;
+  const listsParam = clamp(Number(payload?.lists ?? 800), 100, 2000);
+  const limitParam = clamp(Number(payload?.limit ?? 200), 5, 200); // default widened to 200
+  const namesParam: string[] = Array.isArray(payload?.names)
     ? payload.names.map((n: unknown) => String(n).trim()).filter((n: string) => n.length > 0)
     : [];
+  const namesKeyPart = namesParam.length ? `|names=${namesParam.sort((a,b)=>a.localeCompare(b)).join(";")}` : "";
+  const cacheKey = kv
+    ? `search:geoip:v1:q=${query.toLowerCase()}|ver=${versionFilter}|lmt=${limitParam}|lists=${listsParam}${namesKeyPart}`
+    : null;
+  if (kv && cacheKey) {
+    try {
+      const cached = (await kv.get(cacheKey, { type: "json" })) as any | null;
+      if (cached && typeof cached === "object" && Array.isArray(cached.matches)) {
+        // Background revalidate
+        schedule(c, (async () => {
+          try {
+            const indexMapBg = await fetchIndexMap("geoip", env);
+            const totalAvailableBg = Object.keys(indexMapBg).length;
+            const scopedNamesBg = namesParam.length
+              ? namesParam.filter((name) => indexMapBg[name] !== undefined)
+              : Object.keys(indexMapBg);
+            if (scopedNamesBg.length === 0) return;
+            const tokensBg = buildSearchTokens(query);
+            const prioritizedBg = tokensBg.length
+              ? scopedNamesBg.filter((name) => {
+                  const lower = name.toLowerCase();
+                  return tokensBg.some((token) => lower.includes(token));
+                })
+              : [];
+            const dedupedNamesBg = Array.from(new Map([...prioritizedBg, ...scopedNamesBg].map((n) => [n, n])).values());
+            const namesForSearchBg = dedupedNamesBg.slice(0, Math.min(listsParam, dedupedNamesBg.length));
+            const { matches: matchesBg, scanned: scannedBg, mode } = await searchGeoipLists(
+              query,
+              namesForSearchBg,
+              limitParam,
+              env,
+              indexMapBg,
+              versionFilter,
+              namesForSearchBg.length,
+              tokensBg
+            );
+            const responseBodyBg = {
+              query,
+              version: versionFilter,
+              limit: limitParam,
+              mode,
+              scope: {
+                requested: namesParam,
+                used: namesForSearchBg.length,
+                total: totalAvailableBg,
+                scanned: scannedBg,
+                prioritized: prioritizedBg,
+              },
+              matches: matchesBg,
+            };
+            const eq = JSON.stringify({ q: cached.query, v: cached.version, l: cached.limit, m: cached.matches }) ===
+                      JSON.stringify({ q: responseBodyBg.query, v: responseBodyBg.version, l: responseBodyBg.limit, m: responseBodyBg.matches });
+            if (!eq) {
+              await kv.put(cacheKey, JSON.stringify(responseBodyBg), { expirationTtl: SEARCH_KV_TTL_SECONDS });
+            }
+          } catch (_) { /* ignore */ }
+        })());
+        c.header("X-Cache-Status", "HIT-KV");
+        c.header("Cache-Control", "no-store");
+        return c.json(cached);
+      }
+    } catch (_) {
+      // ignore KV errors
+    }
+  }
+
+  const indexMap = await fetchIndexMap("geoip", env);
+  const totalAvailable = Object.keys(indexMap).length;
+  const requestedNames: string[] = namesParam;
   const scopedNames = requestedNames.length
     ? requestedNames.filter((name) => indexMap[name] !== undefined)
     : Object.keys(indexMap);
   if (scopedNames.length === 0) {
     throw new HTTPException(400, { message: "No valid geoip names in scope" });
   }
-  const limit = clamp(Number(payload?.limit ?? 50), 5, 200);
+  const limit = limitParam;
   const tokens = buildSearchTokens(query);
   const prioritized = tokens.length
     ? scopedNames.filter((name) => {
@@ -1578,7 +1743,7 @@ app.post("/api/search/geoip", async (c) => {
         return tokens.some((token) => lower.includes(token));
       })
     : [];
-  const maxLists = clamp(Number(payload?.lists ?? 800), 100, 2000);
+  const maxLists = listsParam;
   const dedupedNames = Array.from(new Map([...prioritized, ...scopedNames].map((n) => [n, n])).values());
   const namesForSearch = dedupedNames.slice(0, Math.min(maxLists, dedupedNames.length));
   const { matches, scanned, mode } = await searchGeoipLists(
@@ -1591,7 +1756,7 @@ app.post("/api/search/geoip", async (c) => {
     namesForSearch.length,
     tokens
   );
-  return c.json({
+  const responseBody = {
     query,
     version: versionFilter,
     limit,
@@ -1604,7 +1769,17 @@ app.post("/api/search/geoip", async (c) => {
       prioritized,
     },
     matches,
-  });
+  };
+  if (kv && cacheKey) {
+    try {
+      await kv.put(cacheKey, JSON.stringify(responseBody), { expirationTtl: SEARCH_KV_TTL_SECONDS });
+      c.header("X-Cache-Status", "MISS-KV");
+    } catch (_) {
+      // ignore KV errors
+    }
+  }
+  c.header("Cache-Control", "no-store");
+  return c.json(responseBody);
 });
 
 app.get("/", (c) => {

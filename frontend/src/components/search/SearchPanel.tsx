@@ -84,11 +84,13 @@ export function SearchPanel() {
       geositeSearch.mutate({
         query: debouncedComprehensiveQuery,
         attributes: attributes || undefined,
+        limit: 200,
       })
     } else {
       geoipSearch.mutate({
         query: debouncedComprehensiveQuery,
         version,
+        limit: 200,
       })
     }
   }
