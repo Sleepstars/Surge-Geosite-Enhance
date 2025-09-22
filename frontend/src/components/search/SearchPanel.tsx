@@ -16,7 +16,6 @@ export function SearchPanel() {
   const { activeDataset } = useAppStore()
   const [fastQuery, setFastQuery] = useState('')
   const [comprehensiveQuery, setComprehensiveQuery] = useState('')
-  const [limit, setLimit] = useState(50)
   const [attributes, setAttributes] = useState('')
   const [version, setVersion] = useState<'both' | 'ipv4' | 'ipv6'>('both')
 
@@ -33,13 +32,11 @@ export function SearchPanel() {
     if (activeDataset === 'geosite') {
       geositeFastSearch.mutate({
         query: debouncedFastQuery,
-        limit,
         attributes: attributes || undefined,
       })
     } else {
       geoipSearch.mutate({
         query: debouncedFastQuery,
-        limit,
         version,
       })
     }
@@ -51,13 +48,11 @@ export function SearchPanel() {
     if (activeDataset === 'geosite') {
       geositeSearch.mutate({
         query: debouncedComprehensiveQuery,
-        limit,
         attributes: attributes || undefined,
       })
     } else {
       geoipSearch.mutate({
         query: debouncedComprehensiveQuery,
-        limit,
         version,
       })
     }
@@ -106,13 +101,20 @@ export function SearchPanel() {
               <div className="text-xs text-green-700 dark:text-green-300 mb-2">
                 💡 推荐用于：完整域名查询 (如 apple.com, google.com)
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 <Input
                   placeholder="例如：apple.com"
                   value={fastQuery}
                   onChange={(e) => setFastQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleFastSearch()}
                   className="flex-1"
+                />
+                {/* 属性过滤与搜索操作放在同一行 */}
+                <Input
+                  placeholder="属性过滤（如 cn 或 !cn）"
+                  value={attributes}
+                  onChange={(e) => setAttributes(e.target.value)}
+                  className="w-48"
                 />
                 <Button
                   onClick={handleFastSearch}
@@ -147,13 +149,20 @@ export function SearchPanel() {
               <div className="text-xs text-blue-700 dark:text-blue-300 mb-2">
                 💡 推荐用于：关键字搜索 (如 google, apple) 或复杂查询
               </div>
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-wrap">
                 <Input
                   placeholder="例如：google 或 apple.com"
                   value={comprehensiveQuery}
                   onChange={(e) => setComprehensiveQuery(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && handleComprehensiveSearch()}
                   className="flex-1"
+                />
+                {/* 属性过滤与搜索操作放在同一行 */}
+                <Input
+                  placeholder="属性过滤（如 cn 或 !cn）"
+                  value={attributes}
+                  onChange={(e) => setAttributes(e.target.value)}
+                  className="w-48"
                 />
                 <Button
                   onClick={handleComprehensiveSearch}
@@ -167,22 +176,29 @@ export function SearchPanel() {
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium mb-2">IP 地址或 CIDR</label>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium">IP 匹配</label>
+            <div className="flex gap-2 flex-wrap">
               <Input
                 placeholder="例如：8.8.8.8 或 192.168.1.0/24"
                 value={comprehensiveQuery}
                 onChange={(e) => setComprehensiveQuery(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleComprehensiveSearch()}
+                className="flex-1"
               />
-            </div>
-
-            <div>
+              {/* IP 版本与搜索操作放在同一行 */}
+              <Select
+                value={version}
+                onChange={(e) => setVersion(e.target.value as 'both' | 'ipv4' | 'ipv6')}
+                className="w-40"
+              >
+                <option value="both">IPv4 + IPv6</option>
+                <option value="ipv4">仅 IPv4</option>
+                <option value="ipv6">仅 IPv6</option>
+              </Select>
               <Button
                 onClick={handleComprehensiveSearch}
                 disabled={!debouncedComprehensiveQuery.trim() || isLoading}
-                className="w-full mt-6"
               >
                 {isLoading ? '搜索中...' : '开始匹配'}
               </Button>
@@ -190,43 +206,6 @@ export function SearchPanel() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium mb-2">结果限制</label>
-            <Select
-              value={limit.toString()}
-              onChange={(e) => setLimit(Number(e.target.value))}
-            >
-              <option value="20">20 条</option>
-              <option value="50">50 条</option>
-              <option value="100">100 条</option>
-              <option value="200">200 条</option>
-            </Select>
-          </div>
-
-          {activeDataset === 'geosite' ? (
-            <div>
-              <label className="block text-sm font-medium mb-2">属性过滤</label>
-              <Input
-                placeholder="例如：cn 或 !cn"
-                value={attributes}
-                onChange={(e) => setAttributes(e.target.value)}
-              />
-            </div>
-          ) : (
-            <div>
-              <label className="block text-sm font-medium mb-2">IP 版本</label>
-              <Select
-                value={version}
-                onChange={(e) => setVersion(e.target.value as 'both' | 'ipv4' | 'ipv6')}
-              >
-                <option value="both">IPv4 + IPv6</option>
-                <option value="ipv4">仅 IPv4</option>
-                <option value="ipv6">仅 IPv6</option>
-              </Select>
-            </div>
-          )}
-        </div>
 
         {error && (
           <ErrorState
