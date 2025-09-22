@@ -50,7 +50,7 @@ export const GeoipNameList: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>GeoIP · 规则列表</CardTitle>
         </CardHeader>
@@ -63,7 +63,7 @@ export const GeoipNameList: React.FC = () => {
 
   if (error) {
     return (
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>GeoIP · 规则列表</CardTitle>
         </CardHeader>
@@ -78,7 +78,7 @@ export const GeoipNameList: React.FC = () => {
   }
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle>GeoIP · 规则列表</CardTitle>
         <CardDescription>
@@ -113,7 +113,7 @@ export const GeoipNameList: React.FC = () => {
           </div>
         </div>
         
-        <div className="border rounded-md bg-background/50 max-h-96 overflow-y-auto">
+        <div className="border rounded-md bg-background/50 h-96 overflow-y-auto">
           {filteredNames.length > 0 ? (
             <div className="p-2">
               {filteredNames.map((name) => (

@@ -139,7 +139,7 @@ export const GeositeRuleList: React.FC = () => {
   // 未选择时也渲染与选择后一致的布局高度，避免卡片高度跳变
   if (!geositeSelectedName) {
     return (
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>规则详情</CardTitle>
         </CardHeader>
@@ -175,7 +175,7 @@ export const GeositeRuleList: React.FC = () => {
 
   if (isInitialLoading) {
     return (
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>规则详情</CardTitle>
         </CardHeader>
@@ -208,7 +208,7 @@ export const GeositeRuleList: React.FC = () => {
 
   if (error && !activeDetail) {
     return (
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>规则详情</CardTitle>
         </CardHeader>
@@ -246,7 +246,7 @@ export const GeositeRuleList: React.FC = () => {
   if (!activeDetail) return null
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span className="flex items-center gap-2">

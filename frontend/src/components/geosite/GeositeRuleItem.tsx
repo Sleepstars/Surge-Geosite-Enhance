@@ -51,20 +51,20 @@ export const GeositeRuleItem: React.FC<GeositeRuleItemProps> = ({ rule, index })
         </Badge>
         
         <div className="flex-1 min-w-0">
-          <div className="font-mono text-sm break-all">
-            {rule.value}
-          </div>
-          
-          {rule.attrs && rule.attrs.length > 0 && (
-            <div className="flex flex-wrap gap-1 mt-2">
-              <span className="text-xs text-muted-foreground">标签：</span>
-              {rule.attrs.map((attr, i) => (
-                <Badge key={i} variant="secondary" className="text-xs">
-                  {attr}
-                </Badge>
-              ))}
+          <div className="flex items-start gap-2">
+            <div className="font-mono text-sm break-all flex-1">
+              {rule.value}
             </div>
-          )}
+            {rule.attrs && rule.attrs.length > 0 && (
+              <div className="flex flex-wrap gap-1 shrink-0">
+                {rule.attrs.map((attr, i) => (
+                  <Badge key={i} variant="secondary" className="text-xs">
+                    {attr}
+                  </Badge>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>

@@ -88,7 +88,7 @@ export const GeoipCidrList: React.FC = () => {
 
   if (!geoipSelectedName) {
     return (
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>CIDR 列表</CardTitle>
         </CardHeader>
@@ -103,7 +103,7 @@ export const GeoipCidrList: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>CIDR 列表</CardTitle>
         </CardHeader>
@@ -116,7 +116,7 @@ export const GeoipCidrList: React.FC = () => {
 
   if (error) {
     return (
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>CIDR 列表</CardTitle>
         </CardHeader>
@@ -133,7 +133,7 @@ export const GeoipCidrList: React.FC = () => {
   if (!detail) return null
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle className="flex items-center justify-between">
           <span>CIDR 列表</span>

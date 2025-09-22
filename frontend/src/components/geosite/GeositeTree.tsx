@@ -58,7 +58,7 @@ export const GeositeTree: React.FC = () => {
 
   if (isLoading) {
     return (
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>GeoSite · 规则树</CardTitle>
         </CardHeader>
@@ -71,7 +71,7 @@ export const GeositeTree: React.FC = () => {
 
   if (error) {
     return (
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle>GeoSite · 规则树</CardTitle>
         </CardHeader>
@@ -86,7 +86,7 @@ export const GeositeTree: React.FC = () => {
   }
 
   return (
-    <Card>
+    <Card className="h-full">
       <CardHeader>
         <CardTitle>GeoSite · 规则树</CardTitle>
         <CardDescription>
@@ -125,7 +125,7 @@ export const GeositeTree: React.FC = () => {
           </Button>
         </div>
         
-        <div className="border rounded-md bg-background/50 max-h-96 overflow-y-auto">
+        <div className="border rounded-md bg-background/50 h-96 overflow-y-auto">
           {filteredRoot && filteredRoot.children.size > 0 ? (
             <div className="p-2">
               {Array.from(filteredRoot.children.values()).map((child) => (
