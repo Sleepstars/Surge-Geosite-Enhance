@@ -1432,6 +1432,7 @@ app.post("/api/search/geosite", async (c) => {
     : null;
   if (kv && cacheKey) {
     try {
+      const kvStart = Date.now();
       const cached = (await kv.get(cacheKey, { type: "json" })) as any | null;
       if (cached && typeof cached === "object" && Array.isArray(cached.matches)) {
         const now = Date.now();
@@ -1503,7 +1504,15 @@ app.post("/api/search/geosite", async (c) => {
 
         c.header("X-Cache-Status", "HIT-KV");
         c.header("Cache-Control", "no-store");
-        return c.json(cached);
+        const kvElapsed = Date.now() - kvStart;
+        const withPerf = {
+          ...cached,
+          performance: {
+            searchTimeMs: kvElapsed,
+            avgTimePerList: 0,
+          },
+        };
+        return c.json(withPerf);
       }
     } catch (_) {
       // ignore KV errors
@@ -1563,10 +1572,11 @@ app.post("/api/search/geosite", async (c) => {
     softTtlSec: SEARCH_SOFT_TTL_SECONDS,
   };
 
-  // Populate KV cache
+  // Populate KV cache (do not cache performance/timing)
   if (kv && cacheKey) {
     try {
-      await kv.put(cacheKey, JSON.stringify(responseBody), { expirationTtl: SEARCH_KV_TTL_SECONDS });
+      const { performance: _perf, ...responseBodyNoPerf } = responseBody as any;
+      await kv.put(cacheKey, JSON.stringify(responseBodyNoPerf), { expirationTtl: SEARCH_KV_TTL_SECONDS });
       c.header("X-Cache-Status", "MISS-KV");
     } catch (_) {
       // ignore KV errors
@@ -1673,94 +1683,12 @@ app.post("/api/search/geoip", async (c) => {
       : versionRaw === "ipv6" || versionRaw === "v6"
         ? "ipv6"
         : "both";
-  // KV cache for geoip comprehensive search
-  const kv = env.GEO_KV;
+  // Read direct from D1 (no KV cache for geoip)
   const listsParam = clamp(Number(payload?.lists ?? 800), 100, 2000);
   const limitParam = clamp(Number(payload?.limit ?? 200), 5, 200); // default widened to 200
   const namesParam: string[] = Array.isArray(payload?.names)
     ? payload.names.map((n: unknown) => String(n).trim()).filter((n: string) => n.length > 0)
     : [];
-  const namesKeyPart = namesParam.length ? `|names=${namesParam.sort((a,b)=>a.localeCompare(b)).join(";")}` : "";
-  const cacheKey = kv
-    ? `search:geoip:v1:q=${query.toLowerCase()}|ver=${versionFilter}|lmt=${limitParam}|lists=${listsParam}${namesKeyPart}`
-    : null;
-  if (kv && cacheKey) {
-    try {
-      const cached = (await kv.get(cacheKey, { type: "json" })) as any | null;
-      if (cached && typeof cached === "object" && Array.isArray(cached.matches)) {
-        const now = Date.now();
-        const genAt = Number((cached as any).generatedAt || 0);
-        const softSec = Number((cached as any).softTtlSec || SEARCH_SOFT_TTL_SECONDS);
-        const isFresh = genAt > 0 && (now - genAt) <= softSec * 1000;
-
-        if (!isFresh) {
-          const lockKey = `${cacheKey}:lock`;
-          schedule(c, (async () => {
-            try {
-              const hasLock = await kv.get(lockKey);
-              if (hasLock) return;
-              await kv.put(lockKey, "1", { expirationTtl: 60 });
-
-              const indexMapBg = await fetchIndexMap("geoip", env);
-              const totalAvailableBg = Object.keys(indexMapBg).length;
-              const scopedNamesBg = namesParam.length
-                ? namesParam.filter((name) => indexMapBg[name] !== undefined)
-                : Object.keys(indexMapBg);
-              if (scopedNamesBg.length === 0) return;
-              const tokensBg = buildSearchTokens(query);
-              const prioritizedBg = tokensBg.length
-                ? scopedNamesBg.filter((name) => {
-                    const lower = name.toLowerCase();
-                    return tokensBg.some((token) => lower.includes(token));
-                  })
-                : [];
-              const dedupedNamesBg = Array.from(new Map([...prioritizedBg, ...scopedNamesBg].map((n) => [n, n])).values());
-              const namesForSearchBg = dedupedNamesBg.slice(0, Math.min(listsParam, dedupedNamesBg.length));
-              const { matches: matchesBg, scanned: scannedBg, mode } = await searchGeoipLists(
-                query,
-                namesForSearchBg,
-                limitParam,
-                env,
-                indexMapBg,
-                versionFilter,
-                namesForSearchBg.length,
-                tokensBg
-              );
-              const responseBodyBg = {
-                query,
-                version: versionFilter,
-                limit: limitParam,
-                mode,
-                scope: {
-                  requested: namesParam,
-                  used: namesForSearchBg.length,
-                  total: totalAvailableBg,
-                  scanned: scannedBg,
-                  prioritized: prioritizedBg,
-                },
-                matches: matchesBg,
-                generatedAt: Date.now(),
-                softTtlSec: SEARCH_SOFT_TTL_SECONDS,
-              };
-              const eq = JSON.stringify({ q: cached.query, v: cached.version, l: cached.limit, m: cached.matches }) ===
-                        JSON.stringify({ q: responseBodyBg.query, v: responseBodyBg.version, l: responseBodyBg.limit, m: responseBodyBg.matches });
-              if (!eq) {
-                await kv.put(cacheKey, JSON.stringify(responseBodyBg), { expirationTtl: SEARCH_KV_TTL_SECONDS });
-              } else if (!genAt) {
-                await kv.put(cacheKey, JSON.stringify(responseBodyBg), { expirationTtl: SEARCH_KV_TTL_SECONDS });
-              }
-            } catch (_) { /* ignore */ }
-          })());
-        }
-
-        c.header("X-Cache-Status", "HIT-KV");
-        c.header("Cache-Control", "no-store");
-        return c.json(cached);
-      }
-    } catch (_) {
-      // ignore KV errors
-    }
-  }
 
   const indexMap = await fetchIndexMap("geoip", env);
   const totalAvailable = Object.keys(indexMap).length;
@@ -1782,6 +1710,7 @@ app.post("/api/search/geoip", async (c) => {
   const maxLists = listsParam;
   const dedupedNames = Array.from(new Map([...prioritized, ...scopedNames].map((n) => [n, n])).values());
   const namesForSearch = dedupedNames.slice(0, Math.min(maxLists, dedupedNames.length));
+  const startTime = Date.now();
   const { matches, scanned, mode } = await searchGeoipLists(
     query,
     namesForSearch,
@@ -1792,6 +1721,7 @@ app.post("/api/search/geoip", async (c) => {
     namesForSearch.length,
     tokens
   );
+  const searchTime = Date.now() - startTime;
   const responseBody = {
     query,
     version: versionFilter,
@@ -1805,17 +1735,13 @@ app.post("/api/search/geoip", async (c) => {
       prioritized,
     },
     matches,
+    performance: {
+      searchTimeMs: searchTime,
+      avgTimePerList: namesForSearch.length > 0 ? Math.round((searchTime / namesForSearch.length) * 100) / 100 : 0,
+    },
     generatedAt: Date.now(),
     softTtlSec: SEARCH_SOFT_TTL_SECONDS,
   };
-  if (kv && cacheKey) {
-    try {
-      await kv.put(cacheKey, JSON.stringify(responseBody), { expirationTtl: SEARCH_KV_TTL_SECONDS });
-      c.header("X-Cache-Status", "MISS-KV");
-    } catch (_) {
-      // ignore KV errors
-    }
-  }
   c.header("Cache-Control", "no-store");
   return c.json(responseBody);
 });
