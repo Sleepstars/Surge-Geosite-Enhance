@@ -79,7 +79,7 @@ export const GeositeTree: React.FC = () => {
           </div>
 
           {/* 树容器占据剩余空间，保持整体卡片高度一致 */}
-          <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
+          <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] max-h-[24rem] flex items-center justify-center">
             <LoadingState>加载规则树...</LoadingState>
           </div>
         </CardContent>
@@ -110,7 +110,7 @@ export const GeositeTree: React.FC = () => {
           </div>
 
           {/* 树容器占据剩余空间，保持整体卡片高度一致 */}
-          <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
+          <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] max-h-[24rem] flex items-center justify-center">
             <ErrorState
               error={error instanceof Error ? error.message : '加载失败'}
               onRetry={() => refetch()}
@@ -161,7 +161,7 @@ export const GeositeTree: React.FC = () => {
           </Button>
         </div>
         
-        <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-y-auto">
+        <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] max-h-[24rem] overflow-y-auto">
           {filteredRoot && filteredRoot.children.size > 0 ? (
             <div className="p-2">
               {Array.from(filteredRoot.children.values()).map((child) => (

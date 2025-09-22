@@ -163,7 +163,7 @@ export const GeositeRuleList: React.FC = () => {
           <div className="h-5" />
 
           {/* 列表容器占据剩余空间，保持整体卡片高度一致 */}
-          <div className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
+          <div className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] max-h-[24rem] flex items-center justify-center">
             <div className="text-center text-muted-foreground">
               请选择规则组以查看详情
             </div>
@@ -198,7 +198,7 @@ export const GeositeRuleList: React.FC = () => {
           {/* 统计行占位 */}
           <div className="h-5" />
 
-          <div className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
+          <div className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] max-h-[24rem] flex items-center justify-center">
             <LoadingState>加载规则详情...</LoadingState>
           </div>
         </CardContent>
@@ -231,7 +231,7 @@ export const GeositeRuleList: React.FC = () => {
           {/* 统计行占位 */}
           <div className="h-5" />
 
-          <div className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] flex items-center justify-center">
+          <div className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] max-h-[24rem] flex items-center justify-center">
             <ErrorState 
               error={error instanceof Error ? error.message : '加载失败'} 
               onRetry={() => refetch()}
@@ -341,7 +341,7 @@ export const GeositeRuleList: React.FC = () => {
 
         <div
           ref={parentRef}
-          className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] overflow-auto"
+          className="relative border rounded-md bg-background/50 flex-1 min-h-[24rem] max-h-[24rem] overflow-auto"
         >
           {filteredRules.length > 0 ? (
             <div
