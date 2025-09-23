@@ -1,5 +1,9 @@
 # Surge Geosite Enhance
 
+<p align="center">
+  <img src="./docs/img/logo.png" width="128" alt="Surge Geosite Enhance logo" />
+</p>
+
 一个基于 Cloudflare Workers 的服务，按需将 Loyalsoldier 提供的 geosite/geoip 数据集转换为适配 Surge 的纯文本规则集，同时提供 JSON 索引与 SRS 打包文件。项目包含前端浏览器（Cloudflare Pages）用于快速检索、预览与搜索。
 
 👉 部署说明（包含 CI 与 Cloudflare 配置）：[docs/deploy.md](docs/deploy.md)

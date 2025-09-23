@@ -135,7 +135,7 @@ export const GeositeTree: React.FC = () => {
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
             <Input
-              placeholder="搜索 GeoSite 名称，例如 APPLE 或 MEDIA"
+              placeholder="eg: apple, google"
               value={localTreeSearch}
               onChange={(e) => setLocalTreeSearch(e.target.value)}
               className="pl-10"
