@@ -22,7 +22,7 @@ export const buildGeositeTree = (names: string[]): { root: TreeNode; branchPaths
     let currentPath = ''
 
     for (let i = 0; i < segments.length; i++) {
-      const segment = segments[i]
+      const segment = segments[i]!
       const segmentPath = currentPath ? `${currentPath}-${segment}` : segment
       
       if (!current.children.has(segment)) {

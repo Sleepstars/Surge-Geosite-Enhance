@@ -61,7 +61,7 @@ export function SearchPanel() {
       }
       geositeFastSearch.mutate({
         query: fastQuery,
-        attributes: attributes || undefined,
+        ...(attributes && { attributes }),
         names: scopedNames,
         // Ask server to scan fewer lists by default for fast mode
         lists: 200,
@@ -80,7 +80,7 @@ export function SearchPanel() {
     if (activeDataset === 'geosite') {
       geositeSearch.mutate({
         query: comprehensiveQuery,
-        attributes: attributes || undefined,
+        ...(attributes && { attributes }),
         limit: 200,
       })
     } else {

@@ -256,6 +256,7 @@ export const GeoipCidrList: React.FC = () => {
             >
               {virtualizer.getVirtualItems().map((virtualItem) => {
                 const item = filteredCidrs[virtualItem.index]
+                if (!item) return null
                 return (
                   <div
                     key={virtualItem.key}

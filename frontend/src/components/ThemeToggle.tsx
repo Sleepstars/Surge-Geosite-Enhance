@@ -16,7 +16,7 @@ export const ThemeToggle: React.FC = () => {
 
   const handleToggle = () => {
     const currentIndex = modeOrder.indexOf(preference)
-    const nextMode = modeOrder[(currentIndex + 1) % modeOrder.length]
+    const nextMode = modeOrder[(currentIndex + 1) % modeOrder.length]!
     setPreference(nextMode)
   }
 

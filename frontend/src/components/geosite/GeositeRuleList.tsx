@@ -364,7 +364,7 @@ export const GeositeRuleList: React.FC = () => {
                   }}
                 >
                   <GeositeRuleItem
-                    rule={filteredRules[virtualItem.index]}
+                    rule={filteredRules[virtualItem.index]!}
                     index={virtualItem.index}
                   />
                 </div>
