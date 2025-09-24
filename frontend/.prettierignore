@@ -1,0 +1,13 @@
+node_modules
+dist
+.wrangler
+coverage
+*.md
+*.svg
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.log
+*.lock

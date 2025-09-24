@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { resolve } from 'path'
@@ -19,6 +20,7 @@ export default defineConfig({
           vendor: ['react', 'react-dom'],
           query: ['@tanstack/react-query'],
           virtual: ['@tanstack/react-virtual'],
+          ui: ['lucide-react', 'clsx'],
         },
       },
     },
@@ -39,5 +41,11 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/test/setup.ts'],
+    css: true,
   },
 })

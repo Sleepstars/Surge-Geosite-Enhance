@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { memo, useCallback } from 'react'
 import { ChevronRight, ChevronDown, Folder, File } from 'lucide-react'
 import { clsx } from 'clsx'
-import { TreeNode } from '@/types'
+import type { TreeNode } from '@/types'
 import { useAppStore } from '@/stores/useAppStore'
 
 interface GeositeTreeNodeProps {
@@ -9,38 +9,43 @@ interface GeositeTreeNodeProps {
   level: number
 }
 
-export const GeositeTreeNode: React.FC<GeositeTreeNodeProps> = ({ node, level }) => {
-  const { 
-    geositeExpandedNodes, 
-    toggleNodeExpansion, 
+export const GeositeTreeNode: React.FC<GeositeTreeNodeProps> = memo(({ node, level }) => {
+  const {
+    geositeExpandedNodes,
+    toggleNodeExpansion,
     geositeSelectedName,
-    setGeositeSelectedName 
+    setGeositeSelectedName
   } = useAppStore()
-  
+
   const isExpanded = geositeExpandedNodes.has(node.path)
   const isSelected = geositeSelectedName === node.fullName
   const hasChildren = node.children.size > 0
   const isLeaf = !!node.fullName
 
-  const handleToggle = () => {
+  const handleToggle = useCallback(() => {
     if (hasChildren) {
       toggleNodeExpansion(node.path)
     }
-  }
+  }, [hasChildren, toggleNodeExpansion, node.path])
 
-  const handleSelect = () => {
+  const handleSelect = useCallback(() => {
     if (isLeaf && node.fullName) {
       setGeositeSelectedName(node.fullName)
     }
-  }
+  }, [isLeaf, node.fullName, setGeositeSelectedName])
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (isLeaf) {
       handleSelect()
     } else {
       handleToggle()
     }
-  }
+  }, [isLeaf, handleSelect, handleToggle])
+
+  const handleToggleClick = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation()
+    handleToggle()
+  }, [handleToggle])
 
   return (
     <div>
@@ -56,10 +61,7 @@ export const GeositeTreeNode: React.FC<GeositeTreeNodeProps> = ({ node, level })
       >
         {hasChildren ? (
           <button
-            onClick={(e) => {
-              e.stopPropagation()
-              handleToggle()
-            }}
+            onClick={handleToggleClick}
             className="flex items-center justify-center w-4 h-4 hover:bg-accent rounded-sm"
           >
             {isExpanded ? (
@@ -71,27 +73,27 @@ export const GeositeTreeNode: React.FC<GeositeTreeNodeProps> = ({ node, level })
         ) : (
           <div className="w-4 h-4" />
         )}
-        
+
         {isLeaf ? (
           <File className="w-4 h-4 text-muted-foreground" />
         ) : (
           <Folder className="w-4 h-4 text-muted-foreground" />
         )}
-        
+
         <span className={clsx(
           'text-sm truncate',
           isLeaf ? 'font-normal' : 'font-medium'
         )}>
           {node.label}
         </span>
-        
+
         {isLeaf && (
           <span className="text-xs text-muted-foreground ml-auto">
             {node.fullName}
           </span>
         )}
       </div>
-      
+
       {hasChildren && isExpanded && (
         <div>
           {Array.from(node.children.values()).map((child) => (
@@ -105,4 +107,4 @@ export const GeositeTreeNode: React.FC<GeositeTreeNodeProps> = ({ node, level })
       )}
     </div>
   )
-}
+})
