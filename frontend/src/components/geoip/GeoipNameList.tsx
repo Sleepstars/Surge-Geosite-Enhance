@@ -67,7 +67,7 @@ export const GeoipNameList: React.FC = () => {
           </div>
 
           {/* 列表容器占据剩余空间，保持卡片高度一致 */}
-          <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] max-h-[24rem] flex items-center justify-center">
+          <div className="border rounded-md bg-background/50 flex-1 min-h-[28rem] max-h-[28rem] flex items-center justify-center">
             <LoadingState>加载规则列表...</LoadingState>
           </div>
         </CardContent>
@@ -94,7 +94,7 @@ export const GeoipNameList: React.FC = () => {
           </div>
 
           {/* 列表容器占据剩余空间，保持卡片高度一致 */}
-          <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] max-h-[24rem] flex items-center justify-center">
+          <div className="border rounded-md bg-background/50 flex-1 min-h-[28rem] max-h-[28rem] flex items-center justify-center">
             <ErrorState
               error={error instanceof Error ? error.message : '加载失败'}
               onRetry={() => refetch()}
@@ -136,7 +136,7 @@ export const GeoipNameList: React.FC = () => {
           </Select>
         </div>
         
-        <div className="border rounded-md bg-background/50 flex-1 min-h-[24rem] max-h-[24rem] overflow-y-auto">
+        <div className="border rounded-md bg-background/50 flex-1 min-h-[28rem] max-h-[28rem] overflow-y-auto">
           {filteredNames.length > 0 ? (
             <div className="p-2">
               {filteredNames.map((name) => (
