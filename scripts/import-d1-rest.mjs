@@ -384,7 +384,8 @@ const main = async () => {
   // Run a light-weight optimize after imports to refresh stats.
   // This uses a small analysis limit to control cost on large datasets.
   console.log("Executing PRAGMA optimize on D1 (analysis_limit=400)...");
-  await queryRows("PRAGMA optimize");
+  await queryRows("PRAGMA analysis_limit", "PRAGMA analysis_limit=400;");
+  await queryRows("PRAGMA optimize", "PRAGMA optimize;");
   console.log("PRAGMA optimize completed.");
 };
 
