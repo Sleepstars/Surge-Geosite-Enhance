@@ -62,7 +62,7 @@ export function SearchPanel() {
       geositeFastSearch.mutate({
         query: fastQuery,
         ...(attributes && { attributes }),
-        names: scopedNames,
+        ...(scopedNames && { names: scopedNames }),
         // Ask server to scan fewer lists by default for fast mode
         lists: 200,
       })
