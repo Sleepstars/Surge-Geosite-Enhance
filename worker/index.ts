@@ -9,7 +9,7 @@ app.use(logger());
 
 // Enable CORS for frontend
 app.use('*', cors({
-  origin: ['http://localhost:3000', 'https://geo.sleepstars.de'],
+  origin: ['http://localhost:3000', 'https://geo.sleepstars.de', "https://*.surge-geosite-enhance.pages.dev"],
   allowMethods: ['GET', 'POST', 'OPTIONS'],
   allowHeaders: ['Content-Type'],
 }));
