@@ -153,6 +153,8 @@ const loadChangedSummary = async () => {
     return {
       geosite: Array.isArray(parsed.geosite) ? parsed.geosite : [],
       geoip: Array.isArray(parsed.geoip) ? parsed.geoip : [],
+      deletedGeosite: Array.isArray(parsed.deletedGeosite) ? parsed.deletedGeosite : [],
+      deletedGeoip: Array.isArray(parsed.deletedGeoip) ? parsed.deletedGeoip : [],
     };
   } catch (error) {
     if (error && error.code === "ENOENT") {
@@ -182,6 +184,33 @@ const normalizeName = (name) => {
   return idx >= 0 ? name.slice(0, idx) : name;
 };
 
+const escapeSqlIdent = (name) => String(name).replace(/'/g, "''");
+
+const buildDeletionStatements = (type, names) => {
+  const statements = [];
+  if (!Array.isArray(names) || names.length === 0) return statements;
+  const chunkSize = 400; // keep IN lists modest
+  for (let i = 0; i < names.length; i += chunkSize) {
+    const chunk = names.slice(i, i + chunkSize).map((n) => `'${escapeSqlIdent(n)}'`).join(",");
+    if (type === "geosite") {
+      statements.push("BEGIN TRANSACTION;");
+      statements.push(
+        `DELETE FROM geosite_rule WHERE list_id IN (SELECT id FROM geosite_list WHERE name IN (${chunk}));`
+      );
+      statements.push(`DELETE FROM geosite_list WHERE name IN (${chunk});`);
+      statements.push("COMMIT;");
+    } else if (type === "geoip") {
+      statements.push("BEGIN TRANSACTION;");
+      statements.push(
+        `DELETE FROM geoip_cidr WHERE list_id IN (SELECT id FROM geoip_list WHERE name IN (${chunk}));`
+      );
+      statements.push(`DELETE FROM geoip_list WHERE name IN (${chunk});`);
+      statements.push("COMMIT;");
+    }
+  }
+  return statements;
+};
+
 const prepareChunks = async ({ fullRebuild, summary }) => {
   const statements = [];
 
@@ -200,11 +229,26 @@ const prepareChunks = async ({ fullRebuild, summary }) => {
 
   const geositeLists = Array.from(new Set((summary?.geosite || []).map(normalizeName).filter(Boolean)));
   const geoipLists = Array.from(new Set((summary?.geoip || []).map(normalizeName).filter(Boolean)));
+  const deletedGeosite = Array.from(
+    new Set((summary?.deletedGeosite || []).map(normalizeName).filter(Boolean))
+  );
+  const deletedGeoip = Array.from(
+    new Set((summary?.deletedGeoip || []).map(normalizeName).filter(Boolean))
+  );
 
   if (geositeLists.length === 0 && geoipLists.length === 0) {
     return { chunkPaths: [], mode: "incremental" };
   }
 
+  // 1) Deletions first (batched), then insert/updates
+  if (deletedGeosite.length > 0) {
+    statements.push(...buildDeletionStatements("geosite", deletedGeosite));
+  }
+  if (deletedGeoip.length > 0) {
+    statements.push(...buildDeletionStatements("geoip", deletedGeoip));
+  }
+
+  // 2) Apply updated/added lists
   for (const name of geositeLists) {
     const parts = await readSegmentStatements(SEGMENTS_GEOSITE_DIR, name);
     statements.push(...parts);
@@ -219,7 +263,7 @@ const prepareChunks = async ({ fullRebuild, summary }) => {
   }
 
   console.log(
-    `Preparing incremental update: ${geositeLists.length} geosite and ${geoipLists.length} geoip list(s), ${statements.length} statement(s) total.`
+    `Preparing incremental update: +${geositeLists.length}/-${deletedGeosite.length} geosite, +${geoipLists.length}/-${deletedGeoip.length} geoip, ${statements.length} statement(s) total.`
   );
   const chunkPaths = await writeChunkFiles(statements);
   return { chunkPaths, mode: "incremental", geositeLists, geoipLists };

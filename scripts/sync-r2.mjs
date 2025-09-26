@@ -314,7 +314,8 @@ const uploadPlan = async (bucket, manifestKey, localPlan, remoteManifest) => {
   await Promise.all(workers);
 
   // Merge manifest entries
-  const merged = { ...remoteEntries };
+  // Only keep current local keys to avoid persisting removed keys in the manifest
+  const merged = {};
   for (const it of localPlan) {
     merged[it.key] = { sha256: it.sha256, size: it.size };
   }
@@ -353,18 +354,69 @@ const main = async () => {
   plan.sort((a, b) => a.key.localeCompare(b.key));
 
   const remoteManifest = await fetchRemoteManifest(bucket, manifestKey);
-  const { changedKeys } = await uploadPlan(bucket, manifestKey, plan, remoteManifest);
+  const { changedKeys, entries: newEntries } = await uploadPlan(bucket, manifestKey, plan, remoteManifest);
 
   const summary = summarizeChangedKeys(changedKeys);
+  // Compute deletions: keys present in remote manifest before upload but not in current local plan
+  const remoteKeysBefore = new Set(Object.keys(remoteManifest?.entries || {}));
+  const localKeysNow = new Set(plan.map((p) => p.key));
+  const deletedKeys = Array.from(remoteKeysBefore).filter((k) => !localKeysNow.has(k));
+
+  const collectDeleted = (keys) => {
+    const geosite = new Set();
+    const geoip = new Set();
+    for (const key of keys) {
+      if (key.startsWith("geosite-json/")) {
+        const name = path.basename(key, ".json");
+        if (name) geosite.add(name);
+        continue;
+      }
+      if (key.startsWith("geosite/")) {
+        if (!key.endsWith(".srs")) continue;
+        let name = path.basename(key, ".srs");
+        if (!name) continue;
+        const atIndex = name.indexOf("@");
+        if (atIndex >= 0) name = name.slice(0, atIndex);
+        if (name) geosite.add(name);
+        continue;
+      }
+      if (key.startsWith("geoip-json/")) {
+        const name = path.basename(key, ".json");
+        if (name) geoip.add(name);
+        continue;
+      }
+      if (key.startsWith("geoip/")) {
+        if (!key.endsWith(".srs")) continue;
+        let name = path.basename(key, ".srs");
+        if (!name) continue;
+        const atIndex = name.indexOf("@");
+        if (atIndex >= 0) name = name.slice(0, atIndex);
+        if (name) geoip.add(name);
+      }
+    }
+    return {
+      geosite: Array.from(geosite).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" })),
+      geoip: Array.from(geoip).sort((a, b) => a.localeCompare(b, "en", { sensitivity: "base" })),
+    };
+  };
+
+  const deleted = collectDeleted(deletedKeys);
   const summaryPath = path.join(DIST_DIR, "d1-changed.json");
   await fsp.mkdir(DIST_DIR, { recursive: true });
-  await fsp.writeFile(summaryPath, JSON.stringify(summary, null, 2) + "\n", "utf8");
+  const out = {
+    geosite: summary.geosite,
+    geoip: summary.geoip,
+    deletedGeosite: deleted.geosite,
+    deletedGeoip: deleted.geoip,
+  };
+  await fsp.writeFile(summaryPath, JSON.stringify(out, null, 2) + "\n", "utf8");
   const totalChanges = summary.geosite.length + summary.geoip.length;
-  if (totalChanges === 0) {
-    console.log("No geosite/geoip categories changed for D1 sync.");
+  const totalDeletes = deleted.geosite.length + deleted.geoip.length;
+  if (totalChanges === 0 && totalDeletes === 0) {
+    console.log("No geosite/geoip categories changed or deleted for D1 sync.");
   } else {
     console.log(
-      `Recorded D1 incremental changes: ${summary.geosite.length} geosite, ${summary.geoip.length} geoip (see ${summaryPath}).`
+      `Recorded D1 incremental changes: +${summary.geosite.length} geosite, +${summary.geoip.length} geoip; deletions: -${deleted.geosite.length} geosite, -${deleted.geoip.length} geoip (see ${summaryPath}).`
     );
   }
 };
