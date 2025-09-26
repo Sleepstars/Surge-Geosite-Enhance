@@ -166,7 +166,7 @@ jobs:
           npm run r2:sync
 
       - name: Sync D1 database with latest seed
-        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
+        # if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true'
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
