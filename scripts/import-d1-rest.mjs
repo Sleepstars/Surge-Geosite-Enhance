@@ -40,6 +40,8 @@ const apiToken = requiredEnv("CLOUDFLARE_API_TOKEN");
 const accountId = requiredEnv("CLOUDFLARE_ACCOUNT_ID");
 const databaseId = requiredEnv("D1_DATABASE_ID");
 const pollIntervalMs = Number(process.env.D1_IMPORT_POLL_INTERVAL_MS || "1000");
+const forceFullRebuild = String(process.env.D1_FORCE_FULL_REBUILD || "").toLowerCase() === "true" ||
+  String(process.env.D1_FORCE_FULL_REBUILD || "") === "1";
 
 const splitStatements = (sql) => {
   return sql
@@ -174,6 +176,12 @@ const readSegmentStatements = async (dir, name) => {
   }
 };
 
+const normalizeName = (name) => {
+  if (typeof name !== "string") return name;
+  const idx = name.indexOf("@");
+  return idx >= 0 ? name.slice(0, idx) : name;
+};
+
 const prepareChunks = async ({ fullRebuild, summary }) => {
   const statements = [];
 
@@ -190,8 +198,8 @@ const prepareChunks = async ({ fullRebuild, summary }) => {
     return { chunkPaths, mode: "full" };
   }
 
-  const geositeLists = (summary?.geosite || []).filter(Boolean);
-  const geoipLists = (summary?.geoip || []).filter(Boolean);
+  const geositeLists = Array.from(new Set((summary?.geosite || []).map(normalizeName).filter(Boolean)));
+  const geoipLists = Array.from(new Set((summary?.geoip || []).map(normalizeName).filter(Boolean)));
 
   if (geositeLists.length === 0 && geoipLists.length === 0) {
     return { chunkPaths: [], mode: "incremental" };
@@ -353,7 +361,7 @@ const main = async () => {
   }
 
   const { chunkPaths, mode, geositeLists = [], geoipLists = [] } = await prepareChunks({
-    fullRebuild: schemaChanged || !summary,
+    fullRebuild: forceFullRebuild || schemaChanged || !summary,
     summary,
   });
 

@@ -259,7 +259,14 @@ const summarizeChangedKeys = (keys) => {
     }
     if (key.startsWith("geoip/")) {
       if (!key.endsWith(".srs")) continue;
-      const name = path.basename(key, ".srs");
+      let name = path.basename(key, ".srs");
+      if (!name) continue;
+      // D1 segments for geoip are built per base list (no @v4/@v6 variants).
+      // Normalize by stripping any @suffix to match dist/d1/segments/geoip/<name>.sql
+      const atIndex = name.indexOf("@");
+      if (atIndex >= 0) {
+        name = name.slice(0, atIndex);
+      }
       if (name) geoip.add(name);
     }
   }
