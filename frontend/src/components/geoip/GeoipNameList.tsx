@@ -20,6 +20,9 @@ export const GeoipNameList: React.FC = () => {
     setGeoipSelectedName
   } = useAppStore()
 
+  const searchFieldId = React.useId()
+  const versionSelectId = React.useId()
+
   const [localSearch, setLocalSearch] = useState(geoipSearch)
   const debouncedSearch = useDebounce(localSearch, 300)
 
@@ -57,13 +60,13 @@ export const GeoipNameList: React.FC = () => {
             按名称快速检索规则集，可选择仅显示 IPv4 或 IPv6，并加载右侧 CIDR 详情。
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
+        <CardContent className="space-y-5 flex-1 flex flex-col min-h-0">
           {/* 搜索和过滤输入占位 */}
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <div className="h-10 rounded-md border bg-muted/20" />
+          <div className="rounded-lg border bg-muted/10 p-4">
+            <div className="grid gap-3 md:grid-cols-[minmax(0,2fr)_minmax(220px,1fr)]">
+              <div className="h-12 rounded-md border bg-muted/20" />
+              <div className="h-12 rounded-md border bg-muted/20" />
             </div>
-            <div className="h-10 w-40 rounded-md border bg-muted/20" />
           </div>
 
           {/* 列表容器占据剩余空间，保持卡片高度一致 */}
@@ -84,13 +87,13 @@ export const GeoipNameList: React.FC = () => {
             按名称快速检索规则集，可选择仅显示 IPv4 或 IPv6，并加载右侧 CIDR 详情。
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
+        <CardContent className="space-y-5 flex-1 flex flex-col min-h-0">
           {/* 搜索和过滤输入占位 */}
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <div className="h-10 rounded-md border bg-muted/20" />
+          <div className="rounded-lg border bg-muted/10 p-4">
+            <div className="grid gap-3 md:grid-cols-[minmax(0,2fr)_minmax(220px,1fr)]">
+              <div className="h-12 rounded-md border bg-muted/20" />
+              <div className="h-12 rounded-md border bg-muted/20" />
             </div>
-            <div className="h-10 w-40 rounded-md border bg-muted/20" />
           </div>
 
           {/* 列表容器占据剩余空间，保持卡片高度一致 */}
@@ -114,28 +117,42 @@ export const GeoipNameList: React.FC = () => {
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="space-y-4 flex-1 flex flex-col min-h-0">
-        <div className="flex gap-2">
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-            <Input
-              placeholder="输入关键字，例如 CN、APPLE"
-              value={localSearch}
-              onChange={(e) => setLocalSearch(e.target.value)}
-              className="pl-10"
-            />
+      <CardContent className="space-y-5 flex-1 flex flex-col min-h-0">
+        <div className="rounded-lg border bg-background/60 p-4 space-y-4">
+          <div className="grid gap-4 md:grid-cols-[minmax(0,2fr)_minmax(220px,1fr)] md:items-end">
+            <div className="space-y-2">
+              <label htmlFor={searchFieldId} className="text-sm font-medium text-muted-foreground">
+                搜索关键字
+              </label>
+              <div className="relative">
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
+                <Input
+                  id={searchFieldId}
+                  placeholder="输入关键字，例如 CN、APPLE"
+                  value={localSearch}
+                  onChange={(e) => setLocalSearch(e.target.value)}
+                  className="pl-12 h-12 text-base"
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <label htmlFor={versionSelectId} className="text-sm font-medium text-muted-foreground">
+                IP 版本筛选
+              </label>
+              <Select
+                id={versionSelectId}
+                value={geoipVersionFilter}
+                onChange={(e) => setGeoipVersionFilter(e.target.value as 'both' | 'ipv4' | 'ipv6')}
+                className="h-12 text-base"
+              >
+                <option value="both">IPv4 + IPv6</option>
+                <option value="ipv4">仅 IPv4</option>
+                <option value="ipv6">仅 IPv6</option>
+              </Select>
+            </div>
           </div>
-          <Select
-            value={geoipVersionFilter}
-            onChange={(e) => setGeoipVersionFilter(e.target.value as 'both' | 'ipv4' | 'ipv6')}
-            className="w-40"
-          >
-            <option value="both">IPv4 + IPv6</option>
-            <option value="ipv4">仅 IPv4</option>
-            <option value="ipv6">仅 IPv6</option>
-          </Select>
         </div>
-        
+
         <div className="border rounded-md bg-background/50 flex-1 min-h-[28rem] max-h-[28rem] overflow-y-auto">
           {filteredNames.length > 0 ? (
             <div className="p-2">
