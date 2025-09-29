@@ -38,6 +38,31 @@
 - Geosite JSON：`https://direct.sleepstars.de/geosite`
 - GeoIP JSON：`https://direct.sleepstars.de/geoip`
 
+### Egern 规则集合
+
+- GeoSite（YAML）：`GET https://direct.sleepstars.de/egern/geosite/<name>[@filter]`
+  - 过滤：与 Surge 相同，支持 `@cn`、`@!cn` 等属性过滤
+  - 输出包含：`domain_set`（精确域名）、`domain_suffix_set`（后缀匹配）、`domain_regex_set`（正则）
+  - 示例：`https://direct.sleepstars.de/egern/geosite/apple@cn`
+- GeoIP（YAML）：`GET https://direct.sleepstars.de/egern/geoip/<name>[@v4|@v6]`
+  - 输出包含：`ip_cidr_set`（IPv4）、`ip_cidr6_set`（IPv6）
+  - 示例：`https://direct.sleepstars.de/egern/geoip/cn@v4`
+
+示例（部分）：
+
+```yaml
+domain_set:
+  - www.apple.com
+domain_suffix_set:
+  - apple.com
+domain_regex_set:
+  - "google|gstatic|youtube"
+ip_cidr_set:
+  - "192.168.0.0/16"
+ip_cidr6_set:
+  - "2400:cb00::/32"
+```
+
 ## 预构建清单
 
 生成产物的清单以 Markdown 形式保存在仓库中，便于浏览：

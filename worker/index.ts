@@ -270,6 +270,88 @@ const genSurgeListFromJson = async (
   return lines.join("\n");
 };
 
+// ---- Egern rule-set generators ----
+const yamlQuote = (input: string): string => {
+  // Use JSON stringifier for simple double-quoted YAML-safe output
+  return JSON.stringify(input);
+};
+
+const genEgernGeositeYamlFromJson = async (
+  data: RuleJSON,
+  filter: string | null = null
+): Promise<string> => {
+  const filters = normalizeAttributeFilters(filter ? [filter] : []);
+  const domainSet: string[] = [];
+  const suffixSet: string[] = [];
+  const regexSet: string[] = [];
+  for (const r of data.rules) {
+    if (!ruleMatchesAttributes(r, filters)) continue;
+    switch (r.type) {
+      case "full":
+        domainSet.push(r.value);
+        break;
+      case "domain":
+        suffixSet.push(r.value);
+        break;
+      case "regexp":
+        regexSet.push(r.value);
+        break;
+    }
+  }
+  const lines: string[] = [];
+  if (domainSet.length === 0) {
+    lines.push("domain_set: []");
+  } else {
+    lines.push("domain_set:");
+    for (const v of domainSet) lines.push(`  - ${v}`);
+  }
+  if (suffixSet.length === 0) {
+    lines.push("domain_suffix_set: []");
+  } else {
+    lines.push("domain_suffix_set:");
+    for (const v of suffixSet) lines.push(`  - ${v}`);
+  }
+  if (regexSet.length === 0) {
+    lines.push("domain_regex_set: []");
+  } else {
+    lines.push("domain_regex_set:");
+    for (const v of regexSet) lines.push(`  - ${yamlQuote(v)}`);
+  }
+  return lines.join("\n");
+};
+
+const genEgernGeoipYamlFromJson = async (
+  data: GeoIPJSON,
+  filter: string | null = null
+): Promise<string> => {
+  const wantV4 = !filter || ["v4", "ipv4"].includes(filter.toLowerCase());
+  const wantV6 = !filter || ["v6", "ipv6"].includes(filter.toLowerCase());
+  const lines: string[] = [];
+  if (wantV4) {
+    const list = data.cidr4 || [];
+    if (list.length === 0) {
+      lines.push("ip_cidr_set: []");
+    } else {
+      lines.push("ip_cidr_set:");
+      for (const cidr of list) lines.push(`  - ${yamlQuote(cidr)}`);
+    }
+  } else {
+    lines.push("ip_cidr_set: []");
+  }
+  if (wantV6) {
+    const list6 = data.cidr6 || [];
+    if (list6.length === 0) {
+      lines.push("ip_cidr6_set: []");
+    } else {
+      lines.push("ip_cidr6_set:");
+      for (const cidr of list6) lines.push(`  - ${yamlQuote(cidr)}`);
+    }
+  } else {
+    lines.push("ip_cidr6_set: []");
+  }
+  return lines.join("\n");
+};
+
 const getGeoipJson = async (name: string, r2?: R2Bucket): Promise<GeoIPJSON | null> => {
   const candidates = Array.from(new Set([name, name.toUpperCase(), name.toLowerCase()]));
   const now = Date.now();
@@ -1280,6 +1362,36 @@ app.get("/geosite/:name_with_filter", async (c) => {
   }
 });
 
+// Egern rule-set (geosite) YAML
+app.get("/egern/geosite/:name_with_filter", async (c) => {
+  const raw = c.req.param("name_with_filter").trim();
+  if (!raw || raw.length === 0) {
+    throw new HTTPException(400, { message: "Invalid name parameter" });
+  }
+  const [rawName, rawFilter] = raw.includes("@") ? raw.split("@", 2) : [raw, null];
+  const name = rawName;
+  const filter = rawFilter ? rawFilter.toLowerCase() : null;
+  try {
+    const jsonRules = await getJsonRules(name, (c as any).env?.SRS_BUCKET);
+    if (!jsonRules) {
+      throw new HTTPException(404, { message: "Rules not found (JSON missing)" });
+    }
+    const yaml = await genEgernGeositeYamlFromJson(jsonRules, filter);
+    const headers = new Headers();
+    headers.set("content-type", "text/yaml; charset=utf-8");
+    headers.set("cache-control", "public, max-age=300, s-maxage=1800");
+    const filename = `${jsonRules.name}${filter ? `@${filter}` : ""}.yaml`;
+    headers.set("content-disposition", `inline; filename="${encodeURIComponent(filename)}"`);
+    return new Response(yaml, { headers });
+  } catch (error) {
+    console.error(`Error processing egern geosite ${raw}:`, error);
+    if (error instanceof HTTPException) throw error;
+    throw new HTTPException(500, {
+      message: `Failed to process request: ${error instanceof Error ? error.message : "Unknown error"}`,
+    });
+  }
+});
+
 app.get("/geosite", async (c) => {
   const env = ((c as any).env || {}) as EnvBindings;
   const bypassKv = c.req.query("fresh") === "1";
@@ -1382,6 +1494,36 @@ app.get("/geoip/:name_with_filter", async (c) => {
     return c.text(surgeList);
   } catch (error) {
     console.error(`Error processing geoip ${raw}:`, error);
+    if (error instanceof HTTPException) throw error;
+    throw new HTTPException(500, {
+      message: `Failed to process request: ${error instanceof Error ? error.message : "Unknown error"}`,
+    });
+  }
+});
+
+// Egern rule-set (geoip) YAML
+app.get("/egern/geoip/:name_with_filter", async (c) => {
+  const raw = c.req.param("name_with_filter").trim();
+  if (!raw || raw.length === 0) {
+    throw new HTTPException(400, { message: "Invalid name parameter" });
+  }
+  const [rawName, rawFilter] = raw.includes("@") ? raw.split("@", 2) : [raw, null];
+  const name = rawName;
+  const filter = rawFilter ? rawFilter.toLowerCase() : null;
+  try {
+    const json = await getGeoipJson(name, (c as any).env?.SRS_BUCKET);
+    if (!json) {
+      throw new HTTPException(404, { message: "GeoIP not found (JSON missing)" });
+    }
+    const yaml = await genEgernGeoipYamlFromJson(json, filter);
+    const headers = new Headers();
+    headers.set("content-type", "text/yaml; charset=utf-8");
+    headers.set("cache-control", "public, max-age=300, s-maxage=1800");
+    const filename = `${json.name}${filter ? `@${filter}` : ""}.yaml`;
+    headers.set("content-disposition", `inline; filename="${encodeURIComponent(filename)}"`);
+    return new Response(yaml, { headers });
+  } catch (error) {
+    console.error(`Error processing egern geoip ${raw}:`, error);
     if (error instanceof HTTPException) throw error;
     throw new HTTPException(500, {
       message: `Failed to process request: ${error instanceof Error ? error.message : "Unknown error"}`,
