@@ -276,6 +276,33 @@ const yamlQuote = (input: string): string => {
   return JSON.stringify(input);
 };
 
+const extractSimpleKeywordUnion = (pattern: string): string[] | null => {
+  let p = pattern.trim();
+  if (!p) return null;
+  // strip anchors
+  if (p.startsWith("^")) p = p.slice(1);
+  if (p.endsWith("$")) p = p.slice(0, -1);
+  // strip non-capturing or capturing group wrapper
+  if ((p.startsWith("(?:") && p.endsWith(")")) || (p.startsWith("(") && p.endsWith(")"))) {
+    p = p.replace(/^\(\?:?/, "").replace(/\)$/, "");
+  }
+  // allow only word chars, hyphen and '|' separators
+  if (!/^[A-Za-z0-9_|-]+$/.test(p)) return null;
+  const items = p.split("|").map((s) => s.trim()).filter((s) => s.length > 0);
+  if (items.length <= 1) return null;
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const it of items) {
+    const key = it.toLowerCase();
+    if (key.length < 2) continue;
+    if (!seen.has(key)) {
+      seen.add(key);
+      out.push(it);
+    }
+  }
+  return out.length > 0 ? out : null;
+};
+
 const genEgernGeositeYamlFromJson = async (
   data: RuleJSON,
   filter: string | null = null
@@ -283,6 +310,7 @@ const genEgernGeositeYamlFromJson = async (
   const filters = normalizeAttributeFilters(filter ? [filter] : []);
   const domainSet: string[] = [];
   const suffixSet: string[] = [];
+  const keywordSet: string[] = [];
   const regexSet: string[] = [];
   for (const r of data.rules) {
     if (!ruleMatchesAttributes(r, filters)) continue;
@@ -294,26 +322,30 @@ const genEgernGeositeYamlFromJson = async (
         suffixSet.push(r.value);
         break;
       case "regexp":
-        regexSet.push(r.value);
+        // Try to downgrade simple union regex to keyword list
+        const kws = extractSimpleKeywordUnion(r.value);
+        if (kws) {
+          for (const kw of kws) keywordSet.push(kw);
+        } else {
+          regexSet.push(r.value);
+        }
         break;
     }
   }
   const lines: string[] = [];
-  if (domainSet.length === 0) {
-    lines.push("domain_set: []");
-  } else {
+  if (domainSet.length > 0) {
     lines.push("domain_set:");
     for (const v of domainSet) lines.push(`  - ${v}`);
   }
-  if (suffixSet.length === 0) {
-    lines.push("domain_suffix_set: []");
-  } else {
+  if (suffixSet.length > 0) {
     lines.push("domain_suffix_set:");
     for (const v of suffixSet) lines.push(`  - ${v}`);
   }
-  if (regexSet.length === 0) {
-    lines.push("domain_regex_set: []");
-  } else {
+  if (keywordSet.length > 0) {
+    lines.push("domain_keyword_set:");
+    for (const v of keywordSet) lines.push(`  - ${v}`);
+  }
+  if (regexSet.length > 0) {
     lines.push("domain_regex_set:");
     for (const v of regexSet) lines.push(`  - ${yamlQuote(v)}`);
   }
@@ -329,25 +361,17 @@ const genEgernGeoipYamlFromJson = async (
   const lines: string[] = [];
   if (wantV4) {
     const list = data.cidr4 || [];
-    if (list.length === 0) {
-      lines.push("ip_cidr_set: []");
-    } else {
+    if (list.length > 0) {
       lines.push("ip_cidr_set:");
       for (const cidr of list) lines.push(`  - ${yamlQuote(cidr)}`);
     }
-  } else {
-    lines.push("ip_cidr_set: []");
   }
   if (wantV6) {
     const list6 = data.cidr6 || [];
-    if (list6.length === 0) {
-      lines.push("ip_cidr6_set: []");
-    } else {
+    if (list6.length > 0) {
       lines.push("ip_cidr6_set:");
       for (const cidr of list6) lines.push(`  - ${yamlQuote(cidr)}`);
     }
-  } else {
-    lines.push("ip_cidr6_set: []");
   }
   return lines.join("\n");
 };

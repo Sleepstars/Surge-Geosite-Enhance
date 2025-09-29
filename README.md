@@ -42,11 +42,11 @@
 
 - GeoSite（YAML）：`GET https://direct.sleepstars.de/egern/geosite/<name>[@filter]`
   - 过滤：与 Surge 相同，支持 `@cn`、`@!cn` 等属性过滤
-  - 输出包含：`domain_set`（精确域名）、`domain_suffix_set`（后缀匹配）、`domain_regex_set`（正则）
+  - 输出包含：`domain_set`（精确域名）、`domain_suffix_set`（后缀匹配）、`domain_keyword_set`（关键词，来自简单并列正则）、`domain_regex_set`（复杂正则）
   - 示例：`https://direct.sleepstars.de/egern/geosite/apple@cn`
 - GeoIP（YAML）：`GET https://direct.sleepstars.de/egern/geoip/<name>[@v4|@v6]`
   - 输出包含：`ip_cidr_set`（IPv4）、`ip_cidr6_set`（IPv6）
-  - 示例：`https://direct.sleepstars.de/egern/geoip/cn@v4`
+ - 示例：`https://direct.sleepstars.de/egern/geoip/cn@v4`
 
 示例（部分）：
 
@@ -55,13 +55,19 @@ domain_set:
   - www.apple.com
 domain_suffix_set:
   - apple.com
+domain_keyword_set:
+  - google
+  - youtube
 domain_regex_set:
   - "google|gstatic|youtube"
 ip_cidr_set:
   - "192.168.0.0/16"
 ip_cidr6_set:
-  - "2400:cb00::/32"
+ - "2400:cb00::/32"
 ```
+
+说明：上游 geosite 不包含“关键词”类型，`domain_keyword_set` 仅在某些简单“并列正则”（形如 `google|youtube`、可选 `^...$`/`(?:...)` 包裹且不含其它正则元字符）时自动拆分生成；否则保留在 `domain_regex_set`。
+另外：空集合不输出对应键（例如没有 IPv6 条目则无 `ip_cidr6_set`）。
 
 ## 预构建清单
 
