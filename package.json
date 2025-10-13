@@ -16,7 +16,7 @@
     "kv:put:geoip-index": "wrangler kv key put geoip:index --binding=GEO_KV --path ./geoip-index.json"
   },
   "dependencies": {
-    "hono": "^4.9.9",
+    "hono": "^4.9.12",
     "jszip": "^3.10.1",
     "regjsparser": "^0.13.0"
   },
