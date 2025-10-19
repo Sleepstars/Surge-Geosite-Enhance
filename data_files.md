@@ -134,7 +134,6 @@
 | BANGUMI | https://direct.sleepstars.de/geosite/BANGUMI | https://direct.sleepstars.de/srs-geosite/BANGUMI.srs |
 | BARRONS | https://direct.sleepstars.de/geosite/BARRONS | https://direct.sleepstars.de/srs-geosite/BARRONS.srs |
 | BBC | https://direct.sleepstars.de/geosite/BBC | https://direct.sleepstars.de/srs-geosite/BBC.srs |
-| BCY | https://direct.sleepstars.de/geosite/BCY | https://direct.sleepstars.de/srs-geosite/BCY.srs |
 | BDSMHUB | https://direct.sleepstars.de/geosite/BDSMHUB | https://direct.sleepstars.de/srs-geosite/BDSMHUB.srs |
 | BEATS | https://direct.sleepstars.de/geosite/BEATS | https://direct.sleepstars.de/srs-geosite/BEATS.srs |
 | BEISEN | https://direct.sleepstars.de/geosite/BEISEN | https://direct.sleepstars.de/srs-geosite/BEISEN.srs |
@@ -211,6 +210,7 @@
 | CATEGORY-AI-CN | https://direct.sleepstars.de/geosite/CATEGORY-AI-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-AI-CN.srs |
 | CATEGORY-ANDROID-APP-DOWNLOAD | https://direct.sleepstars.de/geosite/CATEGORY-ANDROID-APP-DOWNLOAD | https://direct.sleepstars.de/srs-geosite/CATEGORY-ANDROID-APP-DOWNLOAD.srs |
 | CATEGORY-ANTICENSORSHIP | https://direct.sleepstars.de/geosite/CATEGORY-ANTICENSORSHIP | https://direct.sleepstars.de/srs-geosite/CATEGORY-ANTICENSORSHIP.srs |
+| CATEGORY-AUTOMOBILE-CN | https://direct.sleepstars.de/geosite/CATEGORY-AUTOMOBILE-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-AUTOMOBILE-CN.srs |
 | CATEGORY-BANK-CN | https://direct.sleepstars.de/geosite/CATEGORY-BANK-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-BANK-CN.srs |
 | CATEGORY-BANK-IR | https://direct.sleepstars.de/geosite/CATEGORY-BANK-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-BANK-IR.srs |
 | CATEGORY-BANK-JP | https://direct.sleepstars.de/geosite/CATEGORY-BANK-JP | https://direct.sleepstars.de/srs-geosite/CATEGORY-BANK-JP.srs |
@@ -299,6 +299,7 @@
 | CCTV | https://direct.sleepstars.de/geosite/CCTV | https://direct.sleepstars.de/srs-geosite/CCTV.srs |
 | CDN77 | https://direct.sleepstars.de/geosite/CDN77 | https://direct.sleepstars.de/srs-geosite/CDN77.srs |
 | CENO | https://direct.sleepstars.de/geosite/CENO | https://direct.sleepstars.de/srs-geosite/CENO.srs |
+| CEREBRAS | https://direct.sleepstars.de/geosite/CEREBRAS | https://direct.sleepstars.de/srs-geosite/CEREBRAS.srs |
 | CERN | https://direct.sleepstars.de/geosite/CERN | https://direct.sleepstars.de/srs-geosite/CERN.srs |
 | CERTINOMIS | https://direct.sleepstars.de/geosite/CERTINOMIS | https://direct.sleepstars.de/srs-geosite/CERTINOMIS.srs |
 | CERTUM | https://direct.sleepstars.de/geosite/CERTUM | https://direct.sleepstars.de/srs-geosite/CERTUM.srs |
@@ -314,6 +315,7 @@
 | CHINAPOWER | https://direct.sleepstars.de/geosite/CHINAPOWER | https://direct.sleepstars.de/srs-geosite/CHINAPOWER.srs |
 | CHINASO | https://direct.sleepstars.de/geosite/CHINASO | https://direct.sleepstars.de/srs-geosite/CHINASO.srs |
 | CHINATELECOM | https://direct.sleepstars.de/geosite/CHINATELECOM | https://direct.sleepstars.de/srs-geosite/CHINATELECOM.srs |
+| CHINATOWER | https://direct.sleepstars.de/geosite/CHINATOWER | https://direct.sleepstars.de/srs-geosite/CHINATOWER.srs |
 | CHINAUNICOM | https://direct.sleepstars.de/geosite/CHINAUNICOM | https://direct.sleepstars.de/srs-geosite/CHINAUNICOM.srs |
 | CHINAZ | https://direct.sleepstars.de/geosite/CHINAZ | https://direct.sleepstars.de/srs-geosite/CHINAZ.srs |
 | CHIPHELL | https://direct.sleepstars.de/geosite/CHIPHELL | https://direct.sleepstars.de/srs-geosite/CHIPHELL.srs |
@@ -421,8 +423,11 @@
 | DOCIN | https://direct.sleepstars.de/geosite/DOCIN | https://direct.sleepstars.de/srs-geosite/DOCIN.srs |
 | DOCKER | https://direct.sleepstars.de/geosite/DOCKER | https://direct.sleepstars.de/srs-geosite/DOCKER.srs |
 | DOI | https://direct.sleepstars.de/geosite/DOI | https://direct.sleepstars.de/srs-geosite/DOI.srs |
+| DONGCHEDI | https://direct.sleepstars.de/geosite/DONGCHEDI | https://direct.sleepstars.de/srs-geosite/DONGCHEDI.srs |
 | DONGJIAO | https://direct.sleepstars.de/geosite/DONGJIAO | https://direct.sleepstars.de/srs-geosite/DONGJIAO.srs |
 | DOUBAN | https://direct.sleepstars.de/geosite/DOUBAN | https://direct.sleepstars.de/srs-geosite/DOUBAN.srs |
+| DOUBAO | https://direct.sleepstars.de/geosite/DOUBAO | https://direct.sleepstars.de/srs-geosite/DOUBAO.srs |
+| DOUYIN | https://direct.sleepstars.de/geosite/DOUYIN | https://direct.sleepstars.de/srs-geosite/DOUYIN.srs |
 | DOUYU | https://direct.sleepstars.de/geosite/DOUYU | https://direct.sleepstars.de/srs-geosite/DOUYU.srs |
 | DOWJONES | https://direct.sleepstars.de/geosite/DOWJONES | https://direct.sleepstars.de/srs-geosite/DOWJONES.srs |
 | DRIBBBLE | https://direct.sleepstars.de/geosite/DRIBBBLE | https://direct.sleepstars.de/srs-geosite/DRIBBBLE.srs |
@@ -612,6 +617,7 @@
 | HPE | https://direct.sleepstars.de/geosite/HPE | https://direct.sleepstars.de/srs-geosite/HPE.srs |
 | HSBC | https://direct.sleepstars.de/geosite/HSBC | https://direct.sleepstars.de/srs-geosite/HSBC.srs |
 | HSBC-CN | https://direct.sleepstars.de/geosite/HSBC-CN | https://direct.sleepstars.de/srs-geosite/HSBC-CN.srs |
+| HSQH | https://direct.sleepstars.de/geosite/HSQH | https://direct.sleepstars.de/srs-geosite/HSQH.srs |
 | HUANGHUAGANG | https://direct.sleepstars.de/geosite/HUANGHUAGANG | https://direct.sleepstars.de/srs-geosite/HUANGHUAGANG.srs |
 | HUAWEI | https://direct.sleepstars.de/geosite/HUAWEI | https://direct.sleepstars.de/srs-geosite/HUAWEI.srs |
 | HUAWEI-DEV | https://direct.sleepstars.de/geosite/HUAWEI-DEV | https://direct.sleepstars.de/srs-geosite/HUAWEI-DEV.srs |
@@ -1239,6 +1245,7 @@
 | TOR | https://direct.sleepstars.de/geosite/TOR | https://direct.sleepstars.de/srs-geosite/TOR.srs |
 | TORPROJECT | https://direct.sleepstars.de/geosite/TORPROJECT | https://direct.sleepstars.de/srs-geosite/TORPROJECT.srs |
 | TRACKERNETWORK | https://direct.sleepstars.de/geosite/TRACKERNETWORK | https://direct.sleepstars.de/srs-geosite/TRACKERNETWORK.srs |
+| TRAE | https://direct.sleepstars.de/geosite/TRAE | https://direct.sleepstars.de/srs-geosite/TRAE.srs |
 | TRANSLATEWIKI | https://direct.sleepstars.de/geosite/TRANSLATEWIKI | https://direct.sleepstars.de/srs-geosite/TRANSLATEWIKI.srs |
 | TRELLO | https://direct.sleepstars.de/geosite/TRELLO | https://direct.sleepstars.de/srs-geosite/TRELLO.srs |
 | TRUSTWALLET | https://direct.sleepstars.de/geosite/TRUSTWALLET | https://direct.sleepstars.de/srs-geosite/TRUSTWALLET.srs |
@@ -1321,6 +1328,7 @@
 | WEBNOVEL | https://direct.sleepstars.de/geosite/WEBNOVEL | https://direct.sleepstars.de/srs-geosite/WEBNOVEL.srs |
 | WEBTYPE | https://direct.sleepstars.de/geosite/WEBTYPE | https://direct.sleepstars.de/srs-geosite/WEBTYPE.srs |
 | WEIPHONE | https://direct.sleepstars.de/geosite/WEIPHONE | https://direct.sleepstars.de/srs-geosite/WEIPHONE.srs |
+| WENSHUSHU | https://direct.sleepstars.de/geosite/WENSHUSHU | https://direct.sleepstars.de/srs-geosite/WENSHUSHU.srs |
 | WESTERNDIGITAL | https://direct.sleepstars.de/geosite/WESTERNDIGITAL | https://direct.sleepstars.de/srs-geosite/WESTERNDIGITAL.srs |
 | WHATSAPP | https://direct.sleepstars.de/geosite/WHATSAPP | https://direct.sleepstars.de/srs-geosite/WHATSAPP.srs |
 | WHATSAPP-ADS | https://direct.sleepstars.de/geosite/WHATSAPP-ADS | https://direct.sleepstars.de/srs-geosite/WHATSAPP-ADS.srs |
@@ -1357,6 +1365,7 @@
 | XEDGE | https://direct.sleepstars.de/geosite/XEDGE | https://direct.sleepstars.de/srs-geosite/XEDGE.srs |
 | XHAMSTER | https://direct.sleepstars.de/geosite/XHAMSTER | https://direct.sleepstars.de/srs-geosite/XHAMSTER.srs |
 | XHAMSTER-ADS | https://direct.sleepstars.de/geosite/XHAMSTER-ADS | https://direct.sleepstars.de/srs-geosite/XHAMSTER-ADS.srs |
+| XIAOHEIHE | https://direct.sleepstars.de/geosite/XIAOHEIHE | https://direct.sleepstars.de/srs-geosite/XIAOHEIHE.srs |
 | XIAOHONGSHU | https://direct.sleepstars.de/geosite/XIAOHONGSHU | https://direct.sleepstars.de/srs-geosite/XIAOHONGSHU.srs |
 | XIAOMI | https://direct.sleepstars.de/geosite/XIAOMI | https://direct.sleepstars.de/srs-geosite/XIAOMI.srs |
 | XIAOMI-ADS | https://direct.sleepstars.de/geosite/XIAOMI-ADS | https://direct.sleepstars.de/srs-geosite/XIAOMI-ADS.srs |
