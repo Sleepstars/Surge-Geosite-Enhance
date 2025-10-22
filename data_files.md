@@ -170,7 +170,6 @@
 | BOOKS | https://direct.sleepstars.de/geosite/BOOKS | https://direct.sleepstars.de/srs-geosite/BOOKS.srs |
 | BOOMERANG | https://direct.sleepstars.de/geosite/BOOMERANG | https://direct.sleepstars.de/srs-geosite/BOOMERANG.srs |
 | BOOTCDN | https://direct.sleepstars.de/geosite/BOOTCDN | https://direct.sleepstars.de/srs-geosite/BOOTCDN.srs |
-| BOOTCSS | https://direct.sleepstars.de/geosite/BOOTCSS | https://direct.sleepstars.de/srs-geosite/BOOTCSS.srs |
 | BOOTSTRAP | https://direct.sleepstars.de/geosite/BOOTSTRAP | https://direct.sleepstars.de/srs-geosite/BOOTSTRAP.srs |
 | BORNEOSCHEMATICS | https://direct.sleepstars.de/geosite/BORNEOSCHEMATICS | https://direct.sleepstars.de/srs-geosite/BORNEOSCHEMATICS.srs |
 | BOSLIFE | https://direct.sleepstars.de/geosite/BOSLIFE | https://direct.sleepstars.de/srs-geosite/BOSLIFE.srs |
