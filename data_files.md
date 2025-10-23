@@ -76,6 +76,7 @@
 | ANACONDA | https://direct.sleepstars.de/geosite/ANACONDA | https://direct.sleepstars.de/srs-geosite/ANACONDA.srs |
 | ANANDTECH | https://direct.sleepstars.de/geosite/ANANDTECH | https://direct.sleepstars.de/srs-geosite/ANANDTECH.srs |
 | ANDROID | https://direct.sleepstars.de/geosite/ANDROID | https://direct.sleepstars.de/srs-geosite/ANDROID.srs |
+| ANEXIA | https://direct.sleepstars.de/geosite/ANEXIA | https://direct.sleepstars.de/srs-geosite/ANEXIA.srs |
 | ANIME | https://direct.sleepstars.de/geosite/ANIME | https://direct.sleepstars.de/srs-geosite/ANIME.srs |
 | ANNAS-ARCHIVE | https://direct.sleepstars.de/geosite/ANNAS-ARCHIVE | https://direct.sleepstars.de/srs-geosite/ANNAS-ARCHIVE.srs |
 | ANON-V | https://direct.sleepstars.de/geosite/ANON-V | https://direct.sleepstars.de/srs-geosite/ANON-V.srs |
@@ -209,6 +210,7 @@
 | CATEGORY-AI-CN | https://direct.sleepstars.de/geosite/CATEGORY-AI-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-AI-CN.srs |
 | CATEGORY-ANDROID-APP-DOWNLOAD | https://direct.sleepstars.de/geosite/CATEGORY-ANDROID-APP-DOWNLOAD | https://direct.sleepstars.de/srs-geosite/CATEGORY-ANDROID-APP-DOWNLOAD.srs |
 | CATEGORY-ANTICENSORSHIP | https://direct.sleepstars.de/geosite/CATEGORY-ANTICENSORSHIP | https://direct.sleepstars.de/srs-geosite/CATEGORY-ANTICENSORSHIP.srs |
+| CATEGORY-ANTIVIRUS | https://direct.sleepstars.de/geosite/CATEGORY-ANTIVIRUS | https://direct.sleepstars.de/srs-geosite/CATEGORY-ANTIVIRUS.srs |
 | CATEGORY-AUTOMOBILE-CN | https://direct.sleepstars.de/geosite/CATEGORY-AUTOMOBILE-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-AUTOMOBILE-CN.srs |
 | CATEGORY-BANK-CN | https://direct.sleepstars.de/geosite/CATEGORY-BANK-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-BANK-CN.srs |
 | CATEGORY-BANK-IR | https://direct.sleepstars.de/geosite/CATEGORY-BANK-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-BANK-IR.srs |
@@ -718,6 +720,7 @@
 | KAGGLE | https://direct.sleepstars.de/geosite/KAGGLE | https://direct.sleepstars.de/srs-geosite/KAGGLE.srs |
 | KAKAO | https://direct.sleepstars.de/geosite/KAKAO | https://direct.sleepstars.de/srs-geosite/KAKAO.srs |
 | KANZHONGGUO | https://direct.sleepstars.de/geosite/KANZHONGGUO | https://direct.sleepstars.de/srs-geosite/KANZHONGGUO.srs |
+| KASPERSKY | https://direct.sleepstars.de/geosite/KASPERSKY | https://direct.sleepstars.de/srs-geosite/KASPERSKY.srs |
 | KECHUANG | https://direct.sleepstars.de/geosite/KECHUANG | https://direct.sleepstars.de/srs-geosite/KECHUANG.srs |
 | KEEP | https://direct.sleepstars.de/geosite/KEEP | https://direct.sleepstars.de/srs-geosite/KEEP.srs |
 | KEMONO | https://direct.sleepstars.de/geosite/KEMONO | https://direct.sleepstars.de/srs-geosite/KEMONO.srs |
