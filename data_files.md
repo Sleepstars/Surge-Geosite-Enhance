@@ -1166,6 +1166,7 @@
 | STEAMUNLOCKED | https://direct.sleepstars.de/geosite/STEAMUNLOCKED | https://direct.sleepstars.de/srs-geosite/STEAMUNLOCKED.srs |
 | STEEMIT | https://direct.sleepstars.de/geosite/STEEMIT | https://direct.sleepstars.de/srs-geosite/STEEMIT.srs |
 | STO-EXPRESS | https://direct.sleepstars.de/geosite/STO-EXPRESS | https://direct.sleepstars.de/srs-geosite/STO-EXPRESS.srs |
+| STRAITSX | https://direct.sleepstars.de/geosite/STRAITSX | https://direct.sleepstars.de/srs-geosite/STRAITSX.srs |
 | STREAMABLE | https://direct.sleepstars.de/geosite/STREAMABLE | https://direct.sleepstars.de/srs-geosite/STREAMABLE.srs |
 | STREPSILS | https://direct.sleepstars.de/geosite/STREPSILS | https://direct.sleepstars.de/srs-geosite/STREPSILS.srs |
 | STRIKINGLY | https://direct.sleepstars.de/geosite/STRIKINGLY | https://direct.sleepstars.de/srs-geosite/STRIKINGLY.srs |
@@ -1324,6 +1325,7 @@
 | WANTMEDIA | https://direct.sleepstars.de/geosite/WANTMEDIA | https://direct.sleepstars.de/srs-geosite/WANTMEDIA.srs |
 | WASU | https://direct.sleepstars.de/geosite/WASU | https://direct.sleepstars.de/srs-geosite/WASU.srs |
 | WATCHOUT | https://direct.sleepstars.de/geosite/WATCHOUT | https://direct.sleepstars.de/srs-geosite/WATCHOUT.srs |
+| WBGAMES | https://direct.sleepstars.de/geosite/WBGAMES | https://direct.sleepstars.de/srs-geosite/WBGAMES.srs |
 | WEATHERCN | https://direct.sleepstars.de/geosite/WEATHERCN | https://direct.sleepstars.de/srs-geosite/WEATHERCN.srs |
 | WEBEX | https://direct.sleepstars.de/geosite/WEBEX | https://direct.sleepstars.de/srs-geosite/WEBEX.srs |
 | WEBFLOW | https://direct.sleepstars.de/geosite/WEBFLOW | https://direct.sleepstars.de/srs-geosite/WEBFLOW.srs |
