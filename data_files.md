@@ -449,6 +449,7 @@
 | EASTMONEY | https://direct.sleepstars.de/geosite/EASTMONEY | https://direct.sleepstars.de/srs-geosite/EASTMONEY.srs |
 | EASYLIST | https://direct.sleepstars.de/geosite/EASYLIST | https://direct.sleepstars.de/srs-geosite/EASYLIST.srs |
 | EBAY | https://direct.sleepstars.de/geosite/EBAY | https://direct.sleepstars.de/srs-geosite/EBAY.srs |
+| EBUYER | https://direct.sleepstars.de/geosite/EBUYER | https://direct.sleepstars.de/srs-geosite/EBUYER.srs |
 | ECONOMIST | https://direct.sleepstars.de/geosite/ECONOMIST | https://direct.sleepstars.de/srs-geosite/ECONOMIST.srs |
 | EDX | https://direct.sleepstars.de/geosite/EDX | https://direct.sleepstars.de/srs-geosite/EDX.srs |
 | EGGHEAD | https://direct.sleepstars.de/geosite/EGGHEAD | https://direct.sleepstars.de/srs-geosite/EGGHEAD.srs |
@@ -518,6 +519,7 @@
 | FOUNDERTYPE | https://direct.sleepstars.de/geosite/FOUNDERTYPE | https://direct.sleepstars.de/srs-geosite/FOUNDERTYPE.srs |
 | FOX | https://direct.sleepstars.de/geosite/FOX | https://direct.sleepstars.de/srs-geosite/FOX.srs |
 | FQNOVEL | https://direct.sleepstars.de/geosite/FQNOVEL | https://direct.sleepstars.de/srs-geosite/FQNOVEL.srs |
+| FRAMER | https://direct.sleepstars.de/geosite/FRAMER | https://direct.sleepstars.de/srs-geosite/FRAMER.srs |
 | FREECODECAMP | https://direct.sleepstars.de/geosite/FREECODECAMP | https://direct.sleepstars.de/srs-geosite/FREECODECAMP.srs |
 | FREENODE | https://direct.sleepstars.de/geosite/FREENODE | https://direct.sleepstars.de/srs-geosite/FREENODE.srs |
 | FT | https://direct.sleepstars.de/geosite/FT | https://direct.sleepstars.de/srs-geosite/FT.srs |
@@ -589,6 +591,7 @@
 | HBO | https://direct.sleepstars.de/geosite/HBO | https://direct.sleepstars.de/srs-geosite/HBO.srs |
 | HCAPTCHA | https://direct.sleepstars.de/geosite/HCAPTCHA | https://direct.sleepstars.de/srs-geosite/HCAPTCHA.srs |
 | HELLOFONT | https://direct.sleepstars.de/geosite/HELLOFONT | https://direct.sleepstars.de/srs-geosite/HELLOFONT.srs |
+| HENTAICHEN | https://direct.sleepstars.de/geosite/HENTAICHEN | https://direct.sleepstars.de/srs-geosite/HENTAICHEN.srs |
 | HENTAIVN | https://direct.sleepstars.de/geosite/HENTAIVN | https://direct.sleepstars.de/srs-geosite/HENTAIVN.srs |
 | HEROKU | https://direct.sleepstars.de/geosite/HEROKU | https://direct.sleepstars.de/srs-geosite/HEROKU.srs |
 | HETZNER | https://direct.sleepstars.de/geosite/HETZNER | https://direct.sleepstars.de/srs-geosite/HETZNER.srs |
@@ -801,6 +804,7 @@
 | LYSOL | https://direct.sleepstars.de/geosite/LYSOL | https://direct.sleepstars.de/srs-geosite/LYSOL.srs |
 | MADSHI | https://direct.sleepstars.de/geosite/MADSHI | https://direct.sleepstars.de/srs-geosite/MADSHI.srs |
 | MAFENGWO | https://direct.sleepstars.de/geosite/MAFENGWO | https://direct.sleepstars.de/srs-geosite/MAFENGWO.srs |
+| MAILCOM | https://direct.sleepstars.de/geosite/MAILCOM | https://direct.sleepstars.de/srs-geosite/MAILCOM.srs |
 | MAILRU | https://direct.sleepstars.de/geosite/MAILRU | https://direct.sleepstars.de/srs-geosite/MAILRU.srs |
 | MAINICHI | https://direct.sleepstars.de/geosite/MAINICHI | https://direct.sleepstars.de/srs-geosite/MAINICHI.srs |
 | MANHUAGUI | https://direct.sleepstars.de/geosite/MANHUAGUI | https://direct.sleepstars.de/srs-geosite/MANHUAGUI.srs |
