@@ -593,6 +593,7 @@
 | HELLOFONT | https://direct.sleepstars.de/geosite/HELLOFONT | https://direct.sleepstars.de/srs-geosite/HELLOFONT.srs |
 | HENTAICHEN | https://direct.sleepstars.de/geosite/HENTAICHEN | https://direct.sleepstars.de/srs-geosite/HENTAICHEN.srs |
 | HENTAIVN | https://direct.sleepstars.de/geosite/HENTAIVN | https://direct.sleepstars.de/srs-geosite/HENTAIVN.srs |
+| HEROGAME | https://direct.sleepstars.de/geosite/HEROGAME | https://direct.sleepstars.de/srs-geosite/HEROGAME.srs |
 | HEROKU | https://direct.sleepstars.de/geosite/HEROKU | https://direct.sleepstars.de/srs-geosite/HEROKU.srs |
 | HETZNER | https://direct.sleepstars.de/geosite/HETZNER | https://direct.sleepstars.de/srs-geosite/HETZNER.srs |
 | HEYTEA | https://direct.sleepstars.de/geosite/HEYTEA | https://direct.sleepstars.de/srs-geosite/HEYTEA.srs |
@@ -917,6 +918,7 @@
 | NIST | https://direct.sleepstars.de/geosite/NIST | https://direct.sleepstars.de/srs-geosite/NIST.srs |
 | NIXOS | https://direct.sleepstars.de/geosite/NIXOS | https://direct.sleepstars.de/srs-geosite/NIXOS.srs |
 | NODEJS | https://direct.sleepstars.de/geosite/NODEJS | https://direct.sleepstars.de/srs-geosite/NODEJS.srs |
+| NODESEEK | https://direct.sleepstars.de/geosite/NODESEEK | https://direct.sleepstars.de/srs-geosite/NODESEEK.srs |
 | NORDSTROM | https://direct.sleepstars.de/geosite/NORDSTROM | https://direct.sleepstars.de/srs-geosite/NORDSTROM.srs |
 | NOTION | https://direct.sleepstars.de/geosite/NOTION | https://direct.sleepstars.de/srs-geosite/NOTION.srs |
 | NOW | https://direct.sleepstars.de/geosite/NOW | https://direct.sleepstars.de/srs-geosite/NOW.srs |
@@ -1365,6 +1367,7 @@
 | WYND | https://direct.sleepstars.de/geosite/WYND | https://direct.sleepstars.de/srs-geosite/WYND.srs |
 | X | https://direct.sleepstars.de/geosite/X | https://direct.sleepstars.de/srs-geosite/X.srs |
 | X315 | https://direct.sleepstars.de/geosite/X315 | https://direct.sleepstars.de/srs-geosite/X315.srs |
+| X5 | https://direct.sleepstars.de/geosite/X5 | https://direct.sleepstars.de/srs-geosite/X5.srs |
 | XAI | https://direct.sleepstars.de/geosite/XAI | https://direct.sleepstars.de/srs-geosite/XAI.srs |
 | XBOX | https://direct.sleepstars.de/geosite/XBOX | https://direct.sleepstars.de/srs-geosite/XBOX.srs |
 | XD | https://direct.sleepstars.de/geosite/XD | https://direct.sleepstars.de/srs-geosite/XD.srs |
