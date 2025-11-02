@@ -1099,6 +1099,7 @@
 | SEGMENTFAULT | https://direct.sleepstars.de/geosite/SEGMENTFAULT | https://direct.sleepstars.de/srs-geosite/SEGMENTFAULT.srs |
 | SEHUATANG | https://direct.sleepstars.de/geosite/SEHUATANG | https://direct.sleepstars.de/srs-geosite/SEHUATANG.srs |
 | SENSORSDATA-ADS | https://direct.sleepstars.de/geosite/SENSORSDATA-ADS | https://direct.sleepstars.de/srs-geosite/SENSORSDATA-ADS.srs |
+| SENTRY | https://direct.sleepstars.de/geosite/SENTRY | https://direct.sleepstars.de/srs-geosite/SENTRY.srs |
 | SETAPP | https://direct.sleepstars.de/geosite/SETAPP | https://direct.sleepstars.de/srs-geosite/SETAPP.srs |
 | SETN | https://direct.sleepstars.de/geosite/SETN | https://direct.sleepstars.de/srs-geosite/SETN.srs |
 | SF-EXPRESS | https://direct.sleepstars.de/geosite/SF-EXPRESS | https://direct.sleepstars.de/srs-geosite/SF-EXPRESS.srs |
