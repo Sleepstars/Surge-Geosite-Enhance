@@ -538,6 +538,7 @@
 | GEOLOCATION-!CN | https://direct.sleepstars.de/geosite/GEOLOCATION-!CN | https://direct.sleepstars.de/srs-geosite/GEOLOCATION-!CN.srs |
 | GEOLOCATION-CN | https://direct.sleepstars.de/geosite/GEOLOCATION-CN | https://direct.sleepstars.de/srs-geosite/GEOLOCATION-CN.srs |
 | GETTYIMAGES | https://direct.sleepstars.de/geosite/GETTYIMAGES | https://direct.sleepstars.de/srs-geosite/GETTYIMAGES.srs |
+| GETUI | https://direct.sleepstars.de/geosite/GETUI | https://direct.sleepstars.de/srs-geosite/GETUI.srs |
 | GFW | https://direct.sleepstars.de/geosite/GFW | https://direct.sleepstars.de/srs-geosite/GFW.srs |
 | GFYCAT | https://direct.sleepstars.de/geosite/GFYCAT | https://direct.sleepstars.de/srs-geosite/GFYCAT.srs |
 | GIFFGAFF | https://direct.sleepstars.de/geosite/GIFFGAFF | https://direct.sleepstars.de/srs-geosite/GIFFGAFF.srs |
@@ -1204,6 +1205,7 @@
 | TAPTAP | https://direct.sleepstars.de/geosite/TAPTAP | https://direct.sleepstars.de/srs-geosite/TAPTAP.srs |
 | TARGET | https://direct.sleepstars.de/geosite/TARGET | https://direct.sleepstars.de/srs-geosite/TARGET.srs |
 | TAYLORFRANCIS | https://direct.sleepstars.de/geosite/TAYLORFRANCIS | https://direct.sleepstars.de/srs-geosite/TAYLORFRANCIS.srs |
+| TCL | https://direct.sleepstars.de/geosite/TCL | https://direct.sleepstars.de/srs-geosite/TCL.srs |
 | TEAMBITION | https://direct.sleepstars.de/geosite/TEAMBITION | https://direct.sleepstars.de/srs-geosite/TEAMBITION.srs |
 | TEAMVIEWER | https://direct.sleepstars.de/geosite/TEAMVIEWER | https://direct.sleepstars.de/srs-geosite/TEAMVIEWER.srs |
 | TECHPOWERUP | https://direct.sleepstars.de/geosite/TECHPOWERUP | https://direct.sleepstars.de/srs-geosite/TECHPOWERUP.srs |
