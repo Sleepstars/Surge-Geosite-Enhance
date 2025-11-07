@@ -424,7 +424,6 @@
 | DOCIN | https://direct.sleepstars.de/geosite/DOCIN | https://direct.sleepstars.de/srs-geosite/DOCIN.srs |
 | DOCKER | https://direct.sleepstars.de/geosite/DOCKER | https://direct.sleepstars.de/srs-geosite/DOCKER.srs |
 | DOI | https://direct.sleepstars.de/geosite/DOI | https://direct.sleepstars.de/srs-geosite/DOI.srs |
-| DOLA | https://direct.sleepstars.de/geosite/DOLA | https://direct.sleepstars.de/srs-geosite/DOLA.srs |
 | DONGCHEDI | https://direct.sleepstars.de/geosite/DONGCHEDI | https://direct.sleepstars.de/srs-geosite/DONGCHEDI.srs |
 | DONGJIAO | https://direct.sleepstars.de/geosite/DONGJIAO | https://direct.sleepstars.de/srs-geosite/DONGJIAO.srs |
 | DOUBAN | https://direct.sleepstars.de/geosite/DOUBAN | https://direct.sleepstars.de/srs-geosite/DOUBAN.srs |
@@ -457,7 +456,6 @@
 | EHENTAI | https://direct.sleepstars.de/geosite/EHENTAI | https://direct.sleepstars.de/srs-geosite/EHENTAI.srs |
 | ELECTRON | https://direct.sleepstars.de/geosite/ELECTRON | https://direct.sleepstars.de/srs-geosite/ELECTRON.srs |
 | ELEME | https://direct.sleepstars.de/geosite/ELEME | https://direct.sleepstars.de/srs-geosite/ELEME.srs |
-| ELEVENLABS | https://direct.sleepstars.de/geosite/ELEVENLABS | https://direct.sleepstars.de/srs-geosite/ELEVENLABS.srs |
 | ELSEVIER | https://direct.sleepstars.de/geosite/ELSEVIER | https://direct.sleepstars.de/srs-geosite/ELSEVIER.srs |
 | EMBEDLY | https://direct.sleepstars.de/geosite/EMBEDLY | https://direct.sleepstars.de/srs-geosite/EMBEDLY.srs |
 | EMBL | https://direct.sleepstars.de/geosite/EMBL | https://direct.sleepstars.de/srs-geosite/EMBL.srs |
@@ -527,7 +525,6 @@
 | FREENODE | https://direct.sleepstars.de/geosite/FREENODE | https://direct.sleepstars.de/srs-geosite/FREENODE.srs |
 | FT | https://direct.sleepstars.de/geosite/FT | https://direct.sleepstars.de/srs-geosite/FT.srs |
 | FTV | https://direct.sleepstars.de/geosite/FTV | https://direct.sleepstars.de/srs-geosite/FTV.srs |
-| FUTU | https://direct.sleepstars.de/geosite/FUTU | https://direct.sleepstars.de/srs-geosite/FUTU.srs |
 | FZDM | https://direct.sleepstars.de/geosite/FZDM | https://direct.sleepstars.de/srs-geosite/FZDM.srs |
 | GAMERSKY | https://direct.sleepstars.de/geosite/GAMERSKY | https://direct.sleepstars.de/srs-geosite/GAMERSKY.srs |
 | GANDI | https://direct.sleepstars.de/geosite/GANDI | https://direct.sleepstars.de/srs-geosite/GANDI.srs |
@@ -691,7 +688,6 @@
 | ISGD | https://direct.sleepstars.de/geosite/ISGD | https://direct.sleepstars.de/srs-geosite/ISGD.srs |
 | ISHUMEI | https://direct.sleepstars.de/geosite/ISHUMEI | https://direct.sleepstars.de/srs-geosite/ISHUMEI.srs |
 | ITCHIO | https://direct.sleepstars.de/geosite/ITCHIO | https://direct.sleepstars.de/srs-geosite/ITCHIO.srs |
-| ITIGER | https://direct.sleepstars.de/geosite/ITIGER | https://direct.sleepstars.de/srs-geosite/ITIGER.srs |
 | ITUNES | https://direct.sleepstars.de/geosite/ITUNES | https://direct.sleepstars.de/srs-geosite/ITUNES.srs |
 | IXSYSTEMS | https://direct.sleepstars.de/geosite/IXSYSTEMS | https://direct.sleepstars.de/srs-geosite/IXSYSTEMS.srs |
 | IYF | https://direct.sleepstars.de/geosite/IYF | https://direct.sleepstars.de/srs-geosite/IYF.srs |
@@ -1094,7 +1090,6 @@
 | SCALA | https://direct.sleepstars.de/geosite/SCALA | https://direct.sleepstars.de/srs-geosite/SCALA.srs |
 | SCALEFLEX | https://direct.sleepstars.de/geosite/SCALEFLEX | https://direct.sleepstars.de/srs-geosite/SCALEFLEX.srs |
 | SCENESOURCE | https://direct.sleepstars.de/geosite/SCENESOURCE | https://direct.sleepstars.de/srs-geosite/SCENESOURCE.srs |
-| SCHWAB | https://direct.sleepstars.de/geosite/SCHWAB | https://direct.sleepstars.de/srs-geosite/SCHWAB.srs |
 | SCI | https://direct.sleepstars.de/geosite/SCI | https://direct.sleepstars.de/srs-geosite/SCI.srs |
 | SCI-HUB | https://direct.sleepstars.de/geosite/SCI-HUB | https://direct.sleepstars.de/srs-geosite/SCI-HUB.srs |
 | SCIENCEDIRECT | https://direct.sleepstars.de/geosite/SCIENCEDIRECT | https://direct.sleepstars.de/srs-geosite/SCIENCEDIRECT.srs |
