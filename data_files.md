@@ -144,6 +144,7 @@
 | BETHESDA | https://direct.sleepstars.de/geosite/BETHESDA | https://direct.sleepstars.de/srs-geosite/BETHESDA.srs |
 | BETTEREXPLAINED | https://direct.sleepstars.de/geosite/BETTEREXPLAINED | https://direct.sleepstars.de/srs-geosite/BETTEREXPLAINED.srs |
 | BILIBILI | https://direct.sleepstars.de/geosite/BILIBILI | https://direct.sleepstars.de/srs-geosite/BILIBILI.srs |
+| BILIBILI-CDN | https://direct.sleepstars.de/geosite/BILIBILI-CDN | https://direct.sleepstars.de/srs-geosite/BILIBILI-CDN.srs |
 | BILIBILI-GAME | https://direct.sleepstars.de/geosite/BILIBILI-GAME | https://direct.sleepstars.de/srs-geosite/BILIBILI-GAME.srs |
 | BILIBILI2 | https://direct.sleepstars.de/geosite/BILIBILI2 | https://direct.sleepstars.de/srs-geosite/BILIBILI2.srs |
 | BINANCE | https://direct.sleepstars.de/geosite/BINANCE | https://direct.sleepstars.de/srs-geosite/BINANCE.srs |
