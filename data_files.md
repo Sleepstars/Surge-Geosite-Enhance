@@ -1227,6 +1227,7 @@
 | TENCENT-DEV | https://direct.sleepstars.de/geosite/TENCENT-DEV | https://direct.sleepstars.de/srs-geosite/TENCENT-DEV.srs |
 | TENCENT-GAMES | https://direct.sleepstars.de/geosite/TENCENT-GAMES | https://direct.sleepstars.de/srs-geosite/TENCENT-GAMES.srs |
 | TENDCLOUD | https://direct.sleepstars.de/geosite/TENDCLOUD | https://direct.sleepstars.de/srs-geosite/TENDCLOUD.srs |
+| TERABOX | https://direct.sleepstars.de/geosite/TERABOX | https://direct.sleepstars.de/srs-geosite/TERABOX.srs |
 | TERMUX | https://direct.sleepstars.de/geosite/TERMUX | https://direct.sleepstars.de/srs-geosite/TERMUX.srs |
 | TESLA | https://direct.sleepstars.de/geosite/TESLA | https://direct.sleepstars.de/srs-geosite/TESLA.srs |
 | TEST | https://direct.sleepstars.de/geosite/TEST | https://direct.sleepstars.de/srs-geosite/TEST.srs |
