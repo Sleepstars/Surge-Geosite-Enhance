@@ -10,11 +10,8 @@
 | 2CH | https://direct.sleepstars.de/geosite/2CH | https://direct.sleepstars.de/srs-geosite/2CH.srs |
 | 2KGAMES | https://direct.sleepstars.de/geosite/2KGAMES | https://direct.sleepstars.de/srs-geosite/2KGAMES.srs |
 | 36KR | https://direct.sleepstars.de/geosite/36KR | https://direct.sleepstars.de/srs-geosite/36KR.srs |
-| 3DM | https://direct.sleepstars.de/geosite/3DM | https://direct.sleepstars.de/srs-geosite/3DM.srs |
-| 3TYPE | https://direct.sleepstars.de/geosite/3TYPE | https://direct.sleepstars.de/srs-geosite/3TYPE.srs |
 | 4399 | https://direct.sleepstars.de/geosite/4399 | https://direct.sleepstars.de/srs-geosite/4399.srs |
 | 4CHAN | https://direct.sleepstars.de/geosite/4CHAN | https://direct.sleepstars.de/srs-geosite/4CHAN.srs |
-| 4PARADIGM | https://direct.sleepstars.de/geosite/4PARADIGM | https://direct.sleepstars.de/srs-geosite/4PARADIGM.srs |
 | 4PLEBS | https://direct.sleepstars.de/geosite/4PLEBS | https://direct.sleepstars.de/srs-geosite/4PLEBS.srs |
 | 51JOB | https://direct.sleepstars.de/geosite/51JOB | https://direct.sleepstars.de/srs-geosite/51JOB.srs |
 | 54647 | https://direct.sleepstars.de/geosite/54647 | https://direct.sleepstars.de/srs-geosite/54647.srs |
@@ -59,7 +56,6 @@
 | AIXCODER | https://direct.sleepstars.de/geosite/AIXCODER | https://direct.sleepstars.de/srs-geosite/AIXCODER.srs |
 | AKAMAI | https://direct.sleepstars.de/geosite/AKAMAI | https://direct.sleepstars.de/srs-geosite/AKAMAI.srs |
 | AKIKO | https://direct.sleepstars.de/geosite/AKIKO | https://direct.sleepstars.de/srs-geosite/AKIKO.srs |
-| ALI213 | https://direct.sleepstars.de/geosite/ALI213 | https://direct.sleepstars.de/srs-geosite/ALI213.srs |
 | ALIBABA | https://direct.sleepstars.de/geosite/ALIBABA | https://direct.sleepstars.de/srs-geosite/ALIBABA.srs |
 | ALIBABA-ADS | https://direct.sleepstars.de/geosite/ALIBABA-ADS | https://direct.sleepstars.de/srs-geosite/ALIBABA-ADS.srs |
 | ALIBABACLOUD | https://direct.sleepstars.de/geosite/ALIBABACLOUD | https://direct.sleepstars.de/srs-geosite/ALIBABACLOUD.srs |
@@ -81,7 +77,6 @@
 | ANNAS-ARCHIVE | https://direct.sleepstars.de/geosite/ANNAS-ARCHIVE | https://direct.sleepstars.de/srs-geosite/ANNAS-ARCHIVE.srs |
 | ANON-V | https://direct.sleepstars.de/geosite/ANON-V | https://direct.sleepstars.de/srs-geosite/ANON-V.srs |
 | ANTHROPIC | https://direct.sleepstars.de/geosite/ANTHROPIC | https://direct.sleepstars.de/srs-geosite/ANTHROPIC.srs |
-| ANTUTU | https://direct.sleepstars.de/geosite/ANTUTU | https://direct.sleepstars.de/srs-geosite/ANTUTU.srs |
 | AP | https://direct.sleepstars.de/geosite/AP | https://direct.sleepstars.de/srs-geosite/AP.srs |
 | APA | https://direct.sleepstars.de/geosite/APA | https://direct.sleepstars.de/srs-geosite/APA.srs |
 | APARAT | https://direct.sleepstars.de/geosite/APARAT | https://direct.sleepstars.de/srs-geosite/APARAT.srs |
@@ -127,7 +122,6 @@
 | BAHAMUT | https://direct.sleepstars.de/geosite/BAHAMUT | https://direct.sleepstars.de/srs-geosite/BAHAMUT.srs |
 | BAIDU | https://direct.sleepstars.de/geosite/BAIDU | https://direct.sleepstars.de/srs-geosite/BAIDU.srs |
 | BAIDU-ADS | https://direct.sleepstars.de/geosite/BAIDU-ADS | https://direct.sleepstars.de/srs-geosite/BAIDU-ADS.srs |
-| BAIJIAYUN | https://direct.sleepstars.de/geosite/BAIJIAYUN | https://direct.sleepstars.de/srs-geosite/BAIJIAYUN.srs |
 | BALTAMATICA | https://direct.sleepstars.de/geosite/BALTAMATICA | https://direct.sleepstars.de/srs-geosite/BALTAMATICA.srs |
 | BAMTECH | https://direct.sleepstars.de/geosite/BAMTECH | https://direct.sleepstars.de/srs-geosite/BAMTECH.srs |
 | BANDCAMP | https://direct.sleepstars.de/geosite/BANDCAMP | https://direct.sleepstars.de/srs-geosite/BANDCAMP.srs |
@@ -190,6 +184,7 @@
 | BYBIT | https://direct.sleepstars.de/geosite/BYBIT | https://direct.sleepstars.de/srs-geosite/BYBIT.srs |
 | BYTEDANCE | https://direct.sleepstars.de/geosite/BYTEDANCE | https://direct.sleepstars.de/srs-geosite/BYTEDANCE.srs |
 | BYTEDANCE-ADS | https://direct.sleepstars.de/geosite/BYTEDANCE-ADS | https://direct.sleepstars.de/srs-geosite/BYTEDANCE-ADS.srs |
+| BYTEDANCE-AI-!CN | https://direct.sleepstars.de/geosite/BYTEDANCE-AI-!CN | https://direct.sleepstars.de/srs-geosite/BYTEDANCE-AI-!CN.srs |
 | C-SPAN | https://direct.sleepstars.de/geosite/C-SPAN | https://direct.sleepstars.de/srs-geosite/C-SPAN.srs |
 | CABLETV | https://direct.sleepstars.de/geosite/CABLETV | https://direct.sleepstars.de/srs-geosite/CABLETV.srs |
 | CAINIAO | https://direct.sleepstars.de/geosite/CAINIAO | https://direct.sleepstars.de/srs-geosite/CAINIAO.srs |
@@ -198,6 +193,7 @@
 | CAMWHORES | https://direct.sleepstars.de/geosite/CAMWHORES | https://direct.sleepstars.de/srs-geosite/CAMWHORES.srs |
 | CANON | https://direct.sleepstars.de/geosite/CANON | https://direct.sleepstars.de/srs-geosite/CANON.srs |
 | CANONICAL | https://direct.sleepstars.de/geosite/CANONICAL | https://direct.sleepstars.de/srs-geosite/CANONICAL.srs |
+| CANVA | https://direct.sleepstars.de/geosite/CANVA | https://direct.sleepstars.de/srs-geosite/CANVA.srs |
 | CAPITALONLINE | https://direct.sleepstars.de/geosite/CAPITALONLINE | https://direct.sleepstars.de/srs-geosite/CAPITALONLINE.srs |
 | CAS | https://direct.sleepstars.de/geosite/CAS | https://direct.sleepstars.de/srs-geosite/CAS.srs |
 | CASIMAGES | https://direct.sleepstars.de/geosite/CASIMAGES | https://direct.sleepstars.de/srs-geosite/CASIMAGES.srs |
@@ -320,7 +316,6 @@
 | CHINATOWER | https://direct.sleepstars.de/geosite/CHINATOWER | https://direct.sleepstars.de/srs-geosite/CHINATOWER.srs |
 | CHINAUNICOM | https://direct.sleepstars.de/geosite/CHINAUNICOM | https://direct.sleepstars.de/srs-geosite/CHINAUNICOM.srs |
 | CHINAZ | https://direct.sleepstars.de/geosite/CHINAZ | https://direct.sleepstars.de/srs-geosite/CHINAZ.srs |
-| CHIPHELL | https://direct.sleepstars.de/geosite/CHIPHELL | https://direct.sleepstars.de/srs-geosite/CHIPHELL.srs |
 | CISCO | https://direct.sleepstars.de/geosite/CISCO | https://direct.sleepstars.de/srs-geosite/CISCO.srs |
 | CITIC | https://direct.sleepstars.de/geosite/CITIC | https://direct.sleepstars.de/srs-geosite/CITIC.srs |
 | CITIZENLAB | https://direct.sleepstars.de/geosite/CITIZENLAB | https://direct.sleepstars.de/srs-geosite/CITIZENLAB.srs |
@@ -372,7 +367,6 @@
 | CSIS | https://direct.sleepstars.de/geosite/CSIS | https://direct.sleepstars.de/srs-geosite/CSIS.srs |
 | CTEXCEL | https://direct.sleepstars.de/geosite/CTEXCEL | https://direct.sleepstars.de/srs-geosite/CTEXCEL.srs |
 | CTRIP | https://direct.sleepstars.de/geosite/CTRIP | https://direct.sleepstars.de/srs-geosite/CTRIP.srs |
-| CUGBONLINE | https://direct.sleepstars.de/geosite/CUGBONLINE | https://direct.sleepstars.de/srs-geosite/CUGBONLINE.srs |
 | CUINC | https://direct.sleepstars.de/geosite/CUINC | https://direct.sleepstars.de/srs-geosite/CUINC.srs |
 | CURSEFORGE | https://direct.sleepstars.de/geosite/CURSEFORGE | https://direct.sleepstars.de/srs-geosite/CURSEFORGE.srs |
 | CURSOR | https://direct.sleepstars.de/geosite/CURSOR | https://direct.sleepstars.de/srs-geosite/CURSOR.srs |
@@ -399,8 +393,6 @@
 | DETTOL | https://direct.sleepstars.de/geosite/DETTOL | https://direct.sleepstars.de/srs-geosite/DETTOL.srs |
 | DEVIANTART | https://direct.sleepstars.de/geosite/DEVIANTART | https://direct.sleepstars.de/srs-geosite/DEVIANTART.srs |
 | DEWU | https://direct.sleepstars.de/geosite/DEWU | https://direct.sleepstars.de/srs-geosite/DEWU.srs |
-| DGTLE | https://direct.sleepstars.de/geosite/DGTLE | https://direct.sleepstars.de/srs-geosite/DGTLE.srs |
-| DIDA365 | https://direct.sleepstars.de/geosite/DIDA365 | https://direct.sleepstars.de/srs-geosite/DIDA365.srs |
 | DIDI | https://direct.sleepstars.de/geosite/DIDI | https://direct.sleepstars.de/srs-geosite/DIDI.srs |
 | DIGICERT | https://direct.sleepstars.de/geosite/DIGICERT | https://direct.sleepstars.de/srs-geosite/DIGICERT.srs |
 | DIGITALOCEAN | https://direct.sleepstars.de/geosite/DIGITALOCEAN | https://direct.sleepstars.de/srs-geosite/DIGITALOCEAN.srs |
@@ -419,7 +411,6 @@
 | DMM | https://direct.sleepstars.de/geosite/DMM | https://direct.sleepstars.de/srs-geosite/DMM.srs |
 | DMM-ADS | https://direct.sleepstars.de/geosite/DMM-ADS | https://direct.sleepstars.de/srs-geosite/DMM-ADS.srs |
 | DMM-PORN | https://direct.sleepstars.de/geosite/DMM-PORN | https://direct.sleepstars.de/srs-geosite/DMM-PORN.srs |
-| DMZJ | https://direct.sleepstars.de/geosite/DMZJ | https://direct.sleepstars.de/srs-geosite/DMZJ.srs |
 | DNSPOD | https://direct.sleepstars.de/geosite/DNSPOD | https://direct.sleepstars.de/srs-geosite/DNSPOD.srs |
 | DOC88 | https://direct.sleepstars.de/geosite/DOC88 | https://direct.sleepstars.de/srs-geosite/DOC88.srs |
 | DOCIN | https://direct.sleepstars.de/geosite/DOCIN | https://direct.sleepstars.de/srs-geosite/DOCIN.srs |
@@ -470,7 +461,6 @@
 | EPICBROWSER | https://direct.sleepstars.de/geosite/EPICBROWSER | https://direct.sleepstars.de/srs-geosite/EPICBROWSER.srs |
 | EPICGAMES | https://direct.sleepstars.de/geosite/EPICGAMES | https://direct.sleepstars.de/srs-geosite/EPICGAMES.srs |
 | EPOCHMEDIAGROUP | https://direct.sleepstars.de/geosite/EPOCHMEDIAGROUP | https://direct.sleepstars.de/srs-geosite/EPOCHMEDIAGROUP.srs |
-| ERJI | https://direct.sleepstars.de/geosite/ERJI | https://direct.sleepstars.de/srs-geosite/ERJI.srs |
 | EROLABS | https://direct.sleepstars.de/geosite/EROLABS | https://direct.sleepstars.de/srs-geosite/EROLABS.srs |
 | ESCAPEFROMTARKOV | https://direct.sleepstars.de/geosite/ESCAPEFROMTARKOV | https://direct.sleepstars.de/srs-geosite/ESCAPEFROMTARKOV.srs |
 | ESET | https://direct.sleepstars.de/geosite/ESET | https://direct.sleepstars.de/srs-geosite/ESET.srs |
@@ -520,7 +510,6 @@
 | FONTSINUSE | https://direct.sleepstars.de/geosite/FONTSINUSE | https://direct.sleepstars.de/srs-geosite/FONTSINUSE.srs |
 | FORBES | https://direct.sleepstars.de/geosite/FORBES | https://direct.sleepstars.de/srs-geosite/FORBES.srs |
 | FORZA | https://direct.sleepstars.de/geosite/FORZA | https://direct.sleepstars.de/srs-geosite/FORZA.srs |
-| FOUNDERTYPE | https://direct.sleepstars.de/geosite/FOUNDERTYPE | https://direct.sleepstars.de/srs-geosite/FOUNDERTYPE.srs |
 | FOX | https://direct.sleepstars.de/geosite/FOX | https://direct.sleepstars.de/srs-geosite/FOX.srs |
 | FQNOVEL | https://direct.sleepstars.de/geosite/FQNOVEL | https://direct.sleepstars.de/srs-geosite/FQNOVEL.srs |
 | FRAMER | https://direct.sleepstars.de/geosite/FRAMER | https://direct.sleepstars.de/srs-geosite/FRAMER.srs |
@@ -536,8 +525,6 @@
 | GANNETT | https://direct.sleepstars.de/geosite/GANNETT | https://direct.sleepstars.de/srs-geosite/GANNETT.srs |
 | GARENA | https://direct.sleepstars.de/geosite/GARENA | https://direct.sleepstars.de/srs-geosite/GARENA.srs |
 | GATEIO | https://direct.sleepstars.de/geosite/GATEIO | https://direct.sleepstars.de/srs-geosite/GATEIO.srs |
-| GCORES | https://direct.sleepstars.de/geosite/GCORES | https://direct.sleepstars.de/srs-geosite/GCORES.srs |
-| GEEKPARK | https://direct.sleepstars.de/geosite/GEEKPARK | https://direct.sleepstars.de/srs-geosite/GEEKPARK.srs |
 | GEETEST | https://direct.sleepstars.de/geosite/GEETEST | https://direct.sleepstars.de/srs-geosite/GEETEST.srs |
 | GEMFURY | https://direct.sleepstars.de/geosite/GEMFURY | https://direct.sleepstars.de/srs-geosite/GEMFURY.srs |
 | GEOLOCATION-!CN | https://direct.sleepstars.de/geosite/GEOLOCATION-!CN | https://direct.sleepstars.de/srs-geosite/GEOLOCATION-!CN.srs |
@@ -585,7 +572,6 @@
 | GUCCI | https://direct.sleepstars.de/geosite/GUCCI | https://direct.sleepstars.de/srs-geosite/GUCCI.srs |
 | GUO | https://direct.sleepstars.de/geosite/GUO | https://direct.sleepstars.de/srs-geosite/GUO.srs |
 | GUOKR | https://direct.sleepstars.de/geosite/GUOKR | https://direct.sleepstars.de/srs-geosite/GUOKR.srs |
-| HACPAI | https://direct.sleepstars.de/geosite/HACPAI | https://direct.sleepstars.de/srs-geosite/HACPAI.srs |
 | HAIER | https://direct.sleepstars.de/geosite/HAIER | https://direct.sleepstars.de/srs-geosite/HAIER.srs |
 | HAINANAIRLINES | https://direct.sleepstars.de/geosite/HAINANAIRLINES | https://direct.sleepstars.de/srs-geosite/HAINANAIRLINES.srs |
 | HAITANG | https://direct.sleepstars.de/geosite/HAITANG | https://direct.sleepstars.de/srs-geosite/HAITANG.srs |
@@ -603,7 +589,6 @@
 | HEROGAME | https://direct.sleepstars.de/geosite/HEROGAME | https://direct.sleepstars.de/srs-geosite/HEROGAME.srs |
 | HEROKU | https://direct.sleepstars.de/geosite/HEROKU | https://direct.sleepstars.de/srs-geosite/HEROKU.srs |
 | HETZNER | https://direct.sleepstars.de/geosite/HETZNER | https://direct.sleepstars.de/srs-geosite/HETZNER.srs |
-| HEYTEA | https://direct.sleepstars.de/geosite/HEYTEA | https://direct.sleepstars.de/srs-geosite/HEYTEA.srs |
 | HEYZO | https://direct.sleepstars.de/geosite/HEYZO | https://direct.sleepstars.de/srs-geosite/HEYZO.srs |
 | HIIDO-ADS | https://direct.sleepstars.de/geosite/HIIDO-ADS | https://direct.sleepstars.de/srs-geosite/HIIDO-ADS.srs |
 | HINET | https://direct.sleepstars.de/geosite/HINET | https://direct.sleepstars.de/srs-geosite/HINET.srs |
@@ -618,7 +603,6 @@
 | HM | https://direct.sleepstars.de/geosite/HM | https://direct.sleepstars.de/srs-geosite/HM.srs |
 | HOMEBREW | https://direct.sleepstars.de/geosite/HOMEBREW | https://direct.sleepstars.de/srs-geosite/HOMEBREW.srs |
 | HOMEDEPOT | https://direct.sleepstars.de/geosite/HOMEDEPOT | https://direct.sleepstars.de/srs-geosite/HOMEDEPOT.srs |
-| HONGDUNWANG | https://direct.sleepstars.de/geosite/HONGDUNWANG | https://direct.sleepstars.de/srs-geosite/HONGDUNWANG.srs |
 | HONGKONGPOST | https://direct.sleepstars.de/geosite/HONGKONGPOST | https://direct.sleepstars.de/srs-geosite/HONGKONGPOST.srs |
 | HONOR | https://direct.sleepstars.de/geosite/HONOR | https://direct.sleepstars.de/srs-geosite/HONOR.srs |
 | HOOLIGAPPS | https://direct.sleepstars.de/geosite/HOOLIGAPPS | https://direct.sleepstars.de/srs-geosite/HOOLIGAPPS.srs |
@@ -629,7 +613,6 @@
 | HPE | https://direct.sleepstars.de/geosite/HPE | https://direct.sleepstars.de/srs-geosite/HPE.srs |
 | HSBC | https://direct.sleepstars.de/geosite/HSBC | https://direct.sleepstars.de/srs-geosite/HSBC.srs |
 | HSBC-CN | https://direct.sleepstars.de/geosite/HSBC-CN | https://direct.sleepstars.de/srs-geosite/HSBC-CN.srs |
-| HSQH | https://direct.sleepstars.de/geosite/HSQH | https://direct.sleepstars.de/srs-geosite/HSQH.srs |
 | HUANGHUAGANG | https://direct.sleepstars.de/geosite/HUANGHUAGANG | https://direct.sleepstars.de/srs-geosite/HUANGHUAGANG.srs |
 | HUAWEI | https://direct.sleepstars.de/geosite/HUAWEI | https://direct.sleepstars.de/srs-geosite/HUAWEI.srs |
 | HUAWEI-DEV | https://direct.sleepstars.de/geosite/HUAWEI-DEV | https://direct.sleepstars.de/srs-geosite/HUAWEI-DEV.srs |
@@ -696,7 +679,6 @@
 | ITUNES | https://direct.sleepstars.de/geosite/ITUNES | https://direct.sleepstars.de/srs-geosite/ITUNES.srs |
 | IXSYSTEMS | https://direct.sleepstars.de/geosite/IXSYSTEMS | https://direct.sleepstars.de/srs-geosite/IXSYSTEMS.srs |
 | IYF | https://direct.sleepstars.de/geosite/IYF | https://direct.sleepstars.de/srs-geosite/IYF.srs |
-| J-TEST | https://direct.sleepstars.de/geosite/J-TEST | https://direct.sleepstars.de/srs-geosite/J-TEST.srs |
 | JABLE | https://direct.sleepstars.de/geosite/JABLE | https://direct.sleepstars.de/srs-geosite/JABLE.srs |
 | JAPONX | https://direct.sleepstars.de/geosite/JAPONX | https://direct.sleepstars.de/srs-geosite/JAPONX.srs |
 | JAVA | https://direct.sleepstars.de/geosite/JAVA | https://direct.sleepstars.de/srs-geosite/JAVA.srs |
@@ -713,8 +695,6 @@
 | JIBENCAOZUO | https://direct.sleepstars.de/geosite/JIBENCAOZUO | https://direct.sleepstars.de/srs-geosite/JIBENCAOZUO.srs |
 | JIEMIAN | https://direct.sleepstars.de/geosite/JIEMIAN | https://direct.sleepstars.de/srs-geosite/JIEMIAN.srs |
 | JIGUANG | https://direct.sleepstars.de/geosite/JIGUANG | https://direct.sleepstars.de/srs-geosite/JIGUANG.srs |
-| JINJIANG | https://direct.sleepstars.de/geosite/JINJIANG | https://direct.sleepstars.de/srs-geosite/JINJIANG.srs |
-| JINRISHICI | https://direct.sleepstars.de/geosite/JINRISHICI | https://direct.sleepstars.de/srs-geosite/JINRISHICI.srs |
 | JINSHUJU | https://direct.sleepstars.de/geosite/JINSHUJU | https://direct.sleepstars.de/srs-geosite/JINSHUJU.srs |
 | JIYUKOBO | https://direct.sleepstars.de/geosite/JIYUKOBO | https://direct.sleepstars.de/srs-geosite/JIYUKOBO.srs |
 | JKF | https://direct.sleepstars.de/geosite/JKF | https://direct.sleepstars.de/srs-geosite/JKF.srs |
@@ -776,7 +756,6 @@
 | LASTPASS | https://direct.sleepstars.de/geosite/LASTPASS | https://direct.sleepstars.de/srs-geosite/LASTPASS.srs |
 | LAUNCHPAD | https://direct.sleepstars.de/geosite/LAUNCHPAD | https://direct.sleepstars.de/srs-geosite/LAUNCHPAD.srs |
 | LAVTEAM | https://direct.sleepstars.de/geosite/LAVTEAM | https://direct.sleepstars.de/srs-geosite/LAVTEAM.srs |
-| LDMNQ | https://direct.sleepstars.de/geosite/LDMNQ | https://direct.sleepstars.de/srs-geosite/LDMNQ.srs |
 | LE | https://direct.sleepstars.de/geosite/LE | https://direct.sleepstars.de/srs-geosite/LE.srs |
 | LEANPLUM-ADS | https://direct.sleepstars.de/geosite/LEANPLUM-ADS | https://direct.sleepstars.de/srs-geosite/LEANPLUM-ADS.srs |
 | LENOVO | https://direct.sleepstars.de/geosite/LENOVO | https://direct.sleepstars.de/srs-geosite/LENOVO.srs |
@@ -817,7 +796,6 @@
 | MAILRU | https://direct.sleepstars.de/geosite/MAILRU | https://direct.sleepstars.de/srs-geosite/MAILRU.srs |
 | MAINICHI | https://direct.sleepstars.de/geosite/MAINICHI | https://direct.sleepstars.de/srs-geosite/MAINICHI.srs |
 | MANHUAGUI | https://direct.sleepstars.de/geosite/MANHUAGUI | https://direct.sleepstars.de/srs-geosite/MANHUAGUI.srs |
-| MANMANBUY | https://direct.sleepstars.de/geosite/MANMANBUY | https://direct.sleepstars.de/srs-geosite/MANMANBUY.srs |
 | MANORAMA | https://direct.sleepstars.de/geosite/MANORAMA | https://direct.sleepstars.de/srs-geosite/MANORAMA.srs |
 | MANOTO | https://direct.sleepstars.de/geosite/MANOTO | https://direct.sleepstars.de/srs-geosite/MANOTO.srs |
 | MAOCLOUD | https://direct.sleepstars.de/geosite/MAOCLOUD | https://direct.sleepstars.de/srs-geosite/MAOCLOUD.srs |
@@ -843,9 +821,7 @@
 | META-ADS | https://direct.sleepstars.de/geosite/META-ADS | https://direct.sleepstars.de/srs-geosite/META-ADS.srs |
 | METABRAINZ | https://direct.sleepstars.de/geosite/METABRAINZ | https://direct.sleepstars.de/srs-geosite/METABRAINZ.srs |
 | METART | https://direct.sleepstars.de/geosite/METART | https://direct.sleepstars.de/srs-geosite/METART.srs |
-| MFUNS | https://direct.sleepstars.de/geosite/MFUNS | https://direct.sleepstars.de/srs-geosite/MFUNS.srs |
 | MIAOMIAOZHE | https://direct.sleepstars.de/geosite/MIAOMIAOZHE | https://direct.sleepstars.de/srs-geosite/MIAOMIAOZHE.srs |
-| MIAOPAI | https://direct.sleepstars.de/geosite/MIAOPAI | https://direct.sleepstars.de/srs-geosite/MIAOPAI.srs |
 | MICROSOFT | https://direct.sleepstars.de/geosite/MICROSOFT | https://direct.sleepstars.de/srs-geosite/MICROSOFT.srs |
 | MICROSOFT-DEV | https://direct.sleepstars.de/geosite/MICROSOFT-DEV | https://direct.sleepstars.de/srs-geosite/MICROSOFT-DEV.srs |
 | MICROSOFT-PKI | https://direct.sleepstars.de/geosite/MICROSOFT-PKI | https://direct.sleepstars.de/srs-geosite/MICROSOFT-PKI.srs |
@@ -885,7 +861,6 @@
 | MUDVOD | https://direct.sleepstars.de/geosite/MUDVOD | https://direct.sleepstars.de/srs-geosite/MUDVOD.srs |
 | MUJI | https://direct.sleepstars.de/geosite/MUJI | https://direct.sleepstars.de/srs-geosite/MUJI.srs |
 | MUSIXMATCH | https://direct.sleepstars.de/geosite/MUSIXMATCH | https://direct.sleepstars.de/srs-geosite/MUSIXMATCH.srs |
-| MUWAI | https://direct.sleepstars.de/geosite/MUWAI | https://direct.sleepstars.de/srs-geosite/MUWAI.srs |
 | MXPLAYER-ADS | https://direct.sleepstars.de/geosite/MXPLAYER-ADS | https://direct.sleepstars.de/srs-geosite/MXPLAYER-ADS.srs |
 | MXROUTE | https://direct.sleepstars.de/geosite/MXROUTE | https://direct.sleepstars.de/srs-geosite/MXROUTE.srs |
 | MYDIRTYHOBBY | https://direct.sleepstars.de/geosite/MYDIRTYHOBBY | https://direct.sleepstars.de/srs-geosite/MYDIRTYHOBBY.srs |
@@ -896,7 +871,6 @@
 | N26 | https://direct.sleepstars.de/geosite/N26 | https://direct.sleepstars.de/srs-geosite/N26.srs |
 | N3RO | https://direct.sleepstars.de/geosite/N3RO | https://direct.sleepstars.de/srs-geosite/N3RO.srs |
 | NARWAL | https://direct.sleepstars.de/geosite/NARWAL | https://direct.sleepstars.de/srs-geosite/NARWAL.srs |
-| NAT-TEST | https://direct.sleepstars.de/geosite/NAT-TEST | https://direct.sleepstars.de/srs-geosite/NAT-TEST.srs |
 | NATIONALGEOGRAPHIC | https://direct.sleepstars.de/geosite/NATIONALGEOGRAPHIC | https://direct.sleepstars.de/srs-geosite/NATIONALGEOGRAPHIC.srs |
 | NAVER | https://direct.sleepstars.de/geosite/NAVER | https://direct.sleepstars.de/srs-geosite/NAVER.srs |
 | NBCUNIVERSAL | https://direct.sleepstars.de/geosite/NBCUNIVERSAL | https://direct.sleepstars.de/srs-geosite/NBCUNIVERSAL.srs |
@@ -1004,7 +978,6 @@
 | PIXHOST | https://direct.sleepstars.de/geosite/PIXHOST | https://direct.sleepstars.de/srs-geosite/PIXHOST.srs |
 | PIXIV | https://direct.sleepstars.de/geosite/PIXIV | https://direct.sleepstars.de/srs-geosite/PIXIV.srs |
 | PIXNET | https://direct.sleepstars.de/geosite/PIXNET | https://direct.sleepstars.de/srs-geosite/PIXNET.srs |
-| PKOPLINK | https://direct.sleepstars.de/geosite/PKOPLINK | https://direct.sleepstars.de/srs-geosite/PKOPLINK.srs |
 | PLAYBOY | https://direct.sleepstars.de/geosite/PLAYBOY | https://direct.sleepstars.de/srs-geosite/PLAYBOY.srs |
 | PLAYCOVER | https://direct.sleepstars.de/geosite/PLAYCOVER | https://direct.sleepstars.de/srs-geosite/PLAYCOVER.srs |
 | PLAYSTATION | https://direct.sleepstars.de/geosite/PLAYSTATION | https://direct.sleepstars.de/srs-geosite/PLAYSTATION.srs |
@@ -1034,7 +1007,6 @@
 | PYTHON-COMMUNITY | https://direct.sleepstars.de/geosite/PYTHON-COMMUNITY | https://direct.sleepstars.de/srs-geosite/PYTHON-COMMUNITY.srs |
 | QCC | https://direct.sleepstars.de/geosite/QCC | https://direct.sleepstars.de/srs-geosite/QCC.srs |
 | QCLOUD | https://direct.sleepstars.de/geosite/QCLOUD | https://direct.sleepstars.de/srs-geosite/QCLOUD.srs |
-| QICHAMAO | https://direct.sleepstars.de/geosite/QICHAMAO | https://direct.sleepstars.de/srs-geosite/QICHAMAO.srs |
 | QIHOO360 | https://direct.sleepstars.de/geosite/QIHOO360 | https://direct.sleepstars.de/srs-geosite/QIHOO360.srs |
 | QIHOO360-ADS | https://direct.sleepstars.de/geosite/QIHOO360-ADS | https://direct.sleepstars.de/srs-geosite/QIHOO360-ADS.srs |
 | QIMAO | https://direct.sleepstars.de/geosite/QIMAO | https://direct.sleepstars.de/srs-geosite/QIMAO.srs |
@@ -1050,7 +1022,6 @@
 | QUORA | https://direct.sleepstars.de/geosite/QUORA | https://direct.sleepstars.de/srs-geosite/QUORA.srs |
 | QWANT | https://direct.sleepstars.de/geosite/QWANT | https://direct.sleepstars.de/srs-geosite/QWANT.srs |
 | QWEATHER | https://direct.sleepstars.de/geosite/QWEATHER | https://direct.sleepstars.de/srs-geosite/QWEATHER.srs |
-| QYYJT | https://direct.sleepstars.de/geosite/QYYJT | https://direct.sleepstars.de/srs-geosite/QYYJT.srs |
 | RAKUTEN | https://direct.sleepstars.de/geosite/RAKUTEN | https://direct.sleepstars.de/srs-geosite/RAKUTEN.srs |
 | RARBG | https://direct.sleepstars.de/geosite/RARBG | https://direct.sleepstars.de/srs-geosite/RARBG.srs |
 | RAZER | https://direct.sleepstars.de/geosite/RAZER | https://direct.sleepstars.de/srs-geosite/RAZER.srs |
@@ -1073,7 +1044,6 @@
 | REUTERS | https://direct.sleepstars.de/geosite/REUTERS | https://direct.sleepstars.de/srs-geosite/REUTERS.srs |
 | RFERL | https://direct.sleepstars.de/geosite/RFERL | https://direct.sleepstars.de/srs-geosite/RFERL.srs |
 | RIOT | https://direct.sleepstars.de/geosite/RIOT | https://direct.sleepstars.de/srs-geosite/RIOT.srs |
-| ROBOROCK | https://direct.sleepstars.de/geosite/ROBOROCK | https://direct.sleepstars.de/srs-geosite/ROBOROCK.srs |
 | ROCKSTAR | https://direct.sleepstars.de/geosite/ROCKSTAR | https://direct.sleepstars.de/srs-geosite/ROCKSTAR.srs |
 | ROKU | https://direct.sleepstars.de/geosite/ROKU | https://direct.sleepstars.de/srs-geosite/ROKU.srs |
 | RSSHUB | https://direct.sleepstars.de/geosite/RSSHUB | https://direct.sleepstars.de/srs-geosite/RSSHUB.srs |
@@ -1112,7 +1082,6 @@
 | SETAPP | https://direct.sleepstars.de/geosite/SETAPP | https://direct.sleepstars.de/srs-geosite/SETAPP.srs |
 | SETN | https://direct.sleepstars.de/geosite/SETN | https://direct.sleepstars.de/srs-geosite/SETN.srs |
 | SF-EXPRESS | https://direct.sleepstars.de/geosite/SF-EXPRESS | https://direct.sleepstars.de/srs-geosite/SF-EXPRESS.srs |
-| SFACG | https://direct.sleepstars.de/geosite/SFACG | https://direct.sleepstars.de/srs-geosite/SFACG.srs |
 | SHADOWSOCKSCOM | https://direct.sleepstars.de/geosite/SHADOWSOCKSCOM | https://direct.sleepstars.de/srs-geosite/SHADOWSOCKSCOM.srs |
 | SHANBAY | https://direct.sleepstars.de/geosite/SHANBAY | https://direct.sleepstars.de/srs-geosite/SHANBAY.srs |
 | SHARETHIS | https://direct.sleepstars.de/geosite/SHARETHIS | https://direct.sleepstars.de/srs-geosite/SHARETHIS.srs |
@@ -1146,7 +1115,6 @@
 | SOGOU | https://direct.sleepstars.de/geosite/SOGOU | https://direct.sleepstars.de/srs-geosite/SOGOU.srs |
 | SOHU | https://direct.sleepstars.de/geosite/SOHU | https://direct.sleepstars.de/srs-geosite/SOHU.srs |
 | SOHU-ADS | https://direct.sleepstars.de/geosite/SOHU-ADS | https://direct.sleepstars.de/srs-geosite/SOHU-ADS.srs |
-| SOLIDOT | https://direct.sleepstars.de/geosite/SOLIDOT | https://direct.sleepstars.de/srs-geosite/SOLIDOT.srs |
 | SONY | https://direct.sleepstars.de/geosite/SONY | https://direct.sleepstars.de/srs-geosite/SONY.srs |
 | SONYPICTURES | https://direct.sleepstars.de/geosite/SONYPICTURES | https://direct.sleepstars.de/srs-geosite/SONYPICTURES.srs |
 | SOUNDCLOUD | https://direct.sleepstars.de/geosite/SOUNDCLOUD | https://direct.sleepstars.de/srs-geosite/SOUNDCLOUD.srs |
@@ -1166,7 +1134,6 @@
 | SQUAREUP | https://direct.sleepstars.de/geosite/SQUAREUP | https://direct.sleepstars.de/srs-geosite/SQUAREUP.srs |
 | SQUIRRELVPN | https://direct.sleepstars.de/geosite/SQUIRRELVPN | https://direct.sleepstars.de/srs-geosite/SQUIRRELVPN.srs |
 | SSLCOM | https://direct.sleepstars.de/geosite/SSLCOM | https://direct.sleepstars.de/srs-geosite/SSLCOM.srs |
-| SSPAI | https://direct.sleepstars.de/geosite/SSPAI | https://direct.sleepstars.de/srs-geosite/SSPAI.srs |
 | SSRCLOUD | https://direct.sleepstars.de/geosite/SSRCLOUD | https://direct.sleepstars.de/srs-geosite/SSRCLOUD.srs |
 | ST | https://direct.sleepstars.de/geosite/ST | https://direct.sleepstars.de/srs-geosite/ST.srs |
 | STACKEXCHANGE | https://direct.sleepstars.de/geosite/STACKEXCHANGE | https://direct.sleepstars.de/srs-geosite/STACKEXCHANGE.srs |
@@ -1251,7 +1218,6 @@
 | TIDELIFT | https://direct.sleepstars.de/geosite/TIDELIFT | https://direct.sleepstars.de/srs-geosite/TIDELIFT.srs |
 | TIKTOK | https://direct.sleepstars.de/geosite/TIKTOK | https://direct.sleepstars.de/srs-geosite/TIKTOK.srs |
 | TINYURL | https://direct.sleepstars.de/geosite/TINYURL | https://direct.sleepstars.de/srs-geosite/TINYURL.srs |
-| TIPDM | https://direct.sleepstars.de/geosite/TIPDM | https://direct.sleepstars.de/srs-geosite/TIPDM.srs |
 | TLD-!CN | https://direct.sleepstars.de/geosite/TLD-!CN | https://direct.sleepstars.de/srs-geosite/TLD-!CN.srs |
 | TLD-CN | https://direct.sleepstars.de/geosite/TLD-CN | https://direct.sleepstars.de/srs-geosite/TLD-CN.srs |
 | TLD-OPENNIC | https://direct.sleepstars.de/geosite/TLD-OPENNIC | https://direct.sleepstars.de/srs-geosite/TLD-OPENNIC.srs |
@@ -1378,7 +1344,6 @@
 | WWE | https://direct.sleepstars.de/geosite/WWE | https://direct.sleepstars.de/srs-geosite/WWE.srs |
 | WYND | https://direct.sleepstars.de/geosite/WYND | https://direct.sleepstars.de/srs-geosite/WYND.srs |
 | X | https://direct.sleepstars.de/geosite/X | https://direct.sleepstars.de/srs-geosite/X.srs |
-| X315 | https://direct.sleepstars.de/geosite/X315 | https://direct.sleepstars.de/srs-geosite/X315.srs |
 | X5 | https://direct.sleepstars.de/geosite/X5 | https://direct.sleepstars.de/srs-geosite/X5.srs |
 | XAI | https://direct.sleepstars.de/geosite/XAI | https://direct.sleepstars.de/srs-geosite/XAI.srs |
 | XBOX | https://direct.sleepstars.de/geosite/XBOX | https://direct.sleepstars.de/srs-geosite/XBOX.srs |
@@ -1399,7 +1364,6 @@
 | XNXX | https://direct.sleepstars.de/geosite/XNXX | https://direct.sleepstars.de/srs-geosite/XNXX.srs |
 | XUEERSI | https://direct.sleepstars.de/geosite/XUEERSI | https://direct.sleepstars.de/srs-geosite/XUEERSI.srs |
 | XUEQIU | https://direct.sleepstars.de/geosite/XUEQIU | https://direct.sleepstars.de/srs-geosite/XUEQIU.srs |
-| XUEYUANJUN | https://direct.sleepstars.de/geosite/XUEYUANJUN | https://direct.sleepstars.de/srs-geosite/XUEYUANJUN.srs |
 | XUNLEI | https://direct.sleepstars.de/geosite/XUNLEI | https://direct.sleepstars.de/srs-geosite/XUNLEI.srs |
 | XVIDEOS | https://direct.sleepstars.de/geosite/XVIDEOS | https://direct.sleepstars.de/srs-geosite/XVIDEOS.srs |
 | YAHOO | https://direct.sleepstars.de/geosite/YAHOO | https://direct.sleepstars.de/srs-geosite/YAHOO.srs |
@@ -1407,7 +1371,6 @@
 | YAMIBO | https://direct.sleepstars.de/geosite/YAMIBO | https://direct.sleepstars.de/srs-geosite/YAMIBO.srs |
 | YANDEX | https://direct.sleepstars.de/geosite/YANDEX | https://direct.sleepstars.de/srs-geosite/YANDEX.srs |
 | YCOMBINATOR | https://direct.sleepstars.de/geosite/YCOMBINATOR | https://direct.sleepstars.de/srs-geosite/YCOMBINATOR.srs |
-| YINXIANG | https://direct.sleepstars.de/geosite/YINXIANG | https://direct.sleepstars.de/srs-geosite/YINXIANG.srs |
 | YMTC | https://direct.sleepstars.de/geosite/YMTC | https://direct.sleepstars.de/srs-geosite/YMTC.srs |
 | YNET | https://direct.sleepstars.de/geosite/YNET | https://direct.sleepstars.de/srs-geosite/YNET.srs |
 | YNOPROJECT | https://direct.sleepstars.de/geosite/YNOPROJECT | https://direct.sleepstars.de/srs-geosite/YNOPROJECT.srs |
@@ -1438,9 +1401,7 @@
 | ZENDESK | https://direct.sleepstars.de/geosite/ZENDESK | https://direct.sleepstars.de/srs-geosite/ZENDESK.srs |
 | ZEPLIN | https://direct.sleepstars.de/geosite/ZEPLIN | https://direct.sleepstars.de/srs-geosite/ZEPLIN.srs |
 | ZHANGTAO | https://direct.sleepstars.de/geosite/ZHANGTAO | https://direct.sleepstars.de/srs-geosite/ZHANGTAO.srs |
-| ZHANQI | https://direct.sleepstars.de/geosite/ZHANQI | https://direct.sleepstars.de/srs-geosite/ZHANQI.srs |
 | ZHIHU | https://direct.sleepstars.de/geosite/ZHIHU | https://direct.sleepstars.de/srs-geosite/ZHIHU.srs |
-| ZHIHUISHU | https://direct.sleepstars.de/geosite/ZHIHUISHU | https://direct.sleepstars.de/srs-geosite/ZHIHUISHU.srs |
 | ZHIMEISHE | https://direct.sleepstars.de/geosite/ZHIMEISHE | https://direct.sleepstars.de/srs-geosite/ZHIMEISHE.srs |
 | ZIROOM | https://direct.sleepstars.de/geosite/ZIROOM | https://direct.sleepstars.de/srs-geosite/ZIROOM.srs |
 | ZOHO | https://direct.sleepstars.de/geosite/ZOHO | https://direct.sleepstars.de/srs-geosite/ZOHO.srs |
