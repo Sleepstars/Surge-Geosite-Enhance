@@ -110,7 +110,6 @@
 | ATOM-DATA-ADS | https://direct.sleepstars.de/geosite/ATOM-DATA-ADS | https://direct.sleepstars.de/srs-geosite/ATOM-DATA-ADS.srs |
 | ATT | https://direct.sleepstars.de/geosite/ATT | https://direct.sleepstars.de/srs-geosite/ATT.srs |
 | ATTWATCHTV | https://direct.sleepstars.de/geosite/ATTWATCHTV | https://direct.sleepstars.de/srs-geosite/ATTWATCHTV.srs |
-| AUTHY | https://direct.sleepstars.de/geosite/AUTHY | https://direct.sleepstars.de/srs-geosite/AUTHY.srs |
 | AUTODESK | https://direct.sleepstars.de/geosite/AUTODESK | https://direct.sleepstars.de/srs-geosite/AUTODESK.srs |
 | AVAXHOME | https://direct.sleepstars.de/geosite/AVAXHOME | https://direct.sleepstars.de/srs-geosite/AVAXHOME.srs |
 | AVMOO | https://direct.sleepstars.de/geosite/AVMOO | https://direct.sleepstars.de/srs-geosite/AVMOO.srs |
@@ -649,7 +648,6 @@
 | ILLUSION-NONOFFICIAL | https://direct.sleepstars.de/geosite/ILLUSION-NONOFFICIAL | https://direct.sleepstars.de/srs-geosite/ILLUSION-NONOFFICIAL.srs |
 | IMAGEBAM | https://direct.sleepstars.de/geosite/IMAGEBAM | https://direct.sleepstars.de/srs-geosite/IMAGEBAM.srs |
 | IMAGECURL | https://direct.sleepstars.de/geosite/IMAGECURL | https://direct.sleepstars.de/srs-geosite/IMAGECURL.srs |
-| IMAGEGLASS | https://direct.sleepstars.de/geosite/IMAGEGLASS | https://direct.sleepstars.de/srs-geosite/IMAGEGLASS.srs |
 | IMAGESHACK | https://direct.sleepstars.de/geosite/IMAGESHACK | https://direct.sleepstars.de/srs-geosite/IMAGESHACK.srs |
 | IMAGETWIST | https://direct.sleepstars.de/geosite/IMAGETWIST | https://direct.sleepstars.de/srs-geosite/IMAGETWIST.srs |
 | IMDB | https://direct.sleepstars.de/geosite/IMDB | https://direct.sleepstars.de/srs-geosite/IMDB.srs |
@@ -853,7 +851,6 @@
 | MOVEFREE | https://direct.sleepstars.de/geosite/MOVEFREE | https://direct.sleepstars.de/srs-geosite/MOVEFREE.srs |
 | MOXING | https://direct.sleepstars.de/geosite/MOXING | https://direct.sleepstars.de/srs-geosite/MOXING.srs |
 | MOZILLA | https://direct.sleepstars.de/geosite/MOZILLA | https://direct.sleepstars.de/srs-geosite/MOZILLA.srs |
-| MPV | https://direct.sleepstars.de/geosite/MPV | https://direct.sleepstars.de/srs-geosite/MPV.srs |
 | MSI | https://direct.sleepstars.de/geosite/MSI | https://direct.sleepstars.de/srs-geosite/MSI.srs |
 | MSN | https://direct.sleepstars.de/geosite/MSN | https://direct.sleepstars.de/srs-geosite/MSN.srs |
 | MUBI | https://direct.sleepstars.de/geosite/MUBI | https://direct.sleepstars.de/srs-geosite/MUBI.srs |
