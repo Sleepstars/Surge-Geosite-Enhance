@@ -667,6 +667,7 @@
 | INTEL-DEV | https://direct.sleepstars.de/geosite/INTEL-DEV | https://direct.sleepstars.de/srs-geosite/INTEL-DEV.srs |
 | INTERCOM | https://direct.sleepstars.de/geosite/INTERCOM | https://direct.sleepstars.de/srs-geosite/INTERCOM.srs |
 | INTSIG | https://direct.sleepstars.de/geosite/INTSIG | https://direct.sleepstars.de/srs-geosite/INTSIG.srs |
+| INTUIT | https://direct.sleepstars.de/geosite/INTUIT | https://direct.sleepstars.de/srs-geosite/INTUIT.srs |
 | IPIP | https://direct.sleepstars.de/geosite/IPIP | https://direct.sleepstars.de/srs-geosite/IPIP.srs |
 | IQIYI | https://direct.sleepstars.de/geosite/IQIYI | https://direct.sleepstars.de/srs-geosite/IQIYI.srs |
 | IQIYI-ADS | https://direct.sleepstars.de/geosite/IQIYI-ADS | https://direct.sleepstars.de/srs-geosite/IQIYI-ADS.srs |
@@ -1365,7 +1366,6 @@
 | XVIDEOS | https://direct.sleepstars.de/geosite/XVIDEOS | https://direct.sleepstars.de/srs-geosite/XVIDEOS.srs |
 | YAHOO | https://direct.sleepstars.de/geosite/YAHOO | https://direct.sleepstars.de/srs-geosite/YAHOO.srs |
 | YAHOO-ADS | https://direct.sleepstars.de/geosite/YAHOO-ADS | https://direct.sleepstars.de/srs-geosite/YAHOO-ADS.srs |
-| YAMIBO | https://direct.sleepstars.de/geosite/YAMIBO | https://direct.sleepstars.de/srs-geosite/YAMIBO.srs |
 | YANDEX | https://direct.sleepstars.de/geosite/YANDEX | https://direct.sleepstars.de/srs-geosite/YANDEX.srs |
 | YCOMBINATOR | https://direct.sleepstars.de/geosite/YCOMBINATOR | https://direct.sleepstars.de/srs-geosite/YCOMBINATOR.srs |
 | YMTC | https://direct.sleepstars.de/geosite/YMTC | https://direct.sleepstars.de/srs-geosite/YMTC.srs |
