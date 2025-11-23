@@ -221,6 +221,7 @@
 | CATEGORY-COMPANIES | https://direct.sleepstars.de/geosite/CATEGORY-COMPANIES | https://direct.sleepstars.de/srs-geosite/CATEGORY-COMPANIES.srs |
 | CATEGORY-CONTAINER | https://direct.sleepstars.de/geosite/CATEGORY-CONTAINER | https://direct.sleepstars.de/srs-geosite/CATEGORY-CONTAINER.srs |
 | CATEGORY-CRYPTOCURRENCY | https://direct.sleepstars.de/geosite/CATEGORY-CRYPTOCURRENCY | https://direct.sleepstars.de/srs-geosite/CATEGORY-CRYPTOCURRENCY.srs |
+| CATEGORY-DDNS | https://direct.sleepstars.de/geosite/CATEGORY-DDNS | https://direct.sleepstars.de/srs-geosite/CATEGORY-DDNS.srs |
 | CATEGORY-DEV | https://direct.sleepstars.de/geosite/CATEGORY-DEV | https://direct.sleepstars.de/srs-geosite/CATEGORY-DEV.srs |
 | CATEGORY-DEV-CN | https://direct.sleepstars.de/geosite/CATEGORY-DEV-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-DEV-CN.srs |
 | CATEGORY-DOCUMENTS-CN | https://direct.sleepstars.de/geosite/CATEGORY-DOCUMENTS-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-DOCUMENTS-CN.srs |
@@ -247,6 +248,7 @@
 | CATEGORY-HOSPITAL-CN | https://direct.sleepstars.de/geosite/CATEGORY-HOSPITAL-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-HOSPITAL-CN.srs |
 | CATEGORY-HTTPDNS-CN | https://direct.sleepstars.de/geosite/CATEGORY-HTTPDNS-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-HTTPDNS-CN.srs |
 | CATEGORY-INSURANCE-IR | https://direct.sleepstars.de/geosite/CATEGORY-INSURANCE-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-INSURANCE-IR.srs |
+| CATEGORY-IP-GEO-DETECT | https://direct.sleepstars.de/geosite/CATEGORY-IP-GEO-DETECT | https://direct.sleepstars.de/srs-geosite/CATEGORY-IP-GEO-DETECT.srs |
 | CATEGORY-IPFS | https://direct.sleepstars.de/geosite/CATEGORY-IPFS | https://direct.sleepstars.de/srs-geosite/CATEGORY-IPFS.srs |
 | CATEGORY-IR | https://direct.sleepstars.de/geosite/CATEGORY-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-IR.srs |
 | CATEGORY-LOGISTICS-CN | https://direct.sleepstars.de/geosite/CATEGORY-LOGISTICS-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-LOGISTICS-CN.srs |
@@ -330,6 +332,7 @@
 | CLOUDFLARE-CN | https://direct.sleepstars.de/geosite/CLOUDFLARE-CN | https://direct.sleepstars.de/srs-geosite/CLOUDFLARE-CN.srs |
 | CLOUDFLARE-IPFS | https://direct.sleepstars.de/geosite/CLOUDFLARE-IPFS | https://direct.sleepstars.de/srs-geosite/CLOUDFLARE-IPFS.srs |
 | CLOUDINARY | https://direct.sleepstars.de/geosite/CLOUDINARY | https://direct.sleepstars.de/srs-geosite/CLOUDINARY.srs |
+| CLOUDNS | https://direct.sleepstars.de/geosite/CLOUDNS | https://direct.sleepstars.de/srs-geosite/CLOUDNS.srs |
 | CLUBHOUSE | https://direct.sleepstars.de/geosite/CLUBHOUSE | https://direct.sleepstars.de/srs-geosite/CLUBHOUSE.srs |
 | CMB | https://direct.sleepstars.de/geosite/CMB | https://direct.sleepstars.de/srs-geosite/CMB.srs |
 | CN | https://direct.sleepstars.de/geosite/CN | https://direct.sleepstars.de/srs-geosite/CN.srs |
@@ -437,6 +440,7 @@
 | DW | https://direct.sleepstars.de/geosite/DW | https://direct.sleepstars.de/srs-geosite/DW.srs |
 | DWION | https://direct.sleepstars.de/geosite/DWION | https://direct.sleepstars.de/srs-geosite/DWION.srs |
 | DYNA | https://direct.sleepstars.de/geosite/DYNA | https://direct.sleepstars.de/srs-geosite/DYNA.srs |
+| DYNU | https://direct.sleepstars.de/geosite/DYNU | https://direct.sleepstars.de/srs-geosite/DYNU.srs |
 | EA | https://direct.sleepstars.de/geosite/EA | https://direct.sleepstars.de/srs-geosite/EA.srs |
 | EASTMONEY | https://direct.sleepstars.de/geosite/EASTMONEY | https://direct.sleepstars.de/srs-geosite/EASTMONEY.srs |
 | EASYLIST | https://direct.sleepstars.de/geosite/EASYLIST | https://direct.sleepstars.de/srs-geosite/EASYLIST.srs |
@@ -899,6 +903,7 @@
 | NIXOS | https://direct.sleepstars.de/geosite/NIXOS | https://direct.sleepstars.de/srs-geosite/NIXOS.srs |
 | NODEJS | https://direct.sleepstars.de/geosite/NODEJS | https://direct.sleepstars.de/srs-geosite/NODEJS.srs |
 | NODESEEK | https://direct.sleepstars.de/geosite/NODESEEK | https://direct.sleepstars.de/srs-geosite/NODESEEK.srs |
+| NOIP | https://direct.sleepstars.de/geosite/NOIP | https://direct.sleepstars.de/srs-geosite/NOIP.srs |
 | NORDSTROM | https://direct.sleepstars.de/geosite/NORDSTROM | https://direct.sleepstars.de/srs-geosite/NORDSTROM.srs |
 | NOTION | https://direct.sleepstars.de/geosite/NOTION | https://direct.sleepstars.de/srs-geosite/NOTION.srs |
 | NOW | https://direct.sleepstars.de/geosite/NOW | https://direct.sleepstars.de/srs-geosite/NOW.srs |
