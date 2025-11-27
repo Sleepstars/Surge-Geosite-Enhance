@@ -1376,6 +1376,7 @@
 | YMTC | https://direct.sleepstars.de/geosite/YMTC | https://direct.sleepstars.de/srs-geosite/YMTC.srs |
 | YNET | https://direct.sleepstars.de/geosite/YNET | https://direct.sleepstars.de/srs-geosite/YNET.srs |
 | YNOPROJECT | https://direct.sleepstars.de/geosite/YNOPROJECT | https://direct.sleepstars.de/srs-geosite/YNOPROJECT.srs |
+| YOKAVERSE | https://direct.sleepstars.de/geosite/YOKAVERSE | https://direct.sleepstars.de/srs-geosite/YOKAVERSE.srs |
 | YOMIURI | https://direct.sleepstars.de/geosite/YOMIURI | https://direct.sleepstars.de/srs-geosite/YOMIURI.srs |
 | YOUJIZZ | https://direct.sleepstars.de/geosite/YOUJIZZ | https://direct.sleepstars.de/srs-geosite/YOUJIZZ.srs |
 | YOUKU | https://direct.sleepstars.de/geosite/YOUKU | https://direct.sleepstars.de/srs-geosite/YOUKU.srs |
@@ -1405,6 +1406,7 @@
 | ZHANGTAO | https://direct.sleepstars.de/geosite/ZHANGTAO | https://direct.sleepstars.de/srs-geosite/ZHANGTAO.srs |
 | ZHIHU | https://direct.sleepstars.de/geosite/ZHIHU | https://direct.sleepstars.de/srs-geosite/ZHIHU.srs |
 | ZHIMEISHE | https://direct.sleepstars.de/geosite/ZHIMEISHE | https://direct.sleepstars.de/srs-geosite/ZHIMEISHE.srs |
+| ZHUBAJIE | https://direct.sleepstars.de/geosite/ZHUBAJIE | https://direct.sleepstars.de/srs-geosite/ZHUBAJIE.srs |
 | ZIROOM | https://direct.sleepstars.de/geosite/ZIROOM | https://direct.sleepstars.de/srs-geosite/ZIROOM.srs |
 | ZOHO | https://direct.sleepstars.de/geosite/ZOHO | https://direct.sleepstars.de/srs-geosite/ZOHO.srs |
 | ZOOM | https://direct.sleepstars.de/geosite/ZOOM | https://direct.sleepstars.de/srs-geosite/ZOOM.srs |
