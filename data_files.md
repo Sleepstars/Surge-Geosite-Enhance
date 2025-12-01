@@ -922,6 +922,7 @@
 | OK | https://direct.sleepstars.de/geosite/OK | https://direct.sleepstars.de/srs-geosite/OK.srs |
 | OKAAPPS | https://direct.sleepstars.de/geosite/OKAAPPS | https://direct.sleepstars.de/srs-geosite/OKAAPPS.srs |
 | OKJIKE | https://direct.sleepstars.de/geosite/OKJIKE | https://direct.sleepstars.de/srs-geosite/OKJIKE.srs |
+| OKKO | https://direct.sleepstars.de/geosite/OKKO | https://direct.sleepstars.de/srs-geosite/OKKO.srs |
 | OKX | https://direct.sleepstars.de/geosite/OKX | https://direct.sleepstars.de/srs-geosite/OKX.srs |
 | OLEVOD | https://direct.sleepstars.de/geosite/OLEVOD | https://direct.sleepstars.de/srs-geosite/OLEVOD.srs |
 | ONEDRIVE | https://direct.sleepstars.de/geosite/ONEDRIVE | https://direct.sleepstars.de/srs-geosite/ONEDRIVE.srs |
@@ -1247,6 +1248,7 @@
 | TUMBLR | https://direct.sleepstars.de/geosite/TUMBLR | https://direct.sleepstars.de/srs-geosite/TUMBLR.srs |
 | TUTANOTA | https://direct.sleepstars.de/geosite/TUTANOTA | https://direct.sleepstars.de/srs-geosite/TUTANOTA.srs |
 | TVB | https://direct.sleepstars.de/geosite/TVB | https://direct.sleepstars.de/srs-geosite/TVB.srs |
+| TVDB | https://direct.sleepstars.de/geosite/TVDB | https://direct.sleepstars.de/srs-geosite/TVDB.srs |
 | TVER | https://direct.sleepstars.de/geosite/TVER | https://direct.sleepstars.de/srs-geosite/TVER.srs |
 | TWCA | https://direct.sleepstars.de/geosite/TWCA | https://direct.sleepstars.de/srs-geosite/TWCA.srs |
 | TWITCH | https://direct.sleepstars.de/geosite/TWITCH | https://direct.sleepstars.de/srs-geosite/TWITCH.srs |
