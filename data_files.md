@@ -518,6 +518,7 @@
 | FORZA | https://direct.sleepstars.de/geosite/FORZA | https://direct.sleepstars.de/srs-geosite/FORZA.srs |
 | FOX | https://direct.sleepstars.de/geosite/FOX | https://direct.sleepstars.de/srs-geosite/FOX.srs |
 | FQNOVEL | https://direct.sleepstars.de/geosite/FQNOVEL | https://direct.sleepstars.de/srs-geosite/FQNOVEL.srs |
+| FQNOVEL-ADS | https://direct.sleepstars.de/geosite/FQNOVEL-ADS | https://direct.sleepstars.de/srs-geosite/FQNOVEL-ADS.srs |
 | FRAMER | https://direct.sleepstars.de/geosite/FRAMER | https://direct.sleepstars.de/srs-geosite/FRAMER.srs |
 | FREECODECAMP | https://direct.sleepstars.de/geosite/FREECODECAMP | https://direct.sleepstars.de/srs-geosite/FREECODECAMP.srs |
 | FREENODE | https://direct.sleepstars.de/geosite/FREENODE | https://direct.sleepstars.de/srs-geosite/FREENODE.srs |
@@ -1367,6 +1368,7 @@
 | XIAOHONGSHU | https://direct.sleepstars.de/geosite/XIAOHONGSHU | https://direct.sleepstars.de/srs-geosite/XIAOHONGSHU.srs |
 | XIAOMI | https://direct.sleepstars.de/geosite/XIAOMI | https://direct.sleepstars.de/srs-geosite/XIAOMI.srs |
 | XIAOMI-ADS | https://direct.sleepstars.de/geosite/XIAOMI-ADS | https://direct.sleepstars.de/srs-geosite/XIAOMI-ADS.srs |
+| XIAOYUZHOU | https://direct.sleepstars.de/geosite/XIAOYUZHOU | https://direct.sleepstars.de/srs-geosite/XIAOYUZHOU.srs |
 | XIMALAYA | https://direct.sleepstars.de/geosite/XIMALAYA | https://direct.sleepstars.de/srs-geosite/XIMALAYA.srs |
 | XIMALAYA-ADS | https://direct.sleepstars.de/geosite/XIMALAYA-ADS | https://direct.sleepstars.de/srs-geosite/XIMALAYA-ADS.srs |
 | XINGKONGWUXIANMEDIA | https://direct.sleepstars.de/geosite/XINGKONGWUXIANMEDIA | https://direct.sleepstars.de/srs-geosite/XINGKONGWUXIANMEDIA.srs |
