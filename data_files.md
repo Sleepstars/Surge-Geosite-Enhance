@@ -226,6 +226,7 @@
 | CATEGORY-DEV | https://direct.sleepstars.de/geosite/CATEGORY-DEV | https://direct.sleepstars.de/srs-geosite/CATEGORY-DEV.srs |
 | CATEGORY-DEV-CN | https://direct.sleepstars.de/geosite/CATEGORY-DEV-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-DEV-CN.srs |
 | CATEGORY-DOCUMENTS-CN | https://direct.sleepstars.de/geosite/CATEGORY-DOCUMENTS-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-DOCUMENTS-CN.srs |
+| CATEGORY-DOH | https://direct.sleepstars.de/geosite/CATEGORY-DOH | https://direct.sleepstars.de/srs-geosite/CATEGORY-DOH.srs |
 | CATEGORY-ECOMMERCE | https://direct.sleepstars.de/geosite/CATEGORY-ECOMMERCE | https://direct.sleepstars.de/srs-geosite/CATEGORY-ECOMMERCE.srs |
 | CATEGORY-EDUCATION-CN | https://direct.sleepstars.de/geosite/CATEGORY-EDUCATION-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-EDUCATION-CN.srs |
 | CATEGORY-EDUCATION-IR | https://direct.sleepstars.de/geosite/CATEGORY-EDUCATION-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-EDUCATION-IR.srs |
@@ -444,6 +445,7 @@
 | DWION | https://direct.sleepstars.de/geosite/DWION | https://direct.sleepstars.de/srs-geosite/DWION.srs |
 | DYNA | https://direct.sleepstars.de/geosite/DYNA | https://direct.sleepstars.de/srs-geosite/DYNA.srs |
 | DYNU | https://direct.sleepstars.de/geosite/DYNU | https://direct.sleepstars.de/srs-geosite/DYNU.srs |
+| DZEN | https://direct.sleepstars.de/geosite/DZEN | https://direct.sleepstars.de/srs-geosite/DZEN.srs |
 | EA | https://direct.sleepstars.de/geosite/EA | https://direct.sleepstars.de/srs-geosite/EA.srs |
 | EASTMONEY | https://direct.sleepstars.de/geosite/EASTMONEY | https://direct.sleepstars.de/srs-geosite/EASTMONEY.srs |
 | EASYLIST | https://direct.sleepstars.de/geosite/EASYLIST | https://direct.sleepstars.de/srs-geosite/EASYLIST.srs |
@@ -801,6 +803,7 @@
 | MAFENGWO | https://direct.sleepstars.de/geosite/MAFENGWO | https://direct.sleepstars.de/srs-geosite/MAFENGWO.srs |
 | MAILCOM | https://direct.sleepstars.de/geosite/MAILCOM | https://direct.sleepstars.de/srs-geosite/MAILCOM.srs |
 | MAILRU | https://direct.sleepstars.de/geosite/MAILRU | https://direct.sleepstars.de/srs-geosite/MAILRU.srs |
+| MAILRU-GROUP | https://direct.sleepstars.de/geosite/MAILRU-GROUP | https://direct.sleepstars.de/srs-geosite/MAILRU-GROUP.srs |
 | MAINICHI | https://direct.sleepstars.de/geosite/MAINICHI | https://direct.sleepstars.de/srs-geosite/MAINICHI.srs |
 | MANHUAGUI | https://direct.sleepstars.de/geosite/MANHUAGUI | https://direct.sleepstars.de/srs-geosite/MANHUAGUI.srs |
 | MANORAMA | https://direct.sleepstars.de/geosite/MANORAMA | https://direct.sleepstars.de/srs-geosite/MANORAMA.srs |
