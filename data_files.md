@@ -1422,6 +1422,7 @@
 | ZIROOM | https://direct.sleepstars.de/geosite/ZIROOM | https://direct.sleepstars.de/srs-geosite/ZIROOM.srs |
 | ZOHO | https://direct.sleepstars.de/geosite/ZOHO | https://direct.sleepstars.de/srs-geosite/ZOHO.srs |
 | ZOOM | https://direct.sleepstars.de/geosite/ZOOM | https://direct.sleepstars.de/srs-geosite/ZOOM.srs |
+| ZOTERO | https://direct.sleepstars.de/geosite/ZOTERO | https://direct.sleepstars.de/srs-geosite/ZOTERO.srs |
 | ZTE | https://direct.sleepstars.de/geosite/ZTE | https://direct.sleepstars.de/srs-geosite/ZTE.srs |
 | ZTO-EXPRESS | https://direct.sleepstars.de/geosite/ZTO-EXPRESS | https://direct.sleepstars.de/srs-geosite/ZTO-EXPRESS.srs |
 | ZUOYEBANG | https://direct.sleepstars.de/geosite/ZUOYEBANG | https://direct.sleepstars.de/srs-geosite/ZUOYEBANG.srs |
