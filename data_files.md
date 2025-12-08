@@ -459,6 +459,7 @@
 | ELEME | https://direct.sleepstars.de/geosite/ELEME | https://direct.sleepstars.de/srs-geosite/ELEME.srs |
 | ELEVENLABS | https://direct.sleepstars.de/geosite/ELEVENLABS | https://direct.sleepstars.de/srs-geosite/ELEVENLABS.srs |
 | ELSEVIER | https://direct.sleepstars.de/geosite/ELSEVIER | https://direct.sleepstars.de/srs-geosite/ELSEVIER.srs |
+| EMBARK | https://direct.sleepstars.de/geosite/EMBARK | https://direct.sleepstars.de/srs-geosite/EMBARK.srs |
 | EMBEDLY | https://direct.sleepstars.de/geosite/EMBEDLY | https://direct.sleepstars.de/srs-geosite/EMBEDLY.srs |
 | EMBL | https://direct.sleepstars.de/geosite/EMBL | https://direct.sleepstars.de/srs-geosite/EMBL.srs |
 | EMOGI-ADS | https://direct.sleepstars.de/geosite/EMOGI-ADS | https://direct.sleepstars.de/srs-geosite/EMOGI-ADS.srs |
@@ -482,6 +483,7 @@
 | FACEBOOK | https://direct.sleepstars.de/geosite/FACEBOOK | https://direct.sleepstars.de/srs-geosite/FACEBOOK.srs |
 | FACEBOOK-ADS | https://direct.sleepstars.de/geosite/FACEBOOK-ADS | https://direct.sleepstars.de/srs-geosite/FACEBOOK-ADS.srs |
 | FACEBOOK-DEV | https://direct.sleepstars.de/geosite/FACEBOOK-DEV | https://direct.sleepstars.de/srs-geosite/FACEBOOK-DEV.srs |
+| FACEIT | https://direct.sleepstars.de/geosite/FACEIT | https://direct.sleepstars.de/srs-geosite/FACEIT.srs |
 | FALUNGONG | https://direct.sleepstars.de/geosite/FALUNGONG | https://direct.sleepstars.de/srs-geosite/FALUNGONG.srs |
 | FAMILYMART | https://direct.sleepstars.de/geosite/FAMILYMART | https://direct.sleepstars.de/srs-geosite/FAMILYMART.srs |
 | FANDOM | https://direct.sleepstars.de/geosite/FANDOM | https://direct.sleepstars.de/srs-geosite/FANDOM.srs |
