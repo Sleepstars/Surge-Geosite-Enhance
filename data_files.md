@@ -18,7 +18,6 @@
 | 58TONGCHENG | https://direct.sleepstars.de/geosite/58TONGCHENG | https://direct.sleepstars.de/srs-geosite/58TONGCHENG.srs |
 | 5CH | https://direct.sleepstars.de/geosite/5CH | https://direct.sleepstars.de/srs-geosite/5CH.srs |
 | 6PARK | https://direct.sleepstars.de/geosite/6PARK | https://direct.sleepstars.de/srs-geosite/6PARK.srs |
-| 75TEAM | https://direct.sleepstars.de/geosite/75TEAM | https://direct.sleepstars.de/srs-geosite/75TEAM.srs |
 | 7TV | https://direct.sleepstars.de/geosite/7TV | https://direct.sleepstars.de/srs-geosite/7TV.srs |
 | 800BEST | https://direct.sleepstars.de/geosite/800BEST | https://direct.sleepstars.de/srs-geosite/800BEST.srs |
 | 8BTC | https://direct.sleepstars.de/geosite/8BTC | https://direct.sleepstars.de/srs-geosite/8BTC.srs |
@@ -595,7 +594,6 @@
 | HAVEIBEENPWNED | https://direct.sleepstars.de/geosite/HAVEIBEENPWNED | https://direct.sleepstars.de/srs-geosite/HAVEIBEENPWNED.srs |
 | HBO | https://direct.sleepstars.de/geosite/HBO | https://direct.sleepstars.de/srs-geosite/HBO.srs |
 | HCAPTCHA | https://direct.sleepstars.de/geosite/HCAPTCHA | https://direct.sleepstars.de/srs-geosite/HCAPTCHA.srs |
-| HELLOFONT | https://direct.sleepstars.de/geosite/HELLOFONT | https://direct.sleepstars.de/srs-geosite/HELLOFONT.srs |
 | HENTAICHEN | https://direct.sleepstars.de/geosite/HENTAICHEN | https://direct.sleepstars.de/srs-geosite/HENTAICHEN.srs |
 | HENTAIVN | https://direct.sleepstars.de/geosite/HENTAIVN | https://direct.sleepstars.de/srs-geosite/HENTAIVN.srs |
 | HEROGAME | https://direct.sleepstars.de/geosite/HEROGAME | https://direct.sleepstars.de/srs-geosite/HEROGAME.srs |
@@ -1007,6 +1005,7 @@
 | PPTV | https://direct.sleepstars.de/geosite/PPTV | https://direct.sleepstars.de/srs-geosite/PPTV.srs |
 | PRIMEVIDEO | https://direct.sleepstars.de/geosite/PRIMEVIDEO | https://direct.sleepstars.de/srs-geosite/PRIMEVIDEO.srs |
 | PRIVATE | https://direct.sleepstars.de/geosite/PRIVATE | https://direct.sleepstars.de/srs-geosite/PRIVATE.srs |
+| PROJECTPOI | https://direct.sleepstars.de/geosite/PROJECTPOI | https://direct.sleepstars.de/srs-geosite/PROJECTPOI.srs |
 | PROJECTSEKAI | https://direct.sleepstars.de/geosite/PROJECTSEKAI | https://direct.sleepstars.de/srs-geosite/PROJECTSEKAI.srs |
 | PROQUEST | https://direct.sleepstars.de/geosite/PROQUEST | https://direct.sleepstars.de/srs-geosite/PROQUEST.srs |
 | PROTONMAIL | https://direct.sleepstars.de/geosite/PROTONMAIL | https://direct.sleepstars.de/srs-geosite/PROTONMAIL.srs |
