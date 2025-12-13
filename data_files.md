@@ -289,6 +289,7 @@
 | CATEGORY-SPEEDTEST | https://direct.sleepstars.de/geosite/CATEGORY-SPEEDTEST | https://direct.sleepstars.de/srs-geosite/CATEGORY-SPEEDTEST.srs |
 | CATEGORY-TECH-IR | https://direct.sleepstars.de/geosite/CATEGORY-TECH-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-IR.srs |
 | CATEGORY-TECH-MEDIA | https://direct.sleepstars.de/geosite/CATEGORY-TECH-MEDIA | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-MEDIA.srs |
+| CATEGORY-TM | https://direct.sleepstars.de/geosite/CATEGORY-TM | https://direct.sleepstars.de/srs-geosite/CATEGORY-TM.srs |
 | CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/geosite/CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-TRAVEL-IR.srs |
 | CATEGORY-VOIP | https://direct.sleepstars.de/geosite/CATEGORY-VOIP | https://direct.sleepstars.de/srs-geosite/CATEGORY-VOIP.srs |
 | CATEGORY-VPNSERVICES | https://direct.sleepstars.de/geosite/CATEGORY-VPNSERVICES | https://direct.sleepstars.de/srs-geosite/CATEGORY-VPNSERVICES.srs |
@@ -550,6 +551,7 @@
 | GITBOOK | https://direct.sleepstars.de/geosite/GITBOOK | https://direct.sleepstars.de/srs-geosite/GITBOOK.srs |
 | GITEE | https://direct.sleepstars.de/geosite/GITEE | https://direct.sleepstars.de/srs-geosite/GITEE.srs |
 | GITHUB | https://direct.sleepstars.de/geosite/GITHUB | https://direct.sleepstars.de/srs-geosite/GITHUB.srs |
+| GITHUB-ADS | https://direct.sleepstars.de/geosite/GITHUB-ADS | https://direct.sleepstars.de/srs-geosite/GITHUB-ADS.srs |
 | GITHUB1S | https://direct.sleepstars.de/geosite/GITHUB1S | https://direct.sleepstars.de/srs-geosite/GITHUB1S.srs |
 | GITLAB | https://direct.sleepstars.de/geosite/GITLAB | https://direct.sleepstars.de/srs-geosite/GITLAB.srs |
 | GITV | https://direct.sleepstars.de/geosite/GITV | https://direct.sleepstars.de/srs-geosite/GITV.srs |
