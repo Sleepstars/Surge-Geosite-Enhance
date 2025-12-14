@@ -22,6 +22,7 @@
 | 800BEST | https://direct.sleepstars.de/geosite/800BEST | https://direct.sleepstars.de/srs-geosite/800BEST.srs |
 | 8BTC | https://direct.sleepstars.de/geosite/8BTC | https://direct.sleepstars.de/srs-geosite/8BTC.srs |
 | 928PLUS | https://direct.sleepstars.de/geosite/928PLUS | https://direct.sleepstars.de/srs-geosite/928PLUS.srs |
+| 9GAME | https://direct.sleepstars.de/geosite/9GAME | https://direct.sleepstars.de/srs-geosite/9GAME.srs |
 | 9NEWS | https://direct.sleepstars.de/geosite/9NEWS | https://direct.sleepstars.de/srs-geosite/9NEWS.srs |
 | 9TO5 | https://direct.sleepstars.de/geosite/9TO5 | https://direct.sleepstars.de/srs-geosite/9TO5.srs |
 | AAMGAME | https://direct.sleepstars.de/geosite/AAMGAME | https://direct.sleepstars.de/srs-geosite/AAMGAME.srs |
@@ -121,6 +122,7 @@
 | BAHAMUT | https://direct.sleepstars.de/geosite/BAHAMUT | https://direct.sleepstars.de/srs-geosite/BAHAMUT.srs |
 | BAIDU | https://direct.sleepstars.de/geosite/BAIDU | https://direct.sleepstars.de/srs-geosite/BAIDU.srs |
 | BAIDU-ADS | https://direct.sleepstars.de/geosite/BAIDU-ADS | https://direct.sleepstars.de/srs-geosite/BAIDU-ADS.srs |
+| BAISHANCLOUD | https://direct.sleepstars.de/geosite/BAISHANCLOUD | https://direct.sleepstars.de/srs-geosite/BAISHANCLOUD.srs |
 | BALTAMATICA | https://direct.sleepstars.de/geosite/BALTAMATICA | https://direct.sleepstars.de/srs-geosite/BALTAMATICA.srs |
 | BAMTECH | https://direct.sleepstars.de/geosite/BAMTECH | https://direct.sleepstars.de/srs-geosite/BAMTECH.srs |
 | BANDCAMP | https://direct.sleepstars.de/geosite/BANDCAMP | https://direct.sleepstars.de/srs-geosite/BANDCAMP.srs |
