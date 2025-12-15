@@ -64,6 +64,7 @@
 | ALIYUN-DRIVE | https://direct.sleepstars.de/geosite/ALIYUN-DRIVE | https://direct.sleepstars.de/srs-geosite/ALIYUN-DRIVE.srs |
 | ALJAZEERA | https://direct.sleepstars.de/geosite/ALJAZEERA | https://direct.sleepstars.de/srs-geosite/ALJAZEERA.srs |
 | AMAP | https://direct.sleepstars.de/geosite/AMAP | https://direct.sleepstars.de/srs-geosite/AMAP.srs |
+| AMAP-ADS | https://direct.sleepstars.de/geosite/AMAP-ADS | https://direct.sleepstars.de/srs-geosite/AMAP-ADS.srs |
 | AMAZON | https://direct.sleepstars.de/geosite/AMAZON | https://direct.sleepstars.de/srs-geosite/AMAZON.srs |
 | AMAZON-ADS | https://direct.sleepstars.de/geosite/AMAZON-ADS | https://direct.sleepstars.de/srs-geosite/AMAZON-ADS.srs |
 | AMAZONTRUST | https://direct.sleepstars.de/geosite/AMAZONTRUST | https://direct.sleepstars.de/srs-geosite/AMAZONTRUST.srs |
@@ -838,10 +839,12 @@
 | METART | https://direct.sleepstars.de/geosite/METART | https://direct.sleepstars.de/srs-geosite/METART.srs |
 | MIAOMIAOZHE | https://direct.sleepstars.de/geosite/MIAOMIAOZHE | https://direct.sleepstars.de/srs-geosite/MIAOMIAOZHE.srs |
 | MICROSOFT | https://direct.sleepstars.de/geosite/MICROSOFT | https://direct.sleepstars.de/srs-geosite/MICROSOFT.srs |
+| MICROSOFT-ADS | https://direct.sleepstars.de/geosite/MICROSOFT-ADS | https://direct.sleepstars.de/srs-geosite/MICROSOFT-ADS.srs |
 | MICROSOFT-DEV | https://direct.sleepstars.de/geosite/MICROSOFT-DEV | https://direct.sleepstars.de/srs-geosite/MICROSOFT-DEV.srs |
 | MICROSOFT-PKI | https://direct.sleepstars.de/geosite/MICROSOFT-PKI | https://direct.sleepstars.de/srs-geosite/MICROSOFT-PKI.srs |
 | MIDEA | https://direct.sleepstars.de/geosite/MIDEA | https://direct.sleepstars.de/srs-geosite/MIDEA.srs |
 | MIHOYO | https://direct.sleepstars.de/geosite/MIHOYO | https://direct.sleepstars.de/srs-geosite/MIHOYO.srs |
+| MIHOYO-ADS | https://direct.sleepstars.de/geosite/MIHOYO-ADS | https://direct.sleepstars.de/srs-geosite/MIHOYO-ADS.srs |
 | MIHOYO-CN | https://direct.sleepstars.de/geosite/MIHOYO-CN | https://direct.sleepstars.de/srs-geosite/MIHOYO-CN.srs |
 | MIKROTIK | https://direct.sleepstars.de/geosite/MIKROTIK | https://direct.sleepstars.de/srs-geosite/MIKROTIK.srs |
 | MINDGEEK | https://direct.sleepstars.de/geosite/MINDGEEK | https://direct.sleepstars.de/srs-geosite/MINDGEEK.srs |
@@ -1422,6 +1425,7 @@
 | ZEPLIN | https://direct.sleepstars.de/geosite/ZEPLIN | https://direct.sleepstars.de/srs-geosite/ZEPLIN.srs |
 | ZHANGTAO | https://direct.sleepstars.de/geosite/ZHANGTAO | https://direct.sleepstars.de/srs-geosite/ZHANGTAO.srs |
 | ZHIHU | https://direct.sleepstars.de/geosite/ZHIHU | https://direct.sleepstars.de/srs-geosite/ZHIHU.srs |
+| ZHIHU-ADS | https://direct.sleepstars.de/geosite/ZHIHU-ADS | https://direct.sleepstars.de/srs-geosite/ZHIHU-ADS.srs |
 | ZHIMEISHE | https://direct.sleepstars.de/geosite/ZHIMEISHE | https://direct.sleepstars.de/srs-geosite/ZHIMEISHE.srs |
 | ZHUBAJIE | https://direct.sleepstars.de/geosite/ZHUBAJIE | https://direct.sleepstars.de/srs-geosite/ZHUBAJIE.srs |
 | ZIROOM | https://direct.sleepstars.de/geosite/ZIROOM | https://direct.sleepstars.de/srs-geosite/ZIROOM.srs |
