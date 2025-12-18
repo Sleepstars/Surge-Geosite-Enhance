@@ -376,6 +376,7 @@
 | CSIS | https://direct.sleepstars.de/geosite/CSIS | https://direct.sleepstars.de/srs-geosite/CSIS.srs |
 | CTEXCEL | https://direct.sleepstars.de/geosite/CTEXCEL | https://direct.sleepstars.de/srs-geosite/CTEXCEL.srs |
 | CTRIP | https://direct.sleepstars.de/geosite/CTRIP | https://direct.sleepstars.de/srs-geosite/CTRIP.srs |
+| CTYUN | https://direct.sleepstars.de/geosite/CTYUN | https://direct.sleepstars.de/srs-geosite/CTYUN.srs |
 | CUINC | https://direct.sleepstars.de/geosite/CUINC | https://direct.sleepstars.de/srs-geosite/CUINC.srs |
 | CURSEFORGE | https://direct.sleepstars.de/geosite/CURSEFORGE | https://direct.sleepstars.de/srs-geosite/CURSEFORGE.srs |
 | CURSOR | https://direct.sleepstars.de/geosite/CURSOR | https://direct.sleepstars.de/srs-geosite/CURSOR.srs |
@@ -983,6 +984,7 @@
 | PGYER | https://direct.sleepstars.de/geosite/PGYER | https://direct.sleepstars.de/srs-geosite/PGYER.srs |
 | PHOENIX | https://direct.sleepstars.de/geosite/PHOENIX | https://direct.sleepstars.de/srs-geosite/PHOENIX.srs |
 | PICACG | https://direct.sleepstars.de/geosite/PICACG | https://direct.sleepstars.de/srs-geosite/PICACG.srs |
+| PICACG-ADS | https://direct.sleepstars.de/geosite/PICACG-ADS | https://direct.sleepstars.de/srs-geosite/PICACG-ADS.srs |
 | PICSEE | https://direct.sleepstars.de/geosite/PICSEE | https://direct.sleepstars.de/srs-geosite/PICSEE.srs |
 | PIKPAK | https://direct.sleepstars.de/geosite/PIKPAK | https://direct.sleepstars.de/srs-geosite/PIKPAK.srs |
 | PINDUODUO | https://direct.sleepstars.de/geosite/PINDUODUO | https://direct.sleepstars.de/srs-geosite/PINDUODUO.srs |
@@ -1351,6 +1353,7 @@
 | WIN-SPY | https://direct.sleepstars.de/geosite/WIN-SPY | https://direct.sleepstars.de/srs-geosite/WIN-SPY.srs |
 | WIN-UPDATE | https://direct.sleepstars.de/geosite/WIN-UPDATE | https://direct.sleepstars.de/srs-geosite/WIN-UPDATE.srs |
 | WINDY | https://direct.sleepstars.de/geosite/WINDY | https://direct.sleepstars.de/srs-geosite/WINDY.srs |
+| WINK | https://direct.sleepstars.de/geosite/WINK | https://direct.sleepstars.de/srs-geosite/WINK.srs |
 | WISE | https://direct.sleepstars.de/geosite/WISE | https://direct.sleepstars.de/srs-geosite/WISE.srs |
 | WISEKEY | https://direct.sleepstars.de/geosite/WISEKEY | https://direct.sleepstars.de/srs-geosite/WISEKEY.srs |
 | WISH | https://direct.sleepstars.de/geosite/WISH | https://direct.sleepstars.de/srs-geosite/WISH.srs |
@@ -1379,6 +1382,7 @@
 | XIAOHONGSHU | https://direct.sleepstars.de/geosite/XIAOHONGSHU | https://direct.sleepstars.de/srs-geosite/XIAOHONGSHU.srs |
 | XIAOMI | https://direct.sleepstars.de/geosite/XIAOMI | https://direct.sleepstars.de/srs-geosite/XIAOMI.srs |
 | XIAOMI-ADS | https://direct.sleepstars.de/geosite/XIAOMI-ADS | https://direct.sleepstars.de/srs-geosite/XIAOMI-ADS.srs |
+| XIAOMI-AI | https://direct.sleepstars.de/geosite/XIAOMI-AI | https://direct.sleepstars.de/srs-geosite/XIAOMI-AI.srs |
 | XIAOYUZHOU | https://direct.sleepstars.de/geosite/XIAOYUZHOU | https://direct.sleepstars.de/srs-geosite/XIAOYUZHOU.srs |
 | XIMALAYA | https://direct.sleepstars.de/geosite/XIMALAYA | https://direct.sleepstars.de/srs-geosite/XIMALAYA.srs |
 | XIMALAYA-ADS | https://direct.sleepstars.de/geosite/XIMALAYA-ADS | https://direct.sleepstars.de/srs-geosite/XIMALAYA-ADS.srs |
