@@ -866,6 +866,7 @@
 | MOMO | https://direct.sleepstars.de/geosite/MOMO | https://direct.sleepstars.de/srs-geosite/MOMO.srs |
 | MONGODB | https://direct.sleepstars.de/geosite/MONGODB | https://direct.sleepstars.de/srs-geosite/MONGODB.srs |
 | MONOTYPE | https://direct.sleepstars.de/geosite/MONOTYPE | https://direct.sleepstars.de/srs-geosite/MONOTYPE.srs |
+| MOONVY | https://direct.sleepstars.de/geosite/MOONVY | https://direct.sleepstars.de/srs-geosite/MOONVY.srs |
 | MOPUB-ADS | https://direct.sleepstars.de/geosite/MOPUB-ADS | https://direct.sleepstars.de/srs-geosite/MOPUB-ADS.srs |
 | MORISAWA | https://direct.sleepstars.de/geosite/MORISAWA | https://direct.sleepstars.de/srs-geosite/MORISAWA.srs |
 | MORTEIN | https://direct.sleepstars.de/geosite/MORTEIN | https://direct.sleepstars.de/srs-geosite/MORTEIN.srs |
