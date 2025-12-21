@@ -1440,3 +1440,4 @@
 | ZTE | https://direct.sleepstars.de/geosite/ZTE | https://direct.sleepstars.de/srs-geosite/ZTE.srs |
 | ZTO-EXPRESS | https://direct.sleepstars.de/geosite/ZTO-EXPRESS | https://direct.sleepstars.de/srs-geosite/ZTO-EXPRESS.srs |
 | ZUOYEBANG | https://direct.sleepstars.de/geosite/ZUOYEBANG | https://direct.sleepstars.de/srs-geosite/ZUOYEBANG.srs |
+| ZUOYEBANG-ADS | https://direct.sleepstars.de/geosite/ZUOYEBANG-ADS | https://direct.sleepstars.de/srs-geosite/ZUOYEBANG-ADS.srs |
