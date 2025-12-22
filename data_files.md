@@ -101,10 +101,12 @@
 | APTOIDE | https://direct.sleepstars.de/geosite/APTOIDE | https://direct.sleepstars.de/srs-geosite/APTOIDE.srs |
 | ARCHIVE | https://direct.sleepstars.de/geosite/ARCHIVE | https://direct.sleepstars.de/srs-geosite/ARCHIVE.srs |
 | ARCHIVEOFOUROWN | https://direct.sleepstars.de/geosite/ARCHIVEOFOUROWN | https://direct.sleepstars.de/srs-geosite/ARCHIVEOFOUROWN.srs |
+| ARCHIVETODAY | https://direct.sleepstars.de/geosite/ARCHIVETODAY | https://direct.sleepstars.de/srs-geosite/ARCHIVETODAY.srs |
 | ARCHLINUX | https://direct.sleepstars.de/geosite/ARCHLINUX | https://direct.sleepstars.de/srs-geosite/ARCHLINUX.srs |
 | ARPHIC | https://direct.sleepstars.de/geosite/ARPHIC | https://direct.sleepstars.de/srs-geosite/ARPHIC.srs |
 | ARTSTATION | https://direct.sleepstars.de/geosite/ARTSTATION | https://direct.sleepstars.de/srs-geosite/ARTSTATION.srs |
 | ASAHI | https://direct.sleepstars.de/geosite/ASAHI | https://direct.sleepstars.de/srs-geosite/ASAHI.srs |
+| ASKDIANDIAN | https://direct.sleepstars.de/geosite/ASKDIANDIAN | https://direct.sleepstars.de/srs-geosite/ASKDIANDIAN.srs |
 | ASOBO | https://direct.sleepstars.de/geosite/ASOBO | https://direct.sleepstars.de/srs-geosite/ASOBO.srs |
 | ASPROEX | https://direct.sleepstars.de/geosite/ASPROEX | https://direct.sleepstars.de/srs-geosite/ASPROEX.srs |
 | ASUS | https://direct.sleepstars.de/geosite/ASUS | https://direct.sleepstars.de/srs-geosite/ASUS.srs |
@@ -296,6 +298,7 @@
 | CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/geosite/CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-TRAVEL-IR.srs |
 | CATEGORY-VOIP | https://direct.sleepstars.de/geosite/CATEGORY-VOIP | https://direct.sleepstars.de/srs-geosite/CATEGORY-VOIP.srs |
 | CATEGORY-VPNSERVICES | https://direct.sleepstars.de/geosite/CATEGORY-VPNSERVICES | https://direct.sleepstars.de/srs-geosite/CATEGORY-VPNSERVICES.srs |
+| CATEGORY-WEB-ARCHIVE | https://direct.sleepstars.de/geosite/CATEGORY-WEB-ARCHIVE | https://direct.sleepstars.de/srs-geosite/CATEGORY-WEB-ARCHIVE.srs |
 | CATEGORY-WIKI-CN | https://direct.sleepstars.de/geosite/CATEGORY-WIKI-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-WIKI-CN.srs |
 | CAVPORN | https://direct.sleepstars.de/geosite/CAVPORN | https://direct.sleepstars.de/srs-geosite/CAVPORN.srs |
 | CBS | https://direct.sleepstars.de/geosite/CBS | https://direct.sleepstars.de/srs-geosite/CBS.srs |
@@ -396,6 +399,7 @@
 | DEDAO | https://direct.sleepstars.de/geosite/DEDAO | https://direct.sleepstars.de/srs-geosite/DEDAO.srs |
 | DEEPIN | https://direct.sleepstars.de/geosite/DEEPIN | https://direct.sleepstars.de/srs-geosite/DEEPIN.srs |
 | DEEPSEEK | https://direct.sleepstars.de/geosite/DEEPSEEK | https://direct.sleepstars.de/srs-geosite/DEEPSEEK.srs |
+| DEEZER | https://direct.sleepstars.de/geosite/DEEZER | https://direct.sleepstars.de/srs-geosite/DEEZER.srs |
 | DELL | https://direct.sleepstars.de/geosite/DELL | https://direct.sleepstars.de/srs-geosite/DELL.srs |
 | DEMONOID | https://direct.sleepstars.de/geosite/DEMONOID | https://direct.sleepstars.de/srs-geosite/DEMONOID.srs |
 | DEPPON | https://direct.sleepstars.de/geosite/DEPPON | https://direct.sleepstars.de/srs-geosite/DEPPON.srs |
@@ -418,6 +422,7 @@
 | DJI | https://direct.sleepstars.de/geosite/DJI | https://direct.sleepstars.de/srs-geosite/DJI.srs |
 | DLERCLOUD | https://direct.sleepstars.de/geosite/DLERCLOUD | https://direct.sleepstars.de/srs-geosite/DLERCLOUD.srs |
 | DLSITE | https://direct.sleepstars.de/geosite/DLSITE | https://direct.sleepstars.de/srs-geosite/DLSITE.srs |
+| DMIT | https://direct.sleepstars.de/geosite/DMIT | https://direct.sleepstars.de/srs-geosite/DMIT.srs |
 | DMM | https://direct.sleepstars.de/geosite/DMM | https://direct.sleepstars.de/srs-geosite/DMM.srs |
 | DMM-ADS | https://direct.sleepstars.de/geosite/DMM-ADS | https://direct.sleepstars.de/srs-geosite/DMM-ADS.srs |
 | DMM-PORN | https://direct.sleepstars.de/geosite/DMM-PORN | https://direct.sleepstars.de/srs-geosite/DMM-PORN.srs |
@@ -683,6 +688,7 @@
 | INTEL | https://direct.sleepstars.de/geosite/INTEL | https://direct.sleepstars.de/srs-geosite/INTEL.srs |
 | INTEL-DEV | https://direct.sleepstars.de/geosite/INTEL-DEV | https://direct.sleepstars.de/srs-geosite/INTEL-DEV.srs |
 | INTERCOM | https://direct.sleepstars.de/geosite/INTERCOM | https://direct.sleepstars.de/srs-geosite/INTERCOM.srs |
+| INTERNET-ARCHIVE | https://direct.sleepstars.de/geosite/INTERNET-ARCHIVE | https://direct.sleepstars.de/srs-geosite/INTERNET-ARCHIVE.srs |
 | INTSIG | https://direct.sleepstars.de/geosite/INTSIG | https://direct.sleepstars.de/srs-geosite/INTSIG.srs |
 | INTUIT | https://direct.sleepstars.de/geosite/INTUIT | https://direct.sleepstars.de/srs-geosite/INTUIT.srs |
 | IPIP | https://direct.sleepstars.de/geosite/IPIP | https://direct.sleepstars.de/srs-geosite/IPIP.srs |
