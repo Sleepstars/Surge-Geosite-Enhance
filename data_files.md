@@ -116,6 +116,7 @@
 | ATTWATCHTV | https://direct.sleepstars.de/geosite/ATTWATCHTV | https://direct.sleepstars.de/srs-geosite/ATTWATCHTV.srs |
 | AUTODESK | https://direct.sleepstars.de/geosite/AUTODESK | https://direct.sleepstars.de/srs-geosite/AUTODESK.srs |
 | AVAXHOME | https://direct.sleepstars.de/geosite/AVAXHOME | https://direct.sleepstars.de/srs-geosite/AVAXHOME.srs |
+| AVITO | https://direct.sleepstars.de/geosite/AVITO | https://direct.sleepstars.de/srs-geosite/AVITO.srs |
 | AVMOO | https://direct.sleepstars.de/geosite/AVMOO | https://direct.sleepstars.de/srs-geosite/AVMOO.srs |
 | AWEMPIRE | https://direct.sleepstars.de/geosite/AWEMPIRE | https://direct.sleepstars.de/srs-geosite/AWEMPIRE.srs |
 | AWS | https://direct.sleepstars.de/geosite/AWS | https://direct.sleepstars.de/srs-geosite/AWS.srs |
