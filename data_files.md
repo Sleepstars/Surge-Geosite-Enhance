@@ -1332,6 +1332,8 @@
 | VOLVO | https://direct.sleepstars.de/geosite/VOLVO | https://direct.sleepstars.de/srs-geosite/VOLVO.srs |
 | VOXMEDIA | https://direct.sleepstars.de/geosite/VOXMEDIA | https://direct.sleepstars.de/srs-geosite/VOXMEDIA.srs |
 | VPNGATE | https://direct.sleepstars.de/geosite/VPNGATE | https://direct.sleepstars.de/srs-geosite/VPNGATE.srs |
+| VRCDN | https://direct.sleepstars.de/geosite/VRCDN | https://direct.sleepstars.de/srs-geosite/VRCDN.srs |
+| VRCHAT | https://direct.sleepstars.de/geosite/VRCHAT | https://direct.sleepstars.de/srs-geosite/VRCHAT.srs |
 | VRZWK | https://direct.sleepstars.de/geosite/VRZWK | https://direct.sleepstars.de/srs-geosite/VRZWK.srs |
 | VULTR | https://direct.sleepstars.de/geosite/VULTR | https://direct.sleepstars.de/srs-geosite/VULTR.srs |
 | W3SCHOOLS | https://direct.sleepstars.de/geosite/W3SCHOOLS | https://direct.sleepstars.de/srs-geosite/W3SCHOOLS.srs |
