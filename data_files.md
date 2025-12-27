@@ -613,6 +613,7 @@
 | HETZNER | https://direct.sleepstars.de/geosite/HETZNER | https://direct.sleepstars.de/srs-geosite/HETZNER.srs |
 | HEYZO | https://direct.sleepstars.de/geosite/HEYZO | https://direct.sleepstars.de/srs-geosite/HEYZO.srs |
 | HIIDO-ADS | https://direct.sleepstars.de/geosite/HIIDO-ADS | https://direct.sleepstars.de/srs-geosite/HIIDO-ADS.srs |
+| HIKVISION | https://direct.sleepstars.de/geosite/HIKVISION | https://direct.sleepstars.de/srs-geosite/HIKVISION.srs |
 | HINET | https://direct.sleepstars.de/geosite/HINET | https://direct.sleepstars.de/srs-geosite/HINET.srs |
 | HINET-ECA | https://direct.sleepstars.de/geosite/HINET-ECA | https://direct.sleepstars.de/srs-geosite/HINET-ECA.srs |
 | HITUN | https://direct.sleepstars.de/geosite/HITUN | https://direct.sleepstars.de/srs-geosite/HITUN.srs |
