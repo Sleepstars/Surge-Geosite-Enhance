@@ -66,8 +66,18 @@ ip_cidr6_set:
  - "2400:cb00::/32"
 ```
 
-说明：上游 geosite 不包含“关键词”类型，`domain_keyword_set` 仅在某些简单“并列正则”（形如 `google|youtube`、可选 `^...$`/`(?:...)` 包裹且不含其它正则元字符）时自动拆分生成；否则保留在 `domain_regex_set`。
+说明：上游 geosite 不包含"关键词"类型，`domain_keyword_set` 仅在某些简单"并列正则"（形如 `google|youtube`、可选 `^...$`/`(?:...)` 包裹且不含其它正则元字符）时自动拆分生成；否则保留在 `domain_regex_set`。
 另外：空集合不输出对应键（例如没有 IPv6 条目则无 `ip_cidr6_set`）。
+
+### Mihomo MRS 规则集
+
+- GeoSite（MRS）：`GET https://direct.sleepstars.de/mrs-geosite/<name>[@filter].mrs`
+  - 过滤：与 SRS 相同，支持 `@cn`、`@!cn` 等属性过滤
+  - 示例：`https://direct.sleepstars.de/mrs-geosite/apple@cn.mrs`
+- GeoIP（MRS）：`GET https://direct.sleepstars.de/mrs-geoip/<name>[@v4|@v6].mrs`
+  - 示例：`https://direct.sleepstars.de/mrs-geoip/cn@v4.mrs`
+
+注意：MRS 格式为 mihomo/Clash.Meta 专用的二进制规则集格式。GeoSite MRS 不包含正则表达式规则（mihomo domain behavior 限制）。
 
 ## 预构建清单
 

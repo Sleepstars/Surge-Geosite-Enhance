@@ -110,6 +110,28 @@ jobs:
           echo "$BIN_DIR" >> "$GITHUB_PATH"
           sing-box version
 
+      - name: Install mihomo CLI
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -eux
+          VERSION=$(curl -fsSL -H "Authorization: Bearer ${GITHUB_TOKEN}" -H "Accept: application/vnd.github+json" https://api.github.com/repos/MetaCubeX/mihomo/releases/latest | jq -r '.tag_name')
+          if [ -z "${VERSION}" ] || [ "${VERSION}" = "null" ]; then
+            echo "Failed to resolve mihomo latest version" >&2
+            exit 1
+          fi
+          VERSION=${VERSION#v}
+          ARCHIVE="mihomo-linux-amd64-v${VERSION}.gz"
+          URL="https://github.com/MetaCubeX/mihomo/releases/download/v${VERSION}/${ARCHIVE}"
+          DOWNLOAD="${RUNNER_TEMP}/${ARCHIVE}"
+          curl -fsSL -o "$DOWNLOAD" "$URL"
+          gunzip "$DOWNLOAD"
+          BIN_DIR="${HOME}/.local/bin"
+          mkdir -p "$BIN_DIR"
+          install -m 0755 "${RUNNER_TEMP}/mihomo-linux-amd64-v${VERSION}" "$BIN_DIR/mihomo"
+          echo "$BIN_DIR" >> "$GITHUB_PATH"
+          mihomo version
+
       - name: Restore cache (SRS)
         id: cache-srs
         uses: actions/cache@v5
@@ -124,6 +146,20 @@ jobs:
           path: dist/srs-geoip
           key: srs-geoip-${{ steps.geoip.outputs.sha }}
 
+      - name: Restore cache (MRS)
+        id: cache-mrs
+        uses: actions/cache@v5
+        with:
+          path: dist/mrs
+          key: mrs-${{ steps.geosite.outputs.sha }}-${{ vars.MRS_FILTERS }}
+
+      - name: Restore cache (MRS GeoIP)
+        id: cache-mrs-geoip
+        uses: actions/cache@v5
+        with:
+          path: dist/mrs-geoip
+          key: mrs-geoip-${{ steps.geoip.outputs.sha }}
+
       - name: Build SRS rulesets
         if: steps.cache-srs.outputs.cache-hit != 'true'
         env:
@@ -136,6 +172,20 @@ jobs:
         env:
           SRS_CONCURRENCY: ${{ vars.SRS_CONCURRENCY }}
         run: npm run build:srs-geoip
+
+      - name: Build MRS rulesets
+        if: steps.cache-mrs.outputs.cache-hit != 'true'
+        env:
+          MRS_FILTERS: ${{ vars.MRS_FILTERS }}
+          MRS_CONCURRENCY: ${{ vars.MRS_CONCURRENCY }}
+        run: npm run build:mrs
+
+      - name: Build MRS GeoIP rulesets
+        if: steps.cache-mrs-geoip.outputs.cache-hit != 'true'
+        env:
+          MRS_CONCURRENCY: ${{ vars.MRS_CONCURRENCY }}
+        run: npm run build:mrs-geoip
+
       - name: Install AWS CLI v2
         run: |
           set -eux
@@ -147,7 +197,7 @@ jobs:
           aws --version
 
       - name: Manifest incremental sync to R2
-        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-srs.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true' || steps.cache-srs-geoip.outputs.cache-hit != 'true'
+        if: steps.cache-json.outputs.cache-hit != 'true' || steps.cache-srs.outputs.cache-hit != 'true' || steps.cache-geoip.outputs.cache-hit != 'true' || steps.cache-srs-geoip.outputs.cache-hit != 'true' || steps.cache-mrs.outputs.cache-hit != 'true' || steps.cache-mrs-geoip.outputs.cache-hit != 'true'
         env:
           # AWS CLI (S3) credentials for R2
           R2_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}

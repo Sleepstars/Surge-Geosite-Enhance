@@ -1264,6 +1264,19 @@ const getGeoipSrsKey = (name: string, filter: string | null): string => {
   return `geoip/${fname}`;
 };
 
+// MRS distribution via R2
+const getMrsKey = (name: string, filter: string | null): string => {
+  // Store MRS keys under geosite/ prefix alongside SRS files
+  const fname = filter ? `${name}@${filter}.mrs` : `${name}.mrs`;
+  return `geosite/${fname}`;
+};
+
+const getGeoipMrsKey = (name: string, filter: string | null): string => {
+  // Store GeoIP MRS under geoip/ prefix alongside SRS files
+  const fname = filter ? `${name}@${filter}.mrs` : `${name}.mrs`;
+  return `geoip/${fname}`;
+};
+
 app.get("/srs/:name_with_filter", async (c) => {
   let raw = c.req.param("name_with_filter").trim();
   if (!raw || raw.length === 0) {
@@ -1346,6 +1359,51 @@ app.get("/srs-geosite/:name_with_filter", async (c) => {
   if (!obj) {
     throw new HTTPException(404, { message: "SRS not found" });
   }
+  const headers = new Headers();
+  headers.set("content-type", "application/octet-stream");
+  const suggested = pickedKey.split("/").pop() || pickedKey;
+  headers.set("content-disposition", `inline; filename="${encodeURIComponent(suggested)}"`);
+  if (obj.etag) headers.set("etag", obj.etag);
+  return new Response(obj.body, { headers });
+});
+
+// MRS geosite endpoint
+app.get("/mrs-geosite/:name_with_filter", async (c) => {
+  let raw = c.req.param("name_with_filter").trim();
+  if (!raw || raw.length === 0) {
+    throw new HTTPException(400, { message: "Invalid name parameter" });
+  }
+  // Require ".mrs" suffix in URL, e.g. /mrs-geosite/APPLE.mrs or /mrs-geosite/APPLE@cn.mrs
+  if (!raw.toLowerCase().endsWith(".mrs")) {
+    throw new HTTPException(404, { message: "Not found" });
+  }
+  raw = raw.slice(0, -4);
+  const [rawName, rawFilter] = raw.includes("@") ? raw.split("@", 2) : [raw, null];
+  const name = rawName;
+  const filter = rawFilter ? rawFilter.toLowerCase() : null;
+
+  const bucket = (c as any).env?.SRS_BUCKET as R2Bucket | undefined;
+  if (!bucket) {
+    throw new HTTPException(500, { message: "MRS bucket not configured" });
+  }
+  const candidates = Array.from(new Set([name, name.toUpperCase(), name.toLowerCase()]));
+  let found: R2ObjectBody | null = null;
+  let pickedKey = "";
+  for (const n of candidates) {
+    const key = getMrsKey(n, filter);
+    const obj = await bucket.get(key);
+    if (obj) {
+      found = obj;
+      pickedKey = key;
+      break;
+    }
+  }
+
+  const obj = found;
+  if (!obj) {
+    throw new HTTPException(404, { message: "MRS not found" });
+  }
+
   const headers = new Headers();
   headers.set("content-type", "application/octet-stream");
   const suggested = pickedKey.split("/").pop() || pickedKey;
@@ -1974,6 +2032,51 @@ app.get("/srs-geoip/:name_with_filter", async (c) => {
   if (!obj) {
     throw new HTTPException(404, { message: "SRS not found" });
   }
+  const headers = new Headers();
+  headers.set("content-type", "application/octet-stream");
+  const suggested = pickedKey.split("/").pop() || pickedKey;
+  headers.set("content-disposition", `inline; filename="${encodeURIComponent(suggested)}"`);
+  if (obj.etag) headers.set("etag", obj.etag);
+  return new Response(obj.body, { headers });
+});
+
+// MRS (GeoIP) distribution via R2
+app.get("/mrs-geoip/:name_with_filter", async (c) => {
+  let raw = c.req.param("name_with_filter").trim();
+  if (!raw || raw.length === 0) {
+    throw new HTTPException(400, { message: "Invalid name parameter" });
+  }
+  // Require ".mrs" suffix in URL, e.g. /mrs-geoip/CN.mrs or /mrs-geoip/CN@v4.mrs
+  if (!raw.toLowerCase().endsWith(".mrs")) {
+    throw new HTTPException(404, { message: "Not found" });
+  }
+  raw = raw.slice(0, -4);
+  const [rawName, rawFilter] = raw.includes("@") ? raw.split("@", 2) : [raw, null];
+  const name = rawName;
+  const filter = rawFilter ? rawFilter.toLowerCase() : null; // v4/v6
+
+  const bucket = (c as any).env?.SRS_BUCKET as R2Bucket | undefined;
+  if (!bucket) {
+    throw new HTTPException(500, { message: "MRS bucket not configured" });
+  }
+  const candidates = Array.from(new Set([name, name.toUpperCase(), name.toLowerCase()]));
+  let found: R2ObjectBody | null = null;
+  let pickedKey = "";
+  for (const n of candidates) {
+    const key = getGeoipMrsKey(n, filter);
+    const obj = await bucket.get(key);
+    if (obj) {
+      found = obj;
+      pickedKey = key;
+      break;
+    }
+  }
+
+  const obj = found;
+  if (!obj) {
+    throw new HTTPException(404, { message: "MRS not found" });
+  }
+
   const headers = new Headers();
   headers.set("content-type", "application/octet-stream");
   const suggested = pickedKey.split("/").pop() || pickedKey;

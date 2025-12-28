@@ -35,6 +35,8 @@ const SRC_JSON_DIR = path.join(DIST_DIR, "geosite-json");
 const SRC_GEOIP_JSON_DIR = path.join(DIST_DIR, "geoip-json");
 const SRS_DIR = path.join(DIST_DIR, "srs");
 const SRS_GEOIP_DIR = path.join(DIST_DIR, "srs-geoip");
+const MRS_DIR = path.join(DIST_DIR, "mrs");
+const MRS_GEOIP_DIR = path.join(DIST_DIR, "mrs-geoip");
 const ROOT_INDEX_JSON = path.join(REPO_ROOT, "index.json");
 const ROOT_GEOIP_INDEX_JSON = path.join(REPO_ROOT, "geoip-index.json");
 
@@ -87,6 +89,7 @@ const sha256File = async (file) => {
 const contentTypeFor = (file) => {
   if (file.endsWith(".json")) return "application/json";
   if (file.endsWith(".srs")) return "application/octet-stream";
+  if (file.endsWith(".mrs")) return "application/octet-stream";
   return "application/octet-stream";
 };
 
@@ -113,6 +116,18 @@ const buildLocalPlan = async () => {
   // dist/srs-geoip → geoip/
   const srsGeoipFiles = await walk(SRS_GEOIP_DIR, (f) => f.endsWith(".srs"));
   for (const f of srsGeoipFiles) {
+    const key = `geoip/${path.basename(f)}`;
+    plan.push({ file: f, key, size: (await fsp.stat(f)).size });
+  }
+  // dist/mrs → geosite/
+  const mrsFiles = await walk(MRS_DIR, (f) => f.endsWith(".mrs"));
+  for (const f of mrsFiles) {
+    const key = `geosite/${path.basename(f)}`;
+    plan.push({ file: f, key, size: (await fsp.stat(f)).size });
+  }
+  // dist/mrs-geoip → geoip/
+  const mrsGeoipFiles = await walk(MRS_GEOIP_DIR, (f) => f.endsWith(".mrs"));
+  for (const f of mrsGeoipFiles) {
     const key = `geoip/${path.basename(f)}`;
     plan.push({ file: f, key, size: (await fsp.stat(f)).size });
   }
@@ -241,9 +256,9 @@ const summarizeChangedKeys = (keys) => {
       continue;
     }
     if (key.startsWith("geosite/")) {
-      // Only .srs files correspond to per-list segments. Ignore others like index.json.
-      if (!key.endsWith(".srs")) continue;
-      let name = path.basename(key, ".srs");
+      // Only .srs and .mrs files correspond to per-list segments. Ignore others like index.json.
+      if (!key.endsWith(".srs") && !key.endsWith(".mrs")) continue;
+      let name = key.endsWith(".srs") ? path.basename(key, ".srs") : path.basename(key, ".mrs");
       if (!name) continue;
       const atIndex = name.indexOf("@");
       if (atIndex >= 0) {
@@ -258,8 +273,8 @@ const summarizeChangedKeys = (keys) => {
       continue;
     }
     if (key.startsWith("geoip/")) {
-      if (!key.endsWith(".srs")) continue;
-      let name = path.basename(key, ".srs");
+      if (!key.endsWith(".srs") && !key.endsWith(".mrs")) continue;
+      let name = key.endsWith(".srs") ? path.basename(key, ".srs") : path.basename(key, ".mrs");
       if (!name) continue;
       // D1 segments for geoip are built per base list (no @v4/@v6 variants).
       // Normalize by stripping any @suffix to match dist/d1/segments/geoip/<name>.sql
