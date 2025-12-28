@@ -130,7 +130,7 @@ jobs:
           mkdir -p "$BIN_DIR"
           install -m 0755 "${RUNNER_TEMP}/mihomo-linux-amd64-v${VERSION}" "$BIN_DIR/mihomo"
           echo "$BIN_DIR" >> "$GITHUB_PATH"
-          mihomo version
+          mihomo -v
 
       - name: Restore cache (SRS)
         id: cache-srs
