@@ -42,12 +42,12 @@ const toMihomoYaml = (data, filter) => {
   const wantV4 = !filter || filter.toLowerCase() === "v4" || filter.toLowerCase() === "ipv4";
   const wantV6 = !filter || filter.toLowerCase() === "v6" || filter.toLowerCase() === "ipv6";
 
-  const payload = [];
+  let payload = [];
   if (wantV4 && Array.isArray(data.cidr4)) {
-    payload.push(...data.cidr4);
+    payload = payload.concat(data.cidr4);
   }
   if (wantV6 && Array.isArray(data.cidr6)) {
-    payload.push(...data.cidr6);
+    payload = payload.concat(data.cidr6);
   }
 
   if (payload.length === 0) return null;
