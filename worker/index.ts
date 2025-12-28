@@ -1368,7 +1368,7 @@ app.get("/srs-geosite/:name_with_filter", async (c) => {
 });
 
 // MRS geosite endpoint
-app.get("/mrs-geosite/:name_with_filter", async (c) => {
+app.get("/mihomo/geosite/:name_with_filter", async (c) => {
   let raw = c.req.param("name_with_filter").trim();
   if (!raw || raw.length === 0) {
     throw new HTTPException(400, { message: "Invalid name parameter" });
@@ -2041,7 +2041,7 @@ app.get("/srs-geoip/:name_with_filter", async (c) => {
 });
 
 // MRS (GeoIP) distribution via R2
-app.get("/mrs-geoip/:name_with_filter", async (c) => {
+app.get("/mihomo/geoip/:name_with_filter", async (c) => {
   let raw = c.req.param("name_with_filter").trim();
   if (!raw || raw.length === 0) {
     throw new HTTPException(400, { message: "Invalid name parameter" });
