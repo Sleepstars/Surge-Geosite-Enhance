@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20251221.0",
-    "protobufjs": "^7.5.4",
+    "protobufjs": "^8.0.0",
     "wrangler": "^4.45.3"
   }
 }
