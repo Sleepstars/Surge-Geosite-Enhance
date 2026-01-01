@@ -222,6 +222,8 @@
 | CATEGORY-BOURSE-IR | https://direct.sleepstars.de/geosite/CATEGORY-BOURSE-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-BOURSE-IR.srs |
 | CATEGORY-BROWSER-!CN | https://direct.sleepstars.de/geosite/CATEGORY-BROWSER-!CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-BROWSER-!CN.srs |
 | CATEGORY-CAS | https://direct.sleepstars.de/geosite/CATEGORY-CAS | https://direct.sleepstars.de/srs-geosite/CATEGORY-CAS.srs |
+| CATEGORY-CDN-!CN | https://direct.sleepstars.de/geosite/CATEGORY-CDN-!CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-CDN-!CN.srs |
+| CATEGORY-CDN-CN | https://direct.sleepstars.de/geosite/CATEGORY-CDN-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-CDN-CN.srs |
 | CATEGORY-COLLABORATE-CN | https://direct.sleepstars.de/geosite/CATEGORY-COLLABORATE-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-COLLABORATE-CN.srs |
 | CATEGORY-COMMUNICATION | https://direct.sleepstars.de/geosite/CATEGORY-COMMUNICATION | https://direct.sleepstars.de/srs-geosite/CATEGORY-COMMUNICATION.srs |
 | CATEGORY-COMPANIES | https://direct.sleepstars.de/geosite/CATEGORY-COMPANIES | https://direct.sleepstars.de/srs-geosite/CATEGORY-COMPANIES.srs |
