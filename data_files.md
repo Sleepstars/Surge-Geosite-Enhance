@@ -184,6 +184,7 @@
 | BROADCOM | https://direct.sleepstars.de/geosite/BROADCOM | https://direct.sleepstars.de/srs-geosite/BROADCOM.srs |
 | BTDIG | https://direct.sleepstars.de/geosite/BTDIG | https://direct.sleepstars.de/srs-geosite/BTDIG.srs |
 | BTTZYW | https://direct.sleepstars.de/geosite/BTTZYW | https://direct.sleepstars.de/srs-geosite/BTTZYW.srs |
+| BUSHIROAD | https://direct.sleepstars.de/geosite/BUSHIROAD | https://direct.sleepstars.de/srs-geosite/BUSHIROAD.srs |
 | BUYMEACOFFEE | https://direct.sleepstars.de/geosite/BUYMEACOFFEE | https://direct.sleepstars.de/srs-geosite/BUYMEACOFFEE.srs |
 | BUYPASS | https://direct.sleepstars.de/geosite/BUYPASS | https://direct.sleepstars.de/srs-geosite/BUYPASS.srs |
 | BYBIT | https://direct.sleepstars.de/geosite/BYBIT | https://direct.sleepstars.de/srs-geosite/BYBIT.srs |
