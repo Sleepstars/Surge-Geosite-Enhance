@@ -1362,6 +1362,7 @@
 | WIKIDOT | https://direct.sleepstars.de/geosite/WIKIDOT | https://direct.sleepstars.de/srs-geosite/WIKIDOT.srs |
 | WIKIHOW | https://direct.sleepstars.de/geosite/WIKIHOW | https://direct.sleepstars.de/srs-geosite/WIKIHOW.srs |
 | WIKIMEDIA | https://direct.sleepstars.de/geosite/WIKIMEDIA | https://direct.sleepstars.de/srs-geosite/WIKIMEDIA.srs |
+| WILDBERRIES | https://direct.sleepstars.de/geosite/WILDBERRIES | https://direct.sleepstars.de/srs-geosite/WILDBERRIES.srs |
 | WIN-EXTRA | https://direct.sleepstars.de/geosite/WIN-EXTRA | https://direct.sleepstars.de/srs-geosite/WIN-EXTRA.srs |
 | WIN-SPY | https://direct.sleepstars.de/geosite/WIN-SPY | https://direct.sleepstars.de/srs-geosite/WIN-SPY.srs |
 | WIN-UPDATE | https://direct.sleepstars.de/geosite/WIN-UPDATE | https://direct.sleepstars.de/srs-geosite/WIN-UPDATE.srs |
