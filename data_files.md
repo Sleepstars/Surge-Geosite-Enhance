@@ -282,6 +282,7 @@
 | CATEGORY-PASSWORD-MANAGEMENT | https://direct.sleepstars.de/geosite/CATEGORY-PASSWORD-MANAGEMENT | https://direct.sleepstars.de/srs-geosite/CATEGORY-PASSWORD-MANAGEMENT.srs |
 | CATEGORY-PAYMENT-IR | https://direct.sleepstars.de/geosite/CATEGORY-PAYMENT-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-PAYMENT-IR.srs |
 | CATEGORY-PORN | https://direct.sleepstars.de/geosite/CATEGORY-PORN | https://direct.sleepstars.de/srs-geosite/CATEGORY-PORN.srs |
+| CATEGORY-PROXY-TUNNELS | https://direct.sleepstars.de/geosite/CATEGORY-PROXY-TUNNELS | https://direct.sleepstars.de/srs-geosite/CATEGORY-PROXY-TUNNELS.srs |
 | CATEGORY-PT | https://direct.sleepstars.de/geosite/CATEGORY-PT | https://direct.sleepstars.de/srs-geosite/CATEGORY-PT.srs |
 | CATEGORY-PUBLIC-TRACKER | https://direct.sleepstars.de/geosite/CATEGORY-PUBLIC-TRACKER | https://direct.sleepstars.de/srs-geosite/CATEGORY-PUBLIC-TRACKER.srs |
 | CATEGORY-REMOTE-CONTROL | https://direct.sleepstars.de/geosite/CATEGORY-REMOTE-CONTROL | https://direct.sleepstars.de/srs-geosite/CATEGORY-REMOTE-CONTROL.srs |
@@ -921,6 +922,7 @@
 | NEXON | https://direct.sleepstars.de/geosite/NEXON | https://direct.sleepstars.de/srs-geosite/NEXON.srs |
 | NGA | https://direct.sleepstars.de/geosite/NGA | https://direct.sleepstars.de/srs-geosite/NGA.srs |
 | NGINX | https://direct.sleepstars.de/geosite/NGINX | https://direct.sleepstars.de/srs-geosite/NGINX.srs |
+| NGROK | https://direct.sleepstars.de/geosite/NGROK | https://direct.sleepstars.de/srs-geosite/NGROK.srs |
 | NICONICO | https://direct.sleepstars.de/geosite/NICONICO | https://direct.sleepstars.de/srs-geosite/NICONICO.srs |
 | NIKE | https://direct.sleepstars.de/geosite/NIKE | https://direct.sleepstars.de/srs-geosite/NIKE.srs |
 | NIKKAN-GENDAI | https://direct.sleepstars.de/geosite/NIKKAN-GENDAI | https://direct.sleepstars.de/srs-geosite/NIKKAN-GENDAI.srs |
@@ -1002,6 +1004,7 @@
 | PINDUODUO | https://direct.sleepstars.de/geosite/PINDUODUO | https://direct.sleepstars.de/srs-geosite/PINDUODUO.srs |
 | PINGAN | https://direct.sleepstars.de/geosite/PINGAN | https://direct.sleepstars.de/srs-geosite/PINGAN.srs |
 | PINGCAP | https://direct.sleepstars.de/geosite/PINGCAP | https://direct.sleepstars.de/srs-geosite/PINGCAP.srs |
+| PINGGY | https://direct.sleepstars.de/geosite/PINGGY | https://direct.sleepstars.de/srs-geosite/PINGGY.srs |
 | PINGPE | https://direct.sleepstars.de/geosite/PINGPE | https://direct.sleepstars.de/srs-geosite/PINGPE.srs |
 | PINGSX | https://direct.sleepstars.de/geosite/PINGSX | https://direct.sleepstars.de/srs-geosite/PINGSX.srs |
 | PINKCORE | https://direct.sleepstars.de/geosite/PINKCORE | https://direct.sleepstars.de/srs-geosite/PINKCORE.srs |
