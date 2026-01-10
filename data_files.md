@@ -236,6 +236,7 @@
 | CATEGORY-DOCUMENTS-CN | https://direct.sleepstars.de/geosite/CATEGORY-DOCUMENTS-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-DOCUMENTS-CN.srs |
 | CATEGORY-DOH | https://direct.sleepstars.de/geosite/CATEGORY-DOH | https://direct.sleepstars.de/srs-geosite/CATEGORY-DOH.srs |
 | CATEGORY-ECOMMERCE | https://direct.sleepstars.de/geosite/CATEGORY-ECOMMERCE | https://direct.sleepstars.de/srs-geosite/CATEGORY-ECOMMERCE.srs |
+| CATEGORY-ECOMMERCE-RU | https://direct.sleepstars.de/geosite/CATEGORY-ECOMMERCE-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-ECOMMERCE-RU.srs |
 | CATEGORY-EDUCATION-CN | https://direct.sleepstars.de/geosite/CATEGORY-EDUCATION-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-EDUCATION-CN.srs |
 | CATEGORY-EDUCATION-IR | https://direct.sleepstars.de/geosite/CATEGORY-EDUCATION-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-EDUCATION-IR.srs |
 | CATEGORY-ELECTRONIC-CN | https://direct.sleepstars.de/geosite/CATEGORY-ELECTRONIC-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-ELECTRONIC-CN.srs |
@@ -244,6 +245,7 @@
 | CATEGORY-ENTERPRISE-QUERY-PLATFORM-CN | https://direct.sleepstars.de/geosite/CATEGORY-ENTERPRISE-QUERY-PLATFORM-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-ENTERPRISE-QUERY-PLATFORM-CN.srs |
 | CATEGORY-ENTERTAINMENT | https://direct.sleepstars.de/geosite/CATEGORY-ENTERTAINMENT | https://direct.sleepstars.de/srs-geosite/CATEGORY-ENTERTAINMENT.srs |
 | CATEGORY-ENTERTAINMENT-CN | https://direct.sleepstars.de/geosite/CATEGORY-ENTERTAINMENT-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-ENTERTAINMENT-CN.srs |
+| CATEGORY-ENTERTAINMENT-RU | https://direct.sleepstars.de/geosite/CATEGORY-ENTERTAINMENT-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-ENTERTAINMENT-RU.srs |
 | CATEGORY-FINANCE | https://direct.sleepstars.de/geosite/CATEGORY-FINANCE | https://direct.sleepstars.de/srs-geosite/CATEGORY-FINANCE.srs |
 | CATEGORY-FOOD-CN | https://direct.sleepstars.de/geosite/CATEGORY-FOOD-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-FOOD-CN.srs |
 | CATEGORY-FORUMS | https://direct.sleepstars.de/geosite/CATEGORY-FORUMS | https://direct.sleepstars.de/srs-geosite/CATEGORY-FORUMS.srs |
@@ -286,6 +288,7 @@
 | CATEGORY-PT | https://direct.sleepstars.de/geosite/CATEGORY-PT | https://direct.sleepstars.de/srs-geosite/CATEGORY-PT.srs |
 | CATEGORY-PUBLIC-TRACKER | https://direct.sleepstars.de/geosite/CATEGORY-PUBLIC-TRACKER | https://direct.sleepstars.de/srs-geosite/CATEGORY-PUBLIC-TRACKER.srs |
 | CATEGORY-REMOTE-CONTROL | https://direct.sleepstars.de/geosite/CATEGORY-REMOTE-CONTROL | https://direct.sleepstars.de/srs-geosite/CATEGORY-REMOTE-CONTROL.srs |
+| CATEGORY-RETAIL-RU | https://direct.sleepstars.de/geosite/CATEGORY-RETAIL-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-RETAIL-RU.srs |
 | CATEGORY-RU | https://direct.sleepstars.de/geosite/CATEGORY-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-RU.srs |
 | CATEGORY-SCHOLAR-!CN | https://direct.sleepstars.de/geosite/CATEGORY-SCHOLAR-!CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-SCHOLAR-!CN.srs |
 | CATEGORY-SCHOLAR-CN | https://direct.sleepstars.de/geosite/CATEGORY-SCHOLAR-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-SCHOLAR-CN.srs |
@@ -882,6 +885,7 @@
 | MOPUB-ADS | https://direct.sleepstars.de/geosite/MOPUB-ADS | https://direct.sleepstars.de/srs-geosite/MOPUB-ADS.srs |
 | MORISAWA | https://direct.sleepstars.de/geosite/MORISAWA | https://direct.sleepstars.de/srs-geosite/MORISAWA.srs |
 | MORTEIN | https://direct.sleepstars.de/geosite/MORTEIN | https://direct.sleepstars.de/srs-geosite/MORTEIN.srs |
+| MOSMETRO | https://direct.sleepstars.de/geosite/MOSMETRO | https://direct.sleepstars.de/srs-geosite/MOSMETRO.srs |
 | MOVEFREE | https://direct.sleepstars.de/geosite/MOVEFREE | https://direct.sleepstars.de/srs-geosite/MOVEFREE.srs |
 | MOXING | https://direct.sleepstars.de/geosite/MOXING | https://direct.sleepstars.de/srs-geosite/MOXING.srs |
 | MOZILLA | https://direct.sleepstars.de/geosite/MOZILLA | https://direct.sleepstars.de/srs-geosite/MOZILLA.srs |
@@ -1221,6 +1225,7 @@
 | TCL | https://direct.sleepstars.de/geosite/TCL | https://direct.sleepstars.de/srs-geosite/TCL.srs |
 | TEAMBITION | https://direct.sleepstars.de/geosite/TEAMBITION | https://direct.sleepstars.de/srs-geosite/TEAMBITION.srs |
 | TEAMVIEWER | https://direct.sleepstars.de/geosite/TEAMVIEWER | https://direct.sleepstars.de/srs-geosite/TEAMVIEWER.srs |
+| TECHNOGYM | https://direct.sleepstars.de/geosite/TECHNOGYM | https://direct.sleepstars.de/srs-geosite/TECHNOGYM.srs |
 | TECHPOWERUP | https://direct.sleepstars.de/geosite/TECHPOWERUP | https://direct.sleepstars.de/srs-geosite/TECHPOWERUP.srs |
 | TECHTIMES | https://direct.sleepstars.de/geosite/TECHTIMES | https://direct.sleepstars.de/srs-geosite/TECHTIMES.srs |
 | TED | https://direct.sleepstars.de/geosite/TED | https://direct.sleepstars.de/srs-geosite/TED.srs |
