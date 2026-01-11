@@ -1107,6 +1107,7 @@
 | SCALA | https://direct.sleepstars.de/geosite/SCALA | https://direct.sleepstars.de/srs-geosite/SCALA.srs |
 | SCALEFLEX | https://direct.sleepstars.de/geosite/SCALEFLEX | https://direct.sleepstars.de/srs-geosite/SCALEFLEX.srs |
 | SCENESOURCE | https://direct.sleepstars.de/geosite/SCENESOURCE | https://direct.sleepstars.de/srs-geosite/SCENESOURCE.srs |
+| SCHOOPIA | https://direct.sleepstars.de/geosite/SCHOOPIA | https://direct.sleepstars.de/srs-geosite/SCHOOPIA.srs |
 | SCHWAB | https://direct.sleepstars.de/geosite/SCHWAB | https://direct.sleepstars.de/srs-geosite/SCHWAB.srs |
 | SCI | https://direct.sleepstars.de/geosite/SCI | https://direct.sleepstars.de/srs-geosite/SCI.srs |
 | SCI-HUB | https://direct.sleepstars.de/geosite/SCI-HUB | https://direct.sleepstars.de/srs-geosite/SCI-HUB.srs |
