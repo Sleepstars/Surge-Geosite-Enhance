@@ -1002,7 +1002,6 @@
 | PGYER | https://direct.sleepstars.de/geosite/PGYER | https://direct.sleepstars.de/srs-geosite/PGYER.srs |
 | PHOENIX | https://direct.sleepstars.de/geosite/PHOENIX | https://direct.sleepstars.de/srs-geosite/PHOENIX.srs |
 | PICACG | https://direct.sleepstars.de/geosite/PICACG | https://direct.sleepstars.de/srs-geosite/PICACG.srs |
-| PICACG-ADS | https://direct.sleepstars.de/geosite/PICACG-ADS | https://direct.sleepstars.de/srs-geosite/PICACG-ADS.srs |
 | PICSEE | https://direct.sleepstars.de/geosite/PICSEE | https://direct.sleepstars.de/srs-geosite/PICSEE.srs |
 | PIKPAK | https://direct.sleepstars.de/geosite/PIKPAK | https://direct.sleepstars.de/srs-geosite/PIKPAK.srs |
 | PINDUODUO | https://direct.sleepstars.de/geosite/PINDUODUO | https://direct.sleepstars.de/srs-geosite/PINDUODUO.srs |
@@ -1452,7 +1451,6 @@
 | ZEPLIN | https://direct.sleepstars.de/geosite/ZEPLIN | https://direct.sleepstars.de/srs-geosite/ZEPLIN.srs |
 | ZHANGTAO | https://direct.sleepstars.de/geosite/ZHANGTAO | https://direct.sleepstars.de/srs-geosite/ZHANGTAO.srs |
 | ZHIHU | https://direct.sleepstars.de/geosite/ZHIHU | https://direct.sleepstars.de/srs-geosite/ZHIHU.srs |
-| ZHIHU-ADS | https://direct.sleepstars.de/geosite/ZHIHU-ADS | https://direct.sleepstars.de/srs-geosite/ZHIHU-ADS.srs |
 | ZHIMEISHE | https://direct.sleepstars.de/geosite/ZHIMEISHE | https://direct.sleepstars.de/srs-geosite/ZHIMEISHE.srs |
 | ZHUBAJIE | https://direct.sleepstars.de/geosite/ZHUBAJIE | https://direct.sleepstars.de/srs-geosite/ZHUBAJIE.srs |
 | ZIROOM | https://direct.sleepstars.de/geosite/ZIROOM | https://direct.sleepstars.de/srs-geosite/ZIROOM.srs |
