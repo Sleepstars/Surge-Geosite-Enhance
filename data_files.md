@@ -1188,6 +1188,7 @@
 | STARWORLD | https://direct.sleepstars.de/geosite/STARWORLD | https://direct.sleepstars.de/srs-geosite/STARWORLD.srs |
 | STATICFILE | https://direct.sleepstars.de/geosite/STATICFILE | https://direct.sleepstars.de/srs-geosite/STATICFILE.srs |
 | STEAM | https://direct.sleepstars.de/geosite/STEAM | https://direct.sleepstars.de/srs-geosite/STEAM.srs |
+| STEAMINVENTORYHELPER | https://direct.sleepstars.de/geosite/STEAMINVENTORYHELPER | https://direct.sleepstars.de/srs-geosite/STEAMINVENTORYHELPER.srs |
 | STEAMUNLOCKED | https://direct.sleepstars.de/geosite/STEAMUNLOCKED | https://direct.sleepstars.de/srs-geosite/STEAMUNLOCKED.srs |
 | STEEMIT | https://direct.sleepstars.de/geosite/STEEMIT | https://direct.sleepstars.de/srs-geosite/STEEMIT.srs |
 | STO-EXPRESS | https://direct.sleepstars.de/geosite/STO-EXPRESS | https://direct.sleepstars.de/srs-geosite/STO-EXPRESS.srs |
