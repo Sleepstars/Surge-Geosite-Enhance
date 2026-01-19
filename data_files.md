@@ -1038,6 +1038,7 @@
 | PROTONMAIL | https://direct.sleepstars.de/geosite/PROTONMAIL | https://direct.sleepstars.de/srs-geosite/PROTONMAIL.srs |
 | PSTORAGE | https://direct.sleepstars.de/geosite/PSTORAGE | https://direct.sleepstars.de/srs-geosite/PSTORAGE.srs |
 | PTT | https://direct.sleepstars.de/geosite/PTT | https://direct.sleepstars.de/srs-geosite/PTT.srs |
+| PUBG | https://direct.sleepstars.de/geosite/PUBG | https://direct.sleepstars.de/srs-geosite/PUBG.srs |
 | PUBMATIC | https://direct.sleepstars.de/geosite/PUBMATIC | https://direct.sleepstars.de/srs-geosite/PUBMATIC.srs |
 | PUBMATIC-ADS | https://direct.sleepstars.de/geosite/PUBMATIC-ADS | https://direct.sleepstars.de/srs-geosite/PUBMATIC-ADS.srs |
 | PUGPIG | https://direct.sleepstars.de/geosite/PUGPIG | https://direct.sleepstars.de/srs-geosite/PUGPIG.srs |
