@@ -809,6 +809,7 @@
 | LINUXDO | https://direct.sleepstars.de/geosite/LINUXDO | https://direct.sleepstars.de/srs-geosite/LINUXDO.srs |
 | LISIKU | https://direct.sleepstars.de/geosite/LISIKU | https://direct.sleepstars.de/srs-geosite/LISIKU.srs |
 | LITV | https://direct.sleepstars.de/geosite/LITV | https://direct.sleepstars.de/srs-geosite/LITV.srs |
+| LIVEPERSON | https://direct.sleepstars.de/geosite/LIVEPERSON | https://direct.sleepstars.de/srs-geosite/LIVEPERSON.srs |
 | LIZHI | https://direct.sleepstars.de/geosite/LIZHI | https://direct.sleepstars.de/srs-geosite/LIZHI.srs |
 | LKCOFFEE | https://direct.sleepstars.de/geosite/LKCOFFEE | https://direct.sleepstars.de/srs-geosite/LKCOFFEE.srs |
 | LOCALBITCOINS | https://direct.sleepstars.de/geosite/LOCALBITCOINS | https://direct.sleepstars.de/srs-geosite/LOCALBITCOINS.srs |
@@ -1120,7 +1121,6 @@
 | SEGMENT-ADS | https://direct.sleepstars.de/geosite/SEGMENT-ADS | https://direct.sleepstars.de/srs-geosite/SEGMENT-ADS.srs |
 | SEGMENTFAULT | https://direct.sleepstars.de/geosite/SEGMENTFAULT | https://direct.sleepstars.de/srs-geosite/SEGMENTFAULT.srs |
 | SEHUATANG | https://direct.sleepstars.de/geosite/SEHUATANG | https://direct.sleepstars.de/srs-geosite/SEHUATANG.srs |
-| SENSORSDATA-ADS | https://direct.sleepstars.de/geosite/SENSORSDATA-ADS | https://direct.sleepstars.de/srs-geosite/SENSORSDATA-ADS.srs |
 | SENTRY | https://direct.sleepstars.de/geosite/SENTRY | https://direct.sleepstars.de/srs-geosite/SENTRY.srs |
 | SETAPP | https://direct.sleepstars.de/geosite/SETAPP | https://direct.sleepstars.de/srs-geosite/SETAPP.srs |
 | SETN | https://direct.sleepstars.de/geosite/SETN | https://direct.sleepstars.de/srs-geosite/SETN.srs |
@@ -1182,6 +1182,7 @@
 | STACKEXCHANGE | https://direct.sleepstars.de/geosite/STACKEXCHANGE | https://direct.sleepstars.de/srs-geosite/STACKEXCHANGE.srs |
 | STACKPATH | https://direct.sleepstars.de/geosite/STACKPATH | https://direct.sleepstars.de/srs-geosite/STACKPATH.srs |
 | STAGE1ST | https://direct.sleepstars.de/geosite/STAGE1ST | https://direct.sleepstars.de/srs-geosite/STAGE1ST.srs |
+| STANDARDCHARTERED | https://direct.sleepstars.de/geosite/STANDARDCHARTERED | https://direct.sleepstars.de/srs-geosite/STANDARDCHARTERED.srs |
 | STARBUCKS | https://direct.sleepstars.de/geosite/STARBUCKS | https://direct.sleepstars.de/srs-geosite/STARBUCKS.srs |
 | STARFIELDTECH | https://direct.sleepstars.de/geosite/STARFIELDTECH | https://direct.sleepstars.de/srs-geosite/STARFIELDTECH.srs |
 | STARPLUS | https://direct.sleepstars.de/geosite/STARPLUS | https://direct.sleepstars.de/srs-geosite/STARPLUS.srs |
@@ -1407,6 +1408,7 @@
 | XIAOMI | https://direct.sleepstars.de/geosite/XIAOMI | https://direct.sleepstars.de/srs-geosite/XIAOMI.srs |
 | XIAOMI-ADS | https://direct.sleepstars.de/geosite/XIAOMI-ADS | https://direct.sleepstars.de/srs-geosite/XIAOMI-ADS.srs |
 | XIAOMI-AI | https://direct.sleepstars.de/geosite/XIAOMI-AI | https://direct.sleepstars.de/srs-geosite/XIAOMI-AI.srs |
+| XIAOMI-IOT | https://direct.sleepstars.de/geosite/XIAOMI-IOT | https://direct.sleepstars.de/srs-geosite/XIAOMI-IOT.srs |
 | XIAOYUZHOU | https://direct.sleepstars.de/geosite/XIAOYUZHOU | https://direct.sleepstars.de/srs-geosite/XIAOYUZHOU.srs |
 | XIMALAYA | https://direct.sleepstars.de/geosite/XIMALAYA | https://direct.sleepstars.de/srs-geosite/XIMALAYA.srs |
 | XIMALAYA-ADS | https://direct.sleepstars.de/geosite/XIMALAYA-ADS | https://direct.sleepstars.de/srs-geosite/XIMALAYA-ADS.srs |
@@ -1429,6 +1431,7 @@
 | YOUJIZZ | https://direct.sleepstars.de/geosite/YOUJIZZ | https://direct.sleepstars.de/srs-geosite/YOUJIZZ.srs |
 | YOUKU | https://direct.sleepstars.de/geosite/YOUKU | https://direct.sleepstars.de/srs-geosite/YOUKU.srs |
 | YOUKU-ADS | https://direct.sleepstars.de/geosite/YOUKU-ADS | https://direct.sleepstars.de/srs-geosite/YOUKU-ADS.srs |
+| YOUMIND | https://direct.sleepstars.de/geosite/YOUMIND | https://direct.sleepstars.de/srs-geosite/YOUMIND.srs |
 | YOUPORN | https://direct.sleepstars.de/geosite/YOUPORN | https://direct.sleepstars.de/srs-geosite/YOUPORN.srs |
 | YOUQUAN | https://direct.sleepstars.de/geosite/YOUQUAN | https://direct.sleepstars.de/srs-geosite/YOUQUAN.srs |
 | YOUTUBE | https://direct.sleepstars.de/geosite/YOUTUBE | https://direct.sleepstars.de/srs-geosite/YOUTUBE.srs |
