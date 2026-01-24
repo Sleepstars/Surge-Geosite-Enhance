@@ -481,6 +481,7 @@
 | EMBL | https://direct.sleepstars.de/geosite/EMBL | https://direct.sleepstars.de/srs-geosite/EMBL.srs |
 | EMOGI-ADS | https://direct.sleepstars.de/geosite/EMOGI-ADS | https://direct.sleepstars.de/srs-geosite/EMOGI-ADS.srs |
 | EMOJIPEDIA | https://direct.sleepstars.de/geosite/EMOJIPEDIA | https://direct.sleepstars.de/srs-geosite/EMOJIPEDIA.srs |
+| ENEBA | https://direct.sleepstars.de/geosite/ENEBA | https://direct.sleepstars.de/srs-geosite/ENEBA.srs |
 | ENFA | https://direct.sleepstars.de/geosite/ENFA | https://direct.sleepstars.de/srs-geosite/ENFA.srs |
 | ENTERMEDIADB | https://direct.sleepstars.de/geosite/ENTERMEDIADB | https://direct.sleepstars.de/srs-geosite/ENTERMEDIADB.srs |
 | ENTRUST | https://direct.sleepstars.de/geosite/ENTRUST | https://direct.sleepstars.de/srs-geosite/ENTRUST.srs |
