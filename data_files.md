@@ -810,6 +810,7 @@
 | LOGITECH | https://direct.sleepstars.de/geosite/LOGITECH | https://direct.sleepstars.de/srs-geosite/LOGITECH.srs |
 | LONDONREAL | https://direct.sleepstars.de/geosite/LONDONREAL | https://direct.sleepstars.de/srs-geosite/LONDONREAL.srs |
 | LONGBRIDGE | https://direct.sleepstars.de/geosite/LONGBRIDGE | https://direct.sleepstars.de/srs-geosite/LONGBRIDGE.srs |
+| LOUISVUITTON | https://direct.sleepstars.de/geosite/LOUISVUITTON | https://direct.sleepstars.de/srs-geosite/LOUISVUITTON.srs |
 | LOWIRO | https://direct.sleepstars.de/geosite/LOWIRO | https://direct.sleepstars.de/srs-geosite/LOWIRO.srs |
 | LTN | https://direct.sleepstars.de/geosite/LTN | https://direct.sleepstars.de/srs-geosite/LTN.srs |
 | LUMION | https://direct.sleepstars.de/geosite/LUMION | https://direct.sleepstars.de/srs-geosite/LUMION.srs |
