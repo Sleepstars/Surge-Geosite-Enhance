@@ -566,6 +566,7 @@
 | GITEE | https://direct.sleepstars.de/geosite/GITEE | https://direct.sleepstars.de/srs-geosite/GITEE.srs |
 | GITHUB | https://direct.sleepstars.de/geosite/GITHUB | https://direct.sleepstars.de/srs-geosite/GITHUB.srs |
 | GITHUB-ADS | https://direct.sleepstars.de/geosite/GITHUB-ADS | https://direct.sleepstars.de/srs-geosite/GITHUB-ADS.srs |
+| GITHUB-COPILOT | https://direct.sleepstars.de/geosite/GITHUB-COPILOT | https://direct.sleepstars.de/srs-geosite/GITHUB-COPILOT.srs |
 | GITHUB1S | https://direct.sleepstars.de/geosite/GITHUB1S | https://direct.sleepstars.de/srs-geosite/GITHUB1S.srs |
 | GITLAB | https://direct.sleepstars.de/geosite/GITLAB | https://direct.sleepstars.de/srs-geosite/GITLAB.srs |
 | GITV | https://direct.sleepstars.de/geosite/GITV | https://direct.sleepstars.de/srs-geosite/GITV.srs |
