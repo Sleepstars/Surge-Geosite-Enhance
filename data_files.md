@@ -595,6 +595,7 @@
 | GREATFIRE | https://direct.sleepstars.de/geosite/GREATFIRE | https://direct.sleepstars.de/srs-geosite/GREATFIRE.srs |
 | GREE | https://direct.sleepstars.de/geosite/GREE | https://direct.sleepstars.de/srs-geosite/GREE.srs |
 | GROQ | https://direct.sleepstars.de/geosite/GROQ | https://direct.sleepstars.de/srs-geosite/GROQ.srs |
+| GROWINGIO | https://direct.sleepstars.de/geosite/GROWINGIO | https://direct.sleepstars.de/srs-geosite/GROWINGIO.srs |
 | GUCCI | https://direct.sleepstars.de/geosite/GUCCI | https://direct.sleepstars.de/srs-geosite/GUCCI.srs |
 | GUO | https://direct.sleepstars.de/geosite/GUO | https://direct.sleepstars.de/srs-geosite/GUO.srs |
 | GUOKR | https://direct.sleepstars.de/geosite/GUOKR | https://direct.sleepstars.de/srs-geosite/GUOKR.srs |
@@ -1053,6 +1054,7 @@
 | QUORA | https://direct.sleepstars.de/geosite/QUORA | https://direct.sleepstars.de/srs-geosite/QUORA.srs |
 | QWANT | https://direct.sleepstars.de/geosite/QWANT | https://direct.sleepstars.de/srs-geosite/QWANT.srs |
 | QWEATHER | https://direct.sleepstars.de/geosite/QWEATHER | https://direct.sleepstars.de/srs-geosite/QWEATHER.srs |
+| RADIKO | https://direct.sleepstars.de/geosite/RADIKO | https://direct.sleepstars.de/srs-geosite/RADIKO.srs |
 | RAKUTEN | https://direct.sleepstars.de/geosite/RAKUTEN | https://direct.sleepstars.de/srs-geosite/RAKUTEN.srs |
 | RARBG | https://direct.sleepstars.de/geosite/RARBG | https://direct.sleepstars.de/srs-geosite/RARBG.srs |
 | RAZER | https://direct.sleepstars.de/geosite/RAZER | https://direct.sleepstars.de/srs-geosite/RAZER.srs |
