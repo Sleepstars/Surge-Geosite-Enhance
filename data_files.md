@@ -826,6 +826,7 @@
 | MANHUAGUI | https://direct.sleepstars.de/geosite/MANHUAGUI | https://direct.sleepstars.de/srs-geosite/MANHUAGUI.srs |
 | MANORAMA | https://direct.sleepstars.de/geosite/MANORAMA | https://direct.sleepstars.de/srs-geosite/MANORAMA.srs |
 | MANOTO | https://direct.sleepstars.de/geosite/MANOTO | https://direct.sleepstars.de/srs-geosite/MANOTO.srs |
+| MANUS | https://direct.sleepstars.de/geosite/MANUS | https://direct.sleepstars.de/srs-geosite/MANUS.srs |
 | MAOCLOUD | https://direct.sleepstars.de/geosite/MAOCLOUD | https://direct.sleepstars.de/srs-geosite/MAOCLOUD.srs |
 | MAPBOX | https://direct.sleepstars.de/geosite/MAPBOX | https://direct.sleepstars.de/srs-geosite/MAPBOX.srs |
 | MARVEL | https://direct.sleepstars.de/geosite/MARVEL | https://direct.sleepstars.de/srs-geosite/MARVEL.srs |
