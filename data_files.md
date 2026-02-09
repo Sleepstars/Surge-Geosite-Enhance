@@ -113,6 +113,7 @@
 | ATTWATCHTV | https://direct.sleepstars.de/geosite/ATTWATCHTV | https://direct.sleepstars.de/srs-geosite/ATTWATCHTV.srs |
 | AUTODESK | https://direct.sleepstars.de/geosite/AUTODESK | https://direct.sleepstars.de/srs-geosite/AUTODESK.srs |
 | AVAXHOME | https://direct.sleepstars.de/geosite/AVAXHOME | https://direct.sleepstars.de/srs-geosite/AVAXHOME.srs |
+| AVIASALES | https://direct.sleepstars.de/geosite/AVIASALES | https://direct.sleepstars.de/srs-geosite/AVIASALES.srs |
 | AVITO | https://direct.sleepstars.de/geosite/AVITO | https://direct.sleepstars.de/srs-geosite/AVITO.srs |
 | AVMOO | https://direct.sleepstars.de/geosite/AVMOO | https://direct.sleepstars.de/srs-geosite/AVMOO.srs |
 | AWEMPIRE | https://direct.sleepstars.de/geosite/AWEMPIRE | https://direct.sleepstars.de/srs-geosite/AWEMPIRE.srs |
@@ -611,6 +612,7 @@
 | HAVEIBEENPWNED | https://direct.sleepstars.de/geosite/HAVEIBEENPWNED | https://direct.sleepstars.de/srs-geosite/HAVEIBEENPWNED.srs |
 | HBO | https://direct.sleepstars.de/geosite/HBO | https://direct.sleepstars.de/srs-geosite/HBO.srs |
 | HCAPTCHA | https://direct.sleepstars.de/geosite/HCAPTCHA | https://direct.sleepstars.de/srs-geosite/HCAPTCHA.srs |
+| HDREZKA | https://direct.sleepstars.de/geosite/HDREZKA | https://direct.sleepstars.de/srs-geosite/HDREZKA.srs |
 | HENTAICHEN | https://direct.sleepstars.de/geosite/HENTAICHEN | https://direct.sleepstars.de/srs-geosite/HENTAICHEN.srs |
 | HENTAIVN | https://direct.sleepstars.de/geosite/HENTAIVN | https://direct.sleepstars.de/srs-geosite/HENTAIVN.srs |
 | HEROGAME | https://direct.sleepstars.de/geosite/HEROGAME | https://direct.sleepstars.de/srs-geosite/HEROGAME.srs |
@@ -754,6 +756,7 @@
 | KKTV | https://direct.sleepstars.de/geosite/KKTV | https://direct.sleepstars.de/srs-geosite/KKTV.srs |
 | KNOVEL | https://direct.sleepstars.de/geosite/KNOVEL | https://direct.sleepstars.de/srs-geosite/KNOVEL.srs |
 | KODI | https://direct.sleepstars.de/geosite/KODI | https://direct.sleepstars.de/srs-geosite/KODI.srs |
+| KODIK | https://direct.sleepstars.de/geosite/KODIK | https://direct.sleepstars.de/srs-geosite/KODIK.srs |
 | KONACHAN | https://direct.sleepstars.de/geosite/KONACHAN | https://direct.sleepstars.de/srs-geosite/KONACHAN.srs |
 | KOOLEARN | https://direct.sleepstars.de/geosite/KOOLEARN | https://direct.sleepstars.de/srs-geosite/KOOLEARN.srs |
 | KRAKEN | https://direct.sleepstars.de/geosite/KRAKEN | https://direct.sleepstars.de/srs-geosite/KRAKEN.srs |
@@ -1367,6 +1370,7 @@
 | WIN-EXTRA | https://direct.sleepstars.de/geosite/WIN-EXTRA | https://direct.sleepstars.de/srs-geosite/WIN-EXTRA.srs |
 | WIN-SPY | https://direct.sleepstars.de/geosite/WIN-SPY | https://direct.sleepstars.de/srs-geosite/WIN-SPY.srs |
 | WIN-UPDATE | https://direct.sleepstars.de/geosite/WIN-UPDATE | https://direct.sleepstars.de/srs-geosite/WIN-UPDATE.srs |
+| WINDSURF | https://direct.sleepstars.de/geosite/WINDSURF | https://direct.sleepstars.de/srs-geosite/WINDSURF.srs |
 | WINDY | https://direct.sleepstars.de/geosite/WINDY | https://direct.sleepstars.de/srs-geosite/WINDY.srs |
 | WINK | https://direct.sleepstars.de/geosite/WINK | https://direct.sleepstars.de/srs-geosite/WINK.srs |
 | WISE | https://direct.sleepstars.de/geosite/WISE | https://direct.sleepstars.de/srs-geosite/WISE.srs |
