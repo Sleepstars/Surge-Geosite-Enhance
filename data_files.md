@@ -545,6 +545,7 @@
 | FTV | https://direct.sleepstars.de/geosite/FTV | https://direct.sleepstars.de/srs-geosite/FTV.srs |
 | FUTU | https://direct.sleepstars.de/geosite/FUTU | https://direct.sleepstars.de/srs-geosite/FUTU.srs |
 | FZDM | https://direct.sleepstars.de/geosite/FZDM | https://direct.sleepstars.de/srs-geosite/FZDM.srs |
+| GAIJIN | https://direct.sleepstars.de/geosite/GAIJIN | https://direct.sleepstars.de/srs-geosite/GAIJIN.srs |
 | GAMERSKY | https://direct.sleepstars.de/geosite/GAMERSKY | https://direct.sleepstars.de/srs-geosite/GAMERSKY.srs |
 | GANDI | https://direct.sleepstars.de/geosite/GANDI | https://direct.sleepstars.de/srs-geosite/GANDI.srs |
 | GANJI | https://direct.sleepstars.de/geosite/GANJI | https://direct.sleepstars.de/srs-geosite/GANJI.srs |
@@ -1214,6 +1215,7 @@
 | TABOOLA | https://direct.sleepstars.de/geosite/TABOOLA | https://direct.sleepstars.de/srs-geosite/TABOOLA.srs |
 | TAIKANG | https://direct.sleepstars.de/geosite/TAIKANG | https://direct.sleepstars.de/srs-geosite/TAIKANG.srs |
 | TAILSCALE | https://direct.sleepstars.de/geosite/TAILSCALE | https://direct.sleepstars.de/srs-geosite/TAILSCALE.srs |
+| TAKE-TWO | https://direct.sleepstars.de/geosite/TAKE-TWO | https://direct.sleepstars.de/srs-geosite/TAKE-TWO.srs |
 | TALKATONE | https://direct.sleepstars.de/geosite/TALKATONE | https://direct.sleepstars.de/srs-geosite/TALKATONE.srs |
 | TAOMEE | https://direct.sleepstars.de/geosite/TAOMEE | https://direct.sleepstars.de/srs-geosite/TAOMEE.srs |
 | TAPTAP | https://direct.sleepstars.de/geosite/TAPTAP | https://direct.sleepstars.de/srs-geosite/TAPTAP.srs |
@@ -1460,3 +1462,4 @@
 | ZTO-EXPRESS | https://direct.sleepstars.de/geosite/ZTO-EXPRESS | https://direct.sleepstars.de/srs-geosite/ZTO-EXPRESS.srs |
 | ZUOYEBANG | https://direct.sleepstars.de/geosite/ZUOYEBANG | https://direct.sleepstars.de/srs-geosite/ZUOYEBANG.srs |
 | ZUOYEBANG-ADS | https://direct.sleepstars.de/geosite/ZUOYEBANG-ADS | https://direct.sleepstars.de/srs-geosite/ZUOYEBANG-ADS.srs |
+| ZYNGA | https://direct.sleepstars.de/geosite/ZYNGA | https://direct.sleepstars.de/srs-geosite/ZYNGA.srs |
