@@ -401,6 +401,7 @@
 | DART | https://direct.sleepstars.de/geosite/DART | https://direct.sleepstars.de/srs-geosite/DART.srs |
 | DAZN | https://direct.sleepstars.de/geosite/DAZN | https://direct.sleepstars.de/srs-geosite/DAZN.srs |
 | DCARD | https://direct.sleepstars.de/geosite/DCARD | https://direct.sleepstars.de/srs-geosite/DCARD.srs |
+| DDMAICAI | https://direct.sleepstars.de/geosite/DDMAICAI | https://direct.sleepstars.de/srs-geosite/DDMAICAI.srs |
 | DEBIAN | https://direct.sleepstars.de/geosite/DEBIAN | https://direct.sleepstars.de/srs-geosite/DEBIAN.srs |
 | DECRYPTIPASTORE | https://direct.sleepstars.de/geosite/DECRYPTIPASTORE | https://direct.sleepstars.de/srs-geosite/DECRYPTIPASTORE.srs |
 | DEDAO | https://direct.sleepstars.de/geosite/DEDAO | https://direct.sleepstars.de/srs-geosite/DEDAO.srs |
