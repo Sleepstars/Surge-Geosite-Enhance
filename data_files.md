@@ -8,6 +8,7 @@
 | 17ZUOYE | https://direct.sleepstars.de/geosite/17ZUOYE | https://direct.sleepstars.de/srs-geosite/17ZUOYE.srs |
 | 18COMIC | https://direct.sleepstars.de/geosite/18COMIC | https://direct.sleepstars.de/srs-geosite/18COMIC.srs |
 | 2CH | https://direct.sleepstars.de/geosite/2CH | https://direct.sleepstars.de/srs-geosite/2CH.srs |
+| 2GIS | https://direct.sleepstars.de/geosite/2GIS | https://direct.sleepstars.de/srs-geosite/2GIS.srs |
 | 2KGAMES | https://direct.sleepstars.de/geosite/2KGAMES | https://direct.sleepstars.de/srs-geosite/2KGAMES.srs |
 | 36KR | https://direct.sleepstars.de/geosite/36KR | https://direct.sleepstars.de/srs-geosite/36KR.srs |
 | 4399 | https://direct.sleepstars.de/geosite/4399 | https://direct.sleepstars.de/srs-geosite/4399.srs |
@@ -48,6 +49,7 @@
 | AGILEBITS | https://direct.sleepstars.de/geosite/AGILEBITS | https://direct.sleepstars.de/srs-geosite/AGILEBITS.srs |
 | AGORA | https://direct.sleepstars.de/geosite/AGORA | https://direct.sleepstars.de/srs-geosite/AGORA.srs |
 | AIQICHA | https://direct.sleepstars.de/geosite/AIQICHA | https://direct.sleepstars.de/srs-geosite/AIQICHA.srs |
+| AIRBNB | https://direct.sleepstars.de/geosite/AIRBNB | https://direct.sleepstars.de/srs-geosite/AIRBNB.srs |
 | AIRCHINA | https://direct.sleepstars.de/geosite/AIRCHINA | https://direct.sleepstars.de/srs-geosite/AIRCHINA.srs |
 | AIRWICK | https://direct.sleepstars.de/geosite/AIRWICK | https://direct.sleepstars.de/srs-geosite/AIRWICK.srs |
 | AISIKU | https://direct.sleepstars.de/geosite/AISIKU | https://direct.sleepstars.de/srs-geosite/AISIKU.srs |
