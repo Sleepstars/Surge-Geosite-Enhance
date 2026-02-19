@@ -72,6 +72,7 @@
 | ANDROID | https://direct.sleepstars.de/geosite/ANDROID | https://direct.sleepstars.de/srs-geosite/ANDROID.srs |
 | ANEXIA | https://direct.sleepstars.de/geosite/ANEXIA | https://direct.sleepstars.de/srs-geosite/ANEXIA.srs |
 | ANIME | https://direct.sleepstars.de/geosite/ANIME | https://direct.sleepstars.de/srs-geosite/ANIME.srs |
+| ANKER | https://direct.sleepstars.de/geosite/ANKER | https://direct.sleepstars.de/srs-geosite/ANKER.srs |
 | ANNAS-ARCHIVE | https://direct.sleepstars.de/geosite/ANNAS-ARCHIVE | https://direct.sleepstars.de/srs-geosite/ANNAS-ARCHIVE.srs |
 | ANON-V | https://direct.sleepstars.de/geosite/ANON-V | https://direct.sleepstars.de/srs-geosite/ANON-V.srs |
 | ANTHROPIC | https://direct.sleepstars.de/geosite/ANTHROPIC | https://direct.sleepstars.de/srs-geosite/ANTHROPIC.srs |
@@ -1236,6 +1237,7 @@
 | TLD-!CN | https://direct.sleepstars.de/geosite/TLD-!CN | https://direct.sleepstars.de/srs-geosite/TLD-!CN.srs |
 | TLD-CN | https://direct.sleepstars.de/geosite/TLD-CN | https://direct.sleepstars.de/srs-geosite/TLD-CN.srs |
 | TLD-OPENNIC | https://direct.sleepstars.de/geosite/TLD-OPENNIC | https://direct.sleepstars.de/srs-geosite/TLD-OPENNIC.srs |
+| TLD-RU | https://direct.sleepstars.de/geosite/TLD-RU | https://direct.sleepstars.de/srs-geosite/TLD-RU.srs |
 | TMDB | https://direct.sleepstars.de/geosite/TMDB | https://direct.sleepstars.de/srs-geosite/TMDB.srs |
 | TMTPOST | https://direct.sleepstars.de/geosite/TMTPOST | https://direct.sleepstars.de/srs-geosite/TMTPOST.srs |
 | TOKYO-SPORTS | https://direct.sleepstars.de/geosite/TOKYO-SPORTS | https://direct.sleepstars.de/srs-geosite/TOKYO-SPORTS.srs |
@@ -1390,6 +1392,7 @@
 | YNOPROJECT | https://direct.sleepstars.de/geosite/YNOPROJECT | https://direct.sleepstars.de/srs-geosite/YNOPROJECT.srs |
 | YOKAVERSE | https://direct.sleepstars.de/geosite/YOKAVERSE | https://direct.sleepstars.de/srs-geosite/YOKAVERSE.srs |
 | YOMIURI | https://direct.sleepstars.de/geosite/YOMIURI | https://direct.sleepstars.de/srs-geosite/YOMIURI.srs |
+| YOSTAR | https://direct.sleepstars.de/geosite/YOSTAR | https://direct.sleepstars.de/srs-geosite/YOSTAR.srs |
 | YOUJIZZ | https://direct.sleepstars.de/geosite/YOUJIZZ | https://direct.sleepstars.de/srs-geosite/YOUJIZZ.srs |
 | YOUKU | https://direct.sleepstars.de/geosite/YOUKU | https://direct.sleepstars.de/srs-geosite/YOUKU.srs |
 | YOUMIND | https://direct.sleepstars.de/geosite/YOUMIND | https://direct.sleepstars.de/srs-geosite/YOUMIND.srs |
@@ -1423,6 +1426,7 @@
 | ZOHO | https://direct.sleepstars.de/geosite/ZOHO | https://direct.sleepstars.de/srs-geosite/ZOHO.srs |
 | ZOOM | https://direct.sleepstars.de/geosite/ZOOM | https://direct.sleepstars.de/srs-geosite/ZOOM.srs |
 | ZOTERO | https://direct.sleepstars.de/geosite/ZOTERO | https://direct.sleepstars.de/srs-geosite/ZOTERO.srs |
+| ZSCALER | https://direct.sleepstars.de/geosite/ZSCALER | https://direct.sleepstars.de/srs-geosite/ZSCALER.srs |
 | ZTE | https://direct.sleepstars.de/geosite/ZTE | https://direct.sleepstars.de/srs-geosite/ZTE.srs |
 | ZTO-EXPRESS | https://direct.sleepstars.de/geosite/ZTO-EXPRESS | https://direct.sleepstars.de/srs-geosite/ZTO-EXPRESS.srs |
 | ZUOYEBANG | https://direct.sleepstars.de/geosite/ZUOYEBANG | https://direct.sleepstars.de/srs-geosite/ZUOYEBANG.srs |
