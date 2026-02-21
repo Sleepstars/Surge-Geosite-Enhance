@@ -213,6 +213,7 @@
 | CATEGORY-BANK-IR | https://direct.sleepstars.de/geosite/CATEGORY-BANK-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-BANK-IR.srs |
 | CATEGORY-BANK-JP | https://direct.sleepstars.de/geosite/CATEGORY-BANK-JP | https://direct.sleepstars.de/srs-geosite/CATEGORY-BANK-JP.srs |
 | CATEGORY-BANK-MM | https://direct.sleepstars.de/geosite/CATEGORY-BANK-MM | https://direct.sleepstars.de/srs-geosite/CATEGORY-BANK-MM.srs |
+| CATEGORY-BANK-RU | https://direct.sleepstars.de/geosite/CATEGORY-BANK-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-BANK-RU.srs |
 | CATEGORY-BLOG-CN | https://direct.sleepstars.de/geosite/CATEGORY-BLOG-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-BLOG-CN.srs |
 | CATEGORY-BOURSE-IR | https://direct.sleepstars.de/geosite/CATEGORY-BOURSE-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-BOURSE-IR.srs |
 | CATEGORY-BROWSER-!CN | https://direct.sleepstars.de/geosite/CATEGORY-BROWSER-!CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-BROWSER-!CN.srs |
@@ -298,6 +299,7 @@
 | CATEGORY-TECH-MEDIA | https://direct.sleepstars.de/geosite/CATEGORY-TECH-MEDIA | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-MEDIA.srs |
 | CATEGORY-TM | https://direct.sleepstars.de/geosite/CATEGORY-TM | https://direct.sleepstars.de/srs-geosite/CATEGORY-TM.srs |
 | CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/geosite/CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-TRAVEL-IR.srs |
+| CATEGORY-TRAVEL-RU | https://direct.sleepstars.de/geosite/CATEGORY-TRAVEL-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-TRAVEL-RU.srs |
 | CATEGORY-VOIP | https://direct.sleepstars.de/geosite/CATEGORY-VOIP | https://direct.sleepstars.de/srs-geosite/CATEGORY-VOIP.srs |
 | CATEGORY-VPNSERVICES | https://direct.sleepstars.de/geosite/CATEGORY-VPNSERVICES | https://direct.sleepstars.de/srs-geosite/CATEGORY-VPNSERVICES.srs |
 | CATEGORY-WEB-ARCHIVE | https://direct.sleepstars.de/geosite/CATEGORY-WEB-ARCHIVE | https://direct.sleepstars.de/srs-geosite/CATEGORY-WEB-ARCHIVE.srs |
@@ -739,6 +741,7 @@
 | KINDLE4RSS | https://direct.sleepstars.de/geosite/KINDLE4RSS | https://direct.sleepstars.de/srs-geosite/KINDLE4RSS.srs |
 | KINGKONGLIVE | https://direct.sleepstars.de/geosite/KINGKONGLIVE | https://direct.sleepstars.de/srs-geosite/KINGKONGLIVE.srs |
 | KINGSOFT | https://direct.sleepstars.de/geosite/KINGSOFT | https://direct.sleepstars.de/srs-geosite/KINGSOFT.srs |
+| KINOPOISK | https://direct.sleepstars.de/geosite/KINOPOISK | https://direct.sleepstars.de/srs-geosite/KINOPOISK.srs |
 | KINOPUB | https://direct.sleepstars.de/geosite/KINOPUB | https://direct.sleepstars.de/srs-geosite/KINOPUB.srs |
 | KKBOX | https://direct.sleepstars.de/geosite/KKBOX | https://direct.sleepstars.de/srs-geosite/KKBOX.srs |
 | KKTV | https://direct.sleepstars.de/geosite/KKTV | https://direct.sleepstars.de/srs-geosite/KKTV.srs |
