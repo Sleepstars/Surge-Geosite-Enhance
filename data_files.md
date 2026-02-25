@@ -858,6 +858,7 @@
 | MISSKEY | https://direct.sleepstars.de/geosite/MISSKEY | https://direct.sleepstars.de/srs-geosite/MISSKEY.srs |
 | MISSKEY-UNIVERSE | https://direct.sleepstars.de/geosite/MISSKEY-UNIVERSE | https://direct.sleepstars.de/srs-geosite/MISSKEY-UNIVERSE.srs |
 | MIT | https://direct.sleepstars.de/geosite/MIT | https://direct.sleepstars.de/srs-geosite/MIT.srs |
+| MIXI | https://direct.sleepstars.de/geosite/MIXI | https://direct.sleepstars.de/srs-geosite/MIXI.srs |
 | MOBILE01 | https://direct.sleepstars.de/geosite/MOBILE01 | https://direct.sleepstars.de/srs-geosite/MOBILE01.srs |
 | MOCHA | https://direct.sleepstars.de/geosite/MOCHA | https://direct.sleepstars.de/srs-geosite/MOCHA.srs |
 | MODRINTH | https://direct.sleepstars.de/geosite/MODRINTH | https://direct.sleepstars.de/srs-geosite/MODRINTH.srs |
