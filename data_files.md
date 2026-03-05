@@ -300,6 +300,7 @@
 | CATEGORY-TM | https://direct.sleepstars.de/geosite/CATEGORY-TM | https://direct.sleepstars.de/srs-geosite/CATEGORY-TM.srs |
 | CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/geosite/CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-TRAVEL-IR.srs |
 | CATEGORY-TRAVEL-RU | https://direct.sleepstars.de/geosite/CATEGORY-TRAVEL-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-TRAVEL-RU.srs |
+| CATEGORY-URLSHORTNER | https://direct.sleepstars.de/geosite/CATEGORY-URLSHORTNER | https://direct.sleepstars.de/srs-geosite/CATEGORY-URLSHORTNER.srs |
 | CATEGORY-VOIP | https://direct.sleepstars.de/geosite/CATEGORY-VOIP | https://direct.sleepstars.de/srs-geosite/CATEGORY-VOIP.srs |
 | CATEGORY-VPNSERVICES | https://direct.sleepstars.de/geosite/CATEGORY-VPNSERVICES | https://direct.sleepstars.de/srs-geosite/CATEGORY-VPNSERVICES.srs |
 | CATEGORY-WEB-ARCHIVE | https://direct.sleepstars.de/geosite/CATEGORY-WEB-ARCHIVE | https://direct.sleepstars.de/srs-geosite/CATEGORY-WEB-ARCHIVE.srs |
@@ -666,6 +667,7 @@
 | IHUMAN | https://direct.sleepstars.de/geosite/IHUMAN | https://direct.sleepstars.de/srs-geosite/IHUMAN.srs |
 | IINA | https://direct.sleepstars.de/geosite/IINA | https://direct.sleepstars.de/srs-geosite/IINA.srs |
 | IKEA | https://direct.sleepstars.de/geosite/IKEA | https://direct.sleepstars.de/srs-geosite/IKEA.srs |
+| ILLGAMES | https://direct.sleepstars.de/geosite/ILLGAMES | https://direct.sleepstars.de/srs-geosite/ILLGAMES.srs |
 | ILLUSION | https://direct.sleepstars.de/geosite/ILLUSION | https://direct.sleepstars.de/srs-geosite/ILLUSION.srs |
 | ILLUSION-NONOFFICIAL | https://direct.sleepstars.de/geosite/ILLUSION-NONOFFICIAL | https://direct.sleepstars.de/srs-geosite/ILLUSION-NONOFFICIAL.srs |
 | IMAGEBAM | https://direct.sleepstars.de/geosite/IMAGEBAM | https://direct.sleepstars.de/srs-geosite/IMAGEBAM.srs |
