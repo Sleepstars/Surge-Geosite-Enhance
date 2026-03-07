@@ -1003,6 +1003,7 @@
 | PLAYBOY | https://direct.sleepstars.de/geosite/PLAYBOY | https://direct.sleepstars.de/srs-geosite/PLAYBOY.srs |
 | PLAYCOVER | https://direct.sleepstars.de/geosite/PLAYCOVER | https://direct.sleepstars.de/srs-geosite/PLAYCOVER.srs |
 | PLAYSTATION | https://direct.sleepstars.de/geosite/PLAYSTATION | https://direct.sleepstars.de/srs-geosite/PLAYSTATION.srs |
+| PLEX | https://direct.sleepstars.de/geosite/PLEX | https://direct.sleepstars.de/srs-geosite/PLEX.srs |
 | PLUTOTV | https://direct.sleepstars.de/geosite/PLUTOTV | https://direct.sleepstars.de/srs-geosite/PLUTOTV.srs |
 | POCKETCASTS | https://direct.sleepstars.de/geosite/POCKETCASTS | https://direct.sleepstars.de/srs-geosite/POCKETCASTS.srs |
 | POE | https://direct.sleepstars.de/geosite/POE | https://direct.sleepstars.de/srs-geosite/POE.srs |
