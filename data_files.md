@@ -1233,6 +1233,7 @@
 | TIDAL | https://direct.sleepstars.de/geosite/TIDAL | https://direct.sleepstars.de/srs-geosite/TIDAL.srs |
 | TIDELIFT | https://direct.sleepstars.de/geosite/TIDELIFT | https://direct.sleepstars.de/srs-geosite/TIDELIFT.srs |
 | TIKTOK | https://direct.sleepstars.de/geosite/TIKTOK | https://direct.sleepstars.de/srs-geosite/TIKTOK.srs |
+| TILDA | https://direct.sleepstars.de/geosite/TILDA | https://direct.sleepstars.de/srs-geosite/TILDA.srs |
 | TINYURL | https://direct.sleepstars.de/geosite/TINYURL | https://direct.sleepstars.de/srs-geosite/TINYURL.srs |
 | TLD-!CN | https://direct.sleepstars.de/geosite/TLD-!CN | https://direct.sleepstars.de/srs-geosite/TLD-!CN.srs |
 | TLD-CN | https://direct.sleepstars.de/geosite/TLD-CN | https://direct.sleepstars.de/srs-geosite/TLD-CN.srs |
