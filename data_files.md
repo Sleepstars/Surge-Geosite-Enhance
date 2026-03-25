@@ -948,6 +948,7 @@
 | OPENAI | https://direct.sleepstars.de/geosite/OPENAI | https://direct.sleepstars.de/srs-geosite/OPENAI.srs |
 | OPENCOLLECTIVE | https://direct.sleepstars.de/geosite/OPENCOLLECTIVE | https://direct.sleepstars.de/srs-geosite/OPENCOLLECTIVE.srs |
 | OPENJSFOUNDATION | https://direct.sleepstars.de/geosite/OPENJSFOUNDATION | https://direct.sleepstars.de/srs-geosite/OPENJSFOUNDATION.srs |
+| OPENREC | https://direct.sleepstars.de/geosite/OPENREC | https://direct.sleepstars.de/srs-geosite/OPENREC.srs |
 | OPENSOURCEINSIGHTS | https://direct.sleepstars.de/geosite/OPENSOURCEINSIGHTS | https://direct.sleepstars.de/srs-geosite/OPENSOURCEINSIGHTS.srs |
 | OPENSPEEDTEST | https://direct.sleepstars.de/geosite/OPENSPEEDTEST | https://direct.sleepstars.de/srs-geosite/OPENSPEEDTEST.srs |
 | OPENSTREETMAP | https://direct.sleepstars.de/geosite/OPENSTREETMAP | https://direct.sleepstars.de/srs-geosite/OPENSTREETMAP.srs |
