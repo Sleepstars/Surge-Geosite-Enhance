@@ -263,6 +263,7 @@
 | CATEGORY-MEDIA-CN | https://direct.sleepstars.de/geosite/CATEGORY-MEDIA-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-MEDIA-CN.srs |
 | CATEGORY-MEDIA-IR | https://direct.sleepstars.de/geosite/CATEGORY-MEDIA-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-MEDIA-IR.srs |
 | CATEGORY-MEDIA-RU | https://direct.sleepstars.de/geosite/CATEGORY-MEDIA-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-MEDIA-RU.srs |
+| CATEGORY-MEDICINE-RU | https://direct.sleepstars.de/geosite/CATEGORY-MEDICINE-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-MEDICINE-RU.srs |
 | CATEGORY-MOBILE-REPAIR | https://direct.sleepstars.de/geosite/CATEGORY-MOBILE-REPAIR | https://direct.sleepstars.de/srs-geosite/CATEGORY-MOBILE-REPAIR.srs |
 | CATEGORY-MOOC-CN | https://direct.sleepstars.de/geosite/CATEGORY-MOOC-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-MOOC-CN.srs |
 | CATEGORY-NETDISK-CN | https://direct.sleepstars.de/geosite/CATEGORY-NETDISK-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-NETDISK-CN.srs |
@@ -567,6 +568,7 @@
 | GLOBALSIGN | https://direct.sleepstars.de/geosite/GLOBALSIGN | https://direct.sleepstars.de/srs-geosite/GLOBALSIGN.srs |
 | GLOBALVOICES | https://direct.sleepstars.de/geosite/GLOBALVOICES | https://direct.sleepstars.de/srs-geosite/GLOBALVOICES.srs |
 | GLYPHS | https://direct.sleepstars.de/geosite/GLYPHS | https://direct.sleepstars.de/srs-geosite/GLYPHS.srs |
+| GMO-INTERNET | https://direct.sleepstars.de/geosite/GMO-INTERNET | https://direct.sleepstars.de/srs-geosite/GMO-INTERNET.srs |
 | GODADDY | https://direct.sleepstars.de/geosite/GODADDY | https://direct.sleepstars.de/srs-geosite/GODADDY.srs |
 | GOFUNDME | https://direct.sleepstars.de/geosite/GOFUNDME | https://direct.sleepstars.de/srs-geosite/GOFUNDME.srs |
 | GOG | https://direct.sleepstars.de/geosite/GOG | https://direct.sleepstars.de/srs-geosite/GOG.srs |
@@ -1325,6 +1327,7 @@
 | WANFANG | https://direct.sleepstars.de/geosite/WANFANG | https://direct.sleepstars.de/srs-geosite/WANFANG.srs |
 | WANGSU | https://direct.sleepstars.de/geosite/WANGSU | https://direct.sleepstars.de/srs-geosite/WANGSU.srs |
 | WANTMEDIA | https://direct.sleepstars.de/geosite/WANTMEDIA | https://direct.sleepstars.de/srs-geosite/WANTMEDIA.srs |
+| WARGAMING | https://direct.sleepstars.de/geosite/WARGAMING | https://direct.sleepstars.de/srs-geosite/WARGAMING.srs |
 | WASU | https://direct.sleepstars.de/geosite/WASU | https://direct.sleepstars.de/srs-geosite/WASU.srs |
 | WATCHOUT | https://direct.sleepstars.de/geosite/WATCHOUT | https://direct.sleepstars.de/srs-geosite/WATCHOUT.srs |
 | WBGAMES | https://direct.sleepstars.de/geosite/WBGAMES | https://direct.sleepstars.de/srs-geosite/WBGAMES.srs |
