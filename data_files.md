@@ -567,6 +567,7 @@
 | GITV | https://direct.sleepstars.de/geosite/GITV | https://direct.sleepstars.de/srs-geosite/GITV.srs |
 | GLOBALSIGN | https://direct.sleepstars.de/geosite/GLOBALSIGN | https://direct.sleepstars.de/srs-geosite/GLOBALSIGN.srs |
 | GLOBALVOICES | https://direct.sleepstars.de/geosite/GLOBALVOICES | https://direct.sleepstars.de/srs-geosite/GLOBALVOICES.srs |
+| GLOBO | https://direct.sleepstars.de/geosite/GLOBO | https://direct.sleepstars.de/srs-geosite/GLOBO.srs |
 | GLYPHS | https://direct.sleepstars.de/geosite/GLYPHS | https://direct.sleepstars.de/srs-geosite/GLYPHS.srs |
 | GMO-INTERNET | https://direct.sleepstars.de/geosite/GMO-INTERNET | https://direct.sleepstars.de/srs-geosite/GMO-INTERNET.srs |
 | GODADDY | https://direct.sleepstars.de/geosite/GODADDY | https://direct.sleepstars.de/srs-geosite/GODADDY.srs |
