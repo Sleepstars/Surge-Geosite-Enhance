@@ -1084,6 +1084,7 @@
 | SAMSUNG | https://direct.sleepstars.de/geosite/SAMSUNG | https://direct.sleepstars.de/srs-geosite/SAMSUNG.srs |
 | SANKEI | https://direct.sleepstars.de/geosite/SANKEI | https://direct.sleepstars.de/srs-geosite/SANKEI.srs |
 | SB | https://direct.sleepstars.de/geosite/SB | https://direct.sleepstars.de/srs-geosite/SB.srs |
+| SBER | https://direct.sleepstars.de/geosite/SBER | https://direct.sleepstars.de/srs-geosite/SBER.srs |
 | SCALA | https://direct.sleepstars.de/geosite/SCALA | https://direct.sleepstars.de/srs-geosite/SCALA.srs |
 | SCALEFLEX | https://direct.sleepstars.de/geosite/SCALEFLEX | https://direct.sleepstars.de/srs-geosite/SCALEFLEX.srs |
 | SCENESOURCE | https://direct.sleepstars.de/geosite/SCENESOURCE | https://direct.sleepstars.de/srs-geosite/SCENESOURCE.srs |
@@ -1200,6 +1201,7 @@
 | TAPTAP | https://direct.sleepstars.de/geosite/TAPTAP | https://direct.sleepstars.de/srs-geosite/TAPTAP.srs |
 | TARGET | https://direct.sleepstars.de/geosite/TARGET | https://direct.sleepstars.de/srs-geosite/TARGET.srs |
 | TAYLORFRANCIS | https://direct.sleepstars.de/geosite/TAYLORFRANCIS | https://direct.sleepstars.de/srs-geosite/TAYLORFRANCIS.srs |
+| TBANK-RU | https://direct.sleepstars.de/geosite/TBANK-RU | https://direct.sleepstars.de/srs-geosite/TBANK-RU.srs |
 | TCL | https://direct.sleepstars.de/geosite/TCL | https://direct.sleepstars.de/srs-geosite/TCL.srs |
 | TEAMBITION | https://direct.sleepstars.de/geosite/TEAMBITION | https://direct.sleepstars.de/srs-geosite/TEAMBITION.srs |
 | TEAMVIEWER | https://direct.sleepstars.de/geosite/TEAMVIEWER | https://direct.sleepstars.de/srs-geosite/TEAMVIEWER.srs |
