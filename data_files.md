@@ -479,6 +479,7 @@
 | ENFA | https://direct.sleepstars.de/geosite/ENFA | https://direct.sleepstars.de/srs-geosite/ENFA.srs |
 | ENTERMEDIADB | https://direct.sleepstars.de/geosite/ENTERMEDIADB | https://direct.sleepstars.de/srs-geosite/ENTERMEDIADB.srs |
 | ENTRUST | https://direct.sleepstars.de/geosite/ENTRUST | https://direct.sleepstars.de/srs-geosite/ENTRUST.srs |
+| ENVATO | https://direct.sleepstars.de/geosite/ENVATO | https://direct.sleepstars.de/srs-geosite/ENVATO.srs |
 | EPICBROWSER | https://direct.sleepstars.de/geosite/EPICBROWSER | https://direct.sleepstars.de/srs-geosite/EPICBROWSER.srs |
 | EPICGAMES | https://direct.sleepstars.de/geosite/EPICGAMES | https://direct.sleepstars.de/srs-geosite/EPICGAMES.srs |
 | EPOCHMEDIAGROUP | https://direct.sleepstars.de/geosite/EPOCHMEDIAGROUP | https://direct.sleepstars.de/srs-geosite/EPOCHMEDIAGROUP.srs |
