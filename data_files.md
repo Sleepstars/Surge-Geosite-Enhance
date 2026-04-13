@@ -195,6 +195,7 @@
 | CANONICAL | https://direct.sleepstars.de/geosite/CANONICAL | https://direct.sleepstars.de/srs-geosite/CANONICAL.srs |
 | CANVA | https://direct.sleepstars.de/geosite/CANVA | https://direct.sleepstars.de/srs-geosite/CANVA.srs |
 | CAPITALONLINE | https://direct.sleepstars.de/geosite/CAPITALONLINE | https://direct.sleepstars.de/srs-geosite/CAPITALONLINE.srs |
+| CARROTQUEST | https://direct.sleepstars.de/geosite/CARROTQUEST | https://direct.sleepstars.de/srs-geosite/CARROTQUEST.srs |
 | CAS | https://direct.sleepstars.de/geosite/CAS | https://direct.sleepstars.de/srs-geosite/CAS.srs |
 | CASIMAGES | https://direct.sleepstars.de/geosite/CASIMAGES | https://direct.sleepstars.de/srs-geosite/CASIMAGES.srs |
 | CATCHPLAY | https://direct.sleepstars.de/geosite/CATCHPLAY | https://direct.sleepstars.de/srs-geosite/CATCHPLAY.srs |
@@ -852,6 +853,7 @@
 | MIHOYO | https://direct.sleepstars.de/geosite/MIHOYO | https://direct.sleepstars.de/srs-geosite/MIHOYO.srs |
 | MIHOYO-CN | https://direct.sleepstars.de/geosite/MIHOYO-CN | https://direct.sleepstars.de/srs-geosite/MIHOYO-CN.srs |
 | MIKROTIK | https://direct.sleepstars.de/geosite/MIKROTIK | https://direct.sleepstars.de/srs-geosite/MIKROTIK.srs |
+| MINDBOX | https://direct.sleepstars.de/geosite/MINDBOX | https://direct.sleepstars.de/srs-geosite/MINDBOX.srs |
 | MINDGEEK | https://direct.sleepstars.de/geosite/MINDGEEK | https://direct.sleepstars.de/srs-geosite/MINDGEEK.srs |
 | MINDGEEK-PORN | https://direct.sleepstars.de/geosite/MINDGEEK-PORN | https://direct.sleepstars.de/srs-geosite/MINDGEEK-PORN.srs |
 | MINI | https://direct.sleepstars.de/geosite/MINI | https://direct.sleepstars.de/srs-geosite/MINI.srs |
@@ -1102,6 +1104,7 @@
 | SEGMENT | https://direct.sleepstars.de/geosite/SEGMENT | https://direct.sleepstars.de/srs-geosite/SEGMENT.srs |
 | SEGMENTFAULT | https://direct.sleepstars.de/geosite/SEGMENTFAULT | https://direct.sleepstars.de/srs-geosite/SEGMENTFAULT.srs |
 | SEHUATANG | https://direct.sleepstars.de/geosite/SEHUATANG | https://direct.sleepstars.de/srs-geosite/SEHUATANG.srs |
+| SELECTEL | https://direct.sleepstars.de/geosite/SELECTEL | https://direct.sleepstars.de/srs-geosite/SELECTEL.srs |
 | SENTRY | https://direct.sleepstars.de/geosite/SENTRY | https://direct.sleepstars.de/srs-geosite/SENTRY.srs |
 | SETAPP | https://direct.sleepstars.de/geosite/SETAPP | https://direct.sleepstars.de/srs-geosite/SETAPP.srs |
 | SETN | https://direct.sleepstars.de/geosite/SETN | https://direct.sleepstars.de/srs-geosite/SETN.srs |
