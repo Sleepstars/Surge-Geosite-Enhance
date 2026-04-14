@@ -611,6 +611,7 @@
 | HBO | https://direct.sleepstars.de/geosite/HBO | https://direct.sleepstars.de/srs-geosite/HBO.srs |
 | HCAPTCHA | https://direct.sleepstars.de/geosite/HCAPTCHA | https://direct.sleepstars.de/srs-geosite/HCAPTCHA.srs |
 | HDREZKA | https://direct.sleepstars.de/geosite/HDREZKA | https://direct.sleepstars.de/srs-geosite/HDREZKA.srs |
+| HEADHUNTER | https://direct.sleepstars.de/geosite/HEADHUNTER | https://direct.sleepstars.de/srs-geosite/HEADHUNTER.srs |
 | HENTAICHEN | https://direct.sleepstars.de/geosite/HENTAICHEN | https://direct.sleepstars.de/srs-geosite/HENTAICHEN.srs |
 | HENTAIVN | https://direct.sleepstars.de/geosite/HENTAIVN | https://direct.sleepstars.de/srs-geosite/HENTAIVN.srs |
 | HEROGAME | https://direct.sleepstars.de/geosite/HEROGAME | https://direct.sleepstars.de/srs-geosite/HEROGAME.srs |
