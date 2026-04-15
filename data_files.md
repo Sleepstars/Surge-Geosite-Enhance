@@ -1019,6 +1019,7 @@
 | PPTV | https://direct.sleepstars.de/geosite/PPTV | https://direct.sleepstars.de/srs-geosite/PPTV.srs |
 | PRIMEVIDEO | https://direct.sleepstars.de/geosite/PRIMEVIDEO | https://direct.sleepstars.de/srs-geosite/PRIMEVIDEO.srs |
 | PRIVATE | https://direct.sleepstars.de/geosite/PRIVATE | https://direct.sleepstars.de/srs-geosite/PRIVATE.srs |
+| PROGRESS | https://direct.sleepstars.de/geosite/PROGRESS | https://direct.sleepstars.de/srs-geosite/PROGRESS.srs |
 | PROJECTPOI | https://direct.sleepstars.de/geosite/PROJECTPOI | https://direct.sleepstars.de/srs-geosite/PROJECTPOI.srs |
 | PROJECTSEKAI | https://direct.sleepstars.de/geosite/PROJECTSEKAI | https://direct.sleepstars.de/srs-geosite/PROJECTSEKAI.srs |
 | PROQUEST | https://direct.sleepstars.de/geosite/PROQUEST | https://direct.sleepstars.de/srs-geosite/PROQUEST.srs |
