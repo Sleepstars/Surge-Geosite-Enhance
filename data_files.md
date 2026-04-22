@@ -267,6 +267,7 @@
 | CATEGORY-MEDIA-CN | https://direct.sleepstars.de/geosite/CATEGORY-MEDIA-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-MEDIA-CN.srs |
 | CATEGORY-MEDIA-IR | https://direct.sleepstars.de/geosite/CATEGORY-MEDIA-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-MEDIA-IR.srs |
 | CATEGORY-MEDIA-RU | https://direct.sleepstars.de/geosite/CATEGORY-MEDIA-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-MEDIA-RU.srs |
+| CATEGORY-MEDIA-RU-BLOCKED | https://direct.sleepstars.de/geosite/CATEGORY-MEDIA-RU-BLOCKED | https://direct.sleepstars.de/srs-geosite/CATEGORY-MEDIA-RU-BLOCKED.srs |
 | CATEGORY-MEDICINE-RU | https://direct.sleepstars.de/geosite/CATEGORY-MEDICINE-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-MEDICINE-RU.srs |
 | CATEGORY-MOBILE-REPAIR | https://direct.sleepstars.de/geosite/CATEGORY-MOBILE-REPAIR | https://direct.sleepstars.de/srs-geosite/CATEGORY-MOBILE-REPAIR.srs |
 | CATEGORY-MOOC-CN | https://direct.sleepstars.de/geosite/CATEGORY-MOOC-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-MOOC-CN.srs |
@@ -373,6 +374,7 @@
 | COMFY | https://direct.sleepstars.de/geosite/COMFY | https://direct.sleepstars.de/srs-geosite/COMFY.srs |
 | COMFY-UI-LAUNCHER | https://direct.sleepstars.de/geosite/COMFY-UI-LAUNCHER | https://direct.sleepstars.de/srs-geosite/COMFY-UI-LAUNCHER.srs |
 | COMODO | https://direct.sleepstars.de/geosite/COMODO | https://direct.sleepstars.de/srs-geosite/COMODO.srs |
+| COMSSONE | https://direct.sleepstars.de/geosite/COMSSONE | https://direct.sleepstars.de/srs-geosite/COMSSONE.srs |
 | CONNECTIVITY-CHECK | https://direct.sleepstars.de/geosite/CONNECTIVITY-CHECK | https://direct.sleepstars.de/srs-geosite/CONNECTIVITY-CHECK.srs |
 | CONTENTFUL | https://direct.sleepstars.de/geosite/CONTENTFUL | https://direct.sleepstars.de/srs-geosite/CONTENTFUL.srs |
 | COOLAPK | https://direct.sleepstars.de/geosite/COOLAPK | https://direct.sleepstars.de/srs-geosite/COOLAPK.srs |
@@ -555,6 +557,7 @@
 | GATEIO | https://direct.sleepstars.de/geosite/GATEIO | https://direct.sleepstars.de/srs-geosite/GATEIO.srs |
 | GEETEST | https://direct.sleepstars.de/geosite/GEETEST | https://direct.sleepstars.de/srs-geosite/GEETEST.srs |
 | GEMFURY | https://direct.sleepstars.de/geosite/GEMFURY | https://direct.sleepstars.de/srs-geosite/GEMFURY.srs |
+| GENOTEK-RU | https://direct.sleepstars.de/geosite/GENOTEK-RU | https://direct.sleepstars.de/srs-geosite/GENOTEK-RU.srs |
 | GEOLOCATION-!CN | https://direct.sleepstars.de/geosite/GEOLOCATION-!CN | https://direct.sleepstars.de/srs-geosite/GEOLOCATION-!CN.srs |
 | GEOLOCATION-CN | https://direct.sleepstars.de/geosite/GEOLOCATION-CN | https://direct.sleepstars.de/srs-geosite/GEOLOCATION-CN.srs |
 | GETTYIMAGES | https://direct.sleepstars.de/geosite/GETTYIMAGES | https://direct.sleepstars.de/srs-geosite/GETTYIMAGES.srs |
@@ -565,6 +568,7 @@
 | GIFFGAFF | https://direct.sleepstars.de/geosite/GIFFGAFF | https://direct.sleepstars.de/srs-geosite/GIFFGAFF.srs |
 | GIGABYTE | https://direct.sleepstars.de/geosite/GIGABYTE | https://direct.sleepstars.de/srs-geosite/GIGABYTE.srs |
 | GIMY | https://direct.sleepstars.de/geosite/GIMY | https://direct.sleepstars.de/srs-geosite/GIMY.srs |
+| GISMETEO-RU | https://direct.sleepstars.de/geosite/GISMETEO-RU | https://direct.sleepstars.de/srs-geosite/GISMETEO-RU.srs |
 | GITBOOK | https://direct.sleepstars.de/geosite/GITBOOK | https://direct.sleepstars.de/srs-geosite/GITBOOK.srs |
 | GITEE | https://direct.sleepstars.de/geosite/GITEE | https://direct.sleepstars.de/srs-geosite/GITEE.srs |
 | GITHUB | https://direct.sleepstars.de/geosite/GITHUB | https://direct.sleepstars.de/srs-geosite/GITHUB.srs |
@@ -667,6 +671,7 @@
 | ICBC | https://direct.sleepstars.de/geosite/ICBC | https://direct.sleepstars.de/srs-geosite/ICBC.srs |
 | ICLOUD | https://direct.sleepstars.de/geosite/ICLOUD | https://direct.sleepstars.de/srs-geosite/ICLOUD.srs |
 | ICLOUDPRIVATERELAY | https://direct.sleepstars.de/geosite/ICLOUDPRIVATERELAY | https://direct.sleepstars.de/srs-geosite/ICLOUDPRIVATERELAY.srs |
+| IDECO-RU | https://direct.sleepstars.de/geosite/IDECO-RU | https://direct.sleepstars.de/srs-geosite/IDECO-RU.srs |
 | IDENTRUST | https://direct.sleepstars.de/geosite/IDENTRUST | https://direct.sleepstars.de/srs-geosite/IDENTRUST.srs |
 | IDG | https://direct.sleepstars.de/geosite/IDG | https://direct.sleepstars.de/srs-geosite/IDG.srs |
 | IEEE | https://direct.sleepstars.de/geosite/IEEE | https://direct.sleepstars.de/srs-geosite/IEEE.srs |
