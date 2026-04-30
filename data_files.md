@@ -1049,6 +1049,7 @@
 | PYTHON | https://direct.sleepstars.de/geosite/PYTHON | https://direct.sleepstars.de/srs-geosite/PYTHON.srs |
 | QCC | https://direct.sleepstars.de/geosite/QCC | https://direct.sleepstars.de/srs-geosite/QCC.srs |
 | QCLOUD | https://direct.sleepstars.de/geosite/QCLOUD | https://direct.sleepstars.de/srs-geosite/QCLOUD.srs |
+| QIANXIN | https://direct.sleepstars.de/geosite/QIANXIN | https://direct.sleepstars.de/srs-geosite/QIANXIN.srs |
 | QIHOO360 | https://direct.sleepstars.de/geosite/QIHOO360 | https://direct.sleepstars.de/srs-geosite/QIHOO360.srs |
 | QIMAO | https://direct.sleepstars.de/geosite/QIMAO | https://direct.sleepstars.de/srs-geosite/QIMAO.srs |
 | QINGCLOUD | https://direct.sleepstars.de/geosite/QINGCLOUD | https://direct.sleepstars.de/srs-geosite/QINGCLOUD.srs |
