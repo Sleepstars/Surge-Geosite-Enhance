@@ -487,6 +487,7 @@
 | ENTERMEDIADB | https://direct.sleepstars.de/geosite/ENTERMEDIADB | https://direct.sleepstars.de/srs-geosite/ENTERMEDIADB.srs |
 | ENTRUST | https://direct.sleepstars.de/geosite/ENTRUST | https://direct.sleepstars.de/srs-geosite/ENTRUST.srs |
 | ENVATO | https://direct.sleepstars.de/geosite/ENVATO | https://direct.sleepstars.de/srs-geosite/ENVATO.srs |
+| ENVYBOX | https://direct.sleepstars.de/geosite/ENVYBOX | https://direct.sleepstars.de/srs-geosite/ENVYBOX.srs |
 | EPICBROWSER | https://direct.sleepstars.de/geosite/EPICBROWSER | https://direct.sleepstars.de/srs-geosite/EPICBROWSER.srs |
 | EPICGAMES | https://direct.sleepstars.de/geosite/EPICGAMES | https://direct.sleepstars.de/srs-geosite/EPICGAMES.srs |
 | EPOCHMEDIAGROUP | https://direct.sleepstars.de/geosite/EPOCHMEDIAGROUP | https://direct.sleepstars.de/srs-geosite/EPOCHMEDIAGROUP.srs |
@@ -568,7 +569,7 @@
 | GIFFGAFF | https://direct.sleepstars.de/geosite/GIFFGAFF | https://direct.sleepstars.de/srs-geosite/GIFFGAFF.srs |
 | GIGABYTE | https://direct.sleepstars.de/geosite/GIGABYTE | https://direct.sleepstars.de/srs-geosite/GIGABYTE.srs |
 | GIMY | https://direct.sleepstars.de/geosite/GIMY | https://direct.sleepstars.de/srs-geosite/GIMY.srs |
-| GISMETEO-RU | https://direct.sleepstars.de/geosite/GISMETEO-RU | https://direct.sleepstars.de/srs-geosite/GISMETEO-RU.srs |
+| GISMETEO | https://direct.sleepstars.de/geosite/GISMETEO | https://direct.sleepstars.de/srs-geosite/GISMETEO.srs |
 | GITBOOK | https://direct.sleepstars.de/geosite/GITBOOK | https://direct.sleepstars.de/srs-geosite/GITBOOK.srs |
 | GITEE | https://direct.sleepstars.de/geosite/GITEE | https://direct.sleepstars.de/srs-geosite/GITEE.srs |
 | GITHUB | https://direct.sleepstars.de/geosite/GITHUB | https://direct.sleepstars.de/srs-geosite/GITHUB.srs |
@@ -603,6 +604,7 @@
 | GREATFIRE | https://direct.sleepstars.de/geosite/GREATFIRE | https://direct.sleepstars.de/srs-geosite/GREATFIRE.srs |
 | GREE | https://direct.sleepstars.de/geosite/GREE | https://direct.sleepstars.de/srs-geosite/GREE.srs |
 | GROQ | https://direct.sleepstars.de/geosite/GROQ | https://direct.sleepstars.de/srs-geosite/GROQ.srs |
+| GROUP-IB | https://direct.sleepstars.de/geosite/GROUP-IB | https://direct.sleepstars.de/srs-geosite/GROUP-IB.srs |
 | GROWINGIO | https://direct.sleepstars.de/geosite/GROWINGIO | https://direct.sleepstars.de/srs-geosite/GROWINGIO.srs |
 | GUCCI | https://direct.sleepstars.de/geosite/GUCCI | https://direct.sleepstars.de/srs-geosite/GUCCI.srs |
 | GUO | https://direct.sleepstars.de/geosite/GUO | https://direct.sleepstars.de/srs-geosite/GUO.srs |
@@ -850,6 +852,7 @@
 | MEDIUM | https://direct.sleepstars.de/geosite/MEDIUM | https://direct.sleepstars.de/srs-geosite/MEDIUM.srs |
 | MEDUZA | https://direct.sleepstars.de/geosite/MEDUZA | https://direct.sleepstars.de/srs-geosite/MEDUZA.srs |
 | MEGA | https://direct.sleepstars.de/geosite/MEGA | https://direct.sleepstars.de/srs-geosite/MEGA.srs |
+| MEGAFON | https://direct.sleepstars.de/geosite/MEGAFON | https://direct.sleepstars.de/srs-geosite/MEGAFON.srs |
 | MEIPIAN | https://direct.sleepstars.de/geosite/MEIPIAN | https://direct.sleepstars.de/srs-geosite/MEIPIAN.srs |
 | MEITU | https://direct.sleepstars.de/geosite/MEITU | https://direct.sleepstars.de/srs-geosite/MEITU.srs |
 | MEITUAN | https://direct.sleepstars.de/geosite/MEITUAN | https://direct.sleepstars.de/srs-geosite/MEITUAN.srs |
@@ -896,6 +899,7 @@
 | MOZILLA | https://direct.sleepstars.de/geosite/MOZILLA | https://direct.sleepstars.de/srs-geosite/MOZILLA.srs |
 | MSI | https://direct.sleepstars.de/geosite/MSI | https://direct.sleepstars.de/srs-geosite/MSI.srs |
 | MSN | https://direct.sleepstars.de/geosite/MSN | https://direct.sleepstars.de/srs-geosite/MSN.srs |
+| MTS-RU | https://direct.sleepstars.de/geosite/MTS-RU | https://direct.sleepstars.de/srs-geosite/MTS-RU.srs |
 | MUBI | https://direct.sleepstars.de/geosite/MUBI | https://direct.sleepstars.de/srs-geosite/MUBI.srs |
 | MUCINEX | https://direct.sleepstars.de/geosite/MUCINEX | https://direct.sleepstars.de/srs-geosite/MUCINEX.srs |
 | MUDVOD | https://direct.sleepstars.de/geosite/MUDVOD | https://direct.sleepstars.de/srs-geosite/MUDVOD.srs |
@@ -1089,6 +1093,7 @@
 | ROBLOX | https://direct.sleepstars.de/geosite/ROBLOX | https://direct.sleepstars.de/srs-geosite/ROBLOX.srs |
 | ROCKSTAR | https://direct.sleepstars.de/geosite/ROCKSTAR | https://direct.sleepstars.de/srs-geosite/ROCKSTAR.srs |
 | ROKU | https://direct.sleepstars.de/geosite/ROKU | https://direct.sleepstars.de/srs-geosite/ROKU.srs |
+| ROSTELECOM | https://direct.sleepstars.de/geosite/ROSTELECOM | https://direct.sleepstars.de/srs-geosite/ROSTELECOM.srs |
 | RSSHUB | https://direct.sleepstars.de/geosite/RSSHUB | https://direct.sleepstars.de/srs-geosite/RSSHUB.srs |
 | RSSHUB-3RD | https://direct.sleepstars.de/geosite/RSSHUB-3RD | https://direct.sleepstars.de/srs-geosite/RSSHUB-3RD.srs |
 | RTHK | https://direct.sleepstars.de/geosite/RTHK | https://direct.sleepstars.de/srs-geosite/RTHK.srs |
@@ -1217,6 +1222,7 @@
 | SYMANTEC | https://direct.sleepstars.de/geosite/SYMANTEC | https://direct.sleepstars.de/srs-geosite/SYMANTEC.srs |
 | SYMANTEC-PKI | https://direct.sleepstars.de/geosite/SYMANTEC-PKI | https://direct.sleepstars.de/srs-geosite/SYMANTEC-PKI.srs |
 | SYNOLOGY | https://direct.sleepstars.de/geosite/SYNOLOGY | https://direct.sleepstars.de/srs-geosite/SYNOLOGY.srs |
+| T2-RU | https://direct.sleepstars.de/geosite/T2-RU | https://direct.sleepstars.de/srs-geosite/T2-RU.srs |
 | TABOOLA | https://direct.sleepstars.de/geosite/TABOOLA | https://direct.sleepstars.de/srs-geosite/TABOOLA.srs |
 | TAIKANG | https://direct.sleepstars.de/geosite/TAIKANG | https://direct.sleepstars.de/srs-geosite/TAIKANG.srs |
 | TAILSCALE | https://direct.sleepstars.de/geosite/TAILSCALE | https://direct.sleepstars.de/srs-geosite/TAILSCALE.srs |
