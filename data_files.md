@@ -271,6 +271,7 @@
 | CATEGORY-MEDICINE-RU | https://direct.sleepstars.de/geosite/CATEGORY-MEDICINE-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-MEDICINE-RU.srs |
 | CATEGORY-MOBILE-REPAIR | https://direct.sleepstars.de/geosite/CATEGORY-MOBILE-REPAIR | https://direct.sleepstars.de/srs-geosite/CATEGORY-MOBILE-REPAIR.srs |
 | CATEGORY-MOOC-CN | https://direct.sleepstars.de/geosite/CATEGORY-MOOC-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-MOOC-CN.srs |
+| CATEGORY-NETDISK-!CN | https://direct.sleepstars.de/geosite/CATEGORY-NETDISK-!CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-NETDISK-!CN.srs |
 | CATEGORY-NETDISK-CN | https://direct.sleepstars.de/geosite/CATEGORY-NETDISK-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-NETDISK-CN.srs |
 | CATEGORY-NETWORK-SECURITY-CN | https://direct.sleepstars.de/geosite/CATEGORY-NETWORK-SECURITY-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-NETWORK-SECURITY-CN.srs |
 | CATEGORY-NEWS-IR | https://direct.sleepstars.de/geosite/CATEGORY-NEWS-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-NEWS-IR.srs |
@@ -1302,6 +1303,7 @@
 | TVDB | https://direct.sleepstars.de/geosite/TVDB | https://direct.sleepstars.de/srs-geosite/TVDB.srs |
 | TVER | https://direct.sleepstars.de/geosite/TVER | https://direct.sleepstars.de/srs-geosite/TVER.srs |
 | TWCA | https://direct.sleepstars.de/geosite/TWCA | https://direct.sleepstars.de/srs-geosite/TWCA.srs |
+| TWILIO | https://direct.sleepstars.de/geosite/TWILIO | https://direct.sleepstars.de/srs-geosite/TWILIO.srs |
 | TWITCH | https://direct.sleepstars.de/geosite/TWITCH | https://direct.sleepstars.de/srs-geosite/TWITCH.srs |
 | TWITTER | https://direct.sleepstars.de/geosite/TWITTER | https://direct.sleepstars.de/srs-geosite/TWITTER.srs |
 | TYPEKIT | https://direct.sleepstars.de/geosite/TYPEKIT | https://direct.sleepstars.de/srs-geosite/TYPEKIT.srs |
