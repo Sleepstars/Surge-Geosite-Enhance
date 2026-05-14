@@ -332,6 +332,7 @@
 | CHINABROADNET | https://direct.sleepstars.de/geosite/CHINABROADNET | https://direct.sleepstars.de/srs-geosite/CHINABROADNET.srs |
 | CHINAMOBILE | https://direct.sleepstars.de/geosite/CHINAMOBILE | https://direct.sleepstars.de/srs-geosite/CHINAMOBILE.srs |
 | CHINANEWS | https://direct.sleepstars.de/geosite/CHINANEWS | https://direct.sleepstars.de/srs-geosite/CHINANEWS.srs |
+| CHINAPOST | https://direct.sleepstars.de/geosite/CHINAPOST | https://direct.sleepstars.de/srs-geosite/CHINAPOST.srs |
 | CHINAPOWER | https://direct.sleepstars.de/geosite/CHINAPOWER | https://direct.sleepstars.de/srs-geosite/CHINAPOWER.srs |
 | CHINASO | https://direct.sleepstars.de/geosite/CHINASO | https://direct.sleepstars.de/srs-geosite/CHINASO.srs |
 | CHINATELECOM | https://direct.sleepstars.de/geosite/CHINATELECOM | https://direct.sleepstars.de/srs-geosite/CHINATELECOM.srs |
@@ -936,6 +937,7 @@
 | NGA | https://direct.sleepstars.de/geosite/NGA | https://direct.sleepstars.de/srs-geosite/NGA.srs |
 | NGINX | https://direct.sleepstars.de/geosite/NGINX | https://direct.sleepstars.de/srs-geosite/NGINX.srs |
 | NGROK | https://direct.sleepstars.de/geosite/NGROK | https://direct.sleepstars.de/srs-geosite/NGROK.srs |
+| NICEGRAM | https://direct.sleepstars.de/geosite/NICEGRAM | https://direct.sleepstars.de/srs-geosite/NICEGRAM.srs |
 | NICONICO | https://direct.sleepstars.de/geosite/NICONICO | https://direct.sleepstars.de/srs-geosite/NICONICO.srs |
 | NIKE | https://direct.sleepstars.de/geosite/NIKE | https://direct.sleepstars.de/srs-geosite/NIKE.srs |
 | NIKKAN-GENDAI | https://direct.sleepstars.de/geosite/NIKKAN-GENDAI | https://direct.sleepstars.de/srs-geosite/NIKKAN-GENDAI.srs |
@@ -990,6 +992,7 @@
 | OSCHINA | https://direct.sleepstars.de/geosite/OSCHINA | https://direct.sleepstars.de/srs-geosite/OSCHINA.srs |
 | OSKELLY | https://direct.sleepstars.de/geosite/OSKELLY | https://direct.sleepstars.de/srs-geosite/OSKELLY.srs |
 | OSU | https://direct.sleepstars.de/geosite/OSU | https://direct.sleepstars.de/srs-geosite/OSU.srs |
+| OTPBANK | https://direct.sleepstars.de/geosite/OTPBANK | https://direct.sleepstars.de/srs-geosite/OTPBANK.srs |
 | OUP | https://direct.sleepstars.de/geosite/OUP | https://direct.sleepstars.de/srs-geosite/OUP.srs |
 | OZON | https://direct.sleepstars.de/geosite/OZON | https://direct.sleepstars.de/srs-geosite/OZON.srs |
 | PAGECDN | https://direct.sleepstars.de/geosite/PAGECDN | https://direct.sleepstars.de/srs-geosite/PAGECDN.srs |
@@ -1070,6 +1073,7 @@
 | QWANT | https://direct.sleepstars.de/geosite/QWANT | https://direct.sleepstars.de/srs-geosite/QWANT.srs |
 | QWEATHER | https://direct.sleepstars.de/geosite/QWEATHER | https://direct.sleepstars.de/srs-geosite/QWEATHER.srs |
 | RADIKO | https://direct.sleepstars.de/geosite/RADIKO | https://direct.sleepstars.de/srs-geosite/RADIKO.srs |
+| RAIFFEISENBANK | https://direct.sleepstars.de/geosite/RAIFFEISENBANK | https://direct.sleepstars.de/srs-geosite/RAIFFEISENBANK.srs |
 | RAKUTEN | https://direct.sleepstars.de/geosite/RAKUTEN | https://direct.sleepstars.de/srs-geosite/RAKUTEN.srs |
 | RARBG | https://direct.sleepstars.de/geosite/RARBG | https://direct.sleepstars.de/srs-geosite/RARBG.srs |
 | RAZER | https://direct.sleepstars.de/geosite/RAZER | https://direct.sleepstars.de/srs-geosite/RAZER.srs |
@@ -1318,7 +1322,6 @@
 | UC | https://direct.sleepstars.de/geosite/UC | https://direct.sleepstars.de/srs-geosite/UC.srs |
 | UCLOUD | https://direct.sleepstars.de/geosite/UCLOUD | https://direct.sleepstars.de/srs-geosite/UCLOUD.srs |
 | UCOZ | https://direct.sleepstars.de/geosite/UCOZ | https://direct.sleepstars.de/srs-geosite/UCOZ.srs |
-| UCOZ-RU | https://direct.sleepstars.de/geosite/UCOZ-RU | https://direct.sleepstars.de/srs-geosite/UCOZ-RU.srs |
 | UDACITY | https://direct.sleepstars.de/geosite/UDACITY | https://direct.sleepstars.de/srs-geosite/UDACITY.srs |
 | UDEMY | https://direct.sleepstars.de/geosite/UDEMY | https://direct.sleepstars.de/srs-geosite/UDEMY.srs |
 | UDN | https://direct.sleepstars.de/geosite/UDN | https://direct.sleepstars.de/srs-geosite/UDN.srs |
