@@ -768,6 +768,7 @@
 | KODI | https://direct.sleepstars.de/geosite/KODI | https://direct.sleepstars.de/srs-geosite/KODI.srs |
 | KODIK | https://direct.sleepstars.de/geosite/KODIK | https://direct.sleepstars.de/srs-geosite/KODIK.srs |
 | KONACHAN | https://direct.sleepstars.de/geosite/KONACHAN | https://direct.sleepstars.de/srs-geosite/KONACHAN.srs |
+| KONAMI | https://direct.sleepstars.de/geosite/KONAMI | https://direct.sleepstars.de/srs-geosite/KONAMI.srs |
 | KONTUR | https://direct.sleepstars.de/geosite/KONTUR | https://direct.sleepstars.de/srs-geosite/KONTUR.srs |
 | KOOLEARN | https://direct.sleepstars.de/geosite/KOOLEARN | https://direct.sleepstars.de/srs-geosite/KOOLEARN.srs |
 | KRAKEN | https://direct.sleepstars.de/geosite/KRAKEN | https://direct.sleepstars.de/srs-geosite/KRAKEN.srs |
@@ -1240,6 +1241,7 @@
 | TBANK-RU | https://direct.sleepstars.de/geosite/TBANK-RU | https://direct.sleepstars.de/srs-geosite/TBANK-RU.srs |
 | TCL | https://direct.sleepstars.de/geosite/TCL | https://direct.sleepstars.de/srs-geosite/TCL.srs |
 | TEAMBITION | https://direct.sleepstars.de/geosite/TEAMBITION | https://direct.sleepstars.de/srs-geosite/TEAMBITION.srs |
+| TEAMSPEAK | https://direct.sleepstars.de/geosite/TEAMSPEAK | https://direct.sleepstars.de/srs-geosite/TEAMSPEAK.srs |
 | TEAMVIEWER | https://direct.sleepstars.de/geosite/TEAMVIEWER | https://direct.sleepstars.de/srs-geosite/TEAMVIEWER.srs |
 | TECHNOGYM | https://direct.sleepstars.de/geosite/TECHNOGYM | https://direct.sleepstars.de/srs-geosite/TECHNOGYM.srs |
 | TECHPOWERUP | https://direct.sleepstars.de/geosite/TECHPOWERUP | https://direct.sleepstars.de/srs-geosite/TECHPOWERUP.srs |
