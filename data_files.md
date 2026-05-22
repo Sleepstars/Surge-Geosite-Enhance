@@ -302,6 +302,7 @@
 | CATEGORY-SOCIAL-MEDIA-CN | https://direct.sleepstars.de/geosite/CATEGORY-SOCIAL-MEDIA-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-SOCIAL-MEDIA-CN.srs |
 | CATEGORY-SOCIAL-MEDIA-IR | https://direct.sleepstars.de/geosite/CATEGORY-SOCIAL-MEDIA-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-SOCIAL-MEDIA-IR.srs |
 | CATEGORY-SPEEDTEST | https://direct.sleepstars.de/geosite/CATEGORY-SPEEDTEST | https://direct.sleepstars.de/srs-geosite/CATEGORY-SPEEDTEST.srs |
+| CATEGORY-STUN | https://direct.sleepstars.de/geosite/CATEGORY-STUN | https://direct.sleepstars.de/srs-geosite/CATEGORY-STUN.srs |
 | CATEGORY-TECH-IR | https://direct.sleepstars.de/geosite/CATEGORY-TECH-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-IR.srs |
 | CATEGORY-TECH-MEDIA | https://direct.sleepstars.de/geosite/CATEGORY-TECH-MEDIA | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-MEDIA.srs |
 | CATEGORY-TM | https://direct.sleepstars.de/geosite/CATEGORY-TM | https://direct.sleepstars.de/srs-geosite/CATEGORY-TM.srs |
