@@ -898,6 +898,7 @@
 | MORISAWA | https://direct.sleepstars.de/geosite/MORISAWA | https://direct.sleepstars.de/srs-geosite/MORISAWA.srs |
 | MORTEIN | https://direct.sleepstars.de/geosite/MORTEIN | https://direct.sleepstars.de/srs-geosite/MORTEIN.srs |
 | MOSMETRO | https://direct.sleepstars.de/geosite/MOSMETRO | https://direct.sleepstars.de/srs-geosite/MOSMETRO.srs |
+| MOTOROLA | https://direct.sleepstars.de/geosite/MOTOROLA | https://direct.sleepstars.de/srs-geosite/MOTOROLA.srs |
 | MOVEFREE | https://direct.sleepstars.de/geosite/MOVEFREE | https://direct.sleepstars.de/srs-geosite/MOVEFREE.srs |
 | MOXING | https://direct.sleepstars.de/geosite/MOXING | https://direct.sleepstars.de/srs-geosite/MOXING.srs |
 | MOZILLA | https://direct.sleepstars.de/geosite/MOZILLA | https://direct.sleepstars.de/srs-geosite/MOZILLA.srs |
