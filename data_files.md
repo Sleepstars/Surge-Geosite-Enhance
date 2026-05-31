@@ -1333,6 +1333,7 @@
 | UNIONPAY | https://direct.sleepstars.de/geosite/UNIONPAY | https://direct.sleepstars.de/srs-geosite/UNIONPAY.srs |
 | UNITY | https://direct.sleepstars.de/geosite/UNITY | https://direct.sleepstars.de/srs-geosite/UNITY.srs |
 | UNITYCHINA | https://direct.sleepstars.de/geosite/UNITYCHINA | https://direct.sleepstars.de/srs-geosite/UNITYCHINA.srs |
+| UOLIV | https://direct.sleepstars.de/geosite/UOLIV | https://direct.sleepstars.de/srs-geosite/UOLIV.srs |
 | UPAI | https://direct.sleepstars.de/geosite/UPAI | https://direct.sleepstars.de/srs-geosite/UPAI.srs |
 | USERSDRIVE | https://direct.sleepstars.de/geosite/USERSDRIVE | https://direct.sleepstars.de/srs-geosite/USERSDRIVE.srs |
 | UU-CHAT | https://direct.sleepstars.de/geosite/UU-CHAT | https://direct.sleepstars.de/srs-geosite/UU-CHAT.srs |
