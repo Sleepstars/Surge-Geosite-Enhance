@@ -23,7 +23,6 @@
 | 800BEST | https://direct.sleepstars.de/geosite/800BEST | https://direct.sleepstars.de/srs-geosite/800BEST.srs |
 | 8BTC | https://direct.sleepstars.de/geosite/8BTC | https://direct.sleepstars.de/srs-geosite/8BTC.srs |
 | 928PLUS | https://direct.sleepstars.de/geosite/928PLUS | https://direct.sleepstars.de/srs-geosite/928PLUS.srs |
-| 9GAME | https://direct.sleepstars.de/geosite/9GAME | https://direct.sleepstars.de/srs-geosite/9GAME.srs |
 | 9NEWS | https://direct.sleepstars.de/geosite/9NEWS | https://direct.sleepstars.de/srs-geosite/9NEWS.srs |
 | 9TO5 | https://direct.sleepstars.de/geosite/9TO5 | https://direct.sleepstars.de/srs-geosite/9TO5.srs |
 | AAMGAME | https://direct.sleepstars.de/geosite/AAMGAME | https://direct.sleepstars.de/srs-geosite/AAMGAME.srs |
@@ -58,9 +57,11 @@
 | AKIKO | https://direct.sleepstars.de/geosite/AKIKO | https://direct.sleepstars.de/srs-geosite/AKIKO.srs |
 | ALIBABA | https://direct.sleepstars.de/geosite/ALIBABA | https://direct.sleepstars.de/srs-geosite/ALIBABA.srs |
 | ALIBABACLOUD | https://direct.sleepstars.de/geosite/ALIBABACLOUD | https://direct.sleepstars.de/srs-geosite/ALIBABACLOUD.srs |
+| ALIGAMES | https://direct.sleepstars.de/geosite/ALIGAMES | https://direct.sleepstars.de/srs-geosite/ALIGAMES.srs |
 | ALIYUN | https://direct.sleepstars.de/geosite/ALIYUN | https://direct.sleepstars.de/srs-geosite/ALIYUN.srs |
 | ALIYUN-DRIVE | https://direct.sleepstars.de/geosite/ALIYUN-DRIVE | https://direct.sleepstars.de/srs-geosite/ALIYUN-DRIVE.srs |
 | ALJAZEERA | https://direct.sleepstars.de/geosite/ALJAZEERA | https://direct.sleepstars.de/srs-geosite/ALJAZEERA.srs |
+| ALPHABET | https://direct.sleepstars.de/geosite/ALPHABET | https://direct.sleepstars.de/srs-geosite/ALPHABET.srs |
 | AMAP | https://direct.sleepstars.de/geosite/AMAP | https://direct.sleepstars.de/srs-geosite/AMAP.srs |
 | AMAZON | https://direct.sleepstars.de/geosite/AMAZON | https://direct.sleepstars.de/srs-geosite/AMAZON.srs |
 | AMAZONTRUST | https://direct.sleepstars.de/geosite/AMAZONTRUST | https://direct.sleepstars.de/srs-geosite/AMAZONTRUST.srs |
@@ -1101,9 +1102,11 @@
 | ROBLOX | https://direct.sleepstars.de/geosite/ROBLOX | https://direct.sleepstars.de/srs-geosite/ROBLOX.srs |
 | ROCKSTAR | https://direct.sleepstars.de/geosite/ROCKSTAR | https://direct.sleepstars.de/srs-geosite/ROCKSTAR.srs |
 | ROKU | https://direct.sleepstars.de/geosite/ROKU | https://direct.sleepstars.de/srs-geosite/ROKU.srs |
+| ROSSIYASEGODNYA | https://direct.sleepstars.de/geosite/ROSSIYASEGODNYA | https://direct.sleepstars.de/srs-geosite/ROSSIYASEGODNYA.srs |
 | ROSTELECOM | https://direct.sleepstars.de/geosite/ROSTELECOM | https://direct.sleepstars.de/srs-geosite/ROSTELECOM.srs |
 | RSSHUB | https://direct.sleepstars.de/geosite/RSSHUB | https://direct.sleepstars.de/srs-geosite/RSSHUB.srs |
 | RSSHUB-3RD | https://direct.sleepstars.de/geosite/RSSHUB-3RD | https://direct.sleepstars.de/srs-geosite/RSSHUB-3RD.srs |
+| RT | https://direct.sleepstars.de/geosite/RT | https://direct.sleepstars.de/srs-geosite/RT.srs |
 | RTHK | https://direct.sleepstars.de/geosite/RTHK | https://direct.sleepstars.de/srs-geosite/RTHK.srs |
 | RUANMEI | https://direct.sleepstars.de/geosite/RUANMEI | https://direct.sleepstars.de/srs-geosite/RUANMEI.srs |
 | RUBY | https://direct.sleepstars.de/geosite/RUBY | https://direct.sleepstars.de/srs-geosite/RUBY.srs |
@@ -1149,6 +1152,7 @@
 | SHOPIFY | https://direct.sleepstars.de/geosite/SHOPIFY | https://direct.sleepstars.de/srs-geosite/SHOPIFY.srs |
 | SHORTURL | https://direct.sleepstars.de/geosite/SHORTURL | https://direct.sleepstars.de/srs-geosite/SHORTURL.srs |
 | SHOWTIMEANYTIME | https://direct.sleepstars.de/geosite/SHOWTIMEANYTIME | https://direct.sleepstars.de/srs-geosite/SHOWTIMEANYTIME.srs |
+| SHUQI | https://direct.sleepstars.de/geosite/SHUQI | https://direct.sleepstars.de/srs-geosite/SHUQI.srs |
 | SIGNAL | https://direct.sleepstars.de/geosite/SIGNAL | https://direct.sleepstars.de/srs-geosite/SIGNAL.srs |
 | SINA | https://direct.sleepstars.de/geosite/SINA | https://direct.sleepstars.de/srs-geosite/SINA.srs |
 | SINGTAONEWSCORP | https://direct.sleepstars.de/geosite/SINGTAONEWSCORP | https://direct.sleepstars.de/srs-geosite/SINGTAONEWSCORP.srs |
