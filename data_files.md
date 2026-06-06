@@ -1259,6 +1259,7 @@
 | TENCENT | https://direct.sleepstars.de/geosite/TENCENT | https://direct.sleepstars.de/srs-geosite/TENCENT.srs |
 | TENCENT-DEV | https://direct.sleepstars.de/geosite/TENCENT-DEV | https://direct.sleepstars.de/srs-geosite/TENCENT-DEV.srs |
 | TENCENT-GAMES | https://direct.sleepstars.de/geosite/TENCENT-GAMES | https://direct.sleepstars.de/srs-geosite/TENCENT-GAMES.srs |
+| TENCENT-TME | https://direct.sleepstars.de/geosite/TENCENT-TME | https://direct.sleepstars.de/srs-geosite/TENCENT-TME.srs |
 | TENDCLOUD | https://direct.sleepstars.de/geosite/TENDCLOUD | https://direct.sleepstars.de/srs-geosite/TENDCLOUD.srs |
 | TERABOX | https://direct.sleepstars.de/geosite/TERABOX | https://direct.sleepstars.de/srs-geosite/TERABOX.srs |
 | TERMUX | https://direct.sleepstars.de/geosite/TERMUX | https://direct.sleepstars.de/srs-geosite/TERMUX.srs |
