@@ -295,6 +295,7 @@
 | CATEGORY-RU | https://direct.sleepstars.de/geosite/CATEGORY-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-RU.srs |
 | CATEGORY-SCHOLAR-!CN | https://direct.sleepstars.de/geosite/CATEGORY-SCHOLAR-!CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-SCHOLAR-!CN.srs |
 | CATEGORY-SCHOLAR-CN | https://direct.sleepstars.de/geosite/CATEGORY-SCHOLAR-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-SCHOLAR-CN.srs |
+| CATEGORY-SCHOLAR-HK | https://direct.sleepstars.de/geosite/CATEGORY-SCHOLAR-HK | https://direct.sleepstars.de/srs-geosite/CATEGORY-SCHOLAR-HK.srs |
 | CATEGORY-SCHOLAR-IR | https://direct.sleepstars.de/geosite/CATEGORY-SCHOLAR-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-SCHOLAR-IR.srs |
 | CATEGORY-SCHOLAR-UK | https://direct.sleepstars.de/geosite/CATEGORY-SCHOLAR-UK | https://direct.sleepstars.de/srs-geosite/CATEGORY-SCHOLAR-UK.srs |
 | CATEGORY-SECURITIES-CN | https://direct.sleepstars.de/geosite/CATEGORY-SECURITIES-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-SECURITIES-CN.srs |
@@ -344,6 +345,7 @@
 | CISCO | https://direct.sleepstars.de/geosite/CISCO | https://direct.sleepstars.de/srs-geosite/CISCO.srs |
 | CITIC | https://direct.sleepstars.de/geosite/CITIC | https://direct.sleepstars.de/srs-geosite/CITIC.srs |
 | CITIZENLAB | https://direct.sleepstars.de/geosite/CITIZENLAB | https://direct.sleepstars.de/srs-geosite/CITIZENLAB.srs |
+| CITYU-HK | https://direct.sleepstars.de/geosite/CITYU-HK | https://direct.sleepstars.de/srs-geosite/CITYU-HK.srs |
 | CIWEIMAO | https://direct.sleepstars.de/geosite/CIWEIMAO | https://direct.sleepstars.de/srs-geosite/CIWEIMAO.srs |
 | CK101 | https://direct.sleepstars.de/geosite/CK101 | https://direct.sleepstars.de/srs-geosite/CK101.srs |
 | CLARIVATE | https://direct.sleepstars.de/geosite/CLARIVATE | https://direct.sleepstars.de/srs-geosite/CLARIVATE.srs |
@@ -397,6 +399,7 @@
 | CTEXCEL | https://direct.sleepstars.de/geosite/CTEXCEL | https://direct.sleepstars.de/srs-geosite/CTEXCEL.srs |
 | CTRIP | https://direct.sleepstars.de/geosite/CTRIP | https://direct.sleepstars.de/srs-geosite/CTRIP.srs |
 | CTYUN | https://direct.sleepstars.de/geosite/CTYUN | https://direct.sleepstars.de/srs-geosite/CTYUN.srs |
+| CUHK | https://direct.sleepstars.de/geosite/CUHK | https://direct.sleepstars.de/srs-geosite/CUHK.srs |
 | CUINC | https://direct.sleepstars.de/geosite/CUINC | https://direct.sleepstars.de/srs-geosite/CUINC.srs |
 | CURSEFORGE | https://direct.sleepstars.de/geosite/CURSEFORGE | https://direct.sleepstars.de/srs-geosite/CURSEFORGE.srs |
 | CURSOR | https://direct.sleepstars.de/geosite/CURSOR | https://direct.sleepstars.de/srs-geosite/CURSOR.srs |
@@ -475,6 +478,7 @@
 | EBAY | https://direct.sleepstars.de/geosite/EBAY | https://direct.sleepstars.de/srs-geosite/EBAY.srs |
 | EBUYER | https://direct.sleepstars.de/geosite/EBUYER | https://direct.sleepstars.de/srs-geosite/EBUYER.srs |
 | ECONOMIST | https://direct.sleepstars.de/geosite/ECONOMIST | https://direct.sleepstars.de/srs-geosite/ECONOMIST.srs |
+| EDUHK | https://direct.sleepstars.de/geosite/EDUHK | https://direct.sleepstars.de/srs-geosite/EDUHK.srs |
 | EDX | https://direct.sleepstars.de/geosite/EDX | https://direct.sleepstars.de/srs-geosite/EDX.srs |
 | EGGHEAD | https://direct.sleepstars.de/geosite/EGGHEAD | https://direct.sleepstars.de/srs-geosite/EGGHEAD.srs |
 | EHENTAI | https://direct.sleepstars.de/geosite/EHENTAI | https://direct.sleepstars.de/srs-geosite/EHENTAI.srs |
@@ -636,13 +640,17 @@
 | HIKVISION | https://direct.sleepstars.de/geosite/HIKVISION | https://direct.sleepstars.de/srs-geosite/HIKVISION.srs |
 | HINET | https://direct.sleepstars.de/geosite/HINET | https://direct.sleepstars.de/srs-geosite/HINET.srs |
 | HINET-ECA | https://direct.sleepstars.de/geosite/HINET-ECA | https://direct.sleepstars.de/srs-geosite/HINET-ECA.srs |
+| HISENSE | https://direct.sleepstars.de/geosite/HISENSE | https://direct.sleepstars.de/srs-geosite/HISENSE.srs |
 | HITUN | https://direct.sleepstars.de/geosite/HITUN | https://direct.sleepstars.de/srs-geosite/HITUN.srs |
 | HKBN | https://direct.sleepstars.de/geosite/HKBN | https://direct.sleepstars.de/srs-geosite/HKBN.srs |
+| HKBU | https://direct.sleepstars.de/geosite/HKBU | https://direct.sleepstars.de/srs-geosite/HKBU.srs |
 | HKEDCITY | https://direct.sleepstars.de/geosite/HKEDCITY | https://direct.sleepstars.de/srs-geosite/HKEDCITY.srs |
 | HKETGROUP | https://direct.sleepstars.de/geosite/HKETGROUP | https://direct.sleepstars.de/srs-geosite/HKETGROUP.srs |
 | HKGOLDEN | https://direct.sleepstars.de/geosite/HKGOLDEN | https://direct.sleepstars.de/srs-geosite/HKGOLDEN.srs |
 | HKOPENTV | https://direct.sleepstars.de/geosite/HKOPENTV | https://direct.sleepstars.de/srs-geosite/HKOPENTV.srs |
 | HKT | https://direct.sleepstars.de/geosite/HKT | https://direct.sleepstars.de/srs-geosite/HKT.srs |
+| HKU | https://direct.sleepstars.de/geosite/HKU | https://direct.sleepstars.de/srs-geosite/HKU.srs |
+| HKUST | https://direct.sleepstars.de/geosite/HKUST | https://direct.sleepstars.de/srs-geosite/HKUST.srs |
 | HM | https://direct.sleepstars.de/geosite/HM | https://direct.sleepstars.de/srs-geosite/HM.srs |
 | HOMEBREW | https://direct.sleepstars.de/geosite/HOMEBREW | https://direct.sleepstars.de/srs-geosite/HOMEBREW.srs |
 | HOMEDEPOT | https://direct.sleepstars.de/geosite/HOMEDEPOT | https://direct.sleepstars.de/srs-geosite/HOMEDEPOT.srs |
@@ -665,6 +673,7 @@
 | HUGGINGFACE | https://direct.sleepstars.de/geosite/HUGGINGFACE | https://direct.sleepstars.de/srs-geosite/HUGGINGFACE.srs |
 | HUJIANG | https://direct.sleepstars.de/geosite/HUJIANG | https://direct.sleepstars.de/srs-geosite/HUJIANG.srs |
 | HULU | https://direct.sleepstars.de/geosite/HULU | https://direct.sleepstars.de/srs-geosite/HULU.srs |
+| HUMBLEBUNDLE | https://direct.sleepstars.de/geosite/HUMBLEBUNDLE | https://direct.sleepstars.de/srs-geosite/HUMBLEBUNDLE.srs |
 | HUNANTV | https://direct.sleepstars.de/geosite/HUNANTV | https://direct.sleepstars.de/srs-geosite/HUNANTV.srs |
 | HUOBI | https://direct.sleepstars.de/geosite/HUOBI | https://direct.sleepstars.de/srs-geosite/HUOBI.srs |
 | HUPU | https://direct.sleepstars.de/geosite/HUPU | https://direct.sleepstars.de/srs-geosite/HUPU.srs |
@@ -1040,6 +1049,7 @@
 | POE | https://direct.sleepstars.de/geosite/POE | https://direct.sleepstars.de/srs-geosite/POE.srs |
 | POLOCLOUD | https://direct.sleepstars.de/geosite/POLOCLOUD | https://direct.sleepstars.de/srs-geosite/POLOCLOUD.srs |
 | POLYMER | https://direct.sleepstars.de/geosite/POLYMER | https://direct.sleepstars.de/srs-geosite/POLYMER.srs |
+| POLYU | https://direct.sleepstars.de/geosite/POLYU | https://direct.sleepstars.de/srs-geosite/POLYU.srs |
 | POLYV | https://direct.sleepstars.de/geosite/POLYV | https://direct.sleepstars.de/srs-geosite/POLYV.srs |
 | PORNHUB | https://direct.sleepstars.de/geosite/PORNHUB | https://direct.sleepstars.de/srs-geosite/PORNHUB.srs |
 | PORNPROS | https://direct.sleepstars.de/geosite/PORNPROS | https://direct.sleepstars.de/srs-geosite/PORNPROS.srs |
