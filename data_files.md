@@ -1345,6 +1345,7 @@
 | UDEMY | https://direct.sleepstars.de/geosite/UDEMY | https://direct.sleepstars.de/srs-geosite/UDEMY.srs |
 | UDN | https://direct.sleepstars.de/geosite/UDN | https://direct.sleepstars.de/srs-geosite/UDN.srs |
 | UMENG | https://direct.sleepstars.de/geosite/UMENG | https://direct.sleepstars.de/srs-geosite/UMENG.srs |
+| UNEXT | https://direct.sleepstars.de/geosite/UNEXT | https://direct.sleepstars.de/srs-geosite/UNEXT.srs |
 | UNIONPAY | https://direct.sleepstars.de/geosite/UNIONPAY | https://direct.sleepstars.de/srs-geosite/UNIONPAY.srs |
 | UNITY | https://direct.sleepstars.de/geosite/UNITY | https://direct.sleepstars.de/srs-geosite/UNITY.srs |
 | UNITYCHINA | https://direct.sleepstars.de/geosite/UNITYCHINA | https://direct.sleepstars.de/srs-geosite/UNITYCHINA.srs |
