@@ -435,6 +435,7 @@
 | DINGDATECH | https://direct.sleepstars.de/geosite/DINGDATECH | https://direct.sleepstars.de/srs-geosite/DINGDATECH.srs |
 | DINGTALK | https://direct.sleepstars.de/geosite/DINGTALK | https://direct.sleepstars.de/srs-geosite/DINGTALK.srs |
 | DISCORD | https://direct.sleepstars.de/geosite/DISCORD | https://direct.sleepstars.de/srs-geosite/DISCORD.srs |
+| DISCOURSE | https://direct.sleepstars.de/geosite/DISCOURSE | https://direct.sleepstars.de/srs-geosite/DISCOURSE.srs |
 | DISCOVERYPLUS | https://direct.sleepstars.de/geosite/DISCOVERYPLUS | https://direct.sleepstars.de/srs-geosite/DISCOVERYPLUS.srs |
 | DISCUZ | https://direct.sleepstars.de/geosite/DISCUZ | https://direct.sleepstars.de/srs-geosite/DISCUZ.srs |
 | DISNEY | https://direct.sleepstars.de/geosite/DISNEY | https://direct.sleepstars.de/srs-geosite/DISNEY.srs |
@@ -559,6 +560,7 @@
 | FZDM | https://direct.sleepstars.de/geosite/FZDM | https://direct.sleepstars.de/srs-geosite/FZDM.srs |
 | GAIJIN | https://direct.sleepstars.de/geosite/GAIJIN | https://direct.sleepstars.de/srs-geosite/GAIJIN.srs |
 | GAMERSKY | https://direct.sleepstars.de/geosite/GAMERSKY | https://direct.sleepstars.de/srs-geosite/GAMERSKY.srs |
+| GAMESPLANET | https://direct.sleepstars.de/geosite/GAMESPLANET | https://direct.sleepstars.de/srs-geosite/GAMESPLANET.srs |
 | GANDI | https://direct.sleepstars.de/geosite/GANDI | https://direct.sleepstars.de/srs-geosite/GANDI.srs |
 | GANJI | https://direct.sleepstars.de/geosite/GANJI | https://direct.sleepstars.de/srs-geosite/GANJI.srs |
 | GANNETT | https://direct.sleepstars.de/geosite/GANNETT | https://direct.sleepstars.de/srs-geosite/GANNETT.srs |
@@ -817,6 +819,7 @@
 | LIEPIN | https://direct.sleepstars.de/geosite/LIEPIN | https://direct.sleepstars.de/srs-geosite/LIEPIN.srs |
 | LIFEWIRE | https://direct.sleepstars.de/geosite/LIFEWIRE | https://direct.sleepstars.de/srs-geosite/LIFEWIRE.srs |
 | LIGASTAVOK | https://direct.sleepstars.de/geosite/LIGASTAVOK | https://direct.sleepstars.de/srs-geosite/LIGASTAVOK.srs |
+| LIGHTER | https://direct.sleepstars.de/geosite/LIGHTER | https://direct.sleepstars.de/srs-geosite/LIGHTER.srs |
 | LIHKG | https://direct.sleepstars.de/geosite/LIHKG | https://direct.sleepstars.de/srs-geosite/LIHKG.srs |
 | LIMELIGHT | https://direct.sleepstars.de/geosite/LIMELIGHT | https://direct.sleepstars.de/srs-geosite/LIMELIGHT.srs |
 | LINAKESI | https://direct.sleepstars.de/geosite/LINAKESI | https://direct.sleepstars.de/srs-geosite/LINAKESI.srs |
@@ -950,6 +953,7 @@
 | NGA | https://direct.sleepstars.de/geosite/NGA | https://direct.sleepstars.de/srs-geosite/NGA.srs |
 | NGINX | https://direct.sleepstars.de/geosite/NGINX | https://direct.sleepstars.de/srs-geosite/NGINX.srs |
 | NGROK | https://direct.sleepstars.de/geosite/NGROK | https://direct.sleepstars.de/srs-geosite/NGROK.srs |
+| NHK | https://direct.sleepstars.de/geosite/NHK | https://direct.sleepstars.de/srs-geosite/NHK.srs |
 | NICEGRAM | https://direct.sleepstars.de/geosite/NICEGRAM | https://direct.sleepstars.de/srs-geosite/NICEGRAM.srs |
 | NICONICO | https://direct.sleepstars.de/geosite/NICONICO | https://direct.sleepstars.de/srs-geosite/NICONICO.srs |
 | NIKE | https://direct.sleepstars.de/geosite/NIKE | https://direct.sleepstars.de/srs-geosite/NIKE.srs |
@@ -1448,6 +1452,7 @@
 | XINGKONGWUXIANMEDIA | https://direct.sleepstars.de/geosite/XINGKONGWUXIANMEDIA | https://direct.sleepstars.de/srs-geosite/XINGKONGWUXIANMEDIA.srs |
 | XINGRZ | https://direct.sleepstars.de/geosite/XINGRZ | https://direct.sleepstars.de/srs-geosite/XINGRZ.srs |
 | XNXX | https://direct.sleepstars.de/geosite/XNXX | https://direct.sleepstars.de/srs-geosite/XNXX.srs |
+| XTOM | https://direct.sleepstars.de/geosite/XTOM | https://direct.sleepstars.de/srs-geosite/XTOM.srs |
 | XUEERSI | https://direct.sleepstars.de/geosite/XUEERSI | https://direct.sleepstars.de/srs-geosite/XUEERSI.srs |
 | XUEQIU | https://direct.sleepstars.de/geosite/XUEQIU | https://direct.sleepstars.de/srs-geosite/XUEQIU.srs |
 | XUNLEI | https://direct.sleepstars.de/geosite/XUNLEI | https://direct.sleepstars.de/srs-geosite/XUNLEI.srs |
