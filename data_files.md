@@ -831,6 +831,7 @@
 | LINUXDO | https://direct.sleepstars.de/geosite/LINUXDO | https://direct.sleepstars.de/srs-geosite/LINUXDO.srs |
 | LISIKU | https://direct.sleepstars.de/geosite/LISIKU | https://direct.sleepstars.de/srs-geosite/LISIKU.srs |
 | LITV | https://direct.sleepstars.de/geosite/LITV | https://direct.sleepstars.de/srs-geosite/LITV.srs |
+| LIVEJOURNAL | https://direct.sleepstars.de/geosite/LIVEJOURNAL | https://direct.sleepstars.de/srs-geosite/LIVEJOURNAL.srs |
 | LIVEPERSON | https://direct.sleepstars.de/geosite/LIVEPERSON | https://direct.sleepstars.de/srs-geosite/LIVEPERSON.srs |
 | LIZHI | https://direct.sleepstars.de/geosite/LIZHI | https://direct.sleepstars.de/srs-geosite/LIZHI.srs |
 | LKCOFFEE | https://direct.sleepstars.de/geosite/LKCOFFEE | https://direct.sleepstars.de/srs-geosite/LKCOFFEE.srs |
