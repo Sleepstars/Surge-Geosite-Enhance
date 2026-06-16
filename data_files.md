@@ -955,6 +955,7 @@
 | NGINX | https://direct.sleepstars.de/geosite/NGINX | https://direct.sleepstars.de/srs-geosite/NGINX.srs |
 | NGROK | https://direct.sleepstars.de/geosite/NGROK | https://direct.sleepstars.de/srs-geosite/NGROK.srs |
 | NHK | https://direct.sleepstars.de/geosite/NHK | https://direct.sleepstars.de/srs-geosite/NHK.srs |
+| NIC-RU | https://direct.sleepstars.de/geosite/NIC-RU | https://direct.sleepstars.de/srs-geosite/NIC-RU.srs |
 | NICEGRAM | https://direct.sleepstars.de/geosite/NICEGRAM | https://direct.sleepstars.de/srs-geosite/NICEGRAM.srs |
 | NICONICO | https://direct.sleepstars.de/geosite/NICONICO | https://direct.sleepstars.de/srs-geosite/NICONICO.srs |
 | NIKE | https://direct.sleepstars.de/geosite/NIKE | https://direct.sleepstars.de/srs-geosite/NIKE.srs |
@@ -1109,6 +1110,7 @@
 | REDIS | https://direct.sleepstars.de/geosite/REDIS | https://direct.sleepstars.de/srs-geosite/REDIS.srs |
 | REDOTPAY | https://direct.sleepstars.de/geosite/REDOTPAY | https://direct.sleepstars.de/srs-geosite/REDOTPAY.srs |
 | REDTUBE | https://direct.sleepstars.de/geosite/REDTUBE | https://direct.sleepstars.de/srs-geosite/REDTUBE.srs |
+| REGRU | https://direct.sleepstars.de/geosite/REGRU | https://direct.sleepstars.de/srs-geosite/REGRU.srs |
 | RENREN | https://direct.sleepstars.de/geosite/RENREN | https://direct.sleepstars.de/srs-geosite/RENREN.srs |
 | REURL | https://direct.sleepstars.de/geosite/REURL | https://direct.sleepstars.de/srs-geosite/REURL.srs |
 | REUTERS | https://direct.sleepstars.de/geosite/REUTERS | https://direct.sleepstars.de/srs-geosite/REUTERS.srs |
@@ -1132,6 +1134,7 @@
 | RUTEN | https://direct.sleepstars.de/geosite/RUTEN | https://direct.sleepstars.de/srs-geosite/RUTEN.srs |
 | RUTRACKER | https://direct.sleepstars.de/geosite/RUTRACKER | https://direct.sleepstars.de/srs-geosite/RUTRACKER.srs |
 | RUTUBE | https://direct.sleepstars.de/geosite/RUTUBE | https://direct.sleepstars.de/srs-geosite/RUTUBE.srs |
+| SAFEPAL | https://direct.sleepstars.de/geosite/SAFEPAL | https://direct.sleepstars.de/srs-geosite/SAFEPAL.srs |
 | SAKURAFRP | https://direct.sleepstars.de/geosite/SAKURAFRP | https://direct.sleepstars.de/srs-geosite/SAKURAFRP.srs |
 | SALESFORCE | https://direct.sleepstars.de/geosite/SALESFORCE | https://direct.sleepstars.de/srs-geosite/SALESFORCE.srs |
 | SAMSUNG | https://direct.sleepstars.de/geosite/SAMSUNG | https://direct.sleepstars.de/srs-geosite/SAMSUNG.srs |
