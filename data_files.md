@@ -228,6 +228,7 @@
 | CATEGORY-COLLABORATE-CN | https://direct.sleepstars.de/geosite/CATEGORY-COLLABORATE-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-COLLABORATE-CN.srs |
 | CATEGORY-COMMUNICATION | https://direct.sleepstars.de/geosite/CATEGORY-COMMUNICATION | https://direct.sleepstars.de/srs-geosite/CATEGORY-COMMUNICATION.srs |
 | CATEGORY-COMPANIES | https://direct.sleepstars.de/geosite/CATEGORY-COMPANIES | https://direct.sleepstars.de/srs-geosite/CATEGORY-COMPANIES.srs |
+| CATEGORY-CONSENT-MANAGEMENT | https://direct.sleepstars.de/geosite/CATEGORY-CONSENT-MANAGEMENT | https://direct.sleepstars.de/srs-geosite/CATEGORY-CONSENT-MANAGEMENT.srs |
 | CATEGORY-CONTAINER | https://direct.sleepstars.de/geosite/CATEGORY-CONTAINER | https://direct.sleepstars.de/srs-geosite/CATEGORY-CONTAINER.srs |
 | CATEGORY-CRYPTOCURRENCY | https://direct.sleepstars.de/geosite/CATEGORY-CRYPTOCURRENCY | https://direct.sleepstars.de/srs-geosite/CATEGORY-CRYPTOCURRENCY.srs |
 | CATEGORY-DDNS | https://direct.sleepstars.de/geosite/CATEGORY-DDNS | https://direct.sleepstars.de/srs-geosite/CATEGORY-DDNS.srs |
@@ -1254,6 +1255,7 @@
 | SYNOLOGY | https://direct.sleepstars.de/geosite/SYNOLOGY | https://direct.sleepstars.de/srs-geosite/SYNOLOGY.srs |
 | T2-RU | https://direct.sleepstars.de/geosite/T2-RU | https://direct.sleepstars.de/srs-geosite/T2-RU.srs |
 | TABOOLA | https://direct.sleepstars.de/geosite/TABOOLA | https://direct.sleepstars.de/srs-geosite/TABOOLA.srs |
+| TAIHE | https://direct.sleepstars.de/geosite/TAIHE | https://direct.sleepstars.de/srs-geosite/TAIHE.srs |
 | TAIKANG | https://direct.sleepstars.de/geosite/TAIKANG | https://direct.sleepstars.de/srs-geosite/TAIKANG.srs |
 | TAILSCALE | https://direct.sleepstars.de/geosite/TAILSCALE | https://direct.sleepstars.de/srs-geosite/TAILSCALE.srs |
 | TAKE-TWO | https://direct.sleepstars.de/geosite/TAKE-TWO | https://direct.sleepstars.de/srs-geosite/TAKE-TWO.srs |
