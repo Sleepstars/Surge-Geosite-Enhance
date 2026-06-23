@@ -1030,6 +1030,7 @@
 | PEPPY | https://direct.sleepstars.de/geosite/PEPPY | https://direct.sleepstars.de/srs-geosite/PEPPY.srs |
 | PERL | https://direct.sleepstars.de/geosite/PERL | https://direct.sleepstars.de/srs-geosite/PERL.srs |
 | PERPLEXITY | https://direct.sleepstars.de/geosite/PERPLEXITY | https://direct.sleepstars.de/srs-geosite/PERPLEXITY.srs |
+| PETROCHINA | https://direct.sleepstars.de/geosite/PETROCHINA | https://direct.sleepstars.de/srs-geosite/PETROCHINA.srs |
 | PGYER | https://direct.sleepstars.de/geosite/PGYER | https://direct.sleepstars.de/srs-geosite/PGYER.srs |
 | PHOENIX | https://direct.sleepstars.de/geosite/PHOENIX | https://direct.sleepstars.de/srs-geosite/PHOENIX.srs |
 | PICACG | https://direct.sleepstars.de/geosite/PICACG | https://direct.sleepstars.de/srs-geosite/PICACG.srs |
@@ -1324,6 +1325,7 @@
 | TRAE | https://direct.sleepstars.de/geosite/TRAE | https://direct.sleepstars.de/srs-geosite/TRAE.srs |
 | TRANSLATEWIKI | https://direct.sleepstars.de/geosite/TRANSLATEWIKI | https://direct.sleepstars.de/srs-geosite/TRANSLATEWIKI.srs |
 | TRELLO | https://direct.sleepstars.de/geosite/TRELLO | https://direct.sleepstars.de/srs-geosite/TRELLO.srs |
+| TRUSTASIA | https://direct.sleepstars.de/geosite/TRUSTASIA | https://direct.sleepstars.de/srs-geosite/TRUSTASIA.srs |
 | TRUSTWALLET | https://direct.sleepstars.de/geosite/TRUSTWALLET | https://direct.sleepstars.de/srs-geosite/TRUSTWALLET.srs |
 | TRUSTWAVE | https://direct.sleepstars.de/geosite/TRUSTWAVE | https://direct.sleepstars.de/srs-geosite/TRUSTWAVE.srs |
 | TRUYEN-HENTAI | https://direct.sleepstars.de/geosite/TRUYEN-HENTAI | https://direct.sleepstars.de/srs-geosite/TRUYEN-HENTAI.srs |
@@ -1399,6 +1401,7 @@
 | WALMART | https://direct.sleepstars.de/geosite/WALMART | https://direct.sleepstars.de/srs-geosite/WALMART.srs |
 | WANFANG | https://direct.sleepstars.de/geosite/WANFANG | https://direct.sleepstars.de/srs-geosite/WANFANG.srs |
 | WANGSU | https://direct.sleepstars.de/geosite/WANGSU | https://direct.sleepstars.de/srs-geosite/WANGSU.srs |
+| WANMEI | https://direct.sleepstars.de/geosite/WANMEI | https://direct.sleepstars.de/srs-geosite/WANMEI.srs |
 | WANTMEDIA | https://direct.sleepstars.de/geosite/WANTMEDIA | https://direct.sleepstars.de/srs-geosite/WANTMEDIA.srs |
 | WARGAMING | https://direct.sleepstars.de/geosite/WARGAMING | https://direct.sleepstars.de/srs-geosite/WARGAMING.srs |
 | WASU | https://direct.sleepstars.de/geosite/WASU | https://direct.sleepstars.de/srs-geosite/WASU.srs |
