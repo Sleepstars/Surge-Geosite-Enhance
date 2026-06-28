@@ -31,7 +31,6 @@
 | ACCUWEATHER | https://direct.sleepstars.de/geosite/ACCUWEATHER | https://direct.sleepstars.de/srs-geosite/ACCUWEATHER.srs |
 | ACER | https://direct.sleepstars.de/geosite/ACER | https://direct.sleepstars.de/srs-geosite/ACER.srs |
 | ACFUN | https://direct.sleepstars.de/geosite/ACFUN | https://direct.sleepstars.de/srs-geosite/ACFUN.srs |
-| ACPLAY | https://direct.sleepstars.de/geosite/ACPLAY | https://direct.sleepstars.de/srs-geosite/ACPLAY.srs |
 | ACTALIS | https://direct.sleepstars.de/geosite/ACTALIS | https://direct.sleepstars.de/srs-geosite/ACTALIS.srs |
 | ADBLOCK | https://direct.sleepstars.de/geosite/ADBLOCK | https://direct.sleepstars.de/srs-geosite/ADBLOCK.srs |
 | ADBLOCKPLUS | https://direct.sleepstars.de/geosite/ADBLOCKPLUS | https://direct.sleepstars.de/srs-geosite/ADBLOCKPLUS.srs |
@@ -410,6 +409,7 @@
 | CYLINK | https://direct.sleepstars.de/geosite/CYLINK | https://direct.sleepstars.de/srs-geosite/CYLINK.srs |
 | DAILYMAIL | https://direct.sleepstars.de/geosite/DAILYMAIL | https://direct.sleepstars.de/srs-geosite/DAILYMAIL.srs |
 | DAILYMOTION | https://direct.sleepstars.de/geosite/DAILYMOTION | https://direct.sleepstars.de/srs-geosite/DAILYMOTION.srs |
+| DANDANPLAY | https://direct.sleepstars.de/geosite/DANDANPLAY | https://direct.sleepstars.de/srs-geosite/DANDANPLAY.srs |
 | DANDANZAN | https://direct.sleepstars.de/geosite/DANDANZAN | https://direct.sleepstars.de/srs-geosite/DANDANZAN.srs |
 | DANGDANG | https://direct.sleepstars.de/geosite/DANGDANG | https://direct.sleepstars.de/srs-geosite/DANGDANG.srs |
 | DART | https://direct.sleepstars.de/geosite/DART | https://direct.sleepstars.de/srs-geosite/DART.srs |
