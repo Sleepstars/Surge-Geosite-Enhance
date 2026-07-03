@@ -1061,6 +1061,7 @@
 | POLYV | https://direct.sleepstars.de/geosite/POLYV | https://direct.sleepstars.de/srs-geosite/POLYV.srs |
 | PORNHUB | https://direct.sleepstars.de/geosite/PORNHUB | https://direct.sleepstars.de/srs-geosite/PORNHUB.srs |
 | PORNPROS | https://direct.sleepstars.de/geosite/PORNPROS | https://direct.sleepstars.de/srs-geosite/PORNPROS.srs |
+| POSITIVE-TECHNOLOGIES | https://direct.sleepstars.de/geosite/POSITIVE-TECHNOLOGIES | https://direct.sleepstars.de/srs-geosite/POSITIVE-TECHNOLOGIES.srs |
 | POSTIMAGES | https://direct.sleepstars.de/geosite/POSTIMAGES | https://direct.sleepstars.de/srs-geosite/POSTIMAGES.srs |
 | PPTV | https://direct.sleepstars.de/geosite/PPTV | https://direct.sleepstars.de/srs-geosite/PPTV.srs |
 | PRIMEVIDEO | https://direct.sleepstars.de/geosite/PRIMEVIDEO | https://direct.sleepstars.de/srs-geosite/PRIMEVIDEO.srs |
@@ -1161,6 +1162,7 @@
 | SEHUATANG | https://direct.sleepstars.de/geosite/SEHUATANG | https://direct.sleepstars.de/srs-geosite/SEHUATANG.srs |
 | SELECTEL | https://direct.sleepstars.de/geosite/SELECTEL | https://direct.sleepstars.de/srs-geosite/SELECTEL.srs |
 | SENTRY | https://direct.sleepstars.de/geosite/SENTRY | https://direct.sleepstars.de/srs-geosite/SENTRY.srs |
+| SERVICEPIPE | https://direct.sleepstars.de/geosite/SERVICEPIPE | https://direct.sleepstars.de/srs-geosite/SERVICEPIPE.srs |
 | SETAPP | https://direct.sleepstars.de/geosite/SETAPP | https://direct.sleepstars.de/srs-geosite/SETAPP.srs |
 | SETN | https://direct.sleepstars.de/geosite/SETN | https://direct.sleepstars.de/srs-geosite/SETN.srs |
 | SF-EXPRESS | https://direct.sleepstars.de/geosite/SF-EXPRESS | https://direct.sleepstars.de/srs-geosite/SF-EXPRESS.srs |
