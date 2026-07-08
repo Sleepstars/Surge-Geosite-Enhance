@@ -208,6 +208,7 @@
 | CATEGORY-AI-!CN | https://direct.sleepstars.de/geosite/CATEGORY-AI-!CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-AI-!CN.srs |
 | CATEGORY-AI-CHAT-!CN | https://direct.sleepstars.de/geosite/CATEGORY-AI-CHAT-!CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-AI-CHAT-!CN.srs |
 | CATEGORY-AI-CN | https://direct.sleepstars.de/geosite/CATEGORY-AI-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-AI-CN.srs |
+| CATEGORY-AI-RU | https://direct.sleepstars.de/geosite/CATEGORY-AI-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-AI-RU.srs |
 | CATEGORY-ANDROID-APP-DOWNLOAD | https://direct.sleepstars.de/geosite/CATEGORY-ANDROID-APP-DOWNLOAD | https://direct.sleepstars.de/srs-geosite/CATEGORY-ANDROID-APP-DOWNLOAD.srs |
 | CATEGORY-ANTICENSORSHIP | https://direct.sleepstars.de/geosite/CATEGORY-ANTICENSORSHIP | https://direct.sleepstars.de/srs-geosite/CATEGORY-ANTICENSORSHIP.srs |
 | CATEGORY-ANTIVIRUS | https://direct.sleepstars.de/geosite/CATEGORY-ANTIVIRUS | https://direct.sleepstars.de/srs-geosite/CATEGORY-ANTIVIRUS.srs |
@@ -326,6 +327,7 @@
 | CERN | https://direct.sleepstars.de/geosite/CERN | https://direct.sleepstars.de/srs-geosite/CERN.srs |
 | CERTINOMIS | https://direct.sleepstars.de/geosite/CERTINOMIS | https://direct.sleepstars.de/srs-geosite/CERTINOMIS.srs |
 | CERTUM | https://direct.sleepstars.de/geosite/CERTUM | https://direct.sleepstars.de/srs-geosite/CERTUM.srs |
+| CHANGYOU | https://direct.sleepstars.de/geosite/CHANGYOU | https://direct.sleepstars.de/srs-geosite/CHANGYOU.srs |
 | CHAOXING | https://direct.sleepstars.de/geosite/CHAOXING | https://direct.sleepstars.de/srs-geosite/CHAOXING.srs |
 | CHATANGO | https://direct.sleepstars.de/geosite/CHATANGO | https://direct.sleepstars.de/srs-geosite/CHATANGO.srs |
 | CHATWHORES | https://direct.sleepstars.de/geosite/CHATWHORES | https://direct.sleepstars.de/srs-geosite/CHATWHORES.srs |
@@ -541,6 +543,7 @@
 | FLIBUSTA | https://direct.sleepstars.de/geosite/FLIBUSTA | https://direct.sleepstars.de/srs-geosite/FLIBUSTA.srs |
 | FLICKR | https://direct.sleepstars.de/geosite/FLICKR | https://direct.sleepstars.de/srs-geosite/FLICKR.srs |
 | FLOWUS | https://direct.sleepstars.de/geosite/FLOWUS | https://direct.sleepstars.de/srs-geosite/FLOWUS.srs |
+| FLOWWOW | https://direct.sleepstars.de/geosite/FLOWWOW | https://direct.sleepstars.de/srs-geosite/FLOWWOW.srs |
 | FLUTTER | https://direct.sleepstars.de/geosite/FLUTTER | https://direct.sleepstars.de/srs-geosite/FLUTTER.srs |
 | FONBET | https://direct.sleepstars.de/geosite/FONBET | https://direct.sleepstars.de/srs-geosite/FONBET.srs |
 | FONTAWESOME | https://direct.sleepstars.de/geosite/FONTAWESOME | https://direct.sleepstars.de/srs-geosite/FONTAWESOME.srs |
@@ -557,6 +560,7 @@
 | FREENODE | https://direct.sleepstars.de/geosite/FREENODE | https://direct.sleepstars.de/srs-geosite/FREENODE.srs |
 | FT | https://direct.sleepstars.de/geosite/FT | https://direct.sleepstars.de/srs-geosite/FT.srs |
 | FTV | https://direct.sleepstars.de/geosite/FTV | https://direct.sleepstars.de/srs-geosite/FTV.srs |
+| FUNPAY | https://direct.sleepstars.de/geosite/FUNPAY | https://direct.sleepstars.de/srs-geosite/FUNPAY.srs |
 | FUTU | https://direct.sleepstars.de/geosite/FUTU | https://direct.sleepstars.de/srs-geosite/FUTU.srs |
 | FZDM | https://direct.sleepstars.de/geosite/FZDM | https://direct.sleepstars.de/srs-geosite/FZDM.srs |
 | GAIJIN | https://direct.sleepstars.de/geosite/GAIJIN | https://direct.sleepstars.de/srs-geosite/GAIJIN.srs |
@@ -1022,6 +1026,7 @@
 | PASKOOCHEH | https://direct.sleepstars.de/geosite/PASKOOCHEH | https://direct.sleepstars.de/srs-geosite/PASKOOCHEH.srs |
 | PASTEBIN | https://direct.sleepstars.de/geosite/PASTEBIN | https://direct.sleepstars.de/srs-geosite/PASTEBIN.srs |
 | PATREON | https://direct.sleepstars.de/geosite/PATREON | https://direct.sleepstars.de/srs-geosite/PATREON.srs |
+| PAWCHIVE | https://direct.sleepstars.de/geosite/PAWCHIVE | https://direct.sleepstars.de/srs-geosite/PAWCHIVE.srs |
 | PAYPAL | https://direct.sleepstars.de/geosite/PAYPAL | https://direct.sleepstars.de/srs-geosite/PAYPAL.srs |
 | PBS | https://direct.sleepstars.de/geosite/PBS | https://direct.sleepstars.de/srs-geosite/PBS.srs |
 | PCCW | https://direct.sleepstars.de/geosite/PCCW | https://direct.sleepstars.de/srs-geosite/PCCW.srs |
