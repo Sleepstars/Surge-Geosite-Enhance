@@ -88,7 +88,9 @@
 | APPLE-CN | https://direct.sleepstars.de/geosite/APPLE-CN | https://direct.sleepstars.de/srs-geosite/APPLE-CN.srs |
 | APPLE-DEV | https://direct.sleepstars.de/geosite/APPLE-DEV | https://direct.sleepstars.de/srs-geosite/APPLE-DEV.srs |
 | APPLE-INTELLIGENCE | https://direct.sleepstars.de/geosite/APPLE-INTELLIGENCE | https://direct.sleepstars.de/srs-geosite/APPLE-INTELLIGENCE.srs |
+| APPLE-MUSIC | https://direct.sleepstars.de/geosite/APPLE-MUSIC | https://direct.sleepstars.de/srs-geosite/APPLE-MUSIC.srs |
 | APPLE-PKI | https://direct.sleepstars.de/geosite/APPLE-PKI | https://direct.sleepstars.de/srs-geosite/APPLE-PKI.srs |
+| APPLE-PODCASTS | https://direct.sleepstars.de/geosite/APPLE-PODCASTS | https://direct.sleepstars.de/srs-geosite/APPLE-PODCASTS.srs |
 | APPLE-TVPLUS | https://direct.sleepstars.de/geosite/APPLE-TVPLUS | https://direct.sleepstars.de/srs-geosite/APPLE-TVPLUS.srs |
 | APPLE-UPDATE | https://direct.sleepstars.de/geosite/APPLE-UPDATE | https://direct.sleepstars.de/srs-geosite/APPLE-UPDATE.srs |
 | APPLEDAILY | https://direct.sleepstars.de/geosite/APPLEDAILY | https://direct.sleepstars.de/srs-geosite/APPLEDAILY.srs |
@@ -109,6 +111,7 @@
 | ATT | https://direct.sleepstars.de/geosite/ATT | https://direct.sleepstars.de/srs-geosite/ATT.srs |
 | ATTWATCHTV | https://direct.sleepstars.de/geosite/ATTWATCHTV | https://direct.sleepstars.de/srs-geosite/ATTWATCHTV.srs |
 | AUTODESK | https://direct.sleepstars.de/geosite/AUTODESK | https://direct.sleepstars.de/srs-geosite/AUTODESK.srs |
+| AUX | https://direct.sleepstars.de/geosite/AUX | https://direct.sleepstars.de/srs-geosite/AUX.srs |
 | AVAXHOME | https://direct.sleepstars.de/geosite/AVAXHOME | https://direct.sleepstars.de/srs-geosite/AVAXHOME.srs |
 | AVIASALES | https://direct.sleepstars.de/geosite/AVIASALES | https://direct.sleepstars.de/srs-geosite/AVIASALES.srs |
 | AVITO | https://direct.sleepstars.de/geosite/AVITO | https://direct.sleepstars.de/srs-geosite/AVITO.srs |
@@ -133,6 +136,7 @@
 | BEGET | https://direct.sleepstars.de/geosite/BEGET | https://direct.sleepstars.de/srs-geosite/BEGET.srs |
 | BEISEN | https://direct.sleepstars.de/geosite/BEISEN | https://direct.sleepstars.de/srs-geosite/BEISEN.srs |
 | BESTBUY | https://direct.sleepstars.de/geosite/BESTBUY | https://direct.sleepstars.de/srs-geosite/BESTBUY.srs |
+| BESTCHANGE | https://direct.sleepstars.de/geosite/BESTCHANGE | https://direct.sleepstars.de/srs-geosite/BESTCHANGE.srs |
 | BESTORE | https://direct.sleepstars.de/geosite/BESTORE | https://direct.sleepstars.de/srs-geosite/BESTORE.srs |
 | BESTV | https://direct.sleepstars.de/geosite/BESTV | https://direct.sleepstars.de/srs-geosite/BESTV.srs |
 | BETBOOM | https://direct.sleepstars.de/geosite/BETBOOM | https://direct.sleepstars.de/srs-geosite/BETBOOM.srs |
