@@ -111,7 +111,7 @@
 | ATT | https://direct.sleepstars.de/geosite/ATT | https://direct.sleepstars.de/srs-geosite/ATT.srs |
 | ATTWATCHTV | https://direct.sleepstars.de/geosite/ATTWATCHTV | https://direct.sleepstars.de/srs-geosite/ATTWATCHTV.srs |
 | AUTODESK | https://direct.sleepstars.de/geosite/AUTODESK | https://direct.sleepstars.de/srs-geosite/AUTODESK.srs |
-| AUX | https://direct.sleepstars.de/geosite/AUX | https://direct.sleepstars.de/srs-geosite/AUX.srs |
+| AUXGROUP | https://direct.sleepstars.de/geosite/AUXGROUP | https://direct.sleepstars.de/srs-geosite/AUXGROUP.srs |
 | AVAXHOME | https://direct.sleepstars.de/geosite/AVAXHOME | https://direct.sleepstars.de/srs-geosite/AVAXHOME.srs |
 | AVIASALES | https://direct.sleepstars.de/geosite/AVIASALES | https://direct.sleepstars.de/srs-geosite/AVIASALES.srs |
 | AVITO | https://direct.sleepstars.de/geosite/AVITO | https://direct.sleepstars.de/srs-geosite/AVITO.srs |
