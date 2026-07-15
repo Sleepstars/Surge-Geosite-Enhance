@@ -779,6 +779,7 @@
 | KERNEL | https://direct.sleepstars.de/geosite/KERNEL | https://direct.sleepstars.de/srs-geosite/KERNEL.srs |
 | KEYBASE | https://direct.sleepstars.de/geosite/KEYBASE | https://direct.sleepstars.de/srs-geosite/KEYBASE.srs |
 | KHANACADEMY | https://direct.sleepstars.de/geosite/KHANACADEMY | https://direct.sleepstars.de/srs-geosite/KHANACADEMY.srs |
+| KICK | https://direct.sleepstars.de/geosite/KICK | https://direct.sleepstars.de/srs-geosite/KICK.srs |
 | KINDLE | https://direct.sleepstars.de/geosite/KINDLE | https://direct.sleepstars.de/srs-geosite/KINDLE.srs |
 | KINDLE4RSS | https://direct.sleepstars.de/geosite/KINDLE4RSS | https://direct.sleepstars.de/srs-geosite/KINDLE4RSS.srs |
 | KINGKONGLIVE | https://direct.sleepstars.de/geosite/KINGKONGLIVE | https://direct.sleepstars.de/srs-geosite/KINGKONGLIVE.srs |
