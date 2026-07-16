@@ -831,6 +831,7 @@
 | LIGASTAVOK | https://direct.sleepstars.de/geosite/LIGASTAVOK | https://direct.sleepstars.de/srs-geosite/LIGASTAVOK.srs |
 | LIGHTER | https://direct.sleepstars.de/geosite/LIGHTER | https://direct.sleepstars.de/srs-geosite/LIGHTER.srs |
 | LIHKG | https://direct.sleepstars.de/geosite/LIHKG | https://direct.sleepstars.de/srs-geosite/LIHKG.srs |
+| LIKEE | https://direct.sleepstars.de/geosite/LIKEE | https://direct.sleepstars.de/srs-geosite/LIKEE.srs |
 | LIMELIGHT | https://direct.sleepstars.de/geosite/LIMELIGHT | https://direct.sleepstars.de/srs-geosite/LIMELIGHT.srs |
 | LINAKESI | https://direct.sleepstars.de/geosite/LINAKESI | https://direct.sleepstars.de/srs-geosite/LINAKESI.srs |
 | LINE | https://direct.sleepstars.de/geosite/LINE | https://direct.sleepstars.de/srs-geosite/LINE.srs |
