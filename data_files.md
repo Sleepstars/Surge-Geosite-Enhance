@@ -556,6 +556,7 @@
 | FONTSHOP | https://direct.sleepstars.de/geosite/FONTSHOP | https://direct.sleepstars.de/srs-geosite/FONTSHOP.srs |
 | FONTSINUSE | https://direct.sleepstars.de/geosite/FONTSINUSE | https://direct.sleepstars.de/srs-geosite/FONTSINUSE.srs |
 | FORBES | https://direct.sleepstars.de/geosite/FORBES | https://direct.sleepstars.de/srs-geosite/FORBES.srs |
+| FORMULA1 | https://direct.sleepstars.de/geosite/FORMULA1 | https://direct.sleepstars.de/srs-geosite/FORMULA1.srs |
 | FORZA | https://direct.sleepstars.de/geosite/FORZA | https://direct.sleepstars.de/srs-geosite/FORZA.srs |
 | FOX | https://direct.sleepstars.de/geosite/FOX | https://direct.sleepstars.de/srs-geosite/FOX.srs |
 | FQNOVEL | https://direct.sleepstars.de/geosite/FQNOVEL | https://direct.sleepstars.de/srs-geosite/FQNOVEL.srs |
@@ -1400,6 +1401,7 @@
 | VMWARE | https://direct.sleepstars.de/geosite/VMWARE | https://direct.sleepstars.de/srs-geosite/VMWARE.srs |
 | VOANEWS | https://direct.sleepstars.de/geosite/VOANEWS | https://direct.sleepstars.de/srs-geosite/VOANEWS.srs |
 | VODAFONE | https://direct.sleepstars.de/geosite/VODAFONE | https://direct.sleepstars.de/srs-geosite/VODAFONE.srs |
+| VOKINO | https://direct.sleepstars.de/geosite/VOKINO | https://direct.sleepstars.de/srs-geosite/VOKINO.srs |
 | VOLCENGINE | https://direct.sleepstars.de/geosite/VOLCENGINE | https://direct.sleepstars.de/srs-geosite/VOLCENGINE.srs |
 | VOLMOE | https://direct.sleepstars.de/geosite/VOLMOE | https://direct.sleepstars.de/srs-geosite/VOLMOE.srs |
 | VOLVO | https://direct.sleepstars.de/geosite/VOLVO | https://direct.sleepstars.de/srs-geosite/VOLVO.srs |
