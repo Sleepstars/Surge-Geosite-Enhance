@@ -1126,6 +1126,7 @@
 | REDOTPAY | https://direct.sleepstars.de/geosite/REDOTPAY | https://direct.sleepstars.de/srs-geosite/REDOTPAY.srs |
 | REDTUBE | https://direct.sleepstars.de/geosite/REDTUBE | https://direct.sleepstars.de/srs-geosite/REDTUBE.srs |
 | REGRU | https://direct.sleepstars.de/geosite/REGRU | https://direct.sleepstars.de/srs-geosite/REGRU.srs |
+| REMNAWAVE | https://direct.sleepstars.de/geosite/REMNAWAVE | https://direct.sleepstars.de/srs-geosite/REMNAWAVE.srs |
 | RENREN | https://direct.sleepstars.de/geosite/RENREN | https://direct.sleepstars.de/srs-geosite/RENREN.srs |
 | REURL | https://direct.sleepstars.de/geosite/REURL | https://direct.sleepstars.de/srs-geosite/REURL.srs |
 | REUTERS | https://direct.sleepstars.de/geosite/REUTERS | https://direct.sleepstars.de/srs-geosite/REUTERS.srs |
