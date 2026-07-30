@@ -951,6 +951,7 @@
 | NAVER | https://direct.sleepstars.de/geosite/NAVER | https://direct.sleepstars.de/srs-geosite/NAVER.srs |
 | NBCUNIVERSAL | https://direct.sleepstars.de/geosite/NBCUNIVERSAL | https://direct.sleepstars.de/srs-geosite/NBCUNIVERSAL.srs |
 | NEOWIN | https://direct.sleepstars.de/geosite/NEOWIN | https://direct.sleepstars.de/srs-geosite/NEOWIN.srs |
+| NETCRAZE | https://direct.sleepstars.de/geosite/NETCRAZE | https://direct.sleepstars.de/srs-geosite/NETCRAZE.srs |
 | NETCUP | https://direct.sleepstars.de/geosite/NETCUP | https://direct.sleepstars.de/srs-geosite/NETCUP.srs |
 | NETEASE | https://direct.sleepstars.de/geosite/NETEASE | https://direct.sleepstars.de/srs-geosite/NETEASE.srs |
 | NETFLAV | https://direct.sleepstars.de/geosite/NETFLAV | https://direct.sleepstars.de/srs-geosite/NETFLAV.srs |
