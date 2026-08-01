@@ -13,6 +13,7 @@
 | 36KR | https://direct.sleepstars.de/geosite/36KR | https://direct.sleepstars.de/srs-geosite/36KR.srs |
 | 4399 | https://direct.sleepstars.de/geosite/4399 | https://direct.sleepstars.de/srs-geosite/4399.srs |
 | 4CHAN | https://direct.sleepstars.de/geosite/4CHAN | https://direct.sleepstars.de/srs-geosite/4CHAN.srs |
+| 4PDA | https://direct.sleepstars.de/geosite/4PDA | https://direct.sleepstars.de/srs-geosite/4PDA.srs |
 | 4PLEBS | https://direct.sleepstars.de/geosite/4PLEBS | https://direct.sleepstars.de/srs-geosite/4PLEBS.srs |
 | 51JOB | https://direct.sleepstars.de/geosite/51JOB | https://direct.sleepstars.de/srs-geosite/51JOB.srs |
 | 54647 | https://direct.sleepstars.de/geosite/54647 | https://direct.sleepstars.de/srs-geosite/54647.srs |
@@ -111,6 +112,7 @@
 | ATT | https://direct.sleepstars.de/geosite/ATT | https://direct.sleepstars.de/srs-geosite/ATT.srs |
 | ATTWATCHTV | https://direct.sleepstars.de/geosite/ATTWATCHTV | https://direct.sleepstars.de/srs-geosite/ATTWATCHTV.srs |
 | AUTODESK | https://direct.sleepstars.de/geosite/AUTODESK | https://direct.sleepstars.de/srs-geosite/AUTODESK.srs |
+| AUTORU | https://direct.sleepstars.de/geosite/AUTORU | https://direct.sleepstars.de/srs-geosite/AUTORU.srs |
 | AUXGROUP | https://direct.sleepstars.de/geosite/AUXGROUP | https://direct.sleepstars.de/srs-geosite/AUXGROUP.srs |
 | AVAXHOME | https://direct.sleepstars.de/geosite/AVAXHOME | https://direct.sleepstars.de/srs-geosite/AVAXHOME.srs |
 | AVIASALES | https://direct.sleepstars.de/geosite/AVIASALES | https://direct.sleepstars.de/srs-geosite/AVIASALES.srs |
@@ -244,6 +246,7 @@
 | CATEGORY-ECOMMERCE-RU | https://direct.sleepstars.de/geosite/CATEGORY-ECOMMERCE-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-ECOMMERCE-RU.srs |
 | CATEGORY-EDUCATION-CN | https://direct.sleepstars.de/geosite/CATEGORY-EDUCATION-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-EDUCATION-CN.srs |
 | CATEGORY-EDUCATION-IR | https://direct.sleepstars.de/geosite/CATEGORY-EDUCATION-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-EDUCATION-IR.srs |
+| CATEGORY-EDUCATION-RU | https://direct.sleepstars.de/geosite/CATEGORY-EDUCATION-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-EDUCATION-RU.srs |
 | CATEGORY-ELECTRONIC-CN | https://direct.sleepstars.de/geosite/CATEGORY-ELECTRONIC-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-ELECTRONIC-CN.srs |
 | CATEGORY-EMBY | https://direct.sleepstars.de/geosite/CATEGORY-EMBY | https://direct.sleepstars.de/srs-geosite/CATEGORY-EMBY.srs |
 | CATEGORY-ENHANCE-GAMING | https://direct.sleepstars.de/geosite/CATEGORY-ENHANCE-GAMING | https://direct.sleepstars.de/srs-geosite/CATEGORY-ENHANCE-GAMING.srs |
@@ -255,6 +258,7 @@
 | CATEGORY-FOOD-CN | https://direct.sleepstars.de/geosite/CATEGORY-FOOD-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-FOOD-CN.srs |
 | CATEGORY-FORUMS | https://direct.sleepstars.de/geosite/CATEGORY-FORUMS | https://direct.sleepstars.de/srs-geosite/CATEGORY-FORUMS.srs |
 | CATEGORY-FORUMS-IR | https://direct.sleepstars.de/geosite/CATEGORY-FORUMS-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-FORUMS-IR.srs |
+| CATEGORY-FORUMS-RU | https://direct.sleepstars.de/geosite/CATEGORY-FORUMS-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-FORUMS-RU.srs |
 | CATEGORY-GAME-ACCELERATOR-CN | https://direct.sleepstars.de/geosite/CATEGORY-GAME-ACCELERATOR-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-GAME-ACCELERATOR-CN.srs |
 | CATEGORY-GAME-PLATFORMS-DOWNLOAD | https://direct.sleepstars.de/geosite/CATEGORY-GAME-PLATFORMS-DOWNLOAD | https://direct.sleepstars.de/srs-geosite/CATEGORY-GAME-PLATFORMS-DOWNLOAD.srs |
 | CATEGORY-GAMES | https://direct.sleepstars.de/geosite/CATEGORY-GAMES | https://direct.sleepstars.de/srs-geosite/CATEGORY-GAMES.srs |
@@ -312,6 +316,7 @@
 | CATEGORY-STUN | https://direct.sleepstars.de/geosite/CATEGORY-STUN | https://direct.sleepstars.de/srs-geosite/CATEGORY-STUN.srs |
 | CATEGORY-TECH-IR | https://direct.sleepstars.de/geosite/CATEGORY-TECH-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-IR.srs |
 | CATEGORY-TECH-MEDIA | https://direct.sleepstars.de/geosite/CATEGORY-TECH-MEDIA | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-MEDIA.srs |
+| CATEGORY-TECH-MEDIA-RU | https://direct.sleepstars.de/geosite/CATEGORY-TECH-MEDIA-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-MEDIA-RU.srs |
 | CATEGORY-TM | https://direct.sleepstars.de/geosite/CATEGORY-TM | https://direct.sleepstars.de/srs-geosite/CATEGORY-TM.srs |
 | CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/geosite/CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-TRAVEL-IR.srs |
 | CATEGORY-TRAVEL-RU | https://direct.sleepstars.de/geosite/CATEGORY-TRAVEL-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-TRAVEL-RU.srs |
@@ -337,6 +342,7 @@
 | CHATWHORES | https://direct.sleepstars.de/geosite/CHATWHORES | https://direct.sleepstars.de/srs-geosite/CHATWHORES.srs |
 | CHEETAHMOBILE | https://direct.sleepstars.de/geosite/CHEETAHMOBILE | https://direct.sleepstars.de/srs-geosite/CHEETAHMOBILE.srs |
 | CHEGG | https://direct.sleepstars.de/geosite/CHEGG | https://direct.sleepstars.de/srs-geosite/CHEGG.srs |
+| CHESSCOM | https://direct.sleepstars.de/geosite/CHESSCOM | https://direct.sleepstars.de/srs-geosite/CHESSCOM.srs |
 | CHINA-LIST | https://direct.sleepstars.de/geosite/CHINA-LIST | https://direct.sleepstars.de/srs-geosite/CHINA-LIST.srs |
 | CHINABROADNET | https://direct.sleepstars.de/geosite/CHINABROADNET | https://direct.sleepstars.de/srs-geosite/CHINABROADNET.srs |
 | CHINAMOBILE | https://direct.sleepstars.de/geosite/CHINAMOBILE | https://direct.sleepstars.de/srs-geosite/CHINAMOBILE.srs |
@@ -348,6 +354,7 @@
 | CHINATOWER | https://direct.sleepstars.de/geosite/CHINATOWER | https://direct.sleepstars.de/srs-geosite/CHINATOWER.srs |
 | CHINAUNICOM | https://direct.sleepstars.de/geosite/CHINAUNICOM | https://direct.sleepstars.de/srs-geosite/CHINAUNICOM.srs |
 | CHINAZ | https://direct.sleepstars.de/geosite/CHINAZ | https://direct.sleepstars.de/srs-geosite/CHINAZ.srs |
+| CIAN | https://direct.sleepstars.de/geosite/CIAN | https://direct.sleepstars.de/srs-geosite/CIAN.srs |
 | CISCO | https://direct.sleepstars.de/geosite/CISCO | https://direct.sleepstars.de/srs-geosite/CISCO.srs |
 | CITIC | https://direct.sleepstars.de/geosite/CITIC | https://direct.sleepstars.de/srs-geosite/CITIC.srs |
 | CITIZENLAB | https://direct.sleepstars.de/geosite/CITIZENLAB | https://direct.sleepstars.de/srs-geosite/CITIZENLAB.srs |
@@ -739,6 +746,7 @@
 | ITCHIO | https://direct.sleepstars.de/geosite/ITCHIO | https://direct.sleepstars.de/srs-geosite/ITCHIO.srs |
 | ITIGER | https://direct.sleepstars.de/geosite/ITIGER | https://direct.sleepstars.de/srs-geosite/ITIGER.srs |
 | ITUNES | https://direct.sleepstars.de/geosite/ITUNES | https://direct.sleepstars.de/srs-geosite/ITUNES.srs |
+| IXBT | https://direct.sleepstars.de/geosite/IXBT | https://direct.sleepstars.de/srs-geosite/IXBT.srs |
 | IXSYSTEMS | https://direct.sleepstars.de/geosite/IXSYSTEMS | https://direct.sleepstars.de/srs-geosite/IXSYSTEMS.srs |
 | IYF | https://direct.sleepstars.de/geosite/IYF | https://direct.sleepstars.de/srs-geosite/IYF.srs |
 | JABLE | https://direct.sleepstars.de/geosite/JABLE | https://direct.sleepstars.de/srs-geosite/JABLE.srs |
@@ -865,6 +873,7 @@
 | MAILRU-GROUP | https://direct.sleepstars.de/geosite/MAILRU-GROUP | https://direct.sleepstars.de/srs-geosite/MAILRU-GROUP.srs |
 | MAINICHI | https://direct.sleepstars.de/geosite/MAINICHI | https://direct.sleepstars.de/srs-geosite/MAINICHI.srs |
 | MANHUAGUI | https://direct.sleepstars.de/geosite/MANHUAGUI | https://direct.sleepstars.de/srs-geosite/MANHUAGUI.srs |
+| MANHUAREN | https://direct.sleepstars.de/geosite/MANHUAREN | https://direct.sleepstars.de/srs-geosite/MANHUAREN.srs |
 | MANORAMA | https://direct.sleepstars.de/geosite/MANORAMA | https://direct.sleepstars.de/srs-geosite/MANORAMA.srs |
 | MANOTO | https://direct.sleepstars.de/geosite/MANOTO | https://direct.sleepstars.de/srs-geosite/MANOTO.srs |
 | MANUS | https://direct.sleepstars.de/geosite/MANUS | https://direct.sleepstars.de/srs-geosite/MANUS.srs |
@@ -1026,6 +1035,7 @@
 | OSU | https://direct.sleepstars.de/geosite/OSU | https://direct.sleepstars.de/srs-geosite/OSU.srs |
 | OTPBANK | https://direct.sleepstars.de/geosite/OTPBANK | https://direct.sleepstars.de/srs-geosite/OTPBANK.srs |
 | OUP | https://direct.sleepstars.de/geosite/OUP | https://direct.sleepstars.de/srs-geosite/OUP.srs |
+| OVERCLOCKERS-RU | https://direct.sleepstars.de/geosite/OVERCLOCKERS-RU | https://direct.sleepstars.de/srs-geosite/OVERCLOCKERS-RU.srs |
 | OZON | https://direct.sleepstars.de/geosite/OZON | https://direct.sleepstars.de/srs-geosite/OZON.srs |
 | PAGECDN | https://direct.sleepstars.de/geosite/PAGECDN | https://direct.sleepstars.de/srs-geosite/PAGECDN.srs |
 | PANASONIC | https://direct.sleepstars.de/geosite/PANASONIC | https://direct.sleepstars.de/srs-geosite/PANASONIC.srs |
