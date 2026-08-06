@@ -556,6 +556,8 @@
 | FLOWUS | https://direct.sleepstars.de/geosite/FLOWUS | https://direct.sleepstars.de/srs-geosite/FLOWUS.srs |
 | FLOWWOW | https://direct.sleepstars.de/geosite/FLOWWOW | https://direct.sleepstars.de/srs-geosite/FLOWWOW.srs |
 | FLUTTER | https://direct.sleepstars.de/geosite/FLUTTER | https://direct.sleepstars.de/srs-geosite/FLUTTER.srs |
+| FLYIO | https://direct.sleepstars.de/geosite/FLYIO | https://direct.sleepstars.de/srs-geosite/FLYIO.srs |
+| FOCUSCHINA | https://direct.sleepstars.de/geosite/FOCUSCHINA | https://direct.sleepstars.de/srs-geosite/FOCUSCHINA.srs |
 | FONBET | https://direct.sleepstars.de/geosite/FONBET | https://direct.sleepstars.de/srs-geosite/FONBET.srs |
 | FONTAWESOME | https://direct.sleepstars.de/geosite/FONTAWESOME | https://direct.sleepstars.de/srs-geosite/FONTAWESOME.srs |
 | FONTEXPLORER | https://direct.sleepstars.de/geosite/FONTEXPLORER | https://direct.sleepstars.de/srs-geosite/FONTEXPLORER.srs |
@@ -666,7 +668,6 @@
 | HKEDCITY | https://direct.sleepstars.de/geosite/HKEDCITY | https://direct.sleepstars.de/srs-geosite/HKEDCITY.srs |
 | HKETGROUP | https://direct.sleepstars.de/geosite/HKETGROUP | https://direct.sleepstars.de/srs-geosite/HKETGROUP.srs |
 | HKGOLDEN | https://direct.sleepstars.de/geosite/HKGOLDEN | https://direct.sleepstars.de/srs-geosite/HKGOLDEN.srs |
-| HKOPENTV | https://direct.sleepstars.de/geosite/HKOPENTV | https://direct.sleepstars.de/srs-geosite/HKOPENTV.srs |
 | HKT | https://direct.sleepstars.de/geosite/HKT | https://direct.sleepstars.de/srs-geosite/HKT.srs |
 | HKU | https://direct.sleepstars.de/geosite/HKU | https://direct.sleepstars.de/srs-geosite/HKU.srs |
 | HKUST | https://direct.sleepstars.de/geosite/HKUST | https://direct.sleepstars.de/srs-geosite/HKUST.srs |
@@ -1224,6 +1225,7 @@
 | SOGOU | https://direct.sleepstars.de/geosite/SOGOU | https://direct.sleepstars.de/srs-geosite/SOGOU.srs |
 | SOHU | https://direct.sleepstars.de/geosite/SOHU | https://direct.sleepstars.de/srs-geosite/SOHU.srs |
 | SOKOLOV | https://direct.sleepstars.de/geosite/SOKOLOV | https://direct.sleepstars.de/srs-geosite/SOKOLOV.srs |
+| SONEMIC | https://direct.sleepstars.de/geosite/SONEMIC | https://direct.sleepstars.de/srs-geosite/SONEMIC.srs |
 | SONY | https://direct.sleepstars.de/geosite/SONY | https://direct.sleepstars.de/srs-geosite/SONY.srs |
 | SONYPICTURES | https://direct.sleepstars.de/geosite/SONYPICTURES | https://direct.sleepstars.de/srs-geosite/SONYPICTURES.srs |
 | SOUNDCLOUD | https://direct.sleepstars.de/geosite/SOUNDCLOUD | https://direct.sleepstars.de/srs-geosite/SOUNDCLOUD.srs |
