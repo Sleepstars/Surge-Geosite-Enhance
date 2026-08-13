@@ -33,6 +33,8 @@
 | ACER | https://direct.sleepstars.de/geosite/ACER | https://direct.sleepstars.de/srs-geosite/ACER.srs |
 | ACFUN | https://direct.sleepstars.de/geosite/ACFUN | https://direct.sleepstars.de/srs-geosite/ACFUN.srs |
 | ACTALIS | https://direct.sleepstars.de/geosite/ACTALIS | https://direct.sleepstars.de/srs-geosite/ACTALIS.srs |
+| ACTIVISION | https://direct.sleepstars.de/geosite/ACTIVISION | https://direct.sleepstars.de/srs-geosite/ACTIVISION.srs |
+| ACTIVISION-BLIZZARD | https://direct.sleepstars.de/geosite/ACTIVISION-BLIZZARD | https://direct.sleepstars.de/srs-geosite/ACTIVISION-BLIZZARD.srs |
 | ADBLOCK | https://direct.sleepstars.de/geosite/ADBLOCK | https://direct.sleepstars.de/srs-geosite/ADBLOCK.srs |
 | ADBLOCKPLUS | https://direct.sleepstars.de/geosite/ADBLOCKPLUS | https://direct.sleepstars.de/srs-geosite/ADBLOCKPLUS.srs |
 | ADDTHIS | https://direct.sleepstars.de/geosite/ADDTHIS | https://direct.sleepstars.de/srs-geosite/ADDTHIS.srs |
@@ -987,6 +989,7 @@
 | NIKKEI | https://direct.sleepstars.de/geosite/NIKKEI | https://direct.sleepstars.de/srs-geosite/NIKKEI.srs |
 | NINTENDO | https://direct.sleepstars.de/geosite/NINTENDO | https://direct.sleepstars.de/srs-geosite/NINTENDO.srs |
 | NIST | https://direct.sleepstars.de/geosite/NIST | https://direct.sleepstars.de/srs-geosite/NIST.srs |
+| NIXOS | https://direct.sleepstars.de/geosite/NIXOS | https://direct.sleepstars.de/srs-geosite/NIXOS.srs |
 | NODEJS | https://direct.sleepstars.de/geosite/NODEJS | https://direct.sleepstars.de/srs-geosite/NODEJS.srs |
 | NODESEEK | https://direct.sleepstars.de/geosite/NODESEEK | https://direct.sleepstars.de/srs-geosite/NODESEEK.srs |
 | NOIP | https://direct.sleepstars.de/geosite/NOIP | https://direct.sleepstars.de/srs-geosite/NOIP.srs |
