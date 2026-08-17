@@ -1375,7 +1375,6 @@
 | TYPEKIT | https://direct.sleepstars.de/geosite/TYPEKIT | https://direct.sleepstars.de/srs-geosite/TYPEKIT.srs |
 | TYPENETWORK | https://direct.sleepstars.de/geosite/TYPENETWORK | https://direct.sleepstars.de/srs-geosite/TYPENETWORK.srs |
 | TYPOGRAPHY | https://direct.sleepstars.de/geosite/TYPOGRAPHY | https://direct.sleepstars.de/srs-geosite/TYPOGRAPHY.srs |
-| U17 | https://direct.sleepstars.de/geosite/U17 | https://direct.sleepstars.de/srs-geosite/U17.srs |
 | UBER | https://direct.sleepstars.de/geosite/UBER | https://direct.sleepstars.de/srs-geosite/UBER.srs |
 | UBIQUITI | https://direct.sleepstars.de/geosite/UBIQUITI | https://direct.sleepstars.de/srs-geosite/UBIQUITI.srs |
 | UBISOFT | https://direct.sleepstars.de/geosite/UBISOFT | https://direct.sleepstars.de/srs-geosite/UBISOFT.srs |
