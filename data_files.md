@@ -994,6 +994,7 @@
 | NODESEEK | https://direct.sleepstars.de/geosite/NODESEEK | https://direct.sleepstars.de/srs-geosite/NODESEEK.srs |
 | NOIP | https://direct.sleepstars.de/geosite/NOIP | https://direct.sleepstars.de/srs-geosite/NOIP.srs |
 | NORDSTROM | https://direct.sleepstars.de/geosite/NORDSTROM | https://direct.sleepstars.de/srs-geosite/NORDSTROM.srs |
+| NORDVPN | https://direct.sleepstars.de/geosite/NORDVPN | https://direct.sleepstars.de/srs-geosite/NORDVPN.srs |
 | NOTION | https://direct.sleepstars.de/geosite/NOTION | https://direct.sleepstars.de/srs-geosite/NOTION.srs |
 | NOW | https://direct.sleepstars.de/geosite/NOW | https://direct.sleepstars.de/srs-geosite/NOW.srs |
 | NOWCODER | https://direct.sleepstars.de/geosite/NOWCODER | https://direct.sleepstars.de/srs-geosite/NOWCODER.srs |
