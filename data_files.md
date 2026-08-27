@@ -971,6 +971,7 @@
 | NETLIFY | https://direct.sleepstars.de/geosite/NETLIFY | https://direct.sleepstars.de/srs-geosite/NETLIFY.srs |
 | NEURALINK | https://direct.sleepstars.de/geosite/NEURALINK | https://direct.sleepstars.de/srs-geosite/NEURALINK.srs |
 | NEWEGG | https://direct.sleepstars.de/geosite/NEWEGG | https://direct.sleepstars.de/srs-geosite/NEWEGG.srs |
+| NEWGROUNDS | https://direct.sleepstars.de/geosite/NEWGROUNDS | https://direct.sleepstars.de/srs-geosite/NEWGROUNDS.srs |
 | NEWSCORP | https://direct.sleepstars.de/geosite/NEWSCORP | https://direct.sleepstars.de/srs-geosite/NEWSCORP.srs |
 | NEWSMAX | https://direct.sleepstars.de/geosite/NEWSMAX | https://direct.sleepstars.de/srs-geosite/NEWSMAX.srs |
 | NEXITALLY | https://direct.sleepstars.de/geosite/NEXITALLY | https://direct.sleepstars.de/srs-geosite/NEXITALLY.srs |
