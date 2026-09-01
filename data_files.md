@@ -70,6 +70,7 @@
 | AMC | https://direct.sleepstars.de/geosite/AMC | https://direct.sleepstars.de/srs-geosite/AMC.srs |
 | AMD | https://direct.sleepstars.de/geosite/AMD | https://direct.sleepstars.de/srs-geosite/AMD.srs |
 | AMP | https://direct.sleepstars.de/geosite/AMP | https://direct.sleepstars.de/srs-geosite/AMP.srs |
+| AMPLITUDE | https://direct.sleepstars.de/geosite/AMPLITUDE | https://direct.sleepstars.de/srs-geosite/AMPLITUDE.srs |
 | ANACONDA | https://direct.sleepstars.de/geosite/ANACONDA | https://direct.sleepstars.de/srs-geosite/ANACONDA.srs |
 | ANANDTECH | https://direct.sleepstars.de/geosite/ANANDTECH | https://direct.sleepstars.de/srs-geosite/ANANDTECH.srs |
 | ANDROID | https://direct.sleepstars.de/geosite/ANDROID | https://direct.sleepstars.de/srs-geosite/ANDROID.srs |
@@ -1415,6 +1416,7 @@
 | VISUALARTS | https://direct.sleepstars.de/geosite/VISUALARTS | https://direct.sleepstars.de/srs-geosite/VISUALARTS.srs |
 | VIU | https://direct.sleepstars.de/geosite/VIU | https://direct.sleepstars.de/srs-geosite/VIU.srs |
 | VIVO | https://direct.sleepstars.de/geosite/VIVO | https://direct.sleepstars.de/srs-geosite/VIVO.srs |
+| VIXENGROUP | https://direct.sleepstars.de/geosite/VIXENGROUP | https://direct.sleepstars.de/srs-geosite/VIXENGROUP.srs |
 | VK | https://direct.sleepstars.de/geosite/VK | https://direct.sleepstars.de/srs-geosite/VK.srs |
 | VMWARE | https://direct.sleepstars.de/geosite/VMWARE | https://direct.sleepstars.de/srs-geosite/VMWARE.srs |
 | VOANEWS | https://direct.sleepstars.de/geosite/VOANEWS | https://direct.sleepstars.de/srs-geosite/VOANEWS.srs |
