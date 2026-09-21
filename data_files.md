@@ -573,6 +573,7 @@
 | FOX | https://direct.sleepstars.de/geosite/FOX | https://direct.sleepstars.de/srs-geosite/FOX.srs |
 | FQNOVEL | https://direct.sleepstars.de/geosite/FQNOVEL | https://direct.sleepstars.de/srs-geosite/FQNOVEL.srs |
 | FRAMER | https://direct.sleepstars.de/geosite/FRAMER | https://direct.sleepstars.de/srs-geosite/FRAMER.srs |
+| FREEBUFF | https://direct.sleepstars.de/geosite/FREEBUFF | https://direct.sleepstars.de/srs-geosite/FREEBUFF.srs |
 | FREECODECAMP | https://direct.sleepstars.de/geosite/FREECODECAMP | https://direct.sleepstars.de/srs-geosite/FREECODECAMP.srs |
 | FREENODE | https://direct.sleepstars.de/geosite/FREENODE | https://direct.sleepstars.de/srs-geosite/FREENODE.srs |
 | FT | https://direct.sleepstars.de/geosite/FT | https://direct.sleepstars.de/srs-geosite/FT.srs |
