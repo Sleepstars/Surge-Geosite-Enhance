@@ -213,6 +213,7 @@
 | CATEGORY-ACG | https://direct.sleepstars.de/geosite/CATEGORY-ACG | https://direct.sleepstars.de/srs-geosite/CATEGORY-ACG.srs |
 | CATEGORY-ADS | https://direct.sleepstars.de/geosite/CATEGORY-ADS | https://direct.sleepstars.de/srs-geosite/CATEGORY-ADS.srs |
 | CATEGORY-ADS-ALL | https://direct.sleepstars.de/geosite/CATEGORY-ADS-ALL | https://direct.sleepstars.de/srs-geosite/CATEGORY-ADS-ALL.srs |
+| CATEGORY-ADS-AND-TELEMETRY | https://direct.sleepstars.de/geosite/CATEGORY-ADS-AND-TELEMETRY | https://direct.sleepstars.de/srs-geosite/CATEGORY-ADS-AND-TELEMETRY.srs |
 | CATEGORY-ADS-IR | https://direct.sleepstars.de/geosite/CATEGORY-ADS-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-ADS-IR.srs |
 | CATEGORY-AI-!CN | https://direct.sleepstars.de/geosite/CATEGORY-AI-!CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-AI-!CN.srs |
 | CATEGORY-AI-CHAT-!CN | https://direct.sleepstars.de/geosite/CATEGORY-AI-CHAT-!CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-AI-CHAT-!CN.srs |
@@ -320,6 +321,7 @@
 | CATEGORY-TECH-IR | https://direct.sleepstars.de/geosite/CATEGORY-TECH-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-IR.srs |
 | CATEGORY-TECH-MEDIA | https://direct.sleepstars.de/geosite/CATEGORY-TECH-MEDIA | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-MEDIA.srs |
 | CATEGORY-TECH-MEDIA-RU | https://direct.sleepstars.de/geosite/CATEGORY-TECH-MEDIA-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-TECH-MEDIA-RU.srs |
+| CATEGORY-TELEMETRY | https://direct.sleepstars.de/geosite/CATEGORY-TELEMETRY | https://direct.sleepstars.de/srs-geosite/CATEGORY-TELEMETRY.srs |
 | CATEGORY-TM | https://direct.sleepstars.de/geosite/CATEGORY-TM | https://direct.sleepstars.de/srs-geosite/CATEGORY-TM.srs |
 | CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/geosite/CATEGORY-TRAVEL-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-TRAVEL-IR.srs |
 | CATEGORY-TRAVEL-RU | https://direct.sleepstars.de/geosite/CATEGORY-TRAVEL-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-TRAVEL-RU.srs |
@@ -1177,6 +1179,7 @@
 | SANKEI | https://direct.sleepstars.de/geosite/SANKEI | https://direct.sleepstars.de/srs-geosite/SANKEI.srs |
 | SB | https://direct.sleepstars.de/geosite/SB | https://direct.sleepstars.de/srs-geosite/SB.srs |
 | SBER | https://direct.sleepstars.de/geosite/SBER | https://direct.sleepstars.de/srs-geosite/SBER.srs |
+| SBERBANK | https://direct.sleepstars.de/geosite/SBERBANK | https://direct.sleepstars.de/srs-geosite/SBERBANK.srs |
 | SCALA | https://direct.sleepstars.de/geosite/SCALA | https://direct.sleepstars.de/srs-geosite/SCALA.srs |
 | SCALEFLEX | https://direct.sleepstars.de/geosite/SCALEFLEX | https://direct.sleepstars.de/srs-geosite/SCALEFLEX.srs |
 | SCENESOURCE | https://direct.sleepstars.de/geosite/SCENESOURCE | https://direct.sleepstars.de/srs-geosite/SCENESOURCE.srs |
