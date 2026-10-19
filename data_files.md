@@ -259,6 +259,7 @@
 | CATEGORY-ENTERTAINMENT-CN | https://direct.sleepstars.de/geosite/CATEGORY-ENTERTAINMENT-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-ENTERTAINMENT-CN.srs |
 | CATEGORY-ENTERTAINMENT-RU | https://direct.sleepstars.de/geosite/CATEGORY-ENTERTAINMENT-RU | https://direct.sleepstars.de/srs-geosite/CATEGORY-ENTERTAINMENT-RU.srs |
 | CATEGORY-FINANCE | https://direct.sleepstars.de/geosite/CATEGORY-FINANCE | https://direct.sleepstars.de/srs-geosite/CATEGORY-FINANCE.srs |
+| CATEGORY-FLIGHT-SIMULATOR | https://direct.sleepstars.de/geosite/CATEGORY-FLIGHT-SIMULATOR | https://direct.sleepstars.de/srs-geosite/CATEGORY-FLIGHT-SIMULATOR.srs |
 | CATEGORY-FOOD-CN | https://direct.sleepstars.de/geosite/CATEGORY-FOOD-CN | https://direct.sleepstars.de/srs-geosite/CATEGORY-FOOD-CN.srs |
 | CATEGORY-FORUMS | https://direct.sleepstars.de/geosite/CATEGORY-FORUMS | https://direct.sleepstars.de/srs-geosite/CATEGORY-FORUMS.srs |
 | CATEGORY-FORUMS-IR | https://direct.sleepstars.de/geosite/CATEGORY-FORUMS-IR | https://direct.sleepstars.de/srs-geosite/CATEGORY-FORUMS-IR.srs |
@@ -1409,6 +1410,7 @@
 | VANCL | https://direct.sleepstars.de/geosite/VANCL | https://direct.sleepstars.de/srs-geosite/VANCL.srs |
 | VANISH | https://direct.sleepstars.de/geosite/VANISH | https://direct.sleepstars.de/srs-geosite/VANISH.srs |
 | VAPTCHA | https://direct.sleepstars.de/geosite/VAPTCHA | https://direct.sleepstars.de/srs-geosite/VAPTCHA.srs |
+| VATSIM | https://direct.sleepstars.de/geosite/VATSIM | https://direct.sleepstars.de/srs-geosite/VATSIM.srs |
 | VEET | https://direct.sleepstars.de/geosite/VEET | https://direct.sleepstars.de/srs-geosite/VEET.srs |
 | VERCEL | https://direct.sleepstars.de/geosite/VERCEL | https://direct.sleepstars.de/srs-geosite/VERCEL.srs |
 | VERISIGN | https://direct.sleepstars.de/geosite/VERISIGN | https://direct.sleepstars.de/srs-geosite/VERISIGN.srs |
