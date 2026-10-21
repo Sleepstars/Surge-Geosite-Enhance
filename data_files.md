@@ -156,6 +156,7 @@
 | BITAUTO | https://direct.sleepstars.de/geosite/BITAUTO | https://direct.sleepstars.de/srs-geosite/BITAUTO.srs |
 | BITFLYER | https://direct.sleepstars.de/geosite/BITFLYER | https://direct.sleepstars.de/srs-geosite/BITFLYER.srs |
 | BITLY | https://direct.sleepstars.de/geosite/BITLY | https://direct.sleepstars.de/srs-geosite/BITLY.srs |
+| BITRIX | https://direct.sleepstars.de/geosite/BITRIX | https://direct.sleepstars.de/srs-geosite/BITRIX.srs |
 | BITSQUARE | https://direct.sleepstars.de/geosite/BITSQUARE | https://direct.sleepstars.de/srs-geosite/BITSQUARE.srs |
 | BITWARDEN | https://direct.sleepstars.de/geosite/BITWARDEN | https://direct.sleepstars.de/srs-geosite/BITWARDEN.srs |
 | BJYOUTH | https://direct.sleepstars.de/geosite/BJYOUTH | https://direct.sleepstars.de/srs-geosite/BJYOUTH.srs |
