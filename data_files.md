@@ -563,6 +563,7 @@
 | FLOWUS | https://direct.sleepstars.de/geosite/FLOWUS | https://direct.sleepstars.de/srs-geosite/FLOWUS.srs |
 | FLOWWOW | https://direct.sleepstars.de/geosite/FLOWWOW | https://direct.sleepstars.de/srs-geosite/FLOWWOW.srs |
 | FLUTTER | https://direct.sleepstars.de/geosite/FLUTTER | https://direct.sleepstars.de/srs-geosite/FLUTTER.srs |
+| FLUXER | https://direct.sleepstars.de/geosite/FLUXER | https://direct.sleepstars.de/srs-geosite/FLUXER.srs |
 | FLYIO | https://direct.sleepstars.de/geosite/FLYIO | https://direct.sleepstars.de/srs-geosite/FLYIO.srs |
 | FOCUSCHINA | https://direct.sleepstars.de/geosite/FOCUSCHINA | https://direct.sleepstars.de/srs-geosite/FOCUSCHINA.srs |
 | FONBET | https://direct.sleepstars.de/geosite/FONBET | https://direct.sleepstars.de/srs-geosite/FONBET.srs |
