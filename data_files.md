@@ -338,6 +338,7 @@
 | CCTV | https://direct.sleepstars.de/geosite/CCTV | https://direct.sleepstars.de/srs-geosite/CCTV.srs |
 | CDEK | https://direct.sleepstars.de/geosite/CDEK | https://direct.sleepstars.de/srs-geosite/CDEK.srs |
 | CDN77 | https://direct.sleepstars.de/geosite/CDN77 | https://direct.sleepstars.de/srs-geosite/CDN77.srs |
+| CDPROJEKT | https://direct.sleepstars.de/geosite/CDPROJEKT | https://direct.sleepstars.de/srs-geosite/CDPROJEKT.srs |
 | CENO | https://direct.sleepstars.de/geosite/CENO | https://direct.sleepstars.de/srs-geosite/CENO.srs |
 | CEREBRAS | https://direct.sleepstars.de/geosite/CEREBRAS | https://direct.sleepstars.de/srs-geosite/CEREBRAS.srs |
 | CERN | https://direct.sleepstars.de/geosite/CERN | https://direct.sleepstars.de/srs-geosite/CERN.srs |
