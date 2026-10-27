@@ -848,6 +848,7 @@
 | LIANJIA | https://direct.sleepstars.de/geosite/LIANJIA | https://direct.sleepstars.de/srs-geosite/LIANJIA.srs |
 | LIBERAPAY | https://direct.sleepstars.de/geosite/LIBERAPAY | https://direct.sleepstars.de/srs-geosite/LIBERAPAY.srs |
 | LIBGEN | https://direct.sleepstars.de/geosite/LIBGEN | https://direct.sleepstars.de/srs-geosite/LIBGEN.srs |
+| LIBREWOLF | https://direct.sleepstars.de/geosite/LIBREWOLF | https://direct.sleepstars.de/srs-geosite/LIBREWOLF.srs |
 | LIEPIN | https://direct.sleepstars.de/geosite/LIEPIN | https://direct.sleepstars.de/srs-geosite/LIEPIN.srs |
 | LIFEWIRE | https://direct.sleepstars.de/geosite/LIFEWIRE | https://direct.sleepstars.de/srs-geosite/LIFEWIRE.srs |
 | LIGASTAVOK | https://direct.sleepstars.de/geosite/LIGASTAVOK | https://direct.sleepstars.de/srs-geosite/LIGASTAVOK.srs |
