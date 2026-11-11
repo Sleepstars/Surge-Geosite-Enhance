@@ -640,6 +640,7 @@
 | GOOGLEFCM | https://direct.sleepstars.de/geosite/GOOGLEFCM | https://direct.sleepstars.de/srs-geosite/GOOGLEFCM.srs |
 | GOPROXY | https://direct.sleepstars.de/geosite/GOPROXY | https://direct.sleepstars.de/srs-geosite/GOPROXY.srs |
 | GRACG | https://direct.sleepstars.de/geosite/GRACG | https://direct.sleepstars.de/srs-geosite/GRACG.srs |
+| GRAFANALABS | https://direct.sleepstars.de/geosite/GRAFANALABS | https://direct.sleepstars.de/srs-geosite/GRAFANALABS.srs |
 | GRAPHENEOS | https://direct.sleepstars.de/geosite/GRAPHENEOS | https://direct.sleepstars.de/srs-geosite/GRAPHENEOS.srs |
 | GRAVATAR | https://direct.sleepstars.de/geosite/GRAVATAR | https://direct.sleepstars.de/srs-geosite/GRAVATAR.srs |
 | GREATFIRE | https://direct.sleepstars.de/geosite/GREATFIRE | https://direct.sleepstars.de/srs-geosite/GREATFIRE.srs |
