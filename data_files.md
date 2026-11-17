@@ -713,6 +713,7 @@
 | HUPUN | https://direct.sleepstars.de/geosite/HUPUN | https://direct.sleepstars.de/srs-geosite/HUPUN.srs |
 | HURRICANEELECTRIC | https://direct.sleepstars.de/geosite/HURRICANEELECTRIC | https://direct.sleepstars.de/srs-geosite/HURRICANEELECTRIC.srs |
 | HUYA | https://direct.sleepstars.de/geosite/HUYA | https://direct.sleepstars.de/srs-geosite/HUYA.srs |
+| HYPERGRYPH | https://direct.sleepstars.de/geosite/HYPERGRYPH | https://direct.sleepstars.de/srs-geosite/HYPERGRYPH.srs |
 | IBKR | https://direct.sleepstars.de/geosite/IBKR | https://direct.sleepstars.de/srs-geosite/IBKR.srs |
 | IBM | https://direct.sleepstars.de/geosite/IBM | https://direct.sleepstars.de/srs-geosite/IBM.srs |
 | ICABLE | https://direct.sleepstars.de/geosite/ICABLE | https://direct.sleepstars.de/srs-geosite/ICABLE.srs |
